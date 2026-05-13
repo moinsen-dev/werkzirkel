@@ -1,0 +1,1 @@
+ALTER TABLE "magic_link_token" ADD COLUMN "next_path" text;

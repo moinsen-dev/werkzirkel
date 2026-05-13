@@ -103,6 +103,61 @@ export const de = {
     konto_loeschen_widerrufen_ok:
       'Löschung widerrufen — dein Konto bleibt aktiv.',
   },
+  not_found: {
+    eyebrow: '404 — Nicht gefunden',
+    titel: 'Diese Seite gibt es nicht.',
+    untertitel:
+      'Vielleicht haben wir sie noch nicht gebaut, oder der Link ist veraltet. Hier sind ein paar Orte, die du stattdessen besuchen kannst.',
+    link_start: 'Zum Werkzirkel',
+    link_bedarf: 'Bedarf einbringen',
+    link_foerdern: 'Werke fördern',
+  },
+  uebersicht: {
+    eyebrow_template: (stadtName: string) => `Werkzirkel ${stadtName}`,
+    nav_uebersicht: 'Übersicht',
+    nav_werke: 'Werke',
+    nav_pruefrunden: 'Prüfrunden',
+    nav_termine: 'Termine',
+    hallo: (anzeigename: string) => `Hallo, ${anzeigename}.`,
+    subline:
+      'Schön, dass du da bist. Hier siehst du dein Werkpass-Status, dein Test-Saldo und deine nächsten Schritte.',
+    werkpass_titel: 'Werkpass',
+    werkpass_bearbeiten: 'Werkpass bearbeiten',
+    test_saldo_titel: 'Test-Saldo',
+    gegeben: 'Gegeben',
+    erhalten: 'Erhalten',
+    offen: 'Offen',
+    offene_verpflichtung: (n: number, frist: string) =>
+      `Du hast ${n} offene Verpflichtung${n === 1 ? '' : 'en'} bis ${frist}. Bitte zuerst Feedback zu zwei Werken geben.`,
+    saldo_leer_erklaerung:
+      'Du hast noch keine Prüfrunden gegeben oder erhalten. Wenn du ein Werk testen lässt, gibst du zuerst zwei Tests an anderen Werken.',
+    schnellzugriff_titel: 'Schnellzugriff',
+    meine_werke: 'Meine Werke',
+    meine_pruefrunden: 'Meine Prüfrunden',
+    termine_in: (stadtName: string) => `Termine in ${stadtName}`,
+    in_vorbereitung: '(in Vorbereitung)',
+    in_vorbereitung_text: 'Folgt mit dem nächsten Bau-Sprint.',
+    abmelden: 'Abmelden',
+  },
+  anmelden: {
+    eyebrow: 'Hamburger Werkzirkel',
+    titel: 'Anmelden oder Werkpass anlegen',
+    untertitel:
+      'Wir schicken dir einen Magic-Link per E-Mail. Klick rein, und du bist drin. Kein Passwort, keine Cookies-Banner-Wand.',
+    email_label: 'E-Mail-Adresse',
+    email_placeholder: 'deine-mail@beispiel.de',
+    button_login: 'Anmelden',
+    button_registrieren: 'Werkpass anlegen',
+    erfolg:
+      'Wir haben dir eine E-Mail geschickt. Schau in deinem Postfach (auch im Spam-Ordner). Der Link ist 15 Minuten gültig.',
+    fehler_token_ungueltig:
+      'Der Anmelde-Link ist abgelaufen oder bereits benutzt. Fordere einen neuen an.',
+    fehler_loeschung_token_ungueltig:
+      'Der Bestätigungs-Link für die Konto-Löschung ist abgelaufen. Fordere bei Bedarf eine neue Löschung in den Einstellungen an.',
+    fehler_rate_limit:
+      'Zu viele Anfragen in kurzer Zeit. Bitte warte eine Stunde und versuche es erneut.',
+    fehler_ungueltige_email: 'Bitte gib eine gültige E-Mail-Adresse ein.',
+  },
 } as const;
 
 export type DeStrings = typeof de;

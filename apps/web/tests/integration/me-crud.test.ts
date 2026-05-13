@@ -20,11 +20,15 @@ import { env } from '@/lib/env';
 import { buildSessionCookie } from '@/lib/auth/session';
 
 import { GET as meGet, PATCH as mePatch } from '@/app/api/v1/me/route';
+import { truncateAll } from '../_helpers/db-cleanup';
 
 const APP_ORIGIN = new URL(env.APP_URL).origin;
 const ME_EMAIL = 'me-crud@test.werkzirkel.de';
 
 async function cleanup(): Promise<void> {
+  await truncateAll();
+  // Folgende Spezial-Deletes sind nach truncateAll No-ops, dokumentieren
+  // aber die urspruengliche Aufraeum-Intention pro Suite.
   const ids = (
     await db
       .select({ id: nutzer.id })

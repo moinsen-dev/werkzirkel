@@ -108,6 +108,12 @@ export const magicLinkToken = pgTable(
     zweck: text('zweck').$type<MagicLinkZweck>().notNull(),
     expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
     verwendetAm: timestamp('verwendet_am', { withTimezone: true }),
+    /**
+     * Optionaler Redirect-Pfad, der bei erfolgreichem Verify angefahren wird.
+     * NUR same-origin (`/...`) — Off-Site-Redirects werden im Verify-Handler
+     * defensiv geblockt.
+     */
+    nextPath: text('next_path'),
     erstelltAm: erstelltAm(),
   },
   (table) => ({

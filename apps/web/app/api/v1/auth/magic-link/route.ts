@@ -16,20 +16,9 @@
  *   wenn die E-Mail unbekannt ist. Bei Rate-Limit-Hit dagegen 429.
  */
 
-import { eq } from 'drizzle-orm';
 import { z } from 'zod';
-import { db } from '@/lib/db';
-import { magicLinkToken, nutzer } from '@/lib/db/schema/nutzer';
-import { env } from '@/lib/env';
 import { rejectIfBadOrigin } from '@/lib/auth/csrf';
-import { generateMagicLinkToken } from '@/lib/auth/magic-link';
-import {
-  checkMagicLinkEmailLimit,
-  checkMagicLinkIpLimit,
-} from '@/lib/auth/rate-limit';
-import { sendMail } from '@/lib/email/send';
-
-const MAGIC_LINK_EXPIRY_MIN = 15;
+import { requestMagicLink } from '@/lib/auth/magic-link';
 
 const bodySchema = z.object({
   email: z.string().email().max(320),
@@ -63,72 +52,11 @@ export async function POST(req: Request): Promise<Response> {
     );
   }
   const { email, zweck } = parsed.data;
-  const normalizedEmail = email.toLowerCase();
   const ip = clientIp(req);
 
-  // ── Rate-Limits PRD §16 ───────────────────────────────────────────────────
-  const ipLimit = await checkMagicLinkIpLimit(ip);
-  if (!ipLimit.ok) {
-    return Response.json({ fehler: 'rate_limit_ip' }, { status: 429 });
+  const result = await requestMagicLink({ email, zweck, ip });
+  if (!result.ok) {
+    return Response.json({ fehler: result.fehler }, { status: 429 });
   }
-  const emailLimit = await checkMagicLinkEmailLimit(normalizedEmail);
-  if (!emailLimit.ok) {
-    return Response.json({ fehler: 'rate_limit_email' }, { status: 429 });
-  }
-
-  // ── User-Enumeration-Schutz: bei unbekannter Email immer noch 204 ────────
-  // Bei login: wir versenden nur, wenn ein Nutzer existiert. Sonst NO-OP.
-  // Bei registrierung: wir versenden immer (der Verify-Endpoint legt den
-  // Nutzer erst beim Klick an).
-  const knownNutzer = await db
-    .select({ id: nutzer.id, anzeigename: nutzer.anzeigename })
-    .from(nutzer)
-    .where(eq(nutzer.email, normalizedEmail))
-    .limit(1);
-
-  if (zweck === 'login' && knownNutzer.length === 0) {
-    // unbekannte Mail beim Login → still leise 204
-    return new Response(null, { status: 204 });
-  }
-
-  // ── Token generieren + speichern ─────────────────────────────────────────
-  const { clearToken, tokenHash } = generateMagicLinkToken();
-  const expiresAt = new Date(Date.now() + MAGIC_LINK_EXPIRY_MIN * 60 * 1000);
-  await db.insert(magicLinkToken).values({
-    email: normalizedEmail,
-    tokenHash,
-    zweck,
-    expiresAt,
-  });
-
-  // ── Mail versenden ───────────────────────────────────────────────────────
-  const magicLinkUrl = `${env.APP_URL}/api/v1/auth/magic-link/verify?token=${encodeURIComponent(clearToken)}`;
-
-  if (zweck === 'login') {
-    await sendMail({
-      to: normalizedEmail,
-      template: 'T-001',
-      props: {
-        magicLinkUrl,
-        expiresInMinutes: MAGIC_LINK_EXPIRY_MIN,
-        appUrl: env.APP_URL,
-      },
-      nutzerId: knownNutzer[0]?.id ?? null,
-    });
-  } else {
-    const anzeigename =
-      knownNutzer[0]?.anzeigename ?? normalizedEmail.split('@')[0] ?? 'Werkzirkel';
-    await sendMail({
-      to: normalizedEmail,
-      template: 'T-002',
-      props: {
-        magicLinkUrl,
-        anzeigename,
-        appUrl: env.APP_URL,
-      },
-      nutzerId: knownNutzer[0]?.id ?? null,
-    });
-  }
-
   return new Response(null, { status: 204 });
 }

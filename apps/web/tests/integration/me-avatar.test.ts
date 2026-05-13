@@ -18,6 +18,7 @@ import { env } from '@/lib/env';
 import { buildSessionCookie } from '@/lib/auth/session';
 
 import { POST as avatarPost } from '@/app/api/v1/me/avatar/route';
+import { truncateAll } from '../_helpers/db-cleanup';
 
 const APP_ORIGIN = new URL(env.APP_URL).origin;
 const AVATAR_EMAIL = 'avatar@test.werkzirkel.de';
@@ -29,6 +30,9 @@ const TINY_PNG = Buffer.from(
 );
 
 async function cleanup(): Promise<void> {
+  await truncateAll();
+  // Folgende Spezial-Deletes sind nach truncateAll No-ops, dokumentieren
+  // aber die urspruengliche Aufraeum-Intention pro Suite.
   const ids = (
     await db
       .select({ id: nutzer.id })

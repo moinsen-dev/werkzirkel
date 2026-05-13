@@ -22,10 +22,14 @@ import {
 
 import { GET as exportGet } from '@/app/api/v1/me/export/route';
 import { buildSessionCookie } from '@/lib/auth/session';
+import { truncateAll } from '../_helpers/db-cleanup';
 
 const EXPORT_USER_EMAIL = 'dsgvo-export@test.werkzirkel.de';
 
 async function cleanupTestState(): Promise<void> {
+  await truncateAll();
+  // Folgende Spezial-Deletes sind nach truncateAll No-ops, dokumentieren
+  // aber die urspruengliche Aufraeum-Intention pro Suite.
   const testNutzer = await db
     .select({ id: nutzer.id })
     .from(nutzer)

@@ -15,6 +15,7 @@ edges:
     - id: wp-werkpass-werke
     - id: wp-pruefrunden
     - id: wp-termine
+    - id: wp-glue-pages
 id: plattform-kern
 is_root: false
 open_questions: []

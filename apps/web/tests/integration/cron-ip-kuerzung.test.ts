@@ -19,6 +19,7 @@ import { auditLog, nutzer, session as sessionTable } from '@/lib/db/schema';
 import { env } from '@/lib/env';
 
 import { POST as cronPost } from '@/app/api/v1/cron/ip-kuerzung/route';
+import { truncateAll } from '../_helpers/db-cleanup';
 
 const APP_ORIGIN = new URL(env.APP_URL).origin;
 const CRON_SECRET = env.CRON_SECRET!;
@@ -29,6 +30,9 @@ const TAG_MS = 24 * 60 * 60 * 1000;
 let nutzerIdForTest: string;
 
 async function cleanup(): Promise<void> {
+  await truncateAll();
+  // Folgende Spezial-Deletes sind nach truncateAll No-ops, dokumentieren
+  // aber die urspruengliche Aufraeum-Intention pro Suite.
   const ids = (
     await db.select({ id: nutzer.id }).from(nutzer).where(eq(nutzer.email, TEST_EMAIL))
   ).map((n) => n.id);

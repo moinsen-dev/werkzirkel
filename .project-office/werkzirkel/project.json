@@ -7,22 +7,22 @@
 		"title": "Werkzirkel v1.0 — Plattform bauen",
 		"status": "draft"
 	},
-	"generated_at": "2026-05-13T11:12:45.795Z",
+	"generated_at": "2026-05-13T12:16:16.046Z",
 	"stats": {
-		"node_count": 28,
-		"edge_count": 70,
+		"node_count": 33,
+		"edge_count": 82,
 		"agent_count": 0,
 		"decision_count": 5,
 		"by_type": {
+			"task": 11,
 			"subproject": 7,
-			"workpackage": 4,
+			"workpackage": 5,
 			"decision": 9,
-			"task": 7,
 			"goal": 1
 		},
 		"by_status": {
-			"draft": 14,
-			"done": 14
+			"done": 19,
+			"draft": 14
 		},
 		"readiness": {
 			"passed": 0,
@@ -33,6 +33,15 @@
 	"topics": [],
 	"agents": [],
 	"nodes": [
+		{
+			"id": "task-not-found-de",
+			"type": "task",
+			"title": "Deutsche 404-Seite",
+			"summary": "Globale not-found.tsx auf Deutsch mit Werkzirkel-Branding. Ersetzt das englische Next.js-Default. Plus separate not-found.tsx pro Route-Group nur falls noetig.",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
 		{
 			"id": "plattform-kern",
 			"type": "subproject",
@@ -47,6 +56,15 @@
 			"type": "workpackage",
 			"title": "Auth & Konto: Magic-Link, Session, DSGVO-Self-Service",
 			"summary": "Better-Auth Magic-Link-Integration mit deutscher E-Mail, Session-Management via wz_session-Cookie, Konto-CRUD (Profil, Stadt, Rollen), Konto-Löschung mit 7-Tage-Karenz, DSGVO-Self-Service (JSON-Export, Auskunftsanfrage). Foundation-Layer fuer alle weiteren Workpackages.",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "task-anmelden-page",
+			"type": "task",
+			"title": "Anmelden-Seite mit Magic-Link-Formular",
+			"summary": "Server-Component-Seite unter /anmelden mit Magic-Link-Eingabeformular. Bestaetigungs-State 'Wir haben dir eine Mail geschickt'. Fehler-Banner fuer ?fehler=token-ungueltig|loeschung-token-ungueltig. Optional ?next=Pfad-Parameter durchschleifen.",
 			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
@@ -142,10 +160,28 @@
 			"readiness": "unknown"
 		},
 		{
+			"id": "task-uebersicht-page",
+			"type": "task",
+			"title": "Uebersicht-Seite (Landing-Pad nach Login)",
+			"summary": "Server-Component-Seite unter /uebersicht fuer eingeloggte Nutzer:innen. Begruessung mit anzeigename, Test-Saldo-Anzeige (gegeben/erhalten/offen), Werkpass-Link, Abmelden-Button. Redirect zu /anmelden wenn keine Session.",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
 			"id": "data-model-pick",
 			"type": "decision",
 			"title": "Drizzle ORM + Postgres 17, 28 Tabellen, cuid2-IDs, snake_case",
 			"summary": "Drizzle ORM + Postgres 17, 28 Tabellen, cuid2-IDs, snake_case",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "task-test-cleanup",
+			"type": "task",
+			"title": "Test-DB-Cleanup-Helper + Aufraeumen existierender Test-Daten",
+			"summary": "Wiederverwendbarer Cleanup-Helper fuer Integration-Tests in apps/web/tests/_helpers/db-cleanup.ts. Macht TRUNCATE fuer eine Liste von Tabellen mit CASCADE. Einmal-Skript um die existierenden Test-Reste aus der Dev-DB zu loeschen.",
 			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
@@ -183,6 +219,15 @@
 			"title": "Moderation, Admin, Hilfegesuche",
 			"summary": "Governance-Layer: Hilfegesuche mit Kommentaren, Meldungssystem mit Kurator:innen-Postfach, Admin-Backoffice für Nutzer:innen-Sperrung, Stadt-Verwaltung, Audit-Log-Browser.",
 			"status": "draft",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "wp-glue-pages",
+			"type": "workpackage",
+			"title": "Glue-Pages: /anmelden, /uebersicht, deutsche 404, Test-DB-Cleanup",
+			"summary": "Mini-Sprint: vier kleine Tasks, die nach der visuellen Sichtpruefung als Gaps aufgefallen sind. Macht den wp-auth-Flow manuell durchklick-bar.",
+			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
 		},
@@ -288,6 +333,12 @@
 	],
 	"edges": [
 		{
+			"from": "task-not-found-de",
+			"to": "wp-glue-pages",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
 			"from": "plattform-kern",
 			"to": "goal-root",
 			"type": "composed_of",
@@ -314,6 +365,12 @@
 		{
 			"from": "plattform-kern",
 			"to": "wp-termine",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "plattform-kern",
+			"to": "wp-glue-pages",
 			"type": "decomposes_into",
 			"confidence": 1
 		},
@@ -363,6 +420,18 @@
 			"from": "wp-auth",
 			"to": "task-cron-jobs-auth",
 			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "task-anmelden-page",
+			"to": "task-uebersicht-page",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-anmelden-page",
+			"to": "wp-glue-pages",
+			"type": "composed_of",
 			"confidence": 1
 		},
 		{
@@ -474,9 +543,27 @@
 			"confidence": 1
 		},
 		{
+			"from": "task-uebersicht-page",
+			"to": "wp-glue-pages",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-uebersicht-page",
+			"to": "task-anmelden-page",
+			"type": "depends_on",
+			"confidence": 1
+		},
+		{
 			"from": "data-model-pick",
 			"to": "data-model-decision",
 			"type": "decision_affects",
+			"confidence": 1
+		},
+		{
+			"from": "task-test-cleanup",
+			"to": "wp-glue-pages",
+			"type": "composed_of",
 			"confidence": 1
 		},
 		{
@@ -513,6 +600,36 @@
 			"from": "moderation-admin-hilfegesuche",
 			"to": "goal-root",
 			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "wp-glue-pages",
+			"to": "plattform-kern",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "wp-glue-pages",
+			"to": "task-anmelden-page",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "wp-glue-pages",
+			"to": "task-uebersicht-page",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "wp-glue-pages",
+			"to": "task-not-found-de",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "wp-glue-pages",
+			"to": "task-test-cleanup",
+			"type": "decomposes_into",
 			"confidence": 1
 		},
 		{

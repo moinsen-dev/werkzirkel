@@ -27,6 +27,7 @@ import {
 } from '@/lib/db/schema/nutzer';
 import { rateLimitBucket } from '@/lib/db/schema/rate-limit';
 import { env } from '@/lib/env';
+import { truncateAll } from '../_helpers/db-cleanup';
 
 import { POST as magicLinkPost } from '@/app/api/v1/auth/magic-link/route';
 import { GET as magicLinkVerifyGet } from '@/app/api/v1/auth/magic-link/verify/route';
@@ -72,6 +73,10 @@ function getRequest(path: string, cookie?: string): Request {
 }
 
 async function resetMagicLinkState(): Promise<void> {
+  await truncateAll();
+  // Truncate raeumt alles inklusive Test-Nutzer:innen. Die unten stehenden
+  // Spezial-Deletes sind nach truncateAll No-ops, bleiben aber als Doku der
+  // urspruenglichen Intention erhalten (defensive Aufraeumung pro Suite).
   await db.delete(magicLinkToken);
   await db.delete(rateLimitBucket);
   await db.delete(sessionTable);

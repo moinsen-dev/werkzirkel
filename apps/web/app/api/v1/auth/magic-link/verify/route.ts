@@ -12,7 +12,8 @@
  *     Nutzer mit Mindest-Defaults an (klarname leer, anzeigename = local-part).
  *   - Setzt `email_verifiziert_am`, falls noch nicht gesetzt.
  *   - Erstellt eine neue Session-Row und setzt `wz_session`-Cookie.
- *   - 302 → `${APP_URL}/uebersicht`.
+ *   - 302 → `${APP_URL}/uebersicht` (oder `tokenRow.next_path`, wenn gesetzt
+ *     UND same-origin — Off-Site-Redirects werden defensiv geblockt).
  */
 
 import { eq } from 'drizzle-orm';
@@ -109,9 +110,27 @@ export async function GET(req: Request): Promise<Response> {
     ipAdresse: clientIp(req),
   });
 
+  // Redirect-Ziel bestimmen: `next_path` aus dem Token bevorzugen, wenn
+  // gesetzt UND eindeutig same-origin (`/...`, NICHT `//evil.com/...`).
+  // Sonst Default `/uebersicht`.
+  const safeNext = isSafeNextPath(tok.nextPath) ? tok.nextPath! : '/uebersicht';
+
   const headers = new Headers({
-    location: `${env.APP_URL}/uebersicht`,
+    location: `${env.APP_URL}${safeNext}`,
     'set-cookie': buildSessionCookie(sess.id),
   });
   return new Response(null, { status: 302, headers });
+}
+
+/**
+ * Sicherheits-Filter fuer Redirect-Targets: nur same-origin Pfade erlauben.
+ *
+ * Erlaubt: `/uebersicht`, `/werke/abc`, `/anmelden?foo=bar`.
+ * Verworfen: `https://evil.com/`, `//evil.com/phish`, `javascript:...`.
+ */
+function isSafeNextPath(p: string | null): boolean {
+  if (!p) return false;
+  if (!p.startsWith('/')) return false;
+  if (p.startsWith('//')) return false;
+  return true;
 }

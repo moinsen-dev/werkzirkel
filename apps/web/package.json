@@ -15,6 +15,7 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx lib/db/migrate.ts",
     "db:seed": "tsx lib/db/seed.ts",
+    "db:cleanup-test": "tsx lib/db/cleanup-test-residue.ts",
     "db:studio": "drizzle-kit studio",
     "db:push": "drizzle-kit push"
   },

@@ -31,11 +31,15 @@ import {
 import { POST as deleteRequestPost } from '@/app/api/v1/me/delete-request/route';
 import { GET as deleteConfirmGet } from '@/app/api/v1/me/delete-confirm/route';
 import { POST as cancelDeletionPost } from '@/app/api/v1/me/cancel-deletion/route';
+import { truncateAll } from '../_helpers/db-cleanup';
 
 const APP_ORIGIN = new URL(env.APP_URL).origin;
 const DEL_EMAIL = 'me-deletion@test.werkzirkel.de';
 
 async function cleanup(): Promise<void> {
+  await truncateAll();
+  // Folgende Spezial-Deletes sind nach truncateAll No-ops, dokumentieren
+  // aber die urspruengliche Aufraeum-Intention pro Suite.
   const ids = (
     await db
       .select({ id: nutzer.id })

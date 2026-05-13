@@ -55,4 +55,9 @@ export default defineConfig({
       '@': path.resolve(__dirname, '.'),
     },
   },
+  // Damit JSX in Tests funktioniert (React 19 automatic runtime, kein
+  // expliziter `import React`).
+  esbuild: {
+    jsx: 'automatic',
+  },
 });

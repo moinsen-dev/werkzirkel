@@ -17,6 +17,7 @@ import { auditLog, magicLinkToken } from '@/lib/db/schema';
 import { env } from '@/lib/env';
 
 import { POST as cronPost } from '@/app/api/v1/cron/magic-link-cleanup/route';
+import { truncateAll } from '../_helpers/db-cleanup';
 
 const APP_ORIGIN = new URL(env.APP_URL).origin;
 const CRON_SECRET = env.CRON_SECRET!;
@@ -27,6 +28,9 @@ const TEST_EMAILS = [
 ];
 
 async function cleanup(): Promise<void> {
+  await truncateAll();
+  // Folgende Spezial-Deletes sind nach truncateAll No-ops, dokumentieren
+  // aber die urspruengliche Aufraeum-Intention pro Suite.
   await db.delete(magicLinkToken).where(inArray(magicLinkToken.email, TEST_EMAILS));
   await db.delete(auditLog).where(eq(auditLog.aktion, 'cron.magic-link-cleanup'));
 }

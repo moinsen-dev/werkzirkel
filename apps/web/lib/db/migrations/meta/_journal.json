@@ -15,6 +15,13 @@
       "when": 1778667875266,
       "tag": "0001_cute_albert_cleary",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1778672082266,
+      "tag": "0002_rapid_jackal",
+      "breakpoints": true
     }
   ]
 }

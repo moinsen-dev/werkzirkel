@@ -29,6 +29,7 @@ import {
 import { env } from '@/lib/env';
 
 import { POST as cronPost } from '@/app/api/v1/cron/konto-loeschung-frist-abgelaufen/route';
+import { truncateAll } from '../_helpers/db-cleanup';
 
 const APP_ORIGIN = new URL(env.APP_URL).origin;
 const CRON_SECRET = env.CRON_SECRET!;
@@ -39,6 +40,9 @@ const WERKINHABER_EMAIL = 'cron-konto-werkinhaber@test.werkzirkel.de';
 const ALL_EMAILS = [TEST_EMAIL, TEST_EMAIL_REM, TESTER_EMAIL, WERKINHABER_EMAIL];
 
 async function cleanup(): Promise<void> {
+  await truncateAll();
+  // Folgende Spezial-Deletes sind nach truncateAll No-ops, dokumentieren
+  // aber die urspruengliche Aufraeum-Intention pro Suite.
   const ids = (
     await db.select({ id: nutzer.id }).from(nutzer).where(inArray(nutzer.email, ALL_EMAILS))
   ).map((n) => n.id);

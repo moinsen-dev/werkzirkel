@@ -1,0 +1,499 @@
+{
+	"version": "1.0",
+	"schema_version": "project-office/v1",
+	"project_id": "werkzirkel",
+	"goal": {
+		"id": "goal-root",
+		"title": "Werkzirkel v1.0 — Plattform bauen",
+		"status": "draft"
+	},
+	"generated_at": "2026-05-13T09:49:33.796Z",
+	"stats": {
+		"node_count": 21,
+		"edge_count": 40,
+		"agent_count": 0,
+		"decision_count": 5,
+		"by_type": {
+			"subproject": 7,
+			"decision": 9,
+			"goal": 1,
+			"workpackage": 4
+		},
+		"by_status": {
+			"draft": 15,
+			"done": 6
+		},
+		"readiness": {
+			"passed": 0,
+			"failed": 0,
+			"rate": 0
+		}
+	},
+	"topics": [],
+	"agents": [],
+	"nodes": [
+		{
+			"id": "plattform-kern",
+			"type": "subproject",
+			"title": "Plattform-Kern: Konto, Werke, Prüfrunden, Termine",
+			"summary": "Macher:innen-Seite der Plattform. Auth, Werkpass, Werk-CRUD mit Screenshots und Werkstand-Historie, Prüfrunden mit Reziprozitäts-Engine, Termin-System mit Anmeldung und iCal-Export. Deckt PRD-Sprints 2-4 und schließt die Auth-Lücken aus Sprint 1.",
+			"status": "draft",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "design-system-pick",
+			"type": "decision",
+			"title": "Custom OKLCH-Tokens + Tailwind 4 @theme, keine externe UI-Library",
+			"summary": "Custom OKLCH-Tokens + Tailwind 4 @theme, keine externe UI-Library",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "tech-stack-decision",
+			"type": "decision",
+			"title": "Tech Stack",
+			"summary": "Foundation pillar: tech-stack. Run `po decide tech-stack-decision-pick \"<title>\" --foundation-scope tech-stack --affects tech-stack-decision` to satisfy.",
+			"status": "draft",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "bedarfsseite",
+			"type": "subproject",
+			"title": "Bedarfsseite: Bedarfsträger:innen, Werkstattbeitrag, Werkangebote, Förderprofile",
+			"summary": "Die Nachfrageseite mit den fünf Schutzmechaniken aus PRD §11A. Bedarfsträger:innen-Rolle, Werkstattbeitrag-Pfade (Schauabend/Geld/Sachleistung), Bedarf-CRUD mit Sprach-Check, Werkangebote nicht öffentlich, Förderprofile mit Kurator:innen-Verifikation und Auto-Pause.",
+			"status": "draft",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "geld-und-mitgliedschaft",
+			"type": "subproject",
+			"title": "Geld: Erfolgsbeitrag, Werkstatt-Kasse, Fördermitgliedschaft",
+			"summary": "Stripe-Integration jenseits Werkstattbeitrag. Erfolgsbeitrag als freiwillige Spende, transparente Werkstatt-Kasse pro Stadt mit Quartalsabschluss, Fördermitgliedschaft-Subscriptions in vier Stufen.",
+			"status": "draft",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "cross-cutting-pick",
+			"type": "decision",
+			"title": "Magic-Link-Auth, Sentry-Logging, deutsche E-Mail-Templates, DSGVO-Self-Service",
+			"summary": "Magic-Link-Auth, Sentry-Logging, deutsche E-Mail-Templates, DSGVO-Self-Service",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "architecture-decision",
+			"type": "decision",
+			"title": "Architecture",
+			"summary": "Foundation pillar: architecture. Run `po decide architecture-decision-pick \"<title>\" --foundation-scope architecture --affects architecture-decision` to satisfy.",
+			"status": "draft",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "data-model-pick",
+			"type": "decision",
+			"title": "Drizzle ORM + Postgres 17, 28 Tabellen, cuid2-IDs, snake_case",
+			"summary": "Drizzle ORM + Postgres 17, 28 Tabellen, cuid2-IDs, snake_case",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "design-system-decision",
+			"type": "decision",
+			"title": "Design System",
+			"summary": "Foundation pillar: design-system. Run `po decide design-system-decision-pick \"<title>\" --foundation-scope design-system --affects design-system-decision` to satisfy.",
+			"status": "draft",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "moderation-admin-hilfegesuche",
+			"type": "subproject",
+			"title": "Moderation, Admin, Hilfegesuche",
+			"summary": "Governance-Layer: Hilfegesuche mit Kommentaren, Meldungssystem mit Kurator:innen-Postfach, Admin-Backoffice für Nutzer:innen-Sperrung, Stadt-Verwaltung, Audit-Log-Browser.",
+			"status": "draft",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "tech-stack-pick",
+			"type": "decision",
+			"title": "TS-First-Stack: Next.js + Drizzle + Better-Auth + Stripe + Resend, Docker auf Hetzner",
+			"summary": "TS-First-Stack: Next.js + Drizzle + Better-Auth + Stripe + Resend, Docker auf Hetzner",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "architecture-pick",
+			"type": "decision",
+			"title": "Next.js 15 Full-Stack-Monolith mit Server Components",
+			"summary": "Next.js 15 Full-Stack-Monolith mit Server Components",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "goal-root",
+			"type": "goal",
+			"title": "Werkzirkel v1.0 — Plattform bauen",
+			"summary": "Deutschsprachige lokale Hybrid-Plattform für unabhängige digitale Macher:innen, Bedarfsträger:innen und Förder:innen. Hamburg-First. Werkstatt-Kultur statt Marktplatz: keine Vermittlung, keine Provision, keine DMs an Nachfrageseite. Foundation steht; jetzt baut project-office die 16 Sprints autonom (Next.js 15 + Drizzle + Better-Auth + Stripe + Resend, Hetzner-Docker).",
+			"status": "draft",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "cross-cutting-decision",
+			"type": "subproject",
+			"title": "Cross-cutting Concerns",
+			"summary": "Foundation pillar: cross-cutting. Run `po decide cross-cutting-decision-pick \"<title>\" --foundation-scope cross-cutting --affects cross-cutting-decision` to satisfy.",
+			"status": "draft",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "foundation",
+			"type": "subproject",
+			"title": "Foundation",
+			"summary": "Architecture, data model, tech stack, design system, cross-cutting concerns. Must be done before any build-subproject starts. PRD §13.",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "data-model-decision",
+			"type": "decision",
+			"title": "Data Model",
+			"summary": "Foundation pillar: data-model. Run `po decide data-model-decision-pick \"<title>\" --foundation-scope data-model --affects data-model-decision` to satisfy.",
+			"status": "draft",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "polish-und-launch",
+			"type": "subproject",
+			"title": "Polish, Mobile, Accessibility, SEO und Public Launch Hamburg",
+			"summary": "Sprint 12-16 aus PRD §42. Mobile-Layout-Review mit Bottom-Tab-Bar, A11y-Audit BITV/WCAG AA, Performance-Opt, SEO mit JSON-LD und sitemap, Stadt-Digest-Newsletter, Pre-Launch-QA (E2E, Lasttest, Pentest, Anwalt), Soft-Launch und Public Launch.",
+			"status": "draft",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "wp-auth",
+			"type": "workpackage",
+			"title": "Auth & Konto: Magic-Link, Session, DSGVO-Self-Service",
+			"summary": "Better-Auth Magic-Link-Integration mit deutscher E-Mail, Session-Management via wz_session-Cookie, Konto-CRUD (Profil, Stadt, Rollen), Konto-Löschung mit 7-Tage-Karenz, DSGVO-Self-Service (JSON-Export, Auskunftsanfrage). Foundation-Layer fuer alle weiteren Workpackages.",
+			"status": "draft",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "wp-werkpass-werke",
+			"type": "workpackage",
+			"title": "Werkpass & Werke: CRUD, Screenshots, Werkstand-Historie, Uebersicht",
+			"summary": "Macher:innen-Profil (Werkpass mit Test-Saldo-Anzeige) und Werk-Objekt mit Screenshots, Werkstand-Historie, Hilfebedarfs-Tags. Werke-Uebersicht mit Filter-Sidebar, Werk-Detailseite oeffentlich, Hamburg-Zirkelseite mit Werk-Listing.",
+			"status": "draft",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "wp-pruefrunden",
+			"type": "workpackage",
+			"title": "Pruefrunden mit Reziprozitaets-Engine",
+			"summary": "Kernmechanik von Werkzirkel. Pruefrunde-CRUD, Tester:innen-Anmeldung mit Slot-System, strukturiertes Feedback mit 8 Kategorien, hilfreich-Markierung, Reziprozitaets-Engine in lib/reziprozitaet/ mit Verpflichtungs-Tracking und Cron-Job.",
+			"status": "draft",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "wp-termine",
+			"type": "workpackage",
+			"title": "Termine: Schauabend, Pruefabend, Baurunde, Werkgespraech, Kennenlernrunde, Bedarfsschau",
+			"summary": "Termin-CRUD durch Kurator:innen mit sechs Termin-Typen, Slot-Anmeldung mit Warteliste, iCal-Export pro Termin, Erinnerungs-Cron stuendlich (7d/1d vor Termin), Anwesenheits-Dokumentation nach dem Termin durch Kurator:in.",
+			"status": "draft",
+			"owner": null,
+			"readiness": "unknown"
+		}
+	],
+	"edges": [
+		{
+			"from": "plattform-kern",
+			"to": "goal-root",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "plattform-kern",
+			"to": "wp-auth",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "plattform-kern",
+			"to": "wp-werkpass-werke",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "plattform-kern",
+			"to": "wp-pruefrunden",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "plattform-kern",
+			"to": "wp-termine",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "design-system-pick",
+			"to": "design-system-decision",
+			"type": "decision_affects",
+			"confidence": 1
+		},
+		{
+			"from": "tech-stack-decision",
+			"to": "foundation",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "tech-stack-decision",
+			"to": "tech-stack-pick",
+			"type": "decided_by",
+			"confidence": 1
+		},
+		{
+			"from": "bedarfsseite",
+			"to": "goal-root",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "geld-und-mitgliedschaft",
+			"to": "goal-root",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "cross-cutting-pick",
+			"to": "cross-cutting-decision",
+			"type": "decision_affects",
+			"confidence": 1
+		},
+		{
+			"from": "architecture-decision",
+			"to": "foundation",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "architecture-decision",
+			"to": "architecture-pick",
+			"type": "decided_by",
+			"confidence": 1
+		},
+		{
+			"from": "data-model-pick",
+			"to": "data-model-decision",
+			"type": "decision_affects",
+			"confidence": 1
+		},
+		{
+			"from": "design-system-decision",
+			"to": "foundation",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "design-system-decision",
+			"to": "design-system-pick",
+			"type": "decided_by",
+			"confidence": 1
+		},
+		{
+			"from": "moderation-admin-hilfegesuche",
+			"to": "goal-root",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "tech-stack-pick",
+			"to": "tech-stack-decision",
+			"type": "decision_affects",
+			"confidence": 1
+		},
+		{
+			"from": "architecture-pick",
+			"to": "architecture-decision",
+			"type": "decision_affects",
+			"confidence": 1
+		},
+		{
+			"from": "goal-root",
+			"to": "foundation",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "goal-root",
+			"to": "plattform-kern",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "goal-root",
+			"to": "bedarfsseite",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "goal-root",
+			"to": "geld-und-mitgliedschaft",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "goal-root",
+			"to": "moderation-admin-hilfegesuche",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "goal-root",
+			"to": "polish-und-launch",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "cross-cutting-decision",
+			"to": "foundation",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "cross-cutting-decision",
+			"to": "cross-cutting-pick",
+			"type": "decided_by",
+			"confidence": 1
+		},
+		{
+			"from": "foundation",
+			"to": "goal-root",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "foundation",
+			"to": "architecture-decision",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "foundation",
+			"to": "data-model-decision",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "foundation",
+			"to": "tech-stack-decision",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "foundation",
+			"to": "design-system-decision",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "foundation",
+			"to": "cross-cutting-decision",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "data-model-decision",
+			"to": "foundation",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "data-model-decision",
+			"to": "data-model-pick",
+			"type": "decided_by",
+			"confidence": 1
+		},
+		{
+			"from": "polish-und-launch",
+			"to": "goal-root",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "wp-auth",
+			"to": "plattform-kern",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "wp-werkpass-werke",
+			"to": "plattform-kern",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "wp-pruefrunden",
+			"to": "plattform-kern",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "wp-termine",
+			"to": "plattform-kern",
+			"type": "composed_of",
+			"confidence": 1
+		}
+	],
+	"decisions": [
+		{
+			"id": "design-system-pick",
+			"title": "Custom OKLCH-Tokens + Tailwind 4 @theme, keine externe UI-Library",
+			"status": "accepted",
+			"decided_at": "2026-05-13T09:45:23.143Z"
+		},
+		{
+			"id": "cross-cutting-pick",
+			"title": "Magic-Link-Auth, Sentry-Logging, deutsche E-Mail-Templates, DSGVO-Self-Service",
+			"status": "accepted",
+			"decided_at": "2026-05-13T09:45:23.249Z"
+		},
+		{
+			"id": "data-model-pick",
+			"title": "Drizzle ORM + Postgres 17, 28 Tabellen, cuid2-IDs, snake_case",
+			"status": "accepted",
+			"decided_at": "2026-05-13T09:45:04.934Z"
+		},
+		{
+			"id": "tech-stack-pick",
+			"title": "TS-First-Stack: Next.js + Drizzle + Better-Auth + Stripe + Resend, Docker auf Hetzner",
+			"status": "accepted",
+			"decided_at": "2026-05-13T09:45:23.055Z"
+		},
+		{
+			"id": "architecture-pick",
+			"title": "Next.js 15 Full-Stack-Monolith mit Server Components",
+			"status": "accepted",
+			"decided_at": "2026-05-13T09:44:56.259Z"
+		}
+	]
+}

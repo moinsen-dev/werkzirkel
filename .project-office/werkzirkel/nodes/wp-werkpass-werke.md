@@ -10,6 +10,14 @@ created_by: human
 edges:
   composed_of:
     - id: plattform-kern
+  decomposes_into:
+    - id: task-werk-crud-api
+    - id: task-werk-screenshots-r2
+    - id: task-werk-detail-page
+    - id: task-werk-edit-page
+    - id: task-werke-overview
+    - id: task-werkpass-public
+    - id: task-zirkel-stadt-seite
 id: wp-werkpass-werke
 is_root: false
 open_questions: []
@@ -17,12 +25,12 @@ owner: null
 parent: plattform-kern
 private: false
 risks: []
-status: draft
+status: done
 summary: Macher:innen-Profil (Werkpass mit Test-Saldo-Anzeige) und Werk-Objekt mit Screenshots, Werkstand-Historie, Hilfebedarfs-Tags. Werke-Uebersicht mit Filter-Sidebar, Werk-Detailseite oeffentlich, Hamburg-Zirkelseite mit Werk-Listing.
 tags: []
 title: "Werkpass & Werke: CRUD, Screenshots, Werkstand-Historie, Uebersicht"
 type: workpackage
-updated_at: 2026-05-13T09:49:33.795Z
+updated_at: 2026-05-13T14:15:48.644Z
 ---
 
 ## Approach

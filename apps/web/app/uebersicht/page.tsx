@@ -266,10 +266,9 @@ export default async function UebersichtPage() {
             <Link href="/uebersicht" aria-current="page">
               {t.nav_uebersicht}
             </Link>
-            <a aria-disabled="true" style={{ color: 'var(--muted)' }}>
+            <Link href="/uebersicht/werke">
               {t.nav_werke}
-              {navWarnungFehler}
-            </a>
+            </Link>
             <a aria-disabled="true" style={{ color: 'var(--muted)' }}>
               {t.nav_pruefrunden}
               {navWarnungFehler}
@@ -444,13 +443,15 @@ export default async function UebersichtPage() {
             </div>
           </div>
           <div className="mock-grid">
-            <div className="mock-card wide" aria-disabled="true">
-              <p className="mock-label">
-                {t.meine_werke} {t.in_vorbereitung}
-              </p>
+            <Link
+              href="/uebersicht/werke"
+              className="mock-card wide"
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              <p className="mock-label">{t.meine_werke}</p>
               <strong>{t.meine_werke}</strong>
-              <p>{t.in_vorbereitung_text}</p>
-            </div>
+              <p>Lege Werke an, bearbeite Werkstand und Screenshots.</p>
+            </Link>
             <div className="mock-card" aria-disabled="true">
               <p className="mock-label">
                 {t.meine_pruefrunden} {t.in_vorbereitung}

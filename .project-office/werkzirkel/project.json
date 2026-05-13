@@ -7,22 +7,22 @@
 		"title": "Werkzirkel v1.0 — Plattform bauen",
 		"status": "draft"
 	},
-	"generated_at": "2026-05-13T12:16:16.046Z",
+	"generated_at": "2026-05-13T14:15:48.644Z",
 	"stats": {
-		"node_count": 33,
-		"edge_count": 82,
+		"node_count": 40,
+		"edge_count": 110,
 		"agent_count": 0,
 		"decision_count": 5,
 		"by_type": {
-			"task": 11,
+			"task": 18,
 			"subproject": 7,
 			"workpackage": 5,
 			"decision": 9,
 			"goal": 1
 		},
 		"by_status": {
-			"done": 19,
-			"draft": 14
+			"done": 27,
+			"draft": 13
 		},
 		"readiness": {
 			"passed": 0,
@@ -33,6 +33,15 @@
 	"topics": [],
 	"agents": [],
 	"nodes": [
+		{
+			"id": "task-werk-crud-api",
+			"type": "task",
+			"title": "Werk-CRUD-API: POST/GET/PATCH/DELETE mit Werkstand-Historie",
+			"summary": "Server-API fuer Werk-Objekt gemaess PRD §15.3. POST anlegt, PATCH versioniert (werk_historie-Eintrag bei Werkstand-Wechsel), DELETE entfernt. GET liefert Detail oder gefilterte Liste. Max-5-Werke-Limit fuer kostenlose Konten, unbegrenzt fuer Foerdermitglieder.",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
 		{
 			"id": "task-not-found-de",
 			"type": "task",
@@ -65,6 +74,15 @@
 			"type": "task",
 			"title": "Anmelden-Seite mit Magic-Link-Formular",
 			"summary": "Server-Component-Seite unter /anmelden mit Magic-Link-Eingabeformular. Bestaetigungs-State 'Wir haben dir eine Mail geschickt'. Fehler-Banner fuer ?fehler=token-ungueltig|loeschung-token-ungueltig. Optional ?next=Pfad-Parameter durchschleifen.",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "task-zirkel-stadt-seite",
+			"type": "task",
+			"title": "Zirkel-Stadt-Seite /zirkel/[stadt] mit Werken, Mitglieder, naechsten Terminen",
+			"summary": "Oeffentliche Stadt-Hub-Seite. Hamburg ist initial aktiv. Zeigt Beschreibung, Werke aus der Region (gefiltert wie /werke aber stadt-fixiert), Mitglieder-Strip mit Avataren, kommende Termine (stub falls noch keine API). Berlin/Muenchen zeigen 'in Vorbereitung'-State.",
 			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
@@ -160,6 +178,15 @@
 			"readiness": "unknown"
 		},
 		{
+			"id": "task-werk-edit-page",
+			"type": "task",
+			"title": "Werk anlegen + bearbeiten UI",
+			"summary": "Server-Component-Seiten /werke/neu und /werke/[id]/bearbeiten fuer Inhaber:innen. Forms mit Server Actions, gemeinsame Validatoren aus lib/validators/werk.ts, Screenshot-Upload-UI mit Drag-and-Drop und Preview, Werkstand-Wechsel triggert Historie-Eintrag.",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
 			"id": "task-uebersicht-page",
 			"type": "task",
 			"title": "Uebersicht-Seite (Landing-Pad nach Login)",
@@ -196,11 +223,20 @@
 			"readiness": "unknown"
 		},
 		{
+			"id": "task-werk-detail-page",
+			"type": "task",
+			"title": "Oeffentliche Werk-Detailseite mit Werkstand-Historie",
+			"summary": "Server-Component-Seite /werke/[id] (oeffentlich, kein Login noetig). Rendert Werk komplett: Screenshots, Beschreibung, Werkstand-Badge, Hilfebedarf-Tags, Werkstand-Verlauf, Inhaber:innen-Pfeil zu /werkpass/[id]. Zeigt JSON-LD CreativeWork fuer SEO.",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
 			"id": "wp-werkpass-werke",
 			"type": "workpackage",
 			"title": "Werkpass & Werke: CRUD, Screenshots, Werkstand-Historie, Uebersicht",
 			"summary": "Macher:innen-Profil (Werkpass mit Test-Saldo-Anzeige) und Werk-Objekt mit Screenshots, Werkstand-Historie, Hilfebedarfs-Tags. Werke-Uebersicht mit Filter-Sidebar, Werk-Detailseite oeffentlich, Hamburg-Zirkelseite mit Werk-Listing.",
-			"status": "draft",
+			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
 		},
@@ -245,6 +281,15 @@
 			"type": "decision",
 			"title": "TS-First-Stack: Next.js + Drizzle + Better-Auth + Stripe + Resend, Docker auf Hetzner",
 			"summary": "TS-First-Stack: Next.js + Drizzle + Better-Auth + Stripe + Resend, Docker auf Hetzner",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "task-werke-overview",
+			"type": "task",
+			"title": "Werke-Uebersicht mit Filter-Sidebar (Stadt, Werkstand, Hilfebedarf)",
+			"summary": "Oeffentliche Seite /werke listet alle oeffentlichen Werke. Filter-Sidebar links (Stadt-Dropdown, Werkstand-Mehrfach-Checkbox, Hilfebedarf-Mehrfach-Checkbox), Sortier-Default aktualisiert_am DESC. KEIN Suchschlitz (P4 — Verbindlichkeit statt Rauschen). Pagination via Cursor.",
 			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
@@ -295,6 +340,15 @@
 			"readiness": "unknown"
 		},
 		{
+			"id": "task-werkpass-public",
+			"type": "task",
+			"title": "Oeffentliche Werkpass-Seite /werkpass/[id]",
+			"summary": "Oeffentliches Macher:innen-Profil. Zeigt anzeigename, kurzbeschreibung, faehigkeiten, links (website/github/...), Stadt, Test-Saldo, eigene Werke-Liste. Versteckt: email, klarname (wenn Pseudonym erlaubt), foerdermitgliedschaft-Details.",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
 			"id": "cross-cutting-decision",
 			"type": "subproject",
 			"title": "Cross-cutting Concerns",
@@ -322,6 +376,15 @@
 			"readiness": "unknown"
 		},
 		{
+			"id": "task-werk-screenshots-r2",
+			"type": "task",
+			"title": "Werk-Screenshots: Upload nach R2 mit sharp-Resize, max 3 pro Werk",
+			"summary": "Multipart-Upload-Endpoint POST /api/v1/werke/:id/screenshots mit MIME-/Groessen-Validierung, sharp-Resize (1600px max width JPEG 85), Persistierung in R2 unter werke/<werk-id>-<n>.jpg. DELETE /api/v1/werke/:id/screenshots/:url loescht einzelne. Dev-Fallback ohne R2-Keys: data: URLs.",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
 			"id": "polish-und-launch",
 			"type": "subproject",
 			"title": "Polish, Mobile, Accessibility, SEO und Public Launch Hamburg",
@@ -332,6 +395,30 @@
 		}
 	],
 	"edges": [
+		{
+			"from": "task-werk-crud-api",
+			"to": "task-werk-screenshots-r2",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-werk-crud-api",
+			"to": "task-werk-detail-page",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-werk-crud-api",
+			"to": "task-werk-edit-page",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-werk-crud-api",
+			"to": "wp-werkpass-werke",
+			"type": "composed_of",
+			"confidence": 1
+		},
 		{
 			"from": "task-not-found-de",
 			"to": "wp-glue-pages",
@@ -432,6 +519,18 @@
 			"from": "task-anmelden-page",
 			"to": "wp-glue-pages",
 			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-zirkel-stadt-seite",
+			"to": "wp-werkpass-werke",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-zirkel-stadt-seite",
+			"to": "task-werke-overview",
+			"type": "depends_on",
 			"confidence": 1
 		},
 		{
@@ -543,6 +642,24 @@
 			"confidence": 1
 		},
 		{
+			"from": "task-werk-edit-page",
+			"to": "wp-werkpass-werke",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-werk-edit-page",
+			"to": "task-werk-crud-api",
+			"type": "depends_on",
+			"confidence": 1
+		},
+		{
+			"from": "task-werk-edit-page",
+			"to": "task-werk-screenshots-r2",
+			"type": "depends_on",
+			"confidence": 1
+		},
+		{
 			"from": "task-uebersicht-page",
 			"to": "wp-glue-pages",
 			"type": "composed_of",
@@ -579,9 +696,75 @@
 			"confidence": 1
 		},
 		{
+			"from": "task-werk-detail-page",
+			"to": "task-werke-overview",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-werk-detail-page",
+			"to": "task-werkpass-public",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-werk-detail-page",
+			"to": "wp-werkpass-werke",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-werk-detail-page",
+			"to": "task-werk-crud-api",
+			"type": "depends_on",
+			"confidence": 1
+		},
+		{
 			"from": "wp-werkpass-werke",
 			"to": "plattform-kern",
 			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "wp-werkpass-werke",
+			"to": "task-werk-crud-api",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "wp-werkpass-werke",
+			"to": "task-werk-screenshots-r2",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "wp-werkpass-werke",
+			"to": "task-werk-detail-page",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "wp-werkpass-werke",
+			"to": "task-werk-edit-page",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "wp-werkpass-werke",
+			"to": "task-werke-overview",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "wp-werkpass-werke",
+			"to": "task-werkpass-public",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "wp-werkpass-werke",
+			"to": "task-zirkel-stadt-seite",
+			"type": "decomposes_into",
 			"confidence": 1
 		},
 		{
@@ -666,6 +849,24 @@
 			"from": "tech-stack-pick",
 			"to": "tech-stack-decision",
 			"type": "decision_affects",
+			"confidence": 1
+		},
+		{
+			"from": "task-werke-overview",
+			"to": "task-zirkel-stadt-seite",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-werke-overview",
+			"to": "wp-werkpass-werke",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-werke-overview",
+			"to": "task-werk-detail-page",
+			"type": "depends_on",
 			"confidence": 1
 		},
 		{
@@ -759,6 +960,18 @@
 			"confidence": 1
 		},
 		{
+			"from": "task-werkpass-public",
+			"to": "wp-werkpass-werke",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-werkpass-public",
+			"to": "task-werk-detail-page",
+			"type": "depends_on",
+			"confidence": 1
+		},
+		{
 			"from": "cross-cutting-decision",
 			"to": "foundation",
 			"type": "composed_of",
@@ -816,6 +1029,24 @@
 			"from": "data-model-decision",
 			"to": "data-model-pick",
 			"type": "decided_by",
+			"confidence": 1
+		},
+		{
+			"from": "task-werk-screenshots-r2",
+			"to": "task-werk-edit-page",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-werk-screenshots-r2",
+			"to": "wp-werkpass-werke",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-werk-screenshots-r2",
+			"to": "task-werk-crud-api",
+			"type": "depends_on",
 			"confidence": 1
 		},
 		{

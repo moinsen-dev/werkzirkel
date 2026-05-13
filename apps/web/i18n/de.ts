@@ -31,6 +31,64 @@ export const de = {
     wachsend: 'Wachsend',
     pausiert: 'Pausiert',
   },
+  werk_sichtbarkeit: {
+    oeffentlich: 'Öffentlich sichtbar',
+    nur_zirkel: 'Nur für Werkzirkel-Mitglieder',
+    pausiert: 'Pausiert (für andere unsichtbar)',
+  },
+  werk_form: {
+    titel_neu: 'Neues Werk anlegen',
+    titel_bearbeiten: 'Werk bearbeiten',
+    untertitel_neu:
+      'Beschreibe dein Werk in wenigen Feldern. Du kannst alles später bearbeiten und Screenshots nach dem Speichern hochladen.',
+    untertitel_bearbeiten:
+      'Aktualisiere die Angaben zu deinem Werk. Werkstand-Wechsel landen im öffentlichen Verlauf.',
+    label_name: 'Werkname',
+    label_kurzbeschreibung: 'Kurzbeschreibung (max. 280 Zeichen)',
+    label_problem: 'Welches Problem löst dein Werk?',
+    label_zielgruppe: 'Für wen ist das Werk?',
+    label_werkstand: 'Werkstand',
+    label_hilfebedarf: 'Wobei möchtest du Hilfe? (Mehrfach möglich)',
+    label_link: 'Link zur Live-Version oder Demo (optional)',
+    label_sichtbarkeit: 'Sichtbarkeit',
+    label_screenshots: 'Screenshots (bis zu 3)',
+    button_anlegen: 'Werk anlegen',
+    button_speichern: 'Änderungen speichern',
+    button_loeschen: 'Werk endgültig löschen',
+    button_loeschen_bestaetigen:
+      'Werk wirklich löschen? Dieser Schritt kann nicht rückgängig gemacht werden.',
+    erfolg_gespeichert: 'Werk gespeichert.',
+    erfolg_frisch_angelegt:
+      'Werk angelegt. Lade jetzt bis zu drei Screenshots hoch, damit andere dein Werk schneller verstehen.',
+    fehler_keine_rolle:
+      'Du brauchst eine Macher:innen-Rolle, um Werke anzulegen. Sprich mit der Kurator:in oder ergänze die Rolle in deinen Einstellungen.',
+    fehler_limit:
+      'Du hast bereits 5 Werke. Eine Fördermitgliedschaft hebt das Limit auf.',
+    fehler_validierung:
+      'Bitte prüfe die markierten Felder.',
+    screenshots_max_erreicht:
+      'Maximum von 3 Screenshots erreicht. Lösche einen Screenshot, um einen neuen hochzuladen.',
+    screenshots_keine: 'Noch keine Screenshots hochgeladen.',
+    screenshots_hochladen: 'Screenshot hochladen',
+    screenshots_loeschen: 'Screenshot löschen',
+    screenshots_laeuft: 'Wird hochgeladen…',
+  },
+  werke_uebersicht: {
+    titel: 'Meine Werke',
+    untertitel:
+      'Hier findest du alle deine Werke — auch pausierte und nur intern sichtbare.',
+    leer_titel: 'Du hast noch kein Werk angelegt.',
+    leer_text:
+      'Lege dein erstes Werk an, damit andere Macher:innen es bei Prüfrunden sehen und du Feedback einholen kannst.',
+    neues_werk: 'Neues Werk anlegen',
+    limit_erreicht_hinweis:
+      'Du hast das Limit von 5 Werken erreicht. Eine Fördermitgliedschaft hebt das Limit auf.',
+    bearbeiten: 'Bearbeiten',
+    badge_pausiert: 'Pausiert',
+    badge_ausgeblendet: 'Ausgeblendet',
+    badge_nur_zirkel: 'Nur Zirkel',
+    werkstand_label: 'Werkstand',
+  },
   termin_typ: {
     pruefabend: 'Prüfabend',
     schauabend: 'Schauabend',

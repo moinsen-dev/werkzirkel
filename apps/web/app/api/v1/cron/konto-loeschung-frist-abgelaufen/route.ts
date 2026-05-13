@@ -160,8 +160,10 @@ async function handler(req: Request): Promise<Response> {
         nutzerId: user.id,
       });
 
+      // FK-defensive: nutzerId=null + referenzId=user.id wie im Loesch-Pfad,
+      // sonst kollidiert ein paralleler/spaeterer harter Delete mit dem FK.
       await db.insert(auditLog).values({
-        nutzerId: user.id,
+        nutzerId: null,
         aktion: 'konto.loeschung-erinnerung',
         referenzTyp: 'nutzer',
         referenzId: user.id,

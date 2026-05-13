@@ -165,6 +165,46 @@ export async function renderMail(
  *    `gesendet` oder `fehlgeschlagen` (plus Resend-ID / Fehlermeldung)
  *    festgehalten — die Tabelle ist Source-of-Truth fuer Bounce-Handling.
  */
+/**
+ * RFC-2606-reservierte Test-Domains, an die NIEMALS echt versendet werden darf.
+ * Plus interne Konvention `test.local`.
+ */
+const TEST_DOMAINS = [
+  'example.com',
+  'example.de',
+  'example.org',
+  'example.net',
+  'test.local',
+  'localhost',
+];
+
+function isTestRecipient(to: string): boolean {
+  const lower = to.toLowerCase();
+  return TEST_DOMAINS.some((d) => lower.endsWith('@' + d) || lower.endsWith('.' + d));
+}
+
+/**
+ * Entscheidet, ob Resend tatsaechlich angesprochen werden darf — oder ob wir
+ * in den Mock-Pfad gehen. Trifft auf:
+ *  - kein API-Key gesetzt (Dev ohne Konto)
+ *  - Vitest/Jest-Runtime
+ *  - NODE_ENV=test
+ *  - explizit per EMAIL_FORCE_MOCK=1 erzwungen
+ *  - Empfaenger ist eine RFC-2606-Test-Domain
+ *
+ * Ohne diesen Riegel laufen Integration-Tests mit gesetztem RESEND_API_KEY in
+ * die Tages-Quota des echten Resend-Kontos — bei autobuild-Laeufen mit
+ * vielen sub-agent-Iterationen ist das innerhalb von Minuten ein Problem.
+ */
+function shouldMock(apiKey: string | undefined, to: string): boolean {
+  if (!apiKey) return true;
+  if (process.env.VITEST === 'true') return true;
+  if (process.env.NODE_ENV === 'test') return true;
+  if (process.env.EMAIL_FORCE_MOCK === '1') return true;
+  if (isTestRecipient(to)) return true;
+  return false;
+}
+
 export async function sendMail(opts: SendMailOpts): Promise<SendMailResult> {
   const { to, nutzerId = null, attachments } = opts;
   const { html, text, betreff } = await renderMail(opts);
@@ -173,7 +213,7 @@ export async function sendMail(opts: SendMailOpts): Promise<SendMailResult> {
   const from = env.EMAIL_FROM?.trim() || 'Werkzirkel <noreply@werkzirkel.de>';
 
   // ── Dev-/Test-Pfad ──────────────────────────────────────────────────────
-  if (!apiKey) {
+  if (shouldMock(apiKey, to)) {
     // strukturiertes Mock-Log, damit Dev-Pipelines greifen koennen.
     console.log(
       JSON.stringify({

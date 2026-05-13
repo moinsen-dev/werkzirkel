@@ -1,0 +1,37 @@
+{
+  "name": "werkzirkel",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Werkzirkel — Deutschsprachige lokale Hybrid-Plattform für unabhängige digitale Macher:innen, Bedarfsträger:innen und Förder:innen im DACH-Raum.",
+  "license": "MIT",
+  "homepage": "https://werkzirkel.de",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/moinsen/werkzirkel.git"
+  },
+  "author": "Moinsen <developer@moinsen.dev>",
+  "packageManager": "pnpm@11.1.1",
+  "engines": {
+    "node": ">=22 <27",
+    "pnpm": ">=10"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @werkzirkel/web dev",
+    "build": "pnpm --filter @werkzirkel/web build",
+    "start": "pnpm --filter @werkzirkel/web start",
+    "lint": "pnpm --filter @werkzirkel/web lint",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test",
+    "test:unit": "pnpm -r test:unit",
+    "db:generate": "pnpm --filter @werkzirkel/web db:generate",
+    "db:migrate": "pnpm --filter @werkzirkel/web db:migrate",
+    "db:seed": "pnpm --filter @werkzirkel/web db:seed",
+    "db:studio": "pnpm --filter @werkzirkel/web db:studio",
+    "format": "prettier --write \"**/*.{ts,tsx,mjs,js,json,md,css}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,mjs,js,json,md,css}\""
+  },
+  "devDependencies": {
+    "prettier": "^3.3.3",
+    "typescript": "^5.6.3"
+  }
+}

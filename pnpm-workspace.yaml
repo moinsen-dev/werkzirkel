@@ -1,0 +1,9 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+
+# Native Build-Scripts, denen explizit Ausführung erlaubt wird (pnpm 11+).
+allowBuilds:
+  esbuild: true
+  sharp: true
+  unrs-resolver: true

@@ -231,9 +231,9 @@ export default function WerkpassView({
                   fontSize: 13,
                 }}
               >
-                Offene Verpflichtung
+                Hat eine offene Reziprozitäts-Verpflichtung
                 {testSaldo.naechsteVerpflichtungFrist
-                  ? ` — Frist: ${formatDatum(testSaldo.naechsteVerpflichtungFrist)}`
+                  ? ` bis ${formatDatum(testSaldo.naechsteVerpflichtungFrist)}`
                   : ''}
                 .
               </p>

@@ -10,6 +10,14 @@ created_by: human
 edges:
   composed_of:
     - id: plattform-kern
+  decomposes_into:
+    - id: task-reziprozitaet-engine
+    - id: task-email-templates-pruefrunden
+    - id: task-pruefrunde-crud-api
+    - id: task-pruefrunden-anmeldung-api
+    - id: task-feedback-api
+    - id: task-pruefrunde-pages
+    - id: task-test-saldo-integration
 id: wp-pruefrunden
 is_root: false
 open_questions: []
@@ -17,12 +25,12 @@ owner: null
 parent: plattform-kern
 private: false
 risks: []
-status: draft
+status: done
 summary: Kernmechanik von Werkzirkel. Pruefrunde-CRUD, Tester:innen-Anmeldung mit Slot-System, strukturiertes Feedback mit 8 Kategorien, hilfreich-Markierung, Reziprozitaets-Engine in lib/reziprozitaet/ mit Verpflichtungs-Tracking und Cron-Job.
 tags: []
 title: Pruefrunden mit Reziprozitaets-Engine
 type: workpackage
-updated_at: 2026-05-13T09:49:33.795Z
+updated_at: 2026-05-13T15:55:34.760Z
 ---
 
 ## Approach

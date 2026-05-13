@@ -36,6 +36,9 @@ export interface WerkDetailViewProps {
   inhaber: WerkDetailInhaber;
   stadtName: string;
   historie: WerkDetailHistorieEintrag[];
+  /** Session-Status fuer die Inhaber:innen-/Anmeldung-Aktionen. */
+  istInhaber?: boolean;
+  istEingeloggt?: boolean;
 }
 
 function avatarInitialen(name: string): string {
@@ -87,6 +90,8 @@ export default function WerkDetailView({
   inhaber,
   stadtName,
   historie,
+  istInhaber = false,
+  istEingeloggt = false,
 }: WerkDetailViewProps) {
   const jsonLd = buildJsonLd({ werk, inhaber });
   const hilfebedarf: Hilfebedarf[] = werk.hilfebedarf ?? [];
@@ -314,23 +319,42 @@ export default function WerkDetailView({
                   </div>
                 ) : null}
                 <div style={{ marginTop: 22 }}>
-                  <a
-                    className="button primary"
-                    href={`/pruefrunden/neu?werk=${werk.id}`}
-                    aria-disabled="true"
-                    title="in Vorbereitung"
-                  >
-                    Prüfrunde anbieten
-                  </a>
-                  <p
-                    style={{
-                      margin: '8px 0 0',
-                      color: 'var(--muted)',
-                      fontSize: 13,
-                    }}
-                  >
-                    (in Vorbereitung)
-                  </p>
+                  {istInhaber ? (
+                    <Link
+                      className="button primary"
+                      href={`/pruefrunden/neu?werk=${werk.id}`}
+                    >
+                      {de.pruefrunden.werk.pruefrunde_anbieten}
+                    </Link>
+                  ) : !istEingeloggt ? (
+                    <>
+                      <Link
+                        className="button primary"
+                        href={`/anmelden?next=/werke/${werk.id}`}
+                      >
+                        {de.pruefrunden.werk.pruefrunde_anbieten}
+                      </Link>
+                      <p
+                        style={{
+                          margin: '8px 0 0',
+                          color: 'var(--muted)',
+                          fontSize: 13,
+                        }}
+                      >
+                        {de.pruefrunden.werk.anonym_anmelden_hinweis}
+                      </p>
+                    </>
+                  ) : (
+                    <p
+                      style={{
+                        margin: 0,
+                        color: 'var(--muted)',
+                        fontSize: 13,
+                      }}
+                    >
+                      {de.pruefrunden.werk.nicht_inhaber_hinweis}
+                    </p>
+                  )}
                 </div>
               </div>
             </article>

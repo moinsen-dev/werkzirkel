@@ -216,8 +216,8 @@ describe('/werkpass/[id] page', () => {
     expect(html).toContain('5 gegeben');
     expect(html).toContain('3 erhalten');
     expect(html).toContain('1 offen');
-    // Frist wird angedeutet, wenn offen > 0.
-    expect(html).toContain('Offene Verpflichtung');
+    // Frist-Hinweis (nicht moralisierend, einfach Fakt) wenn offen > 0.
+    expect(html).toContain('Hat eine offene Reziprozitäts-Verpflichtung');
   });
 
   it('Werke-Sektion: zeigt nur sichtbare Werke (oeffentlich/nur_zirkel + aktiv)', async () => {

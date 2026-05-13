@@ -189,6 +189,10 @@ export const de = {
       `Du hast ${n} offene Verpflichtung${n === 1 ? '' : 'en'} bis ${frist}. Bitte zuerst Feedback zu zwei Werken geben.`,
     saldo_leer_erklaerung:
       'Du hast noch keine Prüfrunden gegeben oder erhalten. Wenn du ein Werk testen lässt, gibst du zuerst zwei Tests an anderen Werken.',
+    frist_banner_titel: 'Reziprozitäts-Frist endet bald',
+    frist_banner_text: (n: number, frist: string) =>
+      `Du hast ${n} offene Verpflichtung${n === 1 ? '' : 'en'}. Frist: ${frist}.`,
+    frist_banner_link: 'Jetzt eine Prüfrunde testen',
     schnellzugriff_titel: 'Schnellzugriff',
     meine_werke: 'Meine Werke',
     meine_pruefrunden: 'Meine Prüfrunden',
@@ -196,6 +200,170 @@ export const de = {
     in_vorbereitung: '(in Vorbereitung)',
     in_vorbereitung_text: 'Folgt mit dem nächsten Bau-Sprint.',
     abmelden: 'Abmelden',
+  },
+  pruefrunden: {
+    feedback_kategorie: {
+      erster_eindruck: 'Erster Eindruck',
+      verstaendlichkeit: 'Verständlichkeit',
+      nutzen: 'Nutzen',
+      bedienbarkeit: 'Bedienbarkeit',
+      fehler: 'Fehler',
+      positionierung: 'Positionierung',
+      zahlungsbereitschaft: 'Zahlungsbereitschaft',
+      verbesserungen: 'Verbesserungen',
+    },
+    status: {
+      entwurf: 'Entwurf',
+      oeffentlich: 'Öffentlich',
+      geschlossen: 'Geschlossen',
+      abgeschlossen: 'Abgeschlossen',
+    },
+    liste: {
+      eyebrow: (stadtName: string) => `Werkzirkel ${stadtName} · Prüfrunden`,
+      titel: (stadtName: string) => `Prüfrunden im Werkzirkel ${stadtName}`,
+      counter: (n: number) =>
+        n === 1 ? '1 Prüfrunde sucht Tester:innen.' : `${n} Prüfrunden suchen Tester:innen.`,
+      leer_titel: (stadtName: string) =>
+        `Noch keine offenen Prüfrunden in ${stadtName}.`,
+      leer_text:
+        'Schau bald wieder vorbei oder leg eine eigene Prüfrunde für dein Werk an.',
+      filter_titel: 'Filter',
+      filter_stadt: 'Stadt',
+      filter_status: 'Status',
+      tester_counter: (n: number, m: number) =>
+        `${n} / ${m} Tester:in${m === 1 ? '' : 'nen'} angemeldet`,
+      frist_label: 'Frist',
+      zum_detail: 'Details ansehen',
+    },
+    detail: {
+      eyebrow: 'Werkzirkel · Prüfrunde',
+      werk_label: 'Werk',
+      inhaber_label: 'Inhaber:in',
+      frist_label: 'Frist',
+      tester_label: 'Tester:innen',
+      sektion_was_getestet: 'Was getestet werden soll',
+      sektion_testziel: 'Testziel',
+      sektion_testaufgabe: 'Testaufgabe',
+      sektion_zielgruppe: 'Zielgruppe',
+      sektion_was_wissen: 'Was wir wissen wollen',
+      sektion_zeitaufwand: 'Zeitaufwand',
+      zeitbedarf: (min: number) => `${min} Minuten für einen sauberen Durchlauf.`,
+      action_anonym: 'Anmelden, um Tester:in zu werden',
+      action_anmelden_button: 'Als Tester:in anmelden',
+      action_angemeldet: (frist: string) =>
+        `Du bist angemeldet. Frist: ${frist}.`,
+      action_feedback_link: 'Feedback abgeben',
+      action_feedback_gegeben:
+        'Du hast Feedback zu dieser Prüfrunde abgegeben. Danke!',
+      action_voll: (n: number, m: number) =>
+        `Plätze voll (${n}/${m}). Keine weiteren Anmeldungen möglich.`,
+      action_eigenes_werk:
+        'Das ist deine eigene Prüfrunde. Du kannst dich nicht selbst als Tester:in anmelden.',
+      action_nicht_oeffentlich:
+        'Diese Prüfrunde nimmt keine Anmeldungen mehr an.',
+      verwalten_titel: 'Deine Prüfrunde verwalten',
+      verwalten_tester_titel: 'Angemeldete Tester:innen',
+      verwalten_keine_tester: 'Noch keine Tester:innen angemeldet.',
+      verwalten_status_angemeldet: 'angemeldet',
+      verwalten_status_feedback: 'Feedback gegeben',
+      verwalten_status_zurueckgezogen: 'zurückgezogen',
+      verwalten_schliessen: 'Anmeldungen schließen',
+      verwalten_schliessen_hinweis:
+        'Schließe die Prüfrunde, wenn du alle Anmeldungen hast — Tester:innen können weiter Feedback abgeben.',
+      verwalten_abschliessen: 'Prüfrunde abschließen',
+      verwalten_abschliessen_hinweis:
+        'Markiere mindestens ein Feedback als hilfreich, dann kannst du die Prüfrunde endgültig abschließen.',
+      verwalten_zum_bearbeiten: 'Entwurf bearbeiten',
+      verwalten_feedback_link: 'Feedback ansehen',
+    },
+    neu: {
+      eyebrow: 'Werkzirkel · Neue Prüfrunde',
+      titel: 'Prüfrunde für ein Werk anlegen',
+      untertitel:
+        'Lege fest, was getestet werden soll, wen du suchst und bis wann das Feedback eintreffen muss. Du kannst alles bis zur Veröffentlichung anpassen.',
+      label_werk: 'Werk',
+      label_werk_hilfe: 'Wähle eines deiner Werke aus.',
+      label_titel: 'Titel der Prüfrunde',
+      label_testziel: 'Testziel — was willst du herausfinden?',
+      label_testaufgabe: 'Testaufgabe (Markdown erlaubt)',
+      label_zielgruppe: 'Wen suchst du als Tester:in?',
+      label_zeitbedarf: 'Zeitbedarf (5–120 Minuten)',
+      label_gesuchte_tester: 'Anzahl gesuchter Tester:innen (1–10)',
+      label_feedback_kategorien:
+        'Worauf sollen Tester:innen achten? (Mehrfachauswahl)',
+      label_frist: 'Frist für Feedback (zwischen morgen und 60 Tagen)',
+      button_anlegen: 'Prüfrunde als Entwurf anlegen',
+      button_abbrechen: 'Abbrechen',
+      fehler_keine_rolle:
+        'Du brauchst eine Macher:innen-Rolle, um Prüfrunden anzulegen.',
+      fehler_kein_werk:
+        'Du brauchst zuerst ein eigenes Werk, um eine Prüfrunde anzubieten.',
+      fehler_validierung: 'Bitte prüfe die markierten Felder.',
+      fehler_werk_nicht_eigen:
+        'Du kannst nur für eigene Werke Prüfrunden anlegen.',
+    },
+    bearbeiten: {
+      eyebrow: 'Werkzirkel · Prüfrunde',
+      titel: 'Prüfrunde bearbeiten und veröffentlichen',
+      untertitel:
+        'Solange die Prüfrunde im Entwurf ist, kannst du alles anpassen. Beim Veröffentlichen prüfen wir dein Test-Saldo.',
+      nicht_editierbar_titel: 'Diese Prüfrunde ist bereits veröffentlicht.',
+      nicht_editierbar_text:
+        'Veröffentlichte Prüfrunden können nicht mehr bearbeitet werden. Lege bei Bedarf eine neue an.',
+      button_speichern: 'Änderungen speichern',
+      button_veroeffentlichen: 'Prüfrunde veröffentlichen',
+      button_loeschen: 'Entwurf löschen',
+      erfolg_gespeichert: 'Änderungen gespeichert.',
+      erfolg_veroeffentlicht_saldo:
+        'Prüfrunde veröffentlicht. Dein Test-Saldo reicht aus — keine neue Reziprozitäts-Verpflichtung.',
+      erfolg_veroeffentlicht_verpflichtung: (frist: string) =>
+        `Prüfrunde veröffentlicht. Im Gegenzug verpflichtest du dich, bis ${frist} zwei Werke anderer zu testen. So funktioniert der Werkzirkel-Kreis.`,
+      fehler_reziprozitaet:
+        'Du hast eine abgelaufene Reziprozitäts-Verpflichtung. Bitte teste zuerst zwei Werke anderer, bevor du eine neue Prüfrunde veröffentlichst.',
+      fehler_validierung: 'Bitte prüfe die markierten Felder.',
+      fehler_kein_zugriff: 'Du kannst nur eigene Prüfrunden bearbeiten.',
+      pruefrunden_finden: 'Prüfrunden zum Testen finden',
+    },
+    feedback_form: {
+      eyebrow: 'Werkzirkel · Feedback abgeben',
+      titel: (werkName: string) => `Feedback zu „${werkName}"`,
+      untertitel:
+        'Beantworte die Fragen so konkret und wertschätzend, wie du es selbst gerne lesen würdest. Nur die Werk-Inhaber:in sieht das Feedback — bis sie es als hilfreich markiert.',
+      gesamteindruck_label: 'Dein Gesamteindruck (Pflicht)',
+      kategorie_label: (label: string) => `${label}`,
+      button_abgeben: 'Feedback abgeben',
+      button_abbrechen: 'Abbrechen',
+      fehler_nicht_angemeldet:
+        'Du bist nicht als Tester:in für diese Prüfrunde angemeldet.',
+      fehler_bereits_gegeben:
+        'Du hast für diese Prüfrunde bereits Feedback abgegeben.',
+      fehler_validierung: 'Bitte prüfe die markierten Felder.',
+    },
+    meine: {
+      eyebrow: 'Werkzirkel · Meine Prüfrunden',
+      titel: 'Meine Prüfrunden',
+      untertitel:
+        'Hier siehst du Prüfrunden, die du gestartet hast, und solche, an denen du als Tester:in beteiligt bist.',
+      verpflichtung_banner_titel: 'Offene Reziprozitäts-Verpflichtungen',
+      verpflichtung_banner_text: (n: number, frist: string) =>
+        `Du hast ${n} offene Verpflichtung${n === 1 ? '' : 'en'} bis ${frist}. Bitte teste zwei Werke anderer, damit du weitere Prüfrunden starten kannst.`,
+      verpflichtung_link: 'Prüfrunden zum Testen finden',
+      sektion_gestartet: 'Eigene Prüfrunden',
+      sektion_gestartet_leer:
+        'Du hast noch keine Prüfrunde angelegt. Lege ein Werk an und biete eine Prüfrunde dazu an.',
+      sektion_als_tester: 'Als Tester:in angemeldet',
+      sektion_als_tester_leer:
+        'Du bist aktuell für keine Prüfrunde als Tester:in angemeldet.',
+      neue_pruefrunde: 'Neue Prüfrunde anlegen',
+      erfolg_feedback_abgegeben:
+        'Danke für dein Feedback! Die Werk-Inhaber:in sieht es jetzt.',
+    },
+    werk: {
+      pruefrunde_anbieten: 'Prüfrunde anbieten',
+      anonym_anmelden_hinweis:
+        'Melde dich an, um eine Prüfrunde zu diesem Werk anzubieten.',
+      nicht_inhaber_hinweis: 'Nur die Werk-Inhaber:in kann Prüfrunden anbieten.',
+    },
   },
   anmelden: {
     eyebrow: 'Hamburger Werkzirkel',

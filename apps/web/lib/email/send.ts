@@ -56,6 +56,26 @@ import {
   T005_BETREFF,
   type KontoGeloeschtProps,
 } from './templates/t-005-konto-geloescht';
+import {
+  PruefrundeNeueAnmeldung,
+  T101_BETREFF,
+  type PruefrundeNeueAnmeldungProps,
+} from './templates/t-101-pruefrunde-neue-anmeldung';
+import {
+  PruefrundeNeuesFeedback,
+  T102_BETREFF,
+  type PruefrundeNeuesFeedbackProps,
+} from './templates/t-102-pruefrunde-neues-feedback';
+import {
+  ReziprozitaetFrist3d,
+  T103_BETREFF,
+  type ReziprozitaetFrist3dProps,
+} from './templates/t-103-reziprozitaet-frist-3d';
+import {
+  ReziprozitaetFrist1d,
+  T104_BETREFF,
+  type ReziprozitaetFrist1dProps,
+} from './templates/t-104-reziprozitaet-frist-1d';
 
 /**
  * Diskriminierte Union aller bekannten Templates.
@@ -67,7 +87,11 @@ export type MailTemplate =
   | { template: 'T-002'; props: MagicLinkRegistrierungProps }
   | { template: 'T-003'; props: KontoLoeschungBestaetigungProps }
   | { template: 'T-004'; props: KontoLoeschungErinnerungProps }
-  | { template: 'T-005'; props: KontoGeloeschtProps };
+  | { template: 'T-005'; props: KontoGeloeschtProps }
+  | { template: 'T-101'; props: PruefrundeNeueAnmeldungProps }
+  | { template: 'T-102'; props: PruefrundeNeuesFeedbackProps }
+  | { template: 'T-103'; props: ReziprozitaetFrist3dProps }
+  | { template: 'T-104'; props: ReziprozitaetFrist1dProps };
 
 /**
  * Datei-Anhang. Folgt dem Resend-Format, ist hier aber lokal getypt damit
@@ -134,6 +158,26 @@ function buildEmail(
       return {
         element: React.createElement(KontoGeloescht, opts.props),
         betreff: T005_BETREFF,
+      };
+    case 'T-101':
+      return {
+        element: React.createElement(PruefrundeNeueAnmeldung, opts.props),
+        betreff: T101_BETREFF,
+      };
+    case 'T-102':
+      return {
+        element: React.createElement(PruefrundeNeuesFeedback, opts.props),
+        betreff: T102_BETREFF,
+      };
+    case 'T-103':
+      return {
+        element: React.createElement(ReziprozitaetFrist3d, opts.props),
+        betreff: T103_BETREFF,
+      };
+    case 'T-104':
+      return {
+        element: React.createElement(ReziprozitaetFrist1d, opts.props),
+        betreff: T104_BETREFF,
       };
   }
 }

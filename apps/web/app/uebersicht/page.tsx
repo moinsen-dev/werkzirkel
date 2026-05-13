@@ -23,12 +23,12 @@ import { db } from '@/lib/db';
 import {
   session as sessionTable,
   stadt,
-  testSaldo,
 } from '@/lib/db/schema';
 import {
   buildClearSessionCookie,
   getSessionFromRequest,
 } from '@/lib/auth/session';
+import { getSaldoForUser } from '@/lib/reziprozitaet/saldo';
 
 export const metadata: Metadata = {
   title: 'Übersicht',
@@ -224,18 +224,23 @@ export default async function UebersichtPage() {
   const stadtRow = stadtRows[0];
   const stadtName = stadtRow?.name ?? '';
 
-  const saldoRows = await db
-    .select()
-    .from(testSaldo)
-    .where(eq(testSaldo.nutzerId, me.id))
-    .limit(1);
-  const saldo = saldoRows[0];
+  const saldo = await getSaldoForUser(me.id);
 
-  const gegeben = saldo?.testsGegeben ?? 0;
-  const erhalten = saldo?.testsErhalten ?? 0;
-  const offen = saldo?.offeneVerpflichtungAnzahl ?? 0;
-  const frist = saldo?.naechsteVerpflichtungFrist ?? null;
+  const gegeben = saldo.tests_gegeben;
+  const erhalten = saldo.tests_erhalten;
+  const offen = saldo.offene_verpflichtung_anzahl;
+  const frist = saldo.naechste_verpflichtung_frist;
   const istLeer = gegeben === 0 && erhalten === 0 && offen === 0;
+
+  // Frist-Banner: nur wenn offene Verpflichtung UND Frist < 3 Tage entfernt.
+  const DREI_TAGE_MS = 3 * 24 * 60 * 60 * 1000;
+  const fristBannerAnzeigen =
+    offen > 0 &&
+    frist !== null &&
+    frist.getTime() - Date.now() < DREI_TAGE_MS;
+  const pruefrundenSucheHref = me.stadtId
+    ? `/pruefrunden?stadt=${encodeURIComponent(me.stadtId)}`
+    : '/pruefrunden';
 
   const klarnameZeigen =
     me.klarname && me.klarname.trim().length > 0 ? me.klarname : me.anzeigename;
@@ -269,10 +274,9 @@ export default async function UebersichtPage() {
             <Link href="/uebersicht/werke">
               {t.nav_werke}
             </Link>
-            <a aria-disabled="true" style={{ color: 'var(--muted)' }}>
+            <Link href="/uebersicht/pruefrunden">
               {t.nav_pruefrunden}
-              {navWarnungFehler}
-            </a>
+            </Link>
             <a aria-disabled="true" style={{ color: 'var(--muted)' }}>
               {t.nav_termine}
               {navWarnungFehler}
@@ -325,6 +329,42 @@ export default async function UebersichtPage() {
           </div>
         </div>
       </header>
+
+      {fristBannerAnzeigen ? (
+        <section className="section compact" aria-label={t.frist_banner_titel}>
+          <div className="wrap">
+            <div
+              role="alert"
+              className="callout"
+              style={{
+                padding: '16px 18px',
+                borderRadius: 10,
+                border: '1px solid #d04848',
+                background: '#fbeaea',
+                color: '#5a1a1a',
+              }}
+            >
+              <strong style={{ display: 'block', fontSize: 16 }}>
+                {t.frist_banner_titel}
+              </strong>
+              <p style={{ margin: '6px 0 12px' }}>
+                {t.frist_banner_text(offen, formatFrist(frist))}
+              </p>
+              <Link
+                href={pruefrundenSucheHref}
+                className="button primary"
+                style={{
+                  background: '#5a1a1a',
+                  color: '#fff',
+                  borderColor: '#5a1a1a',
+                }}
+              >
+                {t.frist_banner_link}
+              </Link>
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       <section className="section compact">
         <div className="wrap">
@@ -452,13 +492,17 @@ export default async function UebersichtPage() {
               <strong>{t.meine_werke}</strong>
               <p>Lege Werke an, bearbeite Werkstand und Screenshots.</p>
             </Link>
-            <div className="mock-card" aria-disabled="true">
-              <p className="mock-label">
-                {t.meine_pruefrunden} {t.in_vorbereitung}
-              </p>
+            <Link
+              href="/uebersicht/pruefrunden"
+              className="mock-card"
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              <p className="mock-label">{t.meine_pruefrunden}</p>
               <strong>{t.meine_pruefrunden}</strong>
-              <p>{t.in_vorbereitung_text}</p>
-            </div>
+              <p>
+                Eigene Prüfrunden und Tester:innen-Anmeldungen auf einen Blick.
+              </p>
+            </Link>
             <div className="mock-card" aria-disabled="true">
               <p className="mock-label">
                 {t.termine_in(stadtName || 'Hamburg')} {t.in_vorbereitung}

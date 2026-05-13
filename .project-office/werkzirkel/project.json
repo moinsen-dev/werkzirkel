@@ -7,22 +7,22 @@
 		"title": "Werkzirkel v1.0 — Plattform bauen",
 		"status": "draft"
 	},
-	"generated_at": "2026-05-13T14:15:48.644Z",
+	"generated_at": "2026-05-13T15:55:34.760Z",
 	"stats": {
-		"node_count": 40,
-		"edge_count": 110,
+		"node_count": 47,
+		"edge_count": 138,
 		"agent_count": 0,
 		"decision_count": 5,
 		"by_type": {
-			"task": 18,
+			"task": 25,
 			"subproject": 7,
 			"workpackage": 5,
 			"decision": 9,
 			"goal": 1
 		},
 		"by_status": {
-			"done": 27,
-			"draft": 13
+			"done": 35,
+			"draft": 12
 		},
 		"readiness": {
 			"passed": 0,
@@ -169,6 +169,15 @@
 			"readiness": "unknown"
 		},
 		{
+			"id": "task-pruefrunde-crud-api",
+			"type": "task",
+			"title": "Pruefrunde-CRUD-API: POST/GET/PATCH/DELETE mit Reziprozitaets-Verzahnung",
+			"summary": "Server-API fuer Pruefrunde-Objekt gemaess PRD §15.4. POST anlegt nach Reziprozitaets-Check. Status-Maschine entwurf → oeffentlich → geschlossen → abgeschlossen. PATCH erlaubt Status-Uebergaenge nach Regeln aus §14.2.",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
 			"id": "task-cron-jobs-auth",
 			"type": "task",
 			"title": "Cron-Jobs Auth: Konto-Loeschung + IP-Kuerzung + Token-Cleanup",
@@ -214,11 +223,38 @@
 			"readiness": "unknown"
 		},
 		{
+			"id": "task-pruefrunde-pages",
+			"type": "task",
+			"title": "Pruefrunde-UI: Liste, Detail, Anlegen, Feedback-Form, eigene Uebersicht",
+			"summary": "Komplette UI-Schicht: /pruefrunden Liste, /pruefrunden/[id] Detail mit Anmelden-Button, /pruefrunden/neu Anlege-Form (vom Werk-Detail-Button verlinkt), /pruefrunden/[id]/feedback Feedback-Form, /uebersicht/pruefrunden eigene gegebene+erhaltene.",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "task-reziprozitaet-engine",
+			"type": "task",
+			"title": "Reziprozitaets-Engine: kannPruefrundeStarten, feedbackGegeben, Cron, Verpflichtungs-Tracking",
+			"summary": "Pure Functions in lib/reziprozitaet/ als identitaetsbildende Mechanik (PRD Prinzip P5). Prueft Test-Saldo, erzeugt/schliesst Verpflichtungen, pflegt test_saldo-Materialisierung. Plus taeglicher Cron, der verfallene Verpflichtungen markiert.",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
 			"id": "design-system-decision",
 			"type": "decision",
 			"title": "Design System",
 			"summary": "Foundation pillar: design-system. Run `po decide design-system-decision-pick \"<title>\" --foundation-scope design-system --affects design-system-decision` to satisfy.",
 			"status": "draft",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "task-pruefrunden-anmeldung-api",
+			"type": "task",
+			"title": "Tester:innen-Anmeldung: Slot-System mit Limit-Check",
+			"summary": "POST /api/v1/pruefrunden/:id/anmeldung fuer Tester:innen-Anmeldung. DELETE fuer Ruecknahme. Slot-Limit aus pruefrunde.gesuchte_tester. T-101 an Werk-Inhaber:in versenden bei neuer Anmeldung.",
+			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
 		},
@@ -245,6 +281,15 @@
 			"type": "task",
 			"title": "Better-Auth konfigurieren mit Drizzle-Adapter und Magic-Link-Plugin",
 			"summary": "Better-Auth-Instance in lib/auth/index.ts initialisieren, Drizzle-Adapter gegen die existierenden Tabellen nutzer/session/magic_link_token, Magic-Link-Plugin aktivieren, wz_session-Cookie mit Sliding-Window. Foundation fuer alle weiteren Auth-Tasks.",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "task-feedback-api",
+			"type": "task",
+			"title": "Feedback-API: Abgabe + hilfreich-Markierung + Privacy-Layer",
+			"summary": "POST /api/v1/pruefrunden/:id/feedback fuer Tester:innen-Feedback. PATCH /api/v1/feedback/:id/hilfreich fuer Werkinhaber:in-Markierung. Feedback ist initial nur fuer Werkinhaber:in sichtbar. Verzahnung mit Reziprozitaets-Engine (feedbackGegeben + feedbackErhalten).",
 			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
@@ -286,6 +331,15 @@
 			"readiness": "unknown"
 		},
 		{
+			"id": "task-email-templates-pruefrunden",
+			"type": "task",
+			"title": "E-Mail-Templates T-101 bis T-104 fuer Pruefrunden-Lifecycle",
+			"summary": "Vier React-Email-Templates: T-101 neue Anmeldung als Tester:in, T-102 neues Feedback erhalten, T-103 Reziprozitaets-Frist 3 Tage, T-104 Frist 1 Tag (oder verfallen). Deutsch, Plain-Text-Fallback, eingebunden in sendMail-Helper.",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
 			"id": "task-werke-overview",
 			"type": "task",
 			"title": "Werke-Uebersicht mit Filter-Sidebar (Stadt, Werkstand, Hilfebedarf)",
@@ -308,7 +362,7 @@
 			"type": "workpackage",
 			"title": "Pruefrunden mit Reziprozitaets-Engine",
 			"summary": "Kernmechanik von Werkzirkel. Pruefrunde-CRUD, Tester:innen-Anmeldung mit Slot-System, strukturiertes Feedback mit 8 Kategorien, hilfreich-Markierung, Reziprozitaets-Engine in lib/reziprozitaet/ mit Verpflichtungs-Tracking und Cron-Job.",
-			"status": "draft",
+			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
 		},
@@ -372,6 +426,15 @@
 			"title": "Data Model",
 			"summary": "Foundation pillar: data-model. Run `po decide data-model-decision-pick \"<title>\" --foundation-scope data-model --affects data-model-decision` to satisfy.",
 			"status": "draft",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "task-test-saldo-integration",
+			"type": "task",
+			"title": "Test-Saldo-Integration: echte Daten auf /uebersicht, /werkpass/[id], Hilfegesuche-Stub",
+			"summary": "Die echten test_saldo-Werte werden jetzt von der Reziprozitaets-Engine gepflegt. Diese Task verdrahtet sie ueberall, wo sie sichtbar sein sollen: /uebersicht-Begruessungs-Karte, /werkpass/[id]-Public-Anzeige, und ergaenzt die Anzeige der naechsten Verpflichtungs-Frist.",
+			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
 		},
@@ -624,6 +687,24 @@
 			"confidence": 1
 		},
 		{
+			"from": "task-pruefrunde-crud-api",
+			"to": "task-pruefrunden-anmeldung-api",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-pruefrunde-crud-api",
+			"to": "wp-pruefrunden",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-pruefrunde-crud-api",
+			"to": "task-reziprozitaet-engine",
+			"type": "depends_on",
+			"confidence": 1
+		},
+		{
 			"from": "task-cron-jobs-auth",
 			"to": "wp-auth",
 			"type": "composed_of",
@@ -684,6 +765,36 @@
 			"confidence": 1
 		},
 		{
+			"from": "task-pruefrunde-pages",
+			"to": "task-test-saldo-integration",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-pruefrunde-pages",
+			"to": "wp-pruefrunden",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-pruefrunde-pages",
+			"to": "task-feedback-api",
+			"type": "depends_on",
+			"confidence": 1
+		},
+		{
+			"from": "task-reziprozitaet-engine",
+			"to": "task-pruefrunde-crud-api",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-reziprozitaet-engine",
+			"to": "wp-pruefrunden",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
 			"from": "design-system-decision",
 			"to": "foundation",
 			"type": "composed_of",
@@ -693,6 +804,30 @@
 			"from": "design-system-decision",
 			"to": "design-system-pick",
 			"type": "decided_by",
+			"confidence": 1
+		},
+		{
+			"from": "task-pruefrunden-anmeldung-api",
+			"to": "task-feedback-api",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-pruefrunden-anmeldung-api",
+			"to": "wp-pruefrunden",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-pruefrunden-anmeldung-api",
+			"to": "task-pruefrunde-crud-api",
+			"type": "depends_on",
+			"confidence": 1
+		},
+		{
+			"from": "task-pruefrunden-anmeldung-api",
+			"to": "task-email-templates-pruefrunden",
+			"type": "depends_on",
 			"confidence": 1
 		},
 		{
@@ -780,6 +915,30 @@
 			"confidence": 1
 		},
 		{
+			"from": "task-feedback-api",
+			"to": "task-pruefrunde-pages",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-feedback-api",
+			"to": "wp-pruefrunden",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-feedback-api",
+			"to": "task-pruefrunden-anmeldung-api",
+			"type": "depends_on",
+			"confidence": 1
+		},
+		{
+			"from": "task-feedback-api",
+			"to": "task-email-templates-pruefrunden",
+			"type": "depends_on",
+			"confidence": 1
+		},
+		{
 			"from": "moderation-admin-hilfegesuche",
 			"to": "goal-root",
 			"type": "composed_of",
@@ -852,6 +1011,24 @@
 			"confidence": 1
 		},
 		{
+			"from": "task-email-templates-pruefrunden",
+			"to": "task-pruefrunden-anmeldung-api",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-email-templates-pruefrunden",
+			"to": "task-feedback-api",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-email-templates-pruefrunden",
+			"to": "wp-pruefrunden",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
 			"from": "task-werke-overview",
 			"to": "task-zirkel-stadt-seite",
 			"type": "blocks",
@@ -897,6 +1074,48 @@
 			"from": "wp-pruefrunden",
 			"to": "plattform-kern",
 			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "wp-pruefrunden",
+			"to": "task-reziprozitaet-engine",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "wp-pruefrunden",
+			"to": "task-email-templates-pruefrunden",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "wp-pruefrunden",
+			"to": "task-pruefrunde-crud-api",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "wp-pruefrunden",
+			"to": "task-pruefrunden-anmeldung-api",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "wp-pruefrunden",
+			"to": "task-feedback-api",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "wp-pruefrunden",
+			"to": "task-pruefrunde-pages",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "wp-pruefrunden",
+			"to": "task-test-saldo-integration",
+			"type": "decomposes_into",
 			"confidence": 1
 		},
 		{
@@ -1029,6 +1248,18 @@
 			"from": "data-model-decision",
 			"to": "data-model-pick",
 			"type": "decided_by",
+			"confidence": 1
+		},
+		{
+			"from": "task-test-saldo-integration",
+			"to": "wp-pruefrunden",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-test-saldo-integration",
+			"to": "task-pruefrunde-pages",
+			"type": "depends_on",
 			"confidence": 1
 		},
 		{

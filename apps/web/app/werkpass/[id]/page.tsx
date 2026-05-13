@@ -28,9 +28,9 @@ import {
   foerdermitgliedschaft,
   nutzer,
   stadt,
-  testSaldo,
   werk,
 } from '@/lib/db/schema';
+import { getSaldoForUser } from '@/lib/reziprozitaet/saldo';
 
 import WerkpassView, {
   type WerkpassNutzer,
@@ -131,30 +131,12 @@ async function ladeStadtName(stadtId: string): Promise<string> {
 async function ladeTestSaldo(
   nutzerId: string,
 ): Promise<WerkpassTestSaldo> {
-  const rows = await db
-    .select({
-      testsGegeben: testSaldo.testsGegeben,
-      testsErhalten: testSaldo.testsErhalten,
-      offeneVerpflichtungAnzahl: testSaldo.offeneVerpflichtungAnzahl,
-      naechsteVerpflichtungFrist: testSaldo.naechsteVerpflichtungFrist,
-    })
-    .from(testSaldo)
-    .where(eq(testSaldo.nutzerId, nutzerId))
-    .limit(1);
-  const r = rows[0];
-  if (!r) {
-    return {
-      testsGegeben: 0,
-      testsErhalten: 0,
-      offeneVerpflichtungAnzahl: 0,
-      naechsteVerpflichtungFrist: null,
-    };
-  }
+  const snap = await getSaldoForUser(nutzerId);
   return {
-    testsGegeben: r.testsGegeben,
-    testsErhalten: r.testsErhalten,
-    offeneVerpflichtungAnzahl: r.offeneVerpflichtungAnzahl,
-    naechsteVerpflichtungFrist: r.naechsteVerpflichtungFrist,
+    testsGegeben: snap.tests_gegeben,
+    testsErhalten: snap.tests_erhalten,
+    offeneVerpflichtungAnzahl: snap.offene_verpflichtung_anzahl,
+    naechsteVerpflichtungFrist: snap.naechste_verpflichtung_frist,
   };
 }
 

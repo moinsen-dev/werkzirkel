@@ -185,6 +185,8 @@ export default async function WerkPage({ params }: PageParams) {
       inhaber={inhaber}
       stadtName={stadtName}
       historie={historie}
+      istInhaber={istInhaber}
+      istEingeloggt={!!sess}
     />
   );
 }

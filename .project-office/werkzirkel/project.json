@@ -7,7 +7,7 @@
 		"title": "Werkzirkel v1.0 — Plattform bauen",
 		"status": "draft"
 	},
-	"generated_at": "2026-05-13T09:59:08.618Z",
+	"generated_at": "2026-05-13T11:12:45.795Z",
 	"stats": {
 		"node_count": 28,
 		"edge_count": 70,
@@ -21,8 +21,8 @@
 			"goal": 1
 		},
 		"by_status": {
-			"draft": 22,
-			"done": 6
+			"draft": 14,
+			"done": 14
 		},
 		"readiness": {
 			"passed": 0,
@@ -47,7 +47,7 @@
 			"type": "workpackage",
 			"title": "Auth & Konto: Magic-Link, Session, DSGVO-Self-Service",
 			"summary": "Better-Auth Magic-Link-Integration mit deutscher E-Mail, Session-Management via wz_session-Cookie, Konto-CRUD (Profil, Stadt, Rollen), Konto-Löschung mit 7-Tage-Karenz, DSGVO-Self-Service (JSON-Export, Auskunftsanfrage). Foundation-Layer fuer alle weiteren Workpackages.",
-			"status": "draft",
+			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
 		},
@@ -65,7 +65,7 @@
 			"type": "task",
 			"title": "E-Mail-Templates T-001 bis T-005 (Auth + Konto-Loeschung) auf Deutsch",
 			"summary": "Fuenf React-Email-Templates fuer Auth-Lifecycle: T-001 Magic-Link Login, T-002 Magic-Link Registrierung, T-003 Konto-Loeschung-Bestaetigung, T-004 Loeschung-Erinnerung (2 Tage), T-005 Konto-Geloescht (mit JSON-Anhang). Resend-Versand-Helper in lib/email/.",
-			"status": "draft",
+			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
 		},
@@ -119,7 +119,7 @@
 			"type": "task",
 			"title": "DSGVO-Self-Service: JSON-Export aller eigenen Daten",
 			"summary": "GET /api/v1/me/export liefert vollstaendigen JSON-Dump aller personenbezogenen Daten des eingeloggten Users (Nutzer-Eintrag, Werke, Pruefrunden, Feedbacks gegeben+erhalten, Bedarfe, Werkangebote, Foerderprofil, Termin-Anmeldungen, Werkstattbeitraege). UI-Button im Settings-Tab Datenschutz.",
-			"status": "draft",
+			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
 		},
@@ -137,7 +137,7 @@
 			"type": "task",
 			"title": "Cron-Jobs Auth: Konto-Loeschung + IP-Kuerzung + Token-Cleanup",
 			"summary": "Drei stuendliche/taegliche Cron-Endpunkte unter /api/v1/cron/ mit CRON_SECRET-Header: konto-loeschung-frist (hard-delete nach 7 Tagen), ip-kuerzung (Session+Audit-Log nach 30 Tagen), magic-link-cleanup (abgelaufene Tokens loeschen).",
-			"status": "draft",
+			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
 		},
@@ -173,7 +173,7 @@
 			"type": "task",
 			"title": "Better-Auth konfigurieren mit Drizzle-Adapter und Magic-Link-Plugin",
 			"summary": "Better-Auth-Instance in lib/auth/index.ts initialisieren, Drizzle-Adapter gegen die existierenden Tabellen nutzer/session/magic_link_token, Magic-Link-Plugin aktivieren, wz_session-Cookie mit Sliding-Window. Foundation fuer alle weiteren Auth-Tasks.",
-			"status": "draft",
+			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
 		},
@@ -191,7 +191,7 @@
 			"type": "task",
 			"title": "Magic-Link API-Endpunkte mit Rate-Limits",
 			"summary": "Alle Auth-Endpunkte aus PRD §15.1 implementieren: POST /api/v1/auth/magic-link, GET .../verify, POST .../logout, POST .../logout-all, GET .../me. Plus Rate-Limits (5 Mails/E-Mail/Std, 30 Mails/IP/Std, 10 Verifications/Token).",
-			"status": "draft",
+			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
 		},
@@ -209,7 +209,7 @@
 			"type": "task",
 			"title": "Konto-Loeschung mit 7-Tage-Karenz und Bestaetigungs-Magic-Link",
 			"summary": "DELETE /api/v1/me startet Loeschung mit T-003 Bestaetigungs-Mail. Bestaetigungs-Klick startet 7-Tage-Karenz. POST /api/v1/me/cancel-deletion fuer Widerruf. T-004 Erinnerung nach 5 Tagen.",
-			"status": "draft",
+			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
 		},
@@ -227,7 +227,7 @@
 			"type": "task",
 			"title": "Konto-Einstellungen: Profil-Edit, Avatar-Upload, Pause, Benachrichtigungen",
 			"summary": "GET/PATCH /api/v1/me (Profil-Lese/Update), POST /api/v1/me/avatar (R2-Upload mit sharp-Resize), Pause-Konto-Aktion, UI unter /einstellungen mit drei Tabs (Profil, Benachrichtigungen, Datenschutz).",
-			"status": "draft",
+			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
 		},
@@ -433,6 +433,12 @@
 		},
 		{
 			"from": "task-dsgvo-export",
+			"to": "task-cron-jobs-auth",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-dsgvo-export",
 			"to": "wp-auth",
 			"type": "composed_of",
 			"confidence": 1
@@ -441,12 +447,6 @@
 			"from": "task-dsgvo-export",
 			"to": "task-magic-link-endpoints",
 			"type": "depends_on",
-			"confidence": 1
-		},
-		{
-			"from": "task-dsgvo-export",
-			"to": "task-cron-jobs-auth",
-			"type": "blocks",
 			"confidence": 1
 		},
 		{

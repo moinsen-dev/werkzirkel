@@ -20,12 +20,12 @@ owner: null
 parent: wp-auth
 private: false
 risks: []
-status: draft
+status: done
 summary: "Fuenf React-Email-Templates fuer Auth-Lifecycle: T-001 Magic-Link Login, T-002 Magic-Link Registrierung, T-003 Konto-Loeschung-Bestaetigung, T-004 Loeschung-Erinnerung (2 Tage), T-005 Konto-Geloescht (mit JSON-Anhang). Resend-Versand-Helper in lib/email/."
 tags: []
 title: E-Mail-Templates T-001 bis T-005 (Auth + Konto-Loeschung) auf Deutsch
 type: task
-updated_at: 2026-05-13T09:58:44.228Z
+updated_at: 2026-05-13T10:21:54.507Z
 ---
 
 ## Approach
@@ -43,3 +43,7 @@ Deutsche Sprache durchgaengig. Kein Englisch. Tonalitaet gemaess PRD §6 (klar, 
 - Resend-API-Key kann in Tests fehlen — mock the Resend-Client in lib/email/send.ts (z.B. via DI: factory-Pattern).
 - React-Email rendert Server-Side. Imports muessen `react-email/components` sein, nicht `@react-email/...` (oder umgekehrt, je nach Version).
 - E-Mail-Validierung: Bouncing-Adressen werden im Resend-Webhook gehandelt — separater Task spaeter.
+
+Started 2026-05-13T10:17:55.841Z: autobuild iter 2
+
+Done 2026-05-13T10:21:54.507Z: Implemented 5 React-Email templates (T-001..T-005) + sendMail helper (Tests: green via `unset NODE_ENV && pnpm typecheck && pnpm test && NODE_ENV=production pnpm build`)

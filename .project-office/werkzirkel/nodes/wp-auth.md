@@ -26,12 +26,12 @@ owner: null
 parent: plattform-kern
 private: false
 risks: []
-status: draft
+status: done
 summary: Better-Auth Magic-Link-Integration mit deutscher E-Mail, Session-Management via wz_session-Cookie, Konto-CRUD (Profil, Stadt, Rollen), Konto-Löschung mit 7-Tage-Karenz, DSGVO-Self-Service (JSON-Export, Auskunftsanfrage). Foundation-Layer fuer alle weiteren Workpackages.
 tags: []
 title: "Auth & Konto: Magic-Link, Session, DSGVO-Self-Service"
 type: workpackage
-updated_at: 2026-05-13T09:49:33.790Z
+updated_at: 2026-05-13T11:12:45.795Z
 ---
 
 ## Approach

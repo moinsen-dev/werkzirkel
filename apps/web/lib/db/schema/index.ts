@@ -21,3 +21,4 @@ export * from './kasse';
 export * from './foerdermitgliedschaft';
 export * from './meldung';
 export * from './audit';
+export * from './rate-limit';

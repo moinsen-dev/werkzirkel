@@ -1,0 +1,58 @@
+# ────────────────────────────────────────────────
+# Werkzirkel — Docker-Compose
+#
+# Lokale Entwicklung: `docker compose up -d db`
+# Vollstack-Build:   `docker compose up --build`
+# Produktion läuft auf Hetzner mit demselben Setup, plus reverse-proxy davor.
+# ────────────────────────────────────────────────
+
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: werkzirkel
+      POSTGRES_PASSWORD: werkzirkel_dev
+      POSTGRES_DB: werkzirkel
+    ports:
+      - "5432:5432"
+    volumes:
+      - werkzirkel_db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U werkzirkel -d werkzirkel"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://werkzirkel:werkzirkel_dev@db:5432/werkzirkel
+      APP_URL: ${APP_URL:-http://localhost:3000}
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET:-change-me-32-bytes-minimum-please-do-it}
+      BETTER_AUTH_URL: ${BETTER_AUTH_URL:-http://localhost:3000}
+      RESEND_API_KEY: ${RESEND_API_KEY:-}
+      EMAIL_FROM: ${EMAIL_FROM:-Werkzirkel <postmaster@werkzirkel.de>}
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY:-}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET:-}
+      R2_ACCOUNT_ID: ${R2_ACCOUNT_ID:-}
+      R2_ACCESS_KEY_ID: ${R2_ACCESS_KEY_ID:-}
+      R2_SECRET_ACCESS_KEY: ${R2_SECRET_ACCESS_KEY:-}
+      R2_BUCKET: ${R2_BUCKET:-werkzirkel-public}
+      R2_PUBLIC_URL: ${R2_PUBLIC_URL:-}
+      CRON_SECRET: ${CRON_SECRET:-}
+      SENTRY_DSN: ${SENTRY_DSN:-}
+    ports:
+      - "3000:3000"
+    profiles:
+      - app # `docker compose --profile app up` startet Web; `up -d db` allein nur die DB
+
+volumes:
+  werkzirkel_db:

@@ -3,7 +3,7 @@ import './globals.css';
 import './landingpages.css';
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.APP_URL ?? 'http://localhost:3000'),
+  metadataBase: new URL(process.env.APP_URL ?? 'http://localhost:3210'),
   title: {
     default: 'Werkzirkel — Gemeinsam digitale Produkte bauen',
     template: '%s — Werkzirkel',

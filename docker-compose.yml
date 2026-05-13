@@ -35,9 +35,9 @@ services:
     environment:
       NODE_ENV: production
       DATABASE_URL: postgresql://werkzirkel:werkzirkel_dev@db:5432/werkzirkel
-      APP_URL: ${APP_URL:-http://localhost:3000}
+      APP_URL: ${APP_URL:-http://localhost:3210}
       BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET:-change-me-32-bytes-minimum-please-do-it}
-      BETTER_AUTH_URL: ${BETTER_AUTH_URL:-http://localhost:3000}
+      BETTER_AUTH_URL: ${BETTER_AUTH_URL:-http://localhost:3210}
       RESEND_API_KEY: ${RESEND_API_KEY:-}
       EMAIL_FROM: ${EMAIL_FROM:-Werkzirkel <postmaster@werkzirkel.de>}
       STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY:-}
@@ -50,7 +50,7 @@ services:
       CRON_SECRET: ${CRON_SECRET:-}
       SENTRY_DSN: ${SENTRY_DSN:-}
     ports:
-      - "3000:3000"
+      - "3210:3210"
     profiles:
       - app # `docker compose --profile app up` startet Web; `up -d db` allein nur die DB
 

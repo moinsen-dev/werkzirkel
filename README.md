@@ -73,7 +73,7 @@ cp .env.example .env
 docker compose up -d db          # Postgres starten
 pnpm db:migrate                  # Schema anwenden
 pnpm db:seed                     # drei Städte + Admin-Konto
-pnpm dev                         # http://localhost:3000
+pnpm dev                         # http://localhost:3210
 ```
 
 ## Tests

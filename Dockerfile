@@ -6,7 +6,7 @@
 # Stage 3 (runner): minimaler Runtime-Container, nicht-root
 #
 # Build:  docker build -t werkzirkel:latest .
-# Run:    docker run -p 3000:3000 --env-file .env werkzirkel:latest
+# Run:    docker run -p 3210:3210 --env-file .env werkzirkel:latest
 # ───────────────────────────────────────────────────────────────────────────
 
 ARG NODE_VERSION=22-alpine
@@ -46,7 +46,7 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
-ENV PORT=3000
+ENV PORT=3210
 ENV HOSTNAME=0.0.0.0
 
 # Non-root User für reduzierte Angriffsfläche
@@ -58,9 +58,9 @@ COPY --from=build --chown=werkzirkel:nodejs /app/apps/web/.next/static ./apps/we
 COPY --from=build --chown=werkzirkel:nodejs /app/apps/web/public ./apps/web/public
 
 USER werkzirkel
-EXPOSE 3000
+EXPOSE 3210
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
-  CMD wget --quiet --tries=1 --spider http://localhost:3000/api/health || exit 1
+  CMD wget --quiet --tries=1 --spider http://localhost:3210/api/health || exit 1
 
 CMD ["node", "apps/web/server.js"]

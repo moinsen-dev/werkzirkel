@@ -7,20 +7,21 @@
 		"title": "Werkzirkel v1.0 — Plattform bauen",
 		"status": "draft"
 	},
-	"generated_at": "2026-05-13T09:49:33.796Z",
+	"generated_at": "2026-05-13T09:59:08.618Z",
 	"stats": {
-		"node_count": 21,
-		"edge_count": 40,
+		"node_count": 28,
+		"edge_count": 70,
 		"agent_count": 0,
 		"decision_count": 5,
 		"by_type": {
 			"subproject": 7,
+			"workpackage": 4,
 			"decision": 9,
-			"goal": 1,
-			"workpackage": 4
+			"task": 7,
+			"goal": 1
 		},
 		"by_status": {
-			"draft": 15,
+			"draft": 22,
 			"done": 6
 		},
 		"readiness": {
@@ -42,11 +43,29 @@
 			"readiness": "unknown"
 		},
 		{
+			"id": "wp-auth",
+			"type": "workpackage",
+			"title": "Auth & Konto: Magic-Link, Session, DSGVO-Self-Service",
+			"summary": "Better-Auth Magic-Link-Integration mit deutscher E-Mail, Session-Management via wz_session-Cookie, Konto-CRUD (Profil, Stadt, Rollen), Konto-Löschung mit 7-Tage-Karenz, DSGVO-Self-Service (JSON-Export, Auskunftsanfrage). Foundation-Layer fuer alle weiteren Workpackages.",
+			"status": "draft",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
 			"id": "design-system-pick",
 			"type": "decision",
 			"title": "Custom OKLCH-Tokens + Tailwind 4 @theme, keine externe UI-Library",
 			"summary": "Custom OKLCH-Tokens + Tailwind 4 @theme, keine externe UI-Library",
 			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "task-email-templates-auth",
+			"type": "task",
+			"title": "E-Mail-Templates T-001 bis T-005 (Auth + Konto-Loeschung) auf Deutsch",
+			"summary": "Fuenf React-Email-Templates fuer Auth-Lifecycle: T-001 Magic-Link Login, T-002 Magic-Link Registrierung, T-003 Konto-Loeschung-Bestaetigung, T-004 Loeschung-Erinnerung (2 Tage), T-005 Konto-Geloescht (mit JSON-Anhang). Resend-Versand-Helper in lib/email/.",
+			"status": "draft",
 			"owner": null,
 			"readiness": "unknown"
 		},
@@ -96,6 +115,33 @@
 			"readiness": "unknown"
 		},
 		{
+			"id": "task-dsgvo-export",
+			"type": "task",
+			"title": "DSGVO-Self-Service: JSON-Export aller eigenen Daten",
+			"summary": "GET /api/v1/me/export liefert vollstaendigen JSON-Dump aller personenbezogenen Daten des eingeloggten Users (Nutzer-Eintrag, Werke, Pruefrunden, Feedbacks gegeben+erhalten, Bedarfe, Werkangebote, Foerderprofil, Termin-Anmeldungen, Werkstattbeitraege). UI-Button im Settings-Tab Datenschutz.",
+			"status": "draft",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "wp-termine",
+			"type": "workpackage",
+			"title": "Termine: Schauabend, Pruefabend, Baurunde, Werkgespraech, Kennenlernrunde, Bedarfsschau",
+			"summary": "Termin-CRUD durch Kurator:innen mit sechs Termin-Typen, Slot-Anmeldung mit Warteliste, iCal-Export pro Termin, Erinnerungs-Cron stuendlich (7d/1d vor Termin), Anwesenheits-Dokumentation nach dem Termin durch Kurator:in.",
+			"status": "draft",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "task-cron-jobs-auth",
+			"type": "task",
+			"title": "Cron-Jobs Auth: Konto-Loeschung + IP-Kuerzung + Token-Cleanup",
+			"summary": "Drei stuendliche/taegliche Cron-Endpunkte unter /api/v1/cron/ mit CRON_SECRET-Header: konto-loeschung-frist (hard-delete nach 7 Tagen), ip-kuerzung (Session+Audit-Log nach 30 Tagen), magic-link-cleanup (abgelaufene Tokens loeschen).",
+			"status": "draft",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
 			"id": "data-model-pick",
 			"type": "decision",
 			"title": "Drizzle ORM + Postgres 17, 28 Tabellen, cuid2-IDs, snake_case",
@@ -114,10 +160,37 @@
 			"readiness": "unknown"
 		},
 		{
+			"id": "wp-werkpass-werke",
+			"type": "workpackage",
+			"title": "Werkpass & Werke: CRUD, Screenshots, Werkstand-Historie, Uebersicht",
+			"summary": "Macher:innen-Profil (Werkpass mit Test-Saldo-Anzeige) und Werk-Objekt mit Screenshots, Werkstand-Historie, Hilfebedarfs-Tags. Werke-Uebersicht mit Filter-Sidebar, Werk-Detailseite oeffentlich, Hamburg-Zirkelseite mit Werk-Listing.",
+			"status": "draft",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "task-auth-config",
+			"type": "task",
+			"title": "Better-Auth konfigurieren mit Drizzle-Adapter und Magic-Link-Plugin",
+			"summary": "Better-Auth-Instance in lib/auth/index.ts initialisieren, Drizzle-Adapter gegen die existierenden Tabellen nutzer/session/magic_link_token, Magic-Link-Plugin aktivieren, wz_session-Cookie mit Sliding-Window. Foundation fuer alle weiteren Auth-Tasks.",
+			"status": "draft",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
 			"id": "moderation-admin-hilfegesuche",
 			"type": "subproject",
 			"title": "Moderation, Admin, Hilfegesuche",
 			"summary": "Governance-Layer: Hilfegesuche mit Kommentaren, Meldungssystem mit Kurator:innen-Postfach, Admin-Backoffice für Nutzer:innen-Sperrung, Stadt-Verwaltung, Audit-Log-Browser.",
+			"status": "draft",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "task-magic-link-endpoints",
+			"type": "task",
+			"title": "Magic-Link API-Endpunkte mit Rate-Limits",
+			"summary": "Alle Auth-Endpunkte aus PRD §15.1 implementieren: POST /api/v1/auth/magic-link, GET .../verify, POST .../logout, POST .../logout-all, GET .../me. Plus Rate-Limits (5 Mails/E-Mail/Std, 30 Mails/IP/Std, 10 Verifications/Token).",
 			"status": "draft",
 			"owner": null,
 			"readiness": "unknown"
@@ -128,6 +201,33 @@
 			"title": "TS-First-Stack: Next.js + Drizzle + Better-Auth + Stripe + Resend, Docker auf Hetzner",
 			"summary": "TS-First-Stack: Next.js + Drizzle + Better-Auth + Stripe + Resend, Docker auf Hetzner",
 			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "task-konto-loeschung",
+			"type": "task",
+			"title": "Konto-Loeschung mit 7-Tage-Karenz und Bestaetigungs-Magic-Link",
+			"summary": "DELETE /api/v1/me startet Loeschung mit T-003 Bestaetigungs-Mail. Bestaetigungs-Klick startet 7-Tage-Karenz. POST /api/v1/me/cancel-deletion fuer Widerruf. T-004 Erinnerung nach 5 Tagen.",
+			"status": "draft",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "wp-pruefrunden",
+			"type": "workpackage",
+			"title": "Pruefrunden mit Reziprozitaets-Engine",
+			"summary": "Kernmechanik von Werkzirkel. Pruefrunde-CRUD, Tester:innen-Anmeldung mit Slot-System, strukturiertes Feedback mit 8 Kategorien, hilfreich-Markierung, Reziprozitaets-Engine in lib/reziprozitaet/ mit Verpflichtungs-Tracking und Cron-Job.",
+			"status": "draft",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "task-konto-crud-settings",
+			"type": "task",
+			"title": "Konto-Einstellungen: Profil-Edit, Avatar-Upload, Pause, Benachrichtigungen",
+			"summary": "GET/PATCH /api/v1/me (Profil-Lese/Update), POST /api/v1/me/avatar (R2-Upload mit sharp-Resize), Pause-Konto-Aktion, UI unter /einstellungen mit drei Tabs (Profil, Benachrichtigungen, Datenschutz).",
+			"status": "draft",
 			"owner": null,
 			"readiness": "unknown"
 		},
@@ -184,42 +284,6 @@
 			"status": "draft",
 			"owner": null,
 			"readiness": "unknown"
-		},
-		{
-			"id": "wp-auth",
-			"type": "workpackage",
-			"title": "Auth & Konto: Magic-Link, Session, DSGVO-Self-Service",
-			"summary": "Better-Auth Magic-Link-Integration mit deutscher E-Mail, Session-Management via wz_session-Cookie, Konto-CRUD (Profil, Stadt, Rollen), Konto-Löschung mit 7-Tage-Karenz, DSGVO-Self-Service (JSON-Export, Auskunftsanfrage). Foundation-Layer fuer alle weiteren Workpackages.",
-			"status": "draft",
-			"owner": null,
-			"readiness": "unknown"
-		},
-		{
-			"id": "wp-werkpass-werke",
-			"type": "workpackage",
-			"title": "Werkpass & Werke: CRUD, Screenshots, Werkstand-Historie, Uebersicht",
-			"summary": "Macher:innen-Profil (Werkpass mit Test-Saldo-Anzeige) und Werk-Objekt mit Screenshots, Werkstand-Historie, Hilfebedarfs-Tags. Werke-Uebersicht mit Filter-Sidebar, Werk-Detailseite oeffentlich, Hamburg-Zirkelseite mit Werk-Listing.",
-			"status": "draft",
-			"owner": null,
-			"readiness": "unknown"
-		},
-		{
-			"id": "wp-pruefrunden",
-			"type": "workpackage",
-			"title": "Pruefrunden mit Reziprozitaets-Engine",
-			"summary": "Kernmechanik von Werkzirkel. Pruefrunde-CRUD, Tester:innen-Anmeldung mit Slot-System, strukturiertes Feedback mit 8 Kategorien, hilfreich-Markierung, Reziprozitaets-Engine in lib/reziprozitaet/ mit Verpflichtungs-Tracking und Cron-Job.",
-			"status": "draft",
-			"owner": null,
-			"readiness": "unknown"
-		},
-		{
-			"id": "wp-termine",
-			"type": "workpackage",
-			"title": "Termine: Schauabend, Pruefabend, Baurunde, Werkgespraech, Kennenlernrunde, Bedarfsschau",
-			"summary": "Termin-CRUD durch Kurator:innen mit sechs Termin-Typen, Slot-Anmeldung mit Warteliste, iCal-Export pro Termin, Erinnerungs-Cron stuendlich (7d/1d vor Termin), Anwesenheits-Dokumentation nach dem Termin durch Kurator:in.",
-			"status": "draft",
-			"owner": null,
-			"readiness": "unknown"
 		}
 	],
 	"edges": [
@@ -254,9 +318,75 @@
 			"confidence": 1
 		},
 		{
+			"from": "wp-auth",
+			"to": "plattform-kern",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "wp-auth",
+			"to": "task-auth-config",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "wp-auth",
+			"to": "task-magic-link-endpoints",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "wp-auth",
+			"to": "task-email-templates-auth",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "wp-auth",
+			"to": "task-konto-crud-settings",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "wp-auth",
+			"to": "task-konto-loeschung",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "wp-auth",
+			"to": "task-dsgvo-export",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "wp-auth",
+			"to": "task-cron-jobs-auth",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
 			"from": "design-system-pick",
 			"to": "design-system-decision",
 			"type": "decision_affects",
+			"confidence": 1
+		},
+		{
+			"from": "task-email-templates-auth",
+			"to": "task-magic-link-endpoints",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-email-templates-auth",
+			"to": "task-konto-loeschung",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-email-templates-auth",
+			"to": "wp-auth",
+			"type": "composed_of",
 			"confidence": 1
 		},
 		{
@@ -302,6 +432,48 @@
 			"confidence": 1
 		},
 		{
+			"from": "task-dsgvo-export",
+			"to": "wp-auth",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-dsgvo-export",
+			"to": "task-magic-link-endpoints",
+			"type": "depends_on",
+			"confidence": 1
+		},
+		{
+			"from": "task-dsgvo-export",
+			"to": "task-cron-jobs-auth",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "wp-termine",
+			"to": "plattform-kern",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-cron-jobs-auth",
+			"to": "wp-auth",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-cron-jobs-auth",
+			"to": "task-konto-loeschung",
+			"type": "depends_on",
+			"confidence": 1
+		},
+		{
+			"from": "task-cron-jobs-auth",
+			"to": "task-dsgvo-export",
+			"type": "depends_on",
+			"confidence": 1
+		},
+		{
 			"from": "data-model-pick",
 			"to": "data-model-decision",
 			"type": "decision_affects",
@@ -320,15 +492,111 @@
 			"confidence": 1
 		},
 		{
+			"from": "wp-werkpass-werke",
+			"to": "plattform-kern",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-auth-config",
+			"to": "task-magic-link-endpoints",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-auth-config",
+			"to": "wp-auth",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
 			"from": "moderation-admin-hilfegesuche",
 			"to": "goal-root",
 			"type": "composed_of",
 			"confidence": 1
 		},
 		{
+			"from": "task-magic-link-endpoints",
+			"to": "task-konto-crud-settings",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-magic-link-endpoints",
+			"to": "task-dsgvo-export",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-magic-link-endpoints",
+			"to": "wp-auth",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-magic-link-endpoints",
+			"to": "task-auth-config",
+			"type": "depends_on",
+			"confidence": 1
+		},
+		{
+			"from": "task-magic-link-endpoints",
+			"to": "task-email-templates-auth",
+			"type": "depends_on",
+			"confidence": 1
+		},
+		{
 			"from": "tech-stack-pick",
 			"to": "tech-stack-decision",
 			"type": "decision_affects",
+			"confidence": 1
+		},
+		{
+			"from": "task-konto-loeschung",
+			"to": "task-cron-jobs-auth",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-konto-loeschung",
+			"to": "wp-auth",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-konto-loeschung",
+			"to": "task-konto-crud-settings",
+			"type": "depends_on",
+			"confidence": 1
+		},
+		{
+			"from": "task-konto-loeschung",
+			"to": "task-email-templates-auth",
+			"type": "depends_on",
+			"confidence": 1
+		},
+		{
+			"from": "wp-pruefrunden",
+			"to": "plattform-kern",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-konto-crud-settings",
+			"to": "task-konto-loeschung",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-konto-crud-settings",
+			"to": "wp-auth",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-konto-crud-settings",
+			"to": "task-magic-link-endpoints",
+			"type": "depends_on",
 			"confidence": 1
 		},
 		{
@@ -436,30 +704,6 @@
 		{
 			"from": "polish-und-launch",
 			"to": "goal-root",
-			"type": "composed_of",
-			"confidence": 1
-		},
-		{
-			"from": "wp-auth",
-			"to": "plattform-kern",
-			"type": "composed_of",
-			"confidence": 1
-		},
-		{
-			"from": "wp-werkpass-werke",
-			"to": "plattform-kern",
-			"type": "composed_of",
-			"confidence": 1
-		},
-		{
-			"from": "wp-pruefrunden",
-			"to": "plattform-kern",
-			"type": "composed_of",
-			"confidence": 1
-		},
-		{
-			"from": "wp-termine",
-			"to": "plattform-kern",
 			"type": "composed_of",
 			"confidence": 1
 		}

@@ -11,6 +11,14 @@ created_by: human
 edges:
   composed_of:
     - id: plattform-kern
+  decomposes_into:
+    - id: task-auth-config
+    - id: task-magic-link-endpoints
+    - id: task-email-templates-auth
+    - id: task-konto-crud-settings
+    - id: task-konto-loeschung
+    - id: task-dsgvo-export
+    - id: task-cron-jobs-auth
 id: wp-auth
 is_root: false
 open_questions: []

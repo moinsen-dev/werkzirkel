@@ -1,111 +1,100 @@
-Product Requirement Document v0.2
+Product Requirement Document v0.3
 
 Arbeitstitel: Werkzirkel
 
-Produkt: Deutschsprachige lokale Community-Plattform für unabhängige digitale Produktmacher:innen im DACH-Raum
+Produkt: Deutschsprachige lokale Hybrid-Plattform für unabhängige digitale Produktmacher:innen UND deren Bedarfsträger:innen/Förder:innen im DACH-Raum
 MVP-Fokus: Hamburg zuerst (eine Stadt richtig zünden), danach Berlin und München als Replikation
 Sprache: ausschließlich Deutsch
-Ziel: Menschen, die digitale Produkte bauen, lokal vernetzen, gegenseitig testen lassen, sichtbar machen und in reale Treffen bringen.
+Ziel: Menschen, die digitale Produkte bauen, lokal vernetzen, gegenseitig testen lassen, sichtbar machen, in reale Treffen bringen — und sie mit Bedarfsträger:innen und Förder:innen aus derselben Stadt zusammenführen, ohne dass die Werkstatt-Kultur zur Akquise-Plattform mutiert.
 
-Änderungen gegenüber v0.1 (kompakt)
+Änderungen gegenüber v0.2 (kompakt)
 
-* Sequenzierung umgestellt: Erst lokale Treffen mit existierenden Tools (Eventbrite/Luma + Notion), dann Plattform. Die Plattform folgt der Aktivität, nicht umgekehrt.
-* Hamburg-First statt drei Städte parallel. Replikation in Berlin und München erst nach drei tragenden Schauabenden in Hamburg.
-* Reziprozität („Teste 2, erhalte 1") ins MVP gezogen — sie ist der Kernmechanismus, nicht ein „Später"-Feature.
-* Neue Section 23: Akquisestrategie Hamburg. Konkrete Kanäle, nicht „20–30 Gespräche".
-* Datenmodell entschlackt: Werk.stadt entfernt (erbt von Nutzer.stadt).
-* Geschäftsmodell mit ehrlichem Tragfähigkeitspfad ergänzt.
-* Sprachmuster ergänzt.
-* Section 28 „Nächster Schritt" umgeschrieben: erstes Schauabend in Hamburg, nicht Landingpage.
+* Nachfrageseite eingeführt. Bedarfsträger:innen (Auftraggeber:innen, Problem-Owner:innen) und Förder:innen (Investor:innen, Mäzen:innen, Stiftungs- und Förderprogramm-Träger:innen) werden eigenständige Rollen mit eigenen Werkzeugen und eigenen Pflichten.
+* Neue Kernobjekte: Bedarf (Brief/Problem/Auftragsidee), Werkangebot (strukturierte Antwort eines Macher:innen-Werks auf einen Bedarf), Förderprofil.
+* Neues lokales Format: Bedarfsschau (Pendant zum Schauabend, aber von der Nachfrageseite her gedacht — Probleme zeigen, nicht Werke).
+* Bisherige Schutzregeln „keine Jobbörse, kein Freelancer-Marktplatz" werden relativiert, aber durch fünf Kompensationsmechaniken kompensiert (siehe neuer Abschnitt 11A „Bedarfsseite — Schutzmechaniken"). Werkzirkel wird kein Marktplatz mit Suchschlitz und Provision, sondern eine kuratierte Hybrid-Plattform mit Bedarfsschau als Kulturhandlung.
+* Reziprozität erweitert: Bedarfsträger:innen und Förder:innen haben eigene Beitragspflichten, nicht nur Macher:innen.
+* Plattform vermittelt Sichtbarkeit, niemals Verträge. Geld läuft offline zwischen den Parteien. Werkzirkel hält kein Inkasso, kein Treuhandkonto, keine Vermittlungsprovision.
+* Neuer optionaler Tragfähigkeits-Pfad: Erfolgsbeitrag (freiwillig, transparent, 5 %) bei erfolgreich vermittelten Aufträgen oder Förderungen. In v0.3 ausdrücklich freiwillig — kein technischer Zwang, keine Rechnung von der Plattform.
+* Section 4 („Für wen NICHT?") deutlich umformuliert: nicht jede Vermittlung ist Sales-Spam.
+* Section 23 (Akquise) ergänzt um Kanäle zur Nachfrageseite (lokale Mittelständler:innen, Handwerksbetriebe mit Digitalisierungsbedarf, lokale Förderbanken, IHK Hamburg, Stiftungen).
+* MVP-Roadmap angepasst: Bedarfsseite läuft in Phase 0/1 ebenfalls offline mit (E-Mail + Notion), wird in Phase 2 mit eingebaut. Keine separate Phase.
+* Drei v0.3-Annahmen, die im Schauabend-Zyklus validiert werden müssen (siehe Section 30 „Offene Annahmen v0.3").
 
 ⸻
 
 1. Harte Grundentscheidung
 
 Wir bauen kein weiteres soziales Netzwerk.
+Wir bauen keine Freelancer-Plattform.
+Wir bauen keinen Investoren-Marktplatz.
 
 Wir bauen:
 
-Eine deutschsprachige lokale Arbeitsgemeinschaft für Menschen, die digitale Produkte bauen.
+Eine deutschsprachige lokale Hybrid-Arbeitsgemeinschaft, in der Menschen, die digitale Produkte bauen, sichtbar werden — gegenüber sich gegenseitig, gegenüber lokalen Bedarfsträger:innen und gegenüber lokalen Förder:innen.
 
-Das Produkt soll nicht primär „Networking" verkaufen, sondern Fortschritt.
+Das Produkt soll nicht primär „Networking" verkaufen, sondern Fortschritt und Zusammenkommen.
 
 Der zentrale Satz lautet:
 
-Baue digitale Produkte nicht allein.
+Baue digitale Produkte nicht allein — und finde lokal Menschen, die deine Werke brauchen oder unterstützen wollen.
 
 Oder stärker als Produktversprechen:
 
-Werkzirkel bringt unabhängige digitale Macher:innen in deiner Stadt zusammen – zum Austauschen, Testen, Lernen und Vorankommen.
+Werkzirkel bringt unabhängige digitale Macher:innen in deiner Stadt zusammen — und verbindet sie mit Bedarfsträger:innen und Förder:innen, die in derselben Stadt sitzen und konkrete Probleme oder Mittel mitbringen.
 
-Wichtige Zusatzentscheidung (neu in v0.2):
+Wichtige Zusatzentscheidung aus v0.2 (gilt weiter):
 
-Wir bauen keine Plattform, bevor lokale Treffen funktionieren. Die ersten drei Schauabende in Hamburg laufen mit Eventbrite/Luma und einer öffentlichen Notion-Seite. Erst danach beginnt Plattformentwicklung.
+Wir bauen keine Plattform, bevor lokale Treffen funktionieren. Die ersten drei Schauabende (und mindestens eine Bedarfsschau) in Hamburg laufen mit Eventbrite/Luma und einer öffentlichen Notion-Seite. Erst danach beginnt Plattformentwicklung.
+
+Wichtige Zusatzentscheidung neu in v0.3:
+
+Wir bauen keine Vertragsabwicklung, kein Treuhandkonto, keine Provision und keine algorithmische Match-Engine. Werkzirkel ist eine kuratierte Sichtbarkeitsbühne, kein Marktplatz. Wenn eine Vermittlung passiert, läuft die Verhandlung offline. Die Plattform kennt nur „Bedarf gepostet" und optional „dieser Bedarf wurde erfüllt" — sie hält keine Verträge und kein Geld.
 
 ⸻
 
 2. Namensentscheidung
 
+(unverändert gegenüber v0.2)
+
 Empfohlener Arbeitstitel: Werkzirkel
 
-Warum?
-
-Kriterium	Bewertung
-Deutsch	Ja
-Lokal gedacht	Ja, „Zirkel" passt zu regionalen Gruppen
-Produktiv statt sozial	Ja, „Werk" impliziert Machen
-Nicht zu startupig	Ja
-Nicht zu generisch wie „Community"	Ja
-Erweiterbar	Ja: Hamburger Werkzirkel, Berliner Werkzirkel, Münchner Werkzirkel
-Markenfähig	Vorprüfung nötig
-
-Warum nicht „Werkraum" als Hauptname?
-
-„Werkraum" klingt gut, ist aber als Begriff bereits in mehreren nahen Kontexten belegt: als Community-/Werkstattformat, als Digitalagentur und als städtisches/öffentliches Raumformat. Das macht ihn als Hauptmarke riskanter.
-
-Warum nicht „Macherkreis"?
-
-„Macherkreis" ist inhaltlich sehr nah, aber bereits als Website mit dem Claim „Kreative Projekte aus der Community" sichtbar. Das ist zu nah an unserer Stoßrichtung.
-
-Warum nicht „Macherschaft"?
-
-„MacherSchaft" existiert bereits als offene Werkstatt-/Community-Kontext in Basel. Für ein DACH-Produkt wäre das zu konfliktträchtig oder zumindest erklärungsbedürftig.
-
-Entscheidung für PRD v0.2
-
-Produktname: Werkzirkel
-Untertitel: Gemeinsam digitale Produkte bauen.
-Regionale Namen:
-
-* Werkzirkel Hamburg (Start)
-* Werkzirkel Berlin (Replikation)
-* Werkzirkel München (Replikation)
-* Werkzirkel Wien (später)
-* Werkzirkel Zürich (später)
-
-Begriffe im Produkt:
+Begriffe im Produkt (erweitert in v0.3):
 
 Plattformbegriff	Bedeutung
 Zirkel	regionale Gruppe
 Werk	ein Projekt, Produkt, App, Tool oder digitales Vorhaben
 Prüfrunde	strukturierte Test- und Feedbackrunde
-Schauabend	lokaler Demo-Abend
+Schauabend	lokaler Demo-Abend (Angebotsseite zeigt)
+Bedarfsschau	lokales Format, in dem Bedarfsträger:innen und Förder:innen ihre Probleme/Mittel zeigen (Nachfrageseite zeigt)
 Baurunde	gemeinsames Arbeiten, online oder vor Ort
-Werkpass	Profil einer Person
+Werkpass	Profil einer Person (Macher:innen-Seite)
 Werkstand	Status eines Projekts
-Hilfegesuch	konkrete Bitte um Unterstützung
+Hilfegesuch	konkrete Bitte um Unterstützung (Macher:in → Kreis)
+Bedarf	dokumentiertes Problem, Auftragsidee oder Förderwunsch (Bedarfsträger:in/Förder:in → Kreis)
+Werkangebot	strukturierte Antwort eines Werks auf einen Bedarf
+Förderprofil	Profil einer Förder:in (gesondertes, transparent gemachtes Profil)
+Werkstattbeitrag	einmaliger oder wiederkehrender Beitrag zum Kreis (Bedarfsträger:innen-Pflicht)
+
+Bewusst weiterhin vermieden:
+
+* „Job"
+* „Ausschreibung"
+* „Pitch"
+* „Deal"
+* „Match"
+* „Lead"
+* „Provision"
 
 ⸻
 
 3. Zielgruppe
 
-Primäre Zielgruppe
+3.1 Angebotsseite (Macher:innen)
+
+(unverändert gegenüber v0.2)
 
 Unabhängige digitale Produktmacher:innen im deutschsprachigen Raum.
-
-Das sind Menschen, die alleine oder in kleinen Teams digitale Produkte entwickeln, aber nicht zwingend klassische Startups gründen wollen.
-
-Dazu gehören:
 
 * Indie-Developer
 * App-Entwickler:innen
@@ -119,13 +108,46 @@ Dazu gehören:
 * digitale Handwerker:innen
 * kleine Agenturmenschen mit Nebenprodukten
 
-Sekundäre Zielgruppe
+3.2 Nachfrageseite — Bedarfsträger:innen (neu in v0.3)
 
-* Produktmanager:innen mit Nebenprojekten
-* Studierende mit echten digitalen Projekten
-* Entwickler:innen, die aus Angestelltenrollen heraus eigene Produkte bauen
-* Marketing- und Vertriebsleute, die Indie-Produkte unterstützen wollen
-* lokale Coworking-Spaces, die relevante Community-Formate suchen
+Menschen oder Organisationen in der Region, die ein konkretes digitales Problem haben und es lokal lösen lassen wollen, statt anonym auszuschreiben.
+
+Beispiele:
+
+* Inhaber:innen kleinerer Hamburger Mittelständler (10–80 Beschäftigte) mit Digitalisierungsbedarf
+* Vereins- und Initiativen-Träger:innen mit konkretem Software-Bedarf
+* Stiftungen mit Digitalisierungs-Förderprogrammen
+* lokale Bildungseinrichtungen und Kulturhäuser
+* Handwerksbetriebe mit Buchungs-, Planungs-, Material- oder Schicht-Software-Bedarf
+* Solo-Unternehmer:innen aus nicht-Tech-Branchen (Coaches, Therapeut:innen, Anwält:innen, Architekt:innen) mit konkretem Automations-/SaaS-Bedarf
+* Produktverantwortliche aus mittelgroßen Hamburger Firmen, die für Sonderbedarfe gezielt unabhängige Macher:innen suchen
+
+Was sie verbindet:
+
+* lokal verankert (Hamburg, Pendelumfeld)
+* ehrlicher Bedarf, kein Sales-Funnel
+* bereit, bezahlte Aufträge zu vergeben — Größenordnung typischerweise 500 € bis 30.000 €
+* bereit, sich auf die Werkstatt-Kultur einzulassen (nicht „Ausschreibung mit 12 Anbietern")
+
+3.3 Nachfrageseite — Förder:innen (neu in v0.3)
+
+Personen, Initiativen oder Organisationen, die Geld, Sachmittel, Räume, Beratung oder Zugang zu Vertriebskanälen bereitstellen, um digitale Werke ihrer Stadt zu unterstützen.
+
+Beispiele:
+
+* Business-Angels mit klarem regionalen Bezug
+* Stiftungen (Hamburgische Kulturstiftung, ZEIT-Stiftung, Joachim Herz Stiftung, IFB Hamburg)
+* lokale Wirtschaftsförderung (IFB Innovationsstarter, Hamburg Innovation, Hamburg Kreativ Gesellschaft)
+* Coworking-Spaces, die Patenschaften anbieten (Raum + Sichtbarkeit gegen Beitrag)
+* lokale Tech-Unternehmen, die ein Mentor:innen-/Förder:innen-Budget haben
+* Privatpersonen mit Mäzen:innen-Interesse (z.B. ehemalige Gründer:innen)
+
+Was sie verbindet:
+
+* nicht-anonym (Klarname oder klar erkennbare Organisation, siehe 11A)
+* nicht-equity-getrieben (keine Gegenleistung „Anteile" über die Plattform; Werkzirkel vermittelt das nicht)
+* bereit, transparent zu zeigen, wie groß ihr Förderrahmen ist
+* bereit, einen Beitrag zur Werkstatt-Kultur zu leisten, nicht nur Geld
 
 ⸻
 
@@ -133,16 +155,24 @@ Sekundäre Zielgruppe
 
 Werkzirkel ist nicht für:
 
-* reine Jobvermittlung
-* klassische Freelancer-Projektbörse
-* VC-getriebene Startup-Pitchkultur
+* reine Jobvermittlung (Stellenanzeigen, „suche Senior-Dev für Festanstellung")
+* klassische Freelancer-Projektbörse mit Suchschlitz, Auktion und Sterne-Ranking
+* VC-getriebene Startup-Pitchkultur mit Equity-Forderungen
 * LinkedIn-Selbstdarstellung
-* Agenturen, die nur Leads abgreifen wollen
+* Agenturen, die nur Leads abgreifen wollen (statt sich an die Werkstatt-Regeln zu halten)
 * rein englischsprachige Indie-Hacker
 * Krypto-, Hype- oder Schneeballsystem-Communities
-* Menschen ohne konkretes Projektinteresse
+* Menschen ohne konkretes Projekt-, Problem- oder Förderinteresse
+* Bedarfsträger:innen, die nur eine Ausschreibung mit „12 Angebote bis Donnerstag" abkippen wollen
+* Förder:innen, die anonym oder über Strohleute auftreten
 
-Das ist wichtig. Sonst verwässert das Produkt sofort.
+Neu in v0.3: nicht ausgeschlossen sind …
+
+* Bedarfsträger:innen mit ehrlichem digitalen Bedarf, die bereit sind, einen Werkstattbeitrag zu leisten
+* Förder:innen mit transparenter Identität und transparentem Förderrahmen
+* Stiftungen, Programme und lokale Wirtschaftsförderung
+
+Das ist die größte Verschiebung gegenüber v0.2. Sie wird durch Schutzmechaniken (Abschnitt 11A) aufgefangen.
 
 ⸻
 
@@ -151,35 +181,33 @@ Das ist wichtig. Sonst verwässert das Produkt sofort.
 Hauptproblem
 
 Menschen bauen digitale Produkte im DACH-Raum oft allein, unsichtbar und ohne belastbare Rückkopplung.
+Gleichzeitig finden Bedarfsträger:innen und Förder:innen im DACH-Raum oft keine lokalen, vertrauenswürdigen Macher:innen — sondern landen entweder bei zu großen Agenturen, bei anonymen Freelancer-Plattformen oder bei „Ich kenn da wen aus meinem Kreis", was Glücksspiel ist.
 
 Es fehlt nicht nur Wissen.
-Es fehlt ein lokales, vertrauenswürdiges, deutschsprachiges Umfeld, in dem man unfertige Produkte zeigen, testen lassen und weiterentwickeln kann.
+Es fehlt ein lokales, vertrauenswürdiges, deutschsprachiges Umfeld, in dem man unfertige Produkte zeigen, testen lassen, weiterentwickeln und in echte Aufträge oder Förderungen übersetzen kann — ohne dass die Werkstatt-Kultur zur Akquise-Plattform mutiert.
 
 Teilprobleme
 
-1. Isolation
+1. Isolation (Macher:innen, wie v0.2)
+2. Fehlendes ehrliches Feedback (wie v0.2)
+3. Zu wenig Sichtbarkeit (wie v0.2)
+4. Fehlende Testpersonen (wie v0.2)
+5. Deutschsprachige Lücke (wie v0.2)
+6. Lokale Treffen fehlen (wie v0.2)
 
-Viele Indie-Developer und Freelancer arbeiten allein. Sie haben keine regelmäßigen Sparringspartner und verlieren Momentum.
+Neu in v0.3:
 
-2. Fehlendes ehrliches Feedback
+7. Bedarfsträger:innen finden lokal niemanden mit Vertrauen
 
-Online-Feedback ist oft oberflächlich, anonym oder nicht verbindlich. Lokales Feedback ist wertvoller, weil daraus echte Beziehungen entstehen können.
+Lokale Mittelständler:innen, Vereine und Stiftungen mit echtem Digitalisierungsbedarf haben kaum Zugang zu unabhängigen Macher:innen aus derselben Stadt. Sie landen entweder bei Großagenturen (zu teuer, zu generisch) oder bei anonymen Freelancer-Plattformen (kein Vertrauen, kein lokaler Kontakt). Die Folge: Digitalisierungsprojekte verzögern sich oder werden gar nicht gestartet.
 
-3. Zu wenig Sichtbarkeit
+8. Förder:innen erreichen lokale Macher:innen nicht
 
-Viele gute Projekte bleiben unsichtbar, weil ihre Erbauer:innen weder Vertrieb noch Marketing als Kernkompetenz haben.
+Stiftungen, Wirtschaftsförderungen und Business-Angels in Hamburg haben Mittel, aber keine sauberen Kanäle zu unabhängigen Macher:innen, die nicht im klassischen Startup-Funnel sitzen. Ihre Mittel landen disproportional bei wenigen sichtbaren Gründungen — und nicht bei der breiten Indie-/Solo-Schicht.
 
-4. Fehlende Testpersonen
+9. Macher:innen-Seite wird unsichtbar gegenüber Nachfrage
 
-Apps, SaaS-Produkte und digitale Tools brauchen echte Nutzer:innen. Gerade frühe Versionen brauchen Menschen, die konstruktiv testen.
-
-5. Deutschsprachige Lücke
-
-Viele Indie-Hacker-Communities sind englischsprachig. Das funktioniert für globale Tech-Szenen, aber nicht optimal für Menschen, die im DACH-Markt, mit deutschen Kund:innen, deutschen Rechtsfragen und deutscher Kommunikation arbeiten.
-
-6. Lokale Treffen fehlen
-
-Discord, Slack und Reddit lösen nicht das Bedürfnis nach realer Nähe. Wer sich persönlich trifft, baut schneller Vertrauen auf.
+Selbst wenn Macher:innen unter sich gut vernetzt sind, bleibt die Brücke zur lokalen Wirtschaft und zu Förderkapital fehlen. Reine Macher-Community heißt: gute Werke, schwache Ökonomie. Das macht Werkzirkel langfristig nicht tragfähig — und es lässt Mittel und Bedarf in der Stadt ungenutzt.
 
 ⸻
 
@@ -187,403 +215,183 @@ Discord, Slack und Reddit lösen nicht das Bedürfnis nach realer Nähe. Wer sic
 
 Vision
 
-Werkzirkel wird das deutschsprachige Zuhause für unabhängige digitale Produktmacher:innen im DACH-Raum.
+Werkzirkel wird das deutschsprachige Zuhause für unabhängige digitale Produktmacher:innen im DACH-Raum — und der lokale Knotenpunkt, an dem ihre Werke auf konkrete Bedarfe und Förderwillen aus derselben Stadt treffen.
 
 Nicht als Großplattform.
-Sondern als Netzwerk lokaler Kreise.
+Nicht als Marktplatz.
+Sondern als Netzwerk lokaler Kreise mit gespiegelter Sichtbarkeit: Macher:innen zeigen Werke, Bedarfsträger:innen zeigen Probleme, Förder:innen zeigen Mittel.
 
 Mission
 
-Wir helfen unabhängigen digitalen Macher:innen, ihre Produkte schneller zu verbessern, sichtbarer zu werden und nicht allein zu bauen.
+Wir helfen unabhängigen digitalen Macher:innen, ihre Produkte schneller zu verbessern, sichtbarer zu werden, nicht allein zu bauen — und in ihrer Stadt von Menschen gesehen zu werden, die konkrete Bedarfe oder Mittel mitbringen.
 
 Leitsatz
 
-Erst zeigen. Dann testen. Dann verbessern. Dann sichtbar machen.
+Erst zeigen. Dann testen. Dann verbessern. Dann sichtbar machen — gegenseitig, und gegenüber denen, die brauchen oder unterstützen wollen.
 
 ⸻
 
 7. Kernnutzen
 
-Werkzirkel liefert fünf konkrete Nutzenversprechen:
+Werkzirkel liefert sieben konkrete Nutzenversprechen (fünf aus v0.2, zwei neu in v0.3):
 
-1. Lokale Verbindung
+1. Lokale Verbindung (Macher:innen ↔ Macher:innen, wie v0.2)
+2. Strukturierter Austausch (wie v0.2)
+3. Gegenseitiges Testen (wie v0.2)
+4. Sichtbarkeit für Projekte (wie v0.2)
+5. Reale Treffen (wie v0.2)
 
-Nutzer:innen finden Menschen in ihrer Stadt oder Region, die ebenfalls digitale Produkte bauen.
+Neu in v0.3:
 
-2. Strukturierter Austausch
+6. Lokale Sichtbarkeit gegenüber Bedarfsträger:innen
 
-Nicht nur „mal quatschen", sondern konkrete Formate: Prüfrunden, Schauabende, Baurunden, Hilfegesuche.
+Macher:innen werden in ihrer Stadt von Menschen gesehen, die konkrete digitale Probleme lösen lassen wollen — ohne dass sie sich auf einer Akquise-Plattform bewerben müssen. Bedarfsträger:innen finden umgekehrt Macher:innen mit Werkpass, Test-Bilanz und realer Schauabend-Geschichte — also vertrauenswürdige Profile, keine Bewerbungsmappen.
 
-3. Gegenseitiges Testen
+7. Brücke zu lokalem Förderkapital
 
-Wer Feedback will, gibt auch Feedback. Das schafft Gegenseitigkeit.
-
-4. Sichtbarkeit für Projekte
-
-Jedes Werk bekommt eine einfache Projektseite mit Status, Bedarf und Fortschritt.
-
-5. Reale Treffen
-
-Werkzirkel wird erst richtig wertvoll, wenn aus digitalen Kontakten echte Begegnungen werden.
+Förder:innen — Stiftungen, Angels, Wirtschaftsförderung, Coworking-Pat:innen — werden im Kreis sichtbar mit transparentem Förderrahmen. Macher:innen können sehen, welche Mittel verfügbar sind, ohne Pitches schreiben zu müssen. Die Bedarfsschau ersetzt den Pitchwettbewerb.
 
 ⸻
 
 8. Produktprinzipien
 
-Prinzip 1: Deutsch-only
+(Prinzipien 1–6 aus v0.2 gelten weiter; Prinzip 5 wird leicht erweitert; Prinzip 7 neu in v0.3.)
 
-Die Plattform, die Oberfläche, die Systemtexte, die Community-Regeln, die Eventnamen und die Kommunikation sind auf Deutsch.
+Prinzip 1: Deutsch-only (unverändert)
+Prinzip 2: Lokal vor global (unverändert)
+Prinzip 3: Projekte statt Profile (unverändert)
+Prinzip 4: Verbindlichkeit statt Rauschen (unverändert)
 
-Erlaubte Ausnahmen:
+Prinzip 5: Gegenseitigkeit (verbindlich) — erweitert in v0.3
 
-* Produktnamen
-* technische Begriffe, wenn unvermeidbar
-* Code
-* Markennamen
-* Links zu externen Ressourcen
+Wer Hilfe bekommt, hilft auch anderen. Reziprozität gilt nun auf drei Seiten:
 
-Nicht gewünscht:
+* Macher:innen: Wer eine Prüfrunde startet, hat zuvor zwei Werke getestet (wie v0.2).
+* Bedarfsträger:innen: Wer einen Bedarf posten will, hat zuvor entweder an einem Schauabend teilgenommen ODER einen einmaligen Werkstattbeitrag entrichtet ODER ein anderes konkretes „Geben" erbracht (Mentoring-Stunde, Raum-Spende, Testnutzer-Recruiting). Das verhindert, dass die Plattform zur Drive-by-Ausschreibung wird.
+* Förder:innen: Wer ein Förderprofil führen will, lässt sich von einer Kurator:in verifizieren und stellt sich mindestens einmal pro Quartal in einer Bedarfsschau persönlich vor. Anonyme Mittel-Träger:innen werden nicht aufgenommen.
 
-* „Launch"
-* „Founder"
-* „Demo Day"
-* „Build Night"
-* „Networking"
-* „Pitch"
+Prinzip 6: Treffen vor Tooling (unverändert)
 
-Stattdessen:
+Prinzip 7 (neu in v0.3): Sichtbarkeit, nicht Vermittlung
 
-Englisch vermeiden	Deutscher Begriff
-Launch	Start
-Founder	Gründer:in / Macher:in
-Demo Day	Schauabend
-Build Night	Baurunde
-Feedback Session	Prüfrunde
-Networking	Austausch
-Community	Gemeinschaft / Kreis
-Project	Werk / Vorhaben
-Profile	Werkpass
-
-Prinzip 2: Lokal vor global
-
-Die Plattform ist DACH-weit gedacht, aber der Einstieg erfolgt immer über regionale Kreise. Im MVP gibt es nur einen: Hamburg.
-
-Prinzip 3: Projekte statt Profile
-
-Nicht die Person steht zuerst im Mittelpunkt, sondern:
-
-Was baust du gerade?
-
-Profile sind wichtig, aber Projektseiten sind der Kern.
-
-Prinzip 4: Verbindlichkeit statt Rauschen
-
-Keine endlosen Feeds. Keine Like-Jagd. Keine Follower-Mechanik.
-
-Stattdessen:
-
-* konkrete Hilfegesuche
-* begrenzte Prüfrunden
-* regionale Termine
-* sichtbarer Projektfortschritt
-
-Prinzip 5: Gegenseitigkeit (verbindlich)
-
-Wer Hilfe bekommt, hilft auch anderen. Im MVP gilt: Wer eine Prüfrunde startet, hat zuvor mindestens zwei andere Werke getestet ODER verpflichtet sich, dies innerhalb von 14 Tagen nach Abschluss der eigenen Prüfrunde zu tun. Die Plattform zeigt die Test-Bilanz im Werkpass öffentlich.
-
-Prinzip 6 (neu in v0.2): Treffen vor Tooling
-
-Bevor wir eine Funktion bauen, muss sie in einem realen Schauabend in Hamburg gefehlt haben. Keine Spekulationsfeatures.
+Werkzirkel ist eine Bühne, kein Marktplatz. Die Plattform macht Werke, Bedarfe und Mittel sichtbar; sie organisiert keine Verträge, kein Inkasso, keine Provision, kein Matching. Wer sich findet, regelt das offline. Die Plattform kennt höchstens „Bedarf erfüllt" als optionalen, freiwilligen Status — und auf dieser Basis einen optionalen, freiwilligen Erfolgsbeitrag.
 
 ⸻
 
 9. MVP-Ziel
 
-Ziel des MVP
+Ziel des MVP (Hamburg-First)
 
-Innerhalb der ersten Version soll Werkzirkel beweisen:
+Innerhalb der ersten Version soll Werkzirkel beweisen, dass …
 
-Gibt es in Hamburg genug deutschsprachige digitale Macher:innen, die regelmäßig zu lokalen Treffen kommen, ihre Werke zeigen und ehrlich gegenseitig testen?
+1. … es in Hamburg genug deutschsprachige digitale Macher:innen gibt, die regelmäßig zu lokalen Treffen kommen, ihre Werke zeigen und ehrlich gegenseitig testen (wie v0.2), UND
+2. … es in Hamburg genug lokale Bedarfsträger:innen und Förder:innen gibt, die bereit sind, an einer Bedarfsschau teilzunehmen, einen Werkstattbeitrag zu leisten und in der Werkstatt-Kultur sichtbar zu werden — statt anonym auszuschreiben.
 
 MVP-Erfolgskriterium (Hamburg-First)
 
-Das MVP ist erfolgreich, wenn in Hamburg innerhalb von 12 Wochen:
+Das MVP ist erfolgreich, wenn in Hamburg innerhalb von 16 Wochen (war 12 in v0.2, plus 4 Wochen für Bedarfsschau-Validierung):
 
-* drei Schauabende stattgefunden haben mit jeweils mindestens 8 anwesenden Macher:innen
-* mindestens 15 Werke öffentlich gezeigt wurden
-* mindestens 10 abgeschlossene Prüfrunden mit jeweils mindestens 3 Rückmeldungen entstanden sind
-* mindestens 50 Prozent der Teilnehmer:innen mindestens zu einem zweiten Termin wiedergekommen sind
-* mindestens 5 dokumentierte Fälle existieren, in denen ein Werk durch das Feedback nachweislich verbessert oder neu ausgerichtet wurde
+Aus v0.2 (weiterhin):
 
-Wenn diese Schwelle in Hamburg nicht erreicht wird, starten wir Berlin und München nicht. Das Format wird stattdessen iteriert oder eingestellt.
+* drei Schauabende mit jeweils mindestens 8 anwesenden Macher:innen
+* mindestens 15 Werke öffentlich gezeigt
+* mindestens 10 abgeschlossene Prüfrunden mit jeweils mindestens 3 Rückmeldungen
+* mindestens 50 Prozent der Teilnehmer:innen wiederkehrend
+* mindestens 5 dokumentierte Fälle Werk-Verbesserung durch Feedback
 
-Replikations-Kriterium
+Neu in v0.3 (Bedarfsseite):
 
-Berlin und München starten erst, wenn Hamburg drei Schauabende mit jeweils mindestens 15 Teilnehmer:innen und stabilem Kern erreicht hat.
+* mindestens eine Bedarfsschau mit mindestens 4 Bedarfsträger:innen und/oder Förder:innen, die persönlich anwesend sind
+* mindestens 10 dokumentierte Bedarfe (sauber als Bedarfsobjekt formuliert)
+* mindestens 3 dokumentierte Vermittlungen (Bedarf → Werkangebot → Auftrag offline geschlossen), unabhängig davon, ob Erfolgsbeitrag fließt
+* mindestens 1 Förder:in mit verifiziertem Förderprofil, die mindestens einen Schauabend besucht hat
+
+Wenn diese Schwelle in Hamburg nicht erreicht wird, starten wir Berlin und München nicht. Das Format wird iteriert oder eingestellt.
 
 ⸻
 
 10. MVP-Funktionsumfang
 
-Anmerkung v0.2: Der hier beschriebene Funktionsumfang gilt ab Phase 2 (Plattform). In Phase 0 und Phase 1 nutzen wir Eventbrite/Luma, Notion und E-Mail. Die Plattform-Funktionen unten sind Soll-Zustand nach Plattformbau.
+(Phase 2, also Plattform. Phase 0/1 läuft mit Notion/E-Mail/Eventbrite und einer einseitigen Landingpage.)
 
-Muss-Funktionen (Plattform Phase 2)
+Muss-Funktionen (unverändert gegenüber v0.2 — siehe v0.2-Liste).
 
-1. Startseite
+Zusätzlich Muss-Funktionen für die Nachfrageseite (neu in v0.3):
 
-Die Startseite erklärt in deutscher Sprache:
+10.1 Bedarfseingabe
 
-* Was ist Werkzirkel?
-* Für wen ist es?
-* Wie funktioniert es?
-* Welche Städte gibt es?
-* Wie kann man mitmachen?
-
-Primärer Aufruf:
-
-Tritt deinem Werkzirkel bei
-
-Sekundärer Aufruf:
-
-Zeig dein Werk
-
-⸻
-
-2. Registrierung
-
-Nutzer:innen können sich registrieren mit:
-
-* Name
-* E-Mail
-* Stadt/Region
-* Rolle
-* Interessen
-* aktuelles Werk, optional
-* Bereitschaft zu Treffen vor Ort
-* Bereitschaft, andere Werke zu testen
-
-Rollenbeispiele:
-
-* Entwickler:in
-* Designer:in
-* Produktmacher:in
-* Freelancer
-* Gründer:in
-* KI-Automatisierer:in
-* Marketing/Vertrieb
-* Noch offen
-
-⸻
-
-3. Werkpass
-
-Der Werkpass ist das persönliche Profil.
+Bedarfsträger:innen können einen Bedarf anlegen.
 
 Pflichtfelder:
-
-* Name
-* Stadt/Region
-* Kurzbeschreibung
-* Fähigkeiten
-* Interessen
-* Kontaktoption intern
-
-Sichtbare Test-Bilanz (neu in v0.2):
-
-* Anzahl gegebener Prüfrunden-Feedbacks
-* Anzahl gestarteter Prüfrunden
-* Verhältnis als Sichtbarkeitssignal („Test-Saldo")
-
-Optionale Felder:
-
-* Website
-* GitHub
-* LinkedIn
-* Mastodon
-* eigene Produkte
-* bevorzugte Treffen: online, vor Ort, beides
-
-⸻
-
-4. Werkseite
-
-Jedes digitale Projekt bekommt eine Werkseite.
-
-Pflichtfelder:
-
-* Name des Werks
-* Kurzbeschreibung
-* Problem, das gelöst wird
-* Zielgruppe
-* aktueller Stand
-* Link, falls vorhanden
-* Screenshot, optional
-* gesuchte Hilfe
-
-Werkstand:
-
-* Idee
-* Prototyp
-* Testversion
-* Öffentlich
-* Wachsend
-* Pausiert
-
-Gesuchte Hilfe:
-
-* Nutzerfeedback
-* UX-Test
-* technisches Feedback
-* Marketing
-* Positionierung
-* erste Kund:innen
-* Mitstreiter:innen
-* Rechtliches/Steuern, nur als Austausch, keine Beratung
-
-⸻
-
-5. Regionale Zirkel
-
-Jede Stadt/Region bekommt eine eigene Seite.
-
-Im MVP existiert nur: Werkzirkel Hamburg.
-
-Inhalte:
-
-* Beschreibung des lokalen Kreises
-* Mitglieder aus der Region
-* Werke aus der Region
-* kommende Termine
-* offene Prüfrunden
-* lokale Ansprechpartner:innen
-
-MVP-Stadt:
-
-* Hamburg
-
-Replikations-Städte (nach Hamburg-Validierung):
-
-* Berlin
-* München
-
-Spätere Städte:
-
-* Köln/Düsseldorf/Rhein-Ruhr
-* Frankfurt/Rhein-Main
-* Stuttgart
-* Wien
-* Zürich
-* Leipzig
-* Hannover
-* Nürnberg/Erlangen
-
-⸻
-
-6. Prüfrunden
-
-Die Prüfrunde ist das wichtigste MVP-Feature.
-
-Ein:e Nutzer:in kann für ein Werk eine Prüfrunde starten:
-
-Pflichtangaben:
-
-* Was soll getestet werden?
-* Wer ist die Zielgruppe?
-* Was ist der Link?
-* Wie viel Zeit braucht der Test?
-* Welche Art Feedback wird gesucht?
-* Bis wann soll getestet werden?
-* Wie viele Tester:innen werden gesucht?
-
-Feedbackkategorien:
-
-* erster Eindruck
-* Verständlichkeit
-* Nutzen
-* Bedienbarkeit
-* Fehler/Bugs
-* Positionierung
-* Zahlungsbereitschaft
-* Verbesserungsvorschläge
-
-Reziprozitäts-Regel (Muss-Feature im MVP, vorher „Später"):
-
-Wer eine Prüfrunde startet, muss zuvor zwei Werke getestet haben oder verpflichtet sich, dies innerhalb von 14 Tagen nach Ende der eigenen Prüfrunde zu tun. Wird die Verpflichtung nicht eingelöst, kann keine neue Prüfrunde gestartet werden. Die Plattform setzt das technisch durch.
-
-Das ist der Kernmechanismus gegen Konsumhaltung — er gehört in die erste lauffähige Plattformversion, nicht in eine Erweiterung.
-
-⸻
-
-7. Termine
-
-Termine sind lokal oder online.
-
-MVP-Terminarten:
-
-Terminart	Zweck
-Prüfabend	3–5 Werke werden gemeinsam getestet
-Schauabend	Mitglieder zeigen, was sie bauen
-Baurunde	gemeinsames Arbeiten, ohne großes Programm
-Werkgespräch	ein Thema, ein Impuls, offene Diskussion
-Kennenlernrunde	neue Mitglieder treffen sich
-
-Jeder Termin hat:
 
 * Titel
-* Stadt
-* Ort oder Online-Link
-* Datum
-* Uhrzeit
-* Beschreibung
-* maximale Teilnehmerzahl
-* Anmeldung
+* Was ist das Problem?
+* Welchen Nutzen bringt die Lösung?
+* Wer ist der/die Bedarfsträger:in (Klarname und Organisation)?
+* In welcher Stadt / welchem Pendelumfeld?
+* Welche Größenordnung (Zeit, Aufwand, Geldrahmen — Geldrahmen ist optional, aber als Filter empfohlen)?
+* Bis wann soll der Bedarf vergeben sein?
+* Welche Werkstatt-Beitragsleistung wird geleistet? (Pflichtfeld, nicht überspringbar — siehe Reziprozität)
+
+Geld-Rahmen ist optional, aber wird als Filter angezeigt, wenn gesetzt.
+
+10.2 Werkangebot
+
+Macher:innen können auf einen Bedarf antworten — aber nicht mit „bewerbe mich". Stattdessen mit einem strukturierten Werkangebot:
+
+* Verweis auf bestehendes Werk im Werkpass (Pflicht — kein leeres Bewerberprofil)
+* Was würde ich konkret tun?
+* Was würde ich ausdrücklich nicht tun?
+* Wie würde ich anfangen (erste sichtbare Lieferung in 1–2 Wochen)?
+* Optional: Verweis auf vergangene Schauabende oder Prüfrunden
+
+Werkangebote sind initial nur für Bedarfsträger:in und Werk-Inhaber:in sichtbar, nicht öffentlich. Damit kein Schaulaufen entsteht.
+
+10.3 Förderprofil
+
+Förder:innen können ein Förderprofil anlegen — sichtbar als gesonderte Profilart neben Werkpass.
+
+Pflichtfelder:
+
+* Klarname / Organisationsname
+* Art der Förderung (Geld, Raum, Mentoring, Sachmittel, Vertriebszugang, Mischung)
+* Förderrahmen pro Jahr in Größenordnungen (z.B. „bis 5.000 € pro Werk", „bis 50.000 € jährlich verteilt")
+* Welche Werke werden bevorzugt? (Thematisch, Stadt, Reifegrad)
+* Gegenleistung (z.B. „keine", „Sichtbarkeit", „Berichterstattung", „Equity — über Werkzirkel nicht vermittelt")
+* Verifikationsstatus durch Kurator:in (Pflicht-Workflow)
+
+Förderprofile ohne Verifikation sind nicht öffentlich.
+
+10.4 Bedarfsseiten und Filter
+
+Die Hamburg-Zirkelseite zeigt zusätzlich:
+
+* offene Bedarfe (mit optionalem Geldrahmen-Filter)
+* aktive Förderprofile
+
+Es gibt keinen Suchschlitz und kein algorithmisches Match. Sortiert wird zuerst nach Frist (Bedarfe) und Aktualität (Förderprofile). Macher:innen scrollen, Bedarfsträger:innen sehen Werkangebote sortiert nach Vollständigkeit, nicht nach Bewerber-Zahl.
+
+10.5 Status „Bedarf erfüllt" und freiwilliger Erfolgsbeitrag
+
+Wenn ein Bedarf erfüllt wurde, kann die Bedarfsträger:in den Status öffentlich auf „erfüllt" setzen und optional angeben:
+
+* welches Werk den Bedarf erfüllt hat
+* freiwillige Selbstauskunft zur Größenordnung (Bandbreite, nicht Cent-genau)
+* freiwilliger Erfolgsbeitrag (5 % empfohlen, einstellbar) als Spende an den Hamburger Werkzirkel
+
+Plattform stellt keine Rechnung, hält kein Treuhandkonto, überweist nichts an Macher:innen. Erfolgsbeitrag ist eine Spende an die Werkstatt-Kasse (siehe Geschäftsmodell, Section 20).
 
 ⸻
 
-8. Einfache Benachrichtigungen
-
-MVP reicht mit E-Mail.
-
-Benachrichtigungen bei:
-
-* neuer Prüfrunde in meiner Stadt
-* Feedback zu meinem Werk
-* neuer Termin in meiner Stadt
-* Anmeldung zu meinem Termin
-* Erinnerung vor Termin
-* Erinnerung an offene Reziprozitäts-Schuld
-
-Keine Push-Notifications im MVP.
-
-⸻
-
-9. Moderation und Regeln
-
-Es braucht von Anfang an klare Regeln.
-
-Kurzfassung:
-
-* Deutsch schreiben
-* ehrlich, aber respektvoll feedbacken
-* keine Akquise-Spamerei
-* keine verdeckten Sales-Pitches
-* keine Diskriminierung
-* keine politischen Grabenkämpfe
-* keine Krypto-/MLM-/Schnell-reich-Angebote
-* keine Veröffentlichung fremder unfertiger Projekte ohne Zustimmung
-
-⸻
-
-11. Nicht im MVP
+11. Nicht im MVP (überarbeitet gegenüber v0.2)
 
 Bewusst nicht enthalten:
 
-* Chat
-* Gruppenchat
-* Direktnachrichten mit komplexem Postfach
-* Zahlungsfunktion
-* Jobbörse
-* Freelancer-Marktplatz
+* Chat / Direktnachrichten mit komplexem Postfach
+* Zahlungsfunktion auf der Plattform
+* Vertragsabwicklung, Treuhandkonto, Inkasso
+* Provision auf Vermittlungen (auch nicht als „freiwillig minimal" — siehe Erfolgsbeitrag, das ist Spende, nicht Provision)
+* algorithmisches Matching von Bedarf zu Werk
 * Bewertungen mit Sternen
 * öffentlicher Algorithmus-Feed
 * mobile App
@@ -595,293 +403,310 @@ Bewusst nicht enthalten:
 
 Begründung:
 
-Das MVP muss lokale Aktivität und gegenseitiges Testen in einer Stadt beweisen, nicht eine vollwertige Plattform simulieren.
+Das MVP muss lokale Aktivität, gegenseitiges Testen und mindestens eine funktionierende Bedarfsschau in einer Stadt beweisen, nicht eine vollwertige Marktplatz-Plattform simulieren.
+
+Wichtig zur Klarstellung gegenüber v0.2:
+
+Es gibt im MVP weiterhin keine Jobbörse und keinen Freelancer-Marktplatz. Was es gibt, ist eine Bedarfsseite, die strukturell wie eine Werkseite funktioniert (Sichtbarkeit + Kuratierung + Reziprozität), und die offline endet, sobald zwei Parteien sich gefunden haben.
+
+⸻
+
+11A. Bedarfsseite — Schutzmechaniken (neu in v0.3, kritischer Abschnitt)
+
+Sobald Bedarfsträger:innen und Förder:innen Teil des Kreises werden, drohen fünf konkrete Kulturverluste. Für jeden gibt es einen technischen oder kulturellen Schutz.
+
+Kulturverlust 1: Drive-by-Ausschreibung
+
+Risiko: Bedarfsträger:innen kippen Briefs ab wie auf Freelancer.com, sammeln 12 Angebote, vergeben nichts, gehen wieder.
+
+Schutz: Werkstattbeitrag-Pflicht. Wer einen Bedarf posten will, muss vorher entweder
+
+a) an mindestens einem Schauabend teilgenommen haben (persönlich, in Hamburg), ODER
+b) einen einmaligen Werkstattbeitrag von 50–150 € entrichtet haben (transparente Skala, einkommensabhängige Selbsteinschätzung), ODER
+c) einen konkreten Nicht-Geld-Beitrag dokumentiert haben (Raum-Spende, Testnutzer-Recruiting, Mentor:innen-Stunde).
+
+Kurator:in kann Härtefälle freischalten (Vereine, Initiativen ohne Mittel).
+
+Kulturverlust 2: Cold-Sales von Macher:innen an Bedarfsträger:innen
+
+Risiko: Macher:innen schreiben Bedarfsträger:innen direkt mit „Hi, ich bin günstig" an.
+
+Schutz: Es gibt keine Direktnachrichten an Bedarfsträger:innen. Kontakt entsteht ausschließlich über das strukturierte Werkangebot oder bei einer Bedarfsschau persönlich. Kalter Outreach ist eine Verstoßmeldung, Kurator:in kann sperren.
+
+Kulturverlust 3: Pitchwettbewerb / Schaulaufen
+
+Risiko: Bedarfsträger:in postet einen Bedarf, 14 Werkangebote treffen ein, alle Macher:innen leben in Pitch-Schreib-Marathon.
+
+Schutz: Werkangebote sind nicht öffentlich, sondern nur für Bedarfsträger:in und einreichende Werk-Inhaber:in sichtbar. Bedarfsträger:in sieht eine Liste aller Werkangebote, aber niemand kann Bewerber-Zahl, Konkurrenz oder Preise vergleichen. Bedarfsträger:in sollte (kulturelle Norm, nicht technisch erzwungen) maximal drei Werkangebote ernsthaft bearbeiten, nicht „alle einsammeln".
+
+Kulturverlust 4: Anonymes / undurchsichtiges Förderkapital
+
+Risiko: Förder:innen treten anonym auf, Werkzirkel wird Marketing-Bühne für unklare Mittel, im schlimmsten Fall Geldwäsche-relevant.
+
+Schutz: Förderprofile sind ohne Kurator:innen-Verifikation nicht öffentlich. Verifikation prüft:
+
+* Klarname und Organisation (Handelsregister, Vereinsregister, Stiftungsregister oder Klarname-Personalausweis bei Privatpersonen)
+* Quelle der Mittel auf Plausibilität (keine forensische Prüfung, aber: keine Strohleute, keine offensichtlich problematischen Branchen)
+* persönliche Vorstellung in einer Bedarfsschau mindestens einmal pro Quartal — sonst pausiert das Profil automatisch
+
+Kulturverlust 5: Equity- und Vertragsgeflecht über die Plattform
+
+Risiko: Förder:innen bieten Beteiligungen, Werkzirkel wird Vermittler:in von Equity-Deals, ungewollte Rechtspflichten.
+
+Schutz: Die Plattform vermittelt keine Verträge. Förderprofile dürfen „Equity" als Gegenleistungsart angeben — aber Werkzirkel zeigt explizit den Hinweistext: „Werkzirkel vermittelt keine Beteiligungen. Verhandlungen zwischen Förder:in und Werk-Inhaber:in laufen ausschließlich offline und sind nicht Gegenstand dieser Plattform." Es gibt kein DocuSign, keine Beteiligungsverträge, keine Cap-Tables in der Plattform.
 
 ⸻
 
 12. Hauptnutzerreisen
 
-Nutzerreise 1: Neue Person tritt bei
+(Nutzerreisen 1–3 aus v0.2 gelten weiter. Drei neue Reisen in v0.3.)
 
-1. Person kommt auf Startseite.
-2. Sie versteht: Werkzirkel ist für digitale Produktmacher:innen in Hamburg.
-3. Sie registriert sich.
-4. Sie erstellt einen Werkpass.
-5. Sie gibt an, ob sie ein eigenes Werk hat.
-6. Sie sieht Werke und Termine aus Hamburg.
-7. Sie meldet sich zu einer Prüfrunde oder einem Schauabend an.
+Nutzerreise 4: Bedarfsträger:in postet einen Bedarf (neu)
 
-Erfolg:
-
-Die Person findet innerhalb von zehn Minuten mindestens einen relevanten Kontakt, ein Werk oder einen Termin.
-
-⸻
-
-Nutzerreise 2: Person sucht Tester:innen
-
-1. Person legt ein Werk an.
-2. Person hat ihre Reziprozitäts-Pflicht erfüllt (zwei Tests gegeben) — sonst sieht sie statt „Prüfrunde starten" zuerst „Diese zwei Werke suchen Tester:innen".
-3. Sie startet eine Prüfrunde.
-4. Sie beschreibt, was getestet werden soll.
-5. Andere Mitglieder melden sich als Tester:innen.
-6. Tester:innen geben strukturiertes Feedback.
-7. Die Person bedankt sich und markiert Feedback als hilfreich.
+1. Person kommt auf Hamburg-Zirkelseite.
+2. Sie versteht: Werkzirkel ist eine Werkstatt, kein Marktplatz.
+3. Sie registriert sich als Bedarfsträger:in.
+4. Sie wählt einen Werkstattbeitrag-Pfad (Schauabend-Teilnahme, Beitrag, Sachleistung).
+5. Sie legt einen Bedarf an (siehe 10.1).
+6. Sie wartet auf strukturierte Werkangebote (max. 5–7 typisch, weil kein Pitchwettbewerb).
+7. Sie kontaktiert 1–3 Werke offline für Gespräche.
+8. Sie schließt offline einen Auftrag — und markiert den Bedarf optional als „erfüllt", mit optionalem Erfolgsbeitrag.
 
 Erfolg:
 
-Ein Werk erhält innerhalb von sieben Tagen mindestens drei brauchbare Rückmeldungen.
+Die Person vergibt innerhalb von 6 Wochen einen Auftrag an ein lokales Werk und beschreibt im Nachhinein, dass sie ohne Werkzirkel nicht zu diesem Macher:innen-Team gekommen wäre.
 
-⸻
+Nutzerreise 5: Förder:in stellt sich vor (neu)
 
-Nutzerreise 3: Lokaler Schauabend
-
-1. Kurator:in erstellt Termin „Schauabend Hamburg".
-2. Mitglieder reichen Werke ein.
-3. Drei bis fünf Werke werden ausgewählt.
-4. Teilnehmer:innen melden sich an.
-5. Beim Treffen werden Werke gezeigt und getestet.
-6. Nach dem Treffen werden Feedback und nächste Schritte dokumentiert.
+1. Person/Organisation kommt auf Hamburg-Zirkelseite über Stiftungs-/IFB-Kanal.
+2. Sie registriert sich als Förder:in.
+3. Sie legt ein Förderprofil an (siehe 10.3) — initial nicht öffentlich.
+4. Sie wird von Kurator:in verifiziert (Klarname, Mittelplausibilität).
+5. Sie nimmt an einer Bedarfsschau teil und stellt ihre Mittel vor.
+6. Profil wird öffentlich.
+7. Macher:innen können sehen, wofür Mittel verfügbar sind, ohne Pitches schreiben zu müssen.
+8. Förder:in sucht aktiv Werke aus, lädt Macher:innen zu Gesprächen ein — offline.
 
 Erfolg:
 
-Aus einem Treffen entstehen konkrete Verbesserungen, neue Kontakte oder weitere Prüfrunden.
+Ein Förderprofil führt innerhalb von 6 Monaten zu mindestens einer dokumentierten Förderung (Geld, Raum oder Mentoring) eines Hamburger Werks.
+
+Nutzerreise 6: Lokale Bedarfsschau (neu)
+
+1. Kurator:in kündigt Bedarfsschau Hamburg an (Pendant zum Schauabend, andere Stoßrichtung).
+2. 3–5 Bedarfsträger:innen und/oder Förder:innen reichen Beiträge ein (Bedarf oder Mittel).
+3. Kurator:in kuratiert die Schau.
+4. Macher:innen melden sich an (Teilnahme reziprozitätsfrei, weil sie hier zuhören).
+5. Beim Treffen werden Bedarfe und Mittel persönlich vorgestellt, 7–10 Minuten je Beitrag, anschließend offene Werkrunde mit Macher:innen.
+6. Nach dem Treffen werden Bedarfe und Förderprofile auf der Plattform freigeschaltet (sofern Werkstattbeitrag/Verifikation erledigt).
+
+Erfolg:
+
+Aus einer Bedarfsschau entstehen 2–4 konkrete Gespräche, die offline weiterlaufen.
 
 ⸻
 
 13. Funktionale Anforderungen
 
-Registrierung und Mitgliedschaft
+Aus v0.2 (Registrierung, Werke, Prüfrunden, Regionale Zirkel, Termine, Moderation): unverändert.
+
+Neu in v0.3:
+
+Bedarfe
 
 ID	Anforderung	Priorität
-F-001	Nutzer:innen können sich mit E-Mail registrieren.	Muss
-F-002	Nutzer:innen wählen eine primäre Stadt/Region.	Muss
-F-003	Nutzer:innen können ihren Werkpass erstellen und bearbeiten.	Muss
-F-004	Nutzer:innen können angeben, ob sie vor Ort, online oder beides teilnehmen wollen.	Muss
-F-005	Nutzer:innen können ihr Konto deaktivieren.	Muss
+F-601	Bedarfsträger:innen können einen Bedarf anlegen.	Muss
+F-602	Bedarf hat Klarname, Organisation, Titel, Problem, Nutzen, Stadt, Größenordnung, Frist, Werkstattbeitrag-Nachweis.	Muss
+F-603	Bedarf kann nicht ohne Werkstattbeitrag-Nachweis öffentlich gehen.	Muss
+F-604	Geld-Rahmen ist optional, aber wird als Filter angeboten, wenn gesetzt.	Sollte
+F-605	Bedarf kann durch Kurator:in moderiert / abgelehnt werden.	Muss
+F-606	Bedarf kann auf „erfüllt" gesetzt werden, mit optionalem Verweis auf das erfüllende Werk.	Sollte
+F-607	Bedarf zeigt empfohlenen Erfolgsbeitrag (5 % von Selbstauskunft), niemals als Rechnung, immer als Spende-Hinweis.	Sollte
 
-⸻
-
-Werke
-
-ID	Anforderung	Priorität
-F-101	Nutzer:innen können ein Werk anlegen.	Muss
-F-102	Ein Werk hat Name, Beschreibung, Stand, Zielgruppe und Hilfebedarf.	Muss
-F-103	Werke können nach Stand und Hilfebedarf gefiltert werden. Stadtfilter ergibt sich aus der Stadt der Werkinhaber:in.	Muss
-F-104	Werke können als „pausiert" markiert werden.	Sollte
-F-105	Werke können Screenshots enthalten.	Sollte
-F-106	Werke können privat oder öffentlich sichtbar sein.	Später
-
-⸻
-
-Prüfrunden
+Werkangebote
 
 ID	Anforderung	Priorität
-F-201	Nutzer:innen können für ein Werk eine Prüfrunde starten.	Muss
-F-202	Prüfrunden enthalten Ziel, Testaufgabe, Zeitbedarf und Frist.	Muss
-F-203	Andere Nutzer:innen können sich als Tester:innen melden.	Muss
-F-204	Tester:innen können strukturiertes Feedback abgeben.	Muss
-F-205	Feedback ist zunächst nur für Werkinhaber:in sichtbar.	Muss
-F-206	Werkinhaber:in kann Feedback als hilfreich markieren.	Sollte
-F-207	Wer eine Prüfrunde starten will, sieht den eigenen Test-Saldo und ggf. einen Block, bis zwei Tests gegeben oder zugesagt sind.	Muss
-F-208	Reziprozität wird technisch durchgesetzt: keine neue Prüfrunde bei offener Schuld älter als 14 Tage.	Muss
-F-209	Werkpass zeigt sichtbar gegebene und erhaltene Prüfrunden-Tests („Test-Saldo").	Muss
+F-621	Macher:innen können auf einen Bedarf ein Werkangebot abgeben, das auf ein bestehendes Werk im Werkpass verweist.	Muss
+F-622	Werkangebot hat Pflichtfelder: konkretes Vorgehen, ausdrücklicher Ausschluss, erster sichtbarer Liefer-Meilenstein.	Muss
+F-623	Werkangebote sind nur für Bedarfsträger:in und Werk-Inhaber:in sichtbar, nicht öffentlich, nicht zählbar von außen.	Muss
+F-624	Pro Bedarf kann eine Macher:in maximal ein Werkangebot pro Werk geben (kein Mehrfach-Spam).	Sollte
+F-625	Bedarfsträger:in kann ein Werkangebot als „in Gesprächen" markieren, ohne öffentlich zu zeigen, welche.	Sollte
 
-⸻
-
-Regionale Zirkel
+Förderprofile
 
 ID	Anforderung	Priorität
-F-301	Hamburg hat eine Zirkel-Seite.	Muss
-F-302	Zirkel-Seite zeigt Mitglieder, Werke, Termine und Prüfrunden der Region.	Muss
-F-303	Nutzer:innen können später weiteren Städten folgen.	Später
-F-304	Kurator:innen können lokale Inhalte hervorheben.	Sollte
+F-701	Förder:innen können ein Förderprofil anlegen.	Muss
+F-702	Förderprofil hat Klarname, Förderart, Förderrahmen, bevorzugte Werke, Gegenleistung.	Muss
+F-703	Förderprofil ist nicht öffentlich ohne Kurator:innen-Verifikation.	Muss
+F-704	Verifikation prüft Klarname/Organisation und Plausibilität der Mittelquelle.	Muss
+F-705	Förderprofil pausiert automatisch, wenn die Förder:in vier Quartale lang an keiner Bedarfsschau persönlich teilgenommen hat.	Sollte
+F-706	Förderprofil zeigt explizit den Equity-Hinweistext (siehe 11A, Kulturverlust 5).	Muss
 
-⸻
-
-Termine
-
-ID	Anforderung	Priorität
-F-401	Kurator:innen/Admins können Termine erstellen.	Muss
-F-402	Nutzer:innen können sich zu Terminen anmelden.	Muss
-F-403	Termine können lokal oder online sein.	Muss
-F-404	Termine haben maximale Teilnehmerzahl.	Sollte
-F-405	Angemeldete Nutzer:innen erhalten E-Mail-Erinnerung.	Sollte
-
-⸻
-
-Moderation
+Schutzmechaniken (technisch durchgesetzt)
 
 ID	Anforderung	Priorität
-F-501	Admins können Nutzer:innen sperren.	Muss
-F-502	Admins können Werke ausblenden.	Muss
-F-503	Nutzer:innen können Inhalte melden.	Sollte
-F-504	Kurator:innen können regionale Inhalte moderieren.	Sollte
+F-801	Direktnachrichten an Bedarfsträger:innen sind technisch ausgeschlossen.	Muss
+F-802	Direktnachrichten an Förder:innen sind technisch ausgeschlossen.	Muss
+F-803	Kalter Outreach (Macher:in → Bedarfsträger:in/Förder:in über Werkpass-Kontaktoption) ist gemeldet-bar.	Muss
+F-804	Werkangebote werden nicht öffentlich gelistet oder gezählt.	Muss
+F-805	Plattform zeigt nirgends einen Suchschlitz, der „Macher:innen suchen" als Aktion erlaubt — Bedarfsträger:innen sehen Werke ausschließlich kuratiert oder über die Bedarfsseite.	Sollte
 
 ⸻
 
 14. Nicht-funktionale Anforderungen
 
-Sprache
+(NF-001 bis NF-204 aus v0.2 gelten weiter.)
+
+Neu in v0.3:
+
+Sprache und Tonalität
 
 ID	Anforderung	Priorität
-NF-001	Alle UI-Texte sind auf Deutsch.	Muss
-NF-002	System-E-Mails sind auf Deutsch.	Muss
-NF-003	Community-Regeln sind auf Deutsch.	Muss
-NF-004	Eventformate haben deutsche Namen.	Muss
+NF-005	Bedarfe und Förderprofile dürfen keinen Sales-Sprech enthalten (Stichproben durch Kurator:in).	Sollte
 
-Datenschutz
+Vertrauen und Verifikation
 
 ID	Anforderung	Priorität
-NF-101	DSGVO-konforme Datenschutzerklärung.	Muss
-NF-102	Impressum für DACH-Betrieb, initial Deutschland.	Muss
-NF-103	Nutzer:innen können Datenlöschung anfragen.	Muss
-NF-104	E-Mail-Einwilligungen sind getrennt erfassbar.	Muss
-
-Bedienbarkeit
-
-ID	Anforderung	Priorität
-NF-201	Mobile Nutzung muss gut funktionieren.	Muss
-NF-202	Werk anlegen dauert maximal fünf Minuten.	Muss
-NF-203	Prüfrunde anlegen dauert maximal fünf Minuten.	Muss
-NF-204	Startseite erklärt Produkt innerhalb von 30 Sekunden.	Muss
+NF-301	Förderprofile sind nur nach Verifikation öffentlich. Verifikations-Workflow ist dokumentiert und für Kurator:innen abrufbar.	Muss
+NF-302	Werkstattbeitrag-Pfade sind in der Bedarfsanlage dokumentiert und nicht überspringbar.	Muss
+NF-303	Plattform zeigt explizit, dass keine Verträge, Beteiligungen oder Zahlungen vermittelt werden.	Muss
 
 ⸻
 
 15. Informationsarchitektur
 
-Hauptnavigation
+Hauptnavigation (erweitert)
 
 * Start
 * Zirkel
 * Werke
+* Bedarfe (neu in v0.3)
+* Förder:innen (neu in v0.3)
 * Prüfrunden
 * Termine
 * Mitmachen
 
-Eingeloggt
+Eingeloggt (erweitert)
 
 * Übersicht
-* Mein Werkpass
-* Meine Werke
+* Mein Werkpass / Meine Bedarfe / Mein Förderprofil (rollenabhängig)
+* Meine Werke (Macher:innen) / Meine Bedarfe (Bedarfsträger:innen)
 * Meine Prüfrunden (mit Test-Saldo)
+* Meine Werkangebote (Macher:innen) / Meine erhaltenen Werkangebote (Bedarfsträger:innen)
 * Meine Termine
 * Einstellungen
 
-Admin/Kuration
+Admin/Kuration (erweitert)
 
-* Mitglieder
+* Mitglieder (Macher:innen)
+* Bedarfsträger:innen
+* Förder:innen (mit Verifikations-Workflow)
 * Werke
+* Bedarfe
 * Prüfrunden
 * Termine
+* Bedarfsschauen
 * Meldungen
 * Städte/Zirkel
 
 ⸻
 
-16. Datenmodell v0.2
+16. Datenmodell v0.3
 
-Anmerkung: Stadt wird nur auf Nutzer:in geführt. Werk, Prüfrunde und Termin erben die Stadt aus der Werkinhaber:in bzw. dem Anlegenden. Das vermeidet Drift und vereinfacht Filter.
+(Aus v0.2: Nutzer:in, Werk, Prüfrunde, Feedback, Termin, Anmeldung — bleiben bestehen mit kleinen Anpassungen.)
 
-Nutzer:in
+Nutzer:in (erweitert)
 
-* id
-* name
-* email
-* stadt
-* region
-* rolle
-* kurzbeschreibung
-* fähigkeiten
-* interessen
-* teilnahmeart
-* test_saldo_gegeben
-* test_saldo_erhalten
-* offene_reziprozitaets_schuld_bis (Datum oder null)
-* erstellt_am
-* status
+* alle Felder aus v0.2
+* rolle: {macher, bedarfstraeger, foerderer, mehrere möglich}
+* werkstattbeitrag_status (Datum, Art, Nachweis — nur für Bedarfstraeger:innen)
+* foerder_verifikation_status (offen/verifiziert/pausiert — nur für Förder:innen)
+* letzte_bedarfsschau_teilnahme (Datum, für Förder:innen-Reziprozität)
 
-Werk
+Bedarf (neu)
 
 * id
-* nutzer_id (Stadt ergibt sich daraus)
-* name
-* beschreibung
+* bedarfstraeger_id
+* organisation
+* titel
 * problem
-* zielgruppe
-* werkstand
-* hilfebedarf
-* link
-* screenshot_url
+* nutzen
+* stadt (erbt von Bedarfstraeger:in)
+* groessenordnung_zeit
+* groessenordnung_aufwand
+* geldrahmen_min (optional)
+* geldrahmen_max (optional)
+* frist
+* werkstattbeitrag_nachweis_id
+* status: {entwurf, oeffentlich, in_gespraechen, erfuellt, eingestellt}
+* erfuellt_von_werk_id (optional)
+* selbstauskunft_groesse (optional)
+* erfolgsbeitrag_indikator (optional)
 * erstellt_am
 * aktualisiert_am
-* status
 
-Prüfrunde
+Werkangebot (neu)
 
 * id
+* bedarf_id
 * werk_id
-* titel
-* testziel
-* testaufgabe
-* zielgruppe
-* zeitbedarf
-* gesuchte_tester
-* frist
-* status
+* macher_id
+* konkretes_vorgehen
+* ausdruecklicher_ausschluss
+* erster_liefer_meilenstein
+* status: {eingereicht, in_gespraechen, beauftragt, nicht_gewaehlt, zurueckgezogen}
 * erstellt_am
 
-Feedback
+Förderprofil (neu)
 
 * id
-* pruefrunde_id
-* tester_id
-* erster_eindruck
-* verstaendlichkeit
-* nutzen
-* bedienbarkeit
-* fehler
-* verbesserung
-* zahlungsbereitschaft
-* sonstiges
-* hilfreich_markiert
+* foerderer_id
+* organisation
+* foerderart: {geld, raum, mentoring, sachmittel, vertrieb, mischung}
+* foerderrahmen_jahr
+* foerderrahmen_einzel_max
+* bevorzugte_werke
+* gegenleistung_text
+* gegenleistung_typ: {keine, sichtbarkeit, berichterstattung, equity_offline, mischung}
+* verifikation_status: {offen, verifiziert, pausiert}
+* verifizierer_id (Kurator:in)
+* verifiziert_am
 * erstellt_am
 
-Termin
+Werkstattbeitrag (neu)
 
 * id
-* stadt
-* typ
-* titel
-* beschreibung
-* ort
-* online_link
-* datum
-* uhrzeit
-* max_teilnehmer
-* erstellt_von
-* status
-
-Anmeldung
-
-* id
-* termin_id
-* nutzer_id
-* status
+* bedarfstraeger_id
+* art: {schauabend_teilnahme, geldbeitrag, sachleistung, mentoring, raum, sonstiges}
+* nachweis_text
+* nachweis_dokument_url (optional)
+* hoehe_euro (optional, bei art=geldbeitrag)
+* erfasst_durch_kurator_id
 * erstellt_am
+
+Bedarfsschau (neuer Termintyp)
+
+(Datenmodell wie Termin in v0.2, zusätzlich:)
+
+* typ: bedarfsschau
+* bedarfe_in_schau (Liste Bedarf_ids)
+* foerderprofile_in_schau (Liste Förderprofil_ids)
 
 ⸻
 
 17. Startseiten-Konzept
 
-Hero
+(Hero und Großteil wie v0.2. Drei neue Bausteine in v0.3.)
+
+Hero (erweitert)
 
 Headline:
 
-Baue digitale Produkte nicht allein.
+Baue digitale Produkte nicht allein. Werde lokal gesehen.
 
 Subline:
 
-Werkzirkel verbindet unabhängige digitale Macher:innen in Hamburg – zum Austauschen, Testen, Lernen und Vorankommen. Berlin und München folgen.
+Werkzirkel verbindet unabhängige digitale Macher:innen in Hamburg — und macht sie sichtbar gegenüber lokalen Bedarfsträger:innen und Förder:innen. Werkstatt-Kultur, kein Marktplatz. Berlin und München folgen.
 
 Primärer Button:
 
@@ -891,153 +716,113 @@ Sekundärer Button:
 
 Eigenes Werk zeigen
 
-⸻
+Tertiärer Button (neu in v0.3):
 
-Abschnitt: Für wen?
+Bedarf einbringen oder Werke fördern
 
-Für Menschen, die Apps, SaaS-Produkte, KI-Werkzeuge, Automationen, digitale Dienste oder Nebenprojekte bauen – allein, nebenbei, freiberuflich oder im kleinen Team.
+Neuer Abschnitt: Drei Wege in den Kreis (ersetzt „Was passiert im Werkzirkel?")
 
-⸻
+Drei Kacheln, eine pro Rolle:
 
-Abschnitt: Was passiert im Werkzirkel?
+1. Du baust ein digitales Werk
 
-Drei Kacheln:
+Lege deinen Werkpass an, zeige dein Werk, teste andere Werke und finde lokal Menschen, die dein Werk brauchen oder unterstützen wollen.
 
-1. Zeig dein Werk
+2. Du hast ein digitales Problem (neu)
 
-Lege eine einfache Projektseite an und zeige, woran du arbeitest.
+Bring deinen Bedarf in den Kreis. Stelle dich auf einer Bedarfsschau persönlich vor oder leiste einen Werkstattbeitrag. Treffe lokale Macher:innen, die dein Problem lösen können — kein Pitchwettbewerb, kein Ausschreibungschaos.
 
-2. Starte eine Prüfrunde
+3. Du willst Werke fördern (neu)
 
-Lass dein Produkt von anderen Macher:innen testen und erhalte strukturiertes Feedback. Voraussetzung: du hast selbst zwei Werke getestet.
-
-3. Triff deinen Zirkel
-
-Nimm an lokalen Prüfabenden, Baurunden und Schauabenden in Hamburg teil.
-
-⸻
-
-Abschnitt: Erste Zirkel
-
-* Hamburg (aktiv)
-* Berlin (folgt, wenn Hamburg trägt)
-* München (folgt, wenn Hamburg trägt)
-
-Text:
-
-Wir starten bewusst mit einer Stadt. Erst wenn Hamburg lebt, replizieren wir.
-
-⸻
-
-Abschnitt: Grundregeln
-
-* Deutschsprachig
-* Lokal verankert
-* Hilfreich statt laut
-* Projekte statt Selbstdarstellung
-* Wer Hilfe bekommt, hilft auch anderen — verbindlich
+Stelle dein Förderprofil vor — Klarname, Förderrahmen, transparent. Verifizierung durch Kurator:in, persönliches Vorstellen auf einer Bedarfsschau. Werkzirkel ist keine Vermittlungsagentur, sondern eine kuratierte Bühne.
 
 ⸻
 
 18. Community-Betriebsmodell
 
-Rollen
+(Mitglied / Kurator:in / Admin aus v0.2 gelten weiter.)
 
-Mitglied
+Neue Rollen-Erweiterungen in v0.3:
 
-Kann:
+Mitglied — Macher:in
 
-* Werkpass erstellen
-* Werke anlegen
-* Prüfrunden starten (nach erfüllter Reziprozität)
-* Feedback geben
-* Termine besuchen
+(wie v0.2, kann zusätzlich)
 
-Kurator:in
+* Werkangebote auf Bedarfe abgeben
+* an Bedarfsschauen teilnehmen
 
-Kann zusätzlich:
-
-* lokale Termine erstellen
-* Mitglieder begrüßen
-* Werke für Schauabende auswählen
-* lokale Regeln durchsetzen
-* neue Mitglieder aktivieren
-
-Im MVP: eine Kurator:in für Hamburg. Initial möglicherweise der Gründer selbst.
-
-Admin
+Mitglied — Bedarfsträger:in (neu)
 
 Kann:
 
-* alle Inhalte moderieren
-* Städte/Zirkel anlegen
-* Kurator:innen ernennen
-* Nutzer:innen sperren
-* Plattformtexte bearbeiten
+* Bedarfsträger-Profil anlegen
+* Werkstattbeitrag-Pfad wählen
+* Bedarfe anlegen (nach erfüllter Werkstattbeitrags-Pflicht)
+* Werkangebote ansehen, Gespräche offline führen
+* Bedarf als „erfüllt" markieren
+* an Bedarfsschauen teilnehmen
+* an Schauabenden teilnehmen
+
+Kann nicht:
+
+* andere Macher:innen direkt anschreiben
+* öffentlich nach Macher:innen suchen (kein Suchschlitz)
+* Prüfrunden für eigene Werke starten (es gibt keine eigenen Werke)
+
+Mitglied — Förder:in (neu)
+
+Kann:
+
+* Förderprofil anlegen (initial nicht öffentlich)
+* an Verifikations-Workflow teilnehmen
+* an Bedarfsschauen verpflichtend teilnehmen (mindestens 1 × pro Quartal, sonst Pause)
+* Werke offline ansprechen (über öffentlich sichtbare Werkpässe ist Kontakt erlaubt, weil Werke ja zeigen, dass sie gefunden werden wollen — aber: kein Cold-Sales, kalter Outreach an Macher:innen wird gemeldet, wenn er sich nach Werbung anfühlt)
+
+Kann nicht:
+
+* Bedarfe für andere posten
+* anonym auftreten
+* Equity-Verträge über die Plattform schließen
+
+Kurator:in (erweitert)
+
+Zusätzlich zu v0.2:
+
+* Werkstattbeitrag-Nachweise prüfen
+* Förderprofile verifizieren
+* Bedarfsschauen kuratieren
+* Bedarfe moderieren (Sprachstichproben, Werkstatt-Kultur-Verstöße)
+* Förderprofile pausieren bei Nicht-Erscheinen
 
 ⸻
 
 19. Lokale Formate
 
-1. Prüfabend
+(Prüfabend, Schauabend, Baurunde, Werkgespräch, Kennenlernrunde aus v0.2: unverändert.)
 
-Zweck: konkrete Produkte testen
-Dauer: 90–120 Minuten
-Format: 3 Werke, je 20 Minuten Feedback
-Teilnehmer:innen: 8–20
-Ergebnis: jedes Werk erhält dokumentiertes Feedback
+Neu in v0.3:
 
-2. Schauabend
+6. Bedarfsschau
 
-Zweck: Sichtbarkeit und Motivation
+Zweck: Bedarfsträger:innen und Förder:innen stellen ihre Probleme/Mittel persönlich vor
 Dauer: 2 Stunden
-Format: 5 Kurzvorstellungen à 7 Minuten
-Teilnehmer:innen: 15–40
-Ergebnis: Kontakte, Feedback, Folgeprüfrunden
+Format: 3–5 Vorstellungen à 7–10 Minuten, anschließend offene Werkrunde mit Macher:innen
+Teilnehmer:innen: 15–40 (gemischt Macher:innen + Bedarfsträger:innen + Förder:innen)
+Ergebnis: persönliche Gespräche, Werkangebote, Förder-Anbahnungen — alles offline weitergeführt
 
-3. Baurunde
-
-Zweck: gemeinsam arbeiten
-Dauer: 2–4 Stunden
-Format: ruhiges Arbeiten, kurze Anfangsrunde, kurze Abschlussrunde
-Teilnehmer:innen: 5–20
-Ergebnis: Fortschritt und Verbindlichkeit
-
-4. Werkgespräch
-
-Zweck: Wissen teilen
-Themenbeispiele:
-
-* Wie finde ich erste Nutzer:innen?
-* Wie teste ich eine App sauber?
-* Wie formuliere ich ein Nutzenversprechen?
-* Wie nutze ich KI beim Entwickeln?
-* Wie baue ich eine einfache Startseite?
-* Wie kalkuliere ich Preise?
-
-5. Kennenlernrunde
-
-Zweck: Einstieg erleichtern
-Format: niedrigschwellig, ohne Pitchdruck
-Ergebnis: neue Mitglieder verstehen, wie Werkzirkel funktioniert
+Sprachregel: keine PowerPoint-Pitches mit Marktgrößen-Slides. Stattdessen Werkstatt-Sprache: „Wir haben dieses Problem. So fühlt es sich an. So viel können wir dafür ausgeben."
 
 ⸻
 
 20. Geschäftsmodell
 
-Grundsatz
+(Modell aus v0.2 gilt weiter mit folgenden Ergänzungen.)
 
-Werkzirkel sollte nicht als Jobbörse starten. Das würde sofort die Kultur verändern.
+Realismus-Hinweis (aktualisiert v0.3)
 
-Besser:
+Bei 50 zahlenden Fördermitgliedern × 12 €/Monat + 10 Werkstattbeitragen á 100 € pro Monat + ggf. ersten Erfolgsbeiträgen sind das ca. 1.700–2.500 €/Monat — das deckt Hosting, Kurator:innen-Aufwandsentschädigung und Werkstatt-Werkzeuge, aber noch keine Vollzeitstelle.
 
-Mitgliedschaft + lokale Formate + Partner, aber keine aggressive Lead-Verwertung.
-
-Realismus-Hinweis (neu in v0.2)
-
-Das wirtschaftliche Ziel des MVP ist nicht Selbsttragfähigkeit, sondern Validierung. Bei 50 zahlenden Fördermitgliedern × 12 €/Monat sind das ca. 600 €/Monat — das deckt Hosting und kleine Auslagen, nicht eine Stelle. Werkzirkel wird in Phase 1–3 entweder als Hobby- und Missionsprojekt geführt oder durch externe Quellen co-finanziert (siehe „Pfade zur Tragfähigkeit").
-
-Modell v1
+Modell v1 (erweitert in v0.3)
 
 Kostenlos
 
@@ -1045,364 +830,325 @@ Kostenlos
 * ein Werk
 * Teilnahme an offenen Prüfrunden
 * Basis-Zirkelzugang
+* Teilnahme an Bedarfsschauen als Macher:in (neu)
 
-Fördermitgliedschaft
+Fördermitgliedschaft (wie v0.2)
 
-Möglicher Preisbereich: 9–19 € pro Monat
-
-Enthält:
-
+* 9–19 €/Monat
 * mehrere Werke
 * bevorzugte Prüfrunden
-* Teilnahme an geschlossenen Baurunden
-* Archiv von Werkgesprächen
-* Ermäßigungen für lokale Termine
+* geschlossene Baurunden
+* Archiv Werkgespräche
+* Ermäßigungen Termine
 
-Lokale Partner
+Werkstattbeitrag — Bedarfsträger:innen (neu in v0.3)
 
-Mögliche Partner:
+* einmalig 50–150 € (Selbsteinschätzung) ODER
+* dokumentierte Sachleistung ODER
+* Schauabend-Teilnahme
 
-* Coworking-Spaces
-* Hochschulen
-* Gründungszentren
-* Softwarehäuser
-* Stadtinitiativen
-* lokale Tech-Unternehmen
+Voraussetzung, um Bedarfe zu posten — siehe Reziprozität (Prinzip 5).
 
-Aber: Partner dürfen nicht dominieren.
+Förder-Mitgliedschaft (neu in v0.3)
 
-Regel:
+* freiwilliger Jahresbeitrag in zwei Stufen: 240 € (Stiftung/Privat) oder 1.200 € (Organisation mit aktiver Programmnutzung)
+* enthält: verifiziertes Förderprofil, regelmäßige Bedarfsschau-Slots, Kurator:innen-Kontakt für Programmpassung
+* Voraussetzung für Verifikation ist nicht Bezahlung — sondern persönliche Anwesenheit und Klarname. Beitrag ist Solidaritätsleistung, nicht Ticket.
 
-Partner unterstützen den Kreis, sie besitzen ihn nicht.
+Erfolgsbeitrag (neu in v0.3, freiwillig)
 
-Pfade zur Tragfähigkeit (frühestens Phase 3)
+* Wenn ein Bedarf erfolgreich erfüllt wurde: empfohlener Erfolgsbeitrag von 5 % der freiwilligen Selbstauskunft, als Spende an den Hamburger Werkzirkel
+* Plattform stellt keine Rechnung, übernimmt keine Vermittlungsrolle, nimmt nichts vom Macher:innen-Honorar
+* Erfolgsbeiträge fließen in eine offene Werkstatt-Kasse, deren Verwendung quartalsweise dokumentiert wird (Raum-Miete, Getränke, Kurator:innen-Aufwand)
 
-* Fördermitgliedschaften skaliert auf 300+ über drei Städte
-* Coworking-Partnerschaften mit fixem Quartalsbeitrag (z.B. 200–500 €/Quartal je Standort) gegen Nutzungslizenz und Sichtbarkeit
-* bezahlte Werkgespräche / kuratierte Workshops (50–150 € pro Sitzplatz)
-* Optional: Sponsorship einzelner Schauabende durch lokale Tech-Unternehmen, transparent und unaufdringlich
+In v0.3 ausdrücklich freiwillig. Erst nach Phase 4-Validierung wird geprüft, ob ein verbindlicher Modus möglich ist, ohne die Werkstatt-Kultur zu beschädigen. Vermutlich nicht — siehe Section 30.
 
-Bewusst nicht: Stellenanzeigen, Provisionen auf gefundene Kund:innen, Werbung im Feed.
+Lokale Partner (wie v0.2, plus)
+
+Neue Partner-Kategorie in v0.3:
+
+* IHK Hamburg, Handwerkskammer
+* IFB Hamburg (Hamburgische Investitions- und Förderbank)
+* Hamburg Kreativ Gesellschaft
+* Stiftungen mit Digitalisierungsbezug
+* Lokale Wirtschaftsförderung der Bezirke
+
+Regel weiterhin: Partner unterstützen den Kreis, sie besitzen ihn nicht.
+
+Pfade zur Tragfähigkeit (aktualisiert v0.3)
+
+(Punkte aus v0.2 gelten plus)
+
+* Werkstattbeiträge: bei 20 aktiven Bedarfsträger:innen á 100 €/Quartal sind das 8.000 €/Jahr
+* Förder-Mitgliedschaften: bei 5 organisationalen Förder:innen á 1.200 € sind das 6.000 €/Jahr
+* Erfolgsbeiträge (vorsichtig geschätzt): bei 12 erfolgreichen Vermittlungen pro Jahr à 5.000 € Durchschnittsauftrag und 50 %iger Beitragsquote: ca. 1.500 €/Jahr in Phase 3
+* Drei-Städte-Modell mit allen drei Säulen erreicht voraussichtlich 30.000–50.000 €/Jahr — eine Halbtagsstelle plus Hostingdeckung. Tragfähig, nicht reich.
+
+Bewusst nicht in v0.3 (wie v0.2):
+
+* Stellenanzeigen
+* Provisionen auf Vermittlungen (Erfolgsbeitrag ist Spende, nicht Provision — Unterschied muss in Kommunikation klar bleiben)
+* Werbung im Feed
+* algorithmische Match-Engine als kostenpflichtiges Feature
+* Equity-Vermittlung
 
 ⸻
 
 21. Erfolgskennzahlen
 
-Hinweis v0.2: Kennzahlen beziehen sich auf Hamburg. Berlin/München kommen erst dazu, wenn Hamburg trägt.
+(Kennzahlen aus v0.2 gelten weiter.)
 
-Aktivierung Hamburg
+Neu in v0.3 — Nachfrageseite Hamburg
 
-Kennzahl	Ziel MVP
-Registrierte Nutzer:innen	60
-Angelegte Werke	20
-Nutzer:innen mit Werkpass	80 Prozent
-Nutzer:innen mit mindestens einem Werk	50 Prozent
+Bedarfsseite
 
-Austausch
+Kennzahl	Ziel MVP (16 Wochen)
+Registrierte Bedarfsträger:innen	15
+Aktive Bedarfe	10
+Werkstattbeitrags-Nachweise	15
+Werkangebote pro Bedarf (Durchschnitt)	2–4 (NICHT mehr — Pitch-Schutz)
+Dokumentierte Vermittlungen (Bedarf erfüllt)	3
+Erfolgsbeiträge gezahlt (freiwillig)	mindestens 1
 
-Kennzahl	Ziel MVP
-Gestartete Prüfrunden	10
-Abgeschlossene Feedbacks	40
-Feedbacks pro Prüfrunde	mindestens 3
-Anteil aktiver Feedbackgeber:innen	mindestens 50 Prozent
-Reziprozitäts-Quote (Tests gegeben ≥ Tests erhalten)	mindestens 80 Prozent
-
-Lokalität
+Förderseite
 
 Kennzahl	Ziel MVP
-Aktive Schauabende	3
-Teilnehmer:innen pro Schauabend	8–15 (Schauabend 1), 12–25 (Schauabend 3)
-Wiederkehrende Teilnehmer:innen	mindestens 50 Prozent
+Registrierte Förder:innen	5
+Verifizierte Förderprofile	3
+Aktive Förderprofile (= teilnehmen an Bedarfsschau im Quartal)	2
+Dokumentierte Förderungen	1
 
-Qualität
+Lokale Formate
 
 Kennzahl	Ziel MVP
-Nutzerzufriedenheit nach Prüfrunde	mindestens 4 von 5
-Anteil „hilfreiches Feedback"	mindestens 60 Prozent
-Dokumentierte Werk-Verbesserungen durch Feedback	mindestens 5
-Spam-/Moderationsfälle	sehr niedrig halten
+Bedarfsschauen abgehalten	1–2
+Teilnehmer:innen Bedarfsschau	15–30
+
+Kulturindikatoren (neu in v0.3, qualitativ)
+
+* Sales-Sprech-Beschwerden pro Quartal: maximal 5
+* Cold-Outreach-Meldungen: maximal 3
+* Bedarfsträger:innen, die ohne Werkstattbeitrag versucht haben, abzukürzen: dokumentiert und vom Kurator:innen-Workflow gestoppt
+* Anteil Bedarfsträger:innen, die persönlich auf einem Schauabend oder einer Bedarfsschau anwesend waren: mindestens 80 %
 
 ⸻
 
-22. MVP-Roadmap (Hamburg-First, komplett neu in v0.2)
+22. MVP-Roadmap (Hamburg-First, angepasst v0.3)
 
 Phase 0: Hypothesen-Test ohne Software (Wochen 1–4)
 
-Ziel: Beweisen, dass in Hamburg überhaupt 8+ digitale Macher:innen an einem Abend zusammenkommen wollen.
+Ziel wie v0.2 (8+ digitale Macher:innen wollen zusammenkommen) PLUS:
 
-Bauen: keine Plattform. Nur:
+* mindestens 5 explorative Gespräche mit potenziellen Bedarfsträger:innen in Hamburg (lokale Mittelständler, Stiftungen, Wirtschaftsförderung)
+* mindestens 3 explorative Gespräche mit potenziellen Förder:innen (Angels, IFB, Stiftungen)
 
-* eine einseitige Landingpage (statisch, Tally-Formular für Warteliste)
-* Eventbrite/Luma-Seite für ersten Schauabend
-* öffentliche Notion-Seite mit Konzept, Regeln, Format
-* eine E-Mail-Adresse: hamburg@werkzirkel.de
+Bauen: keine Plattform. Nur Landingpage + Notion + E-Mail.
 
-Tun:
+Tun (Macher:innen-Seite wie v0.2; Bedarfsseite zusätzlich):
 
-* Akquise gemäß Section 23 starten
-* Ort sichern (Coworking-Space-Anfragen, drei Optionen)
-* ersten Schauabend ankündigen
-* parallel 10–15 Einzelgespräche mit potenziellen Erstmitgliedern
+* IHK Hamburg, Handwerkskammer, IFB ansprechen
+* 1–2 Stiftungen mit Digitalisierungs-Bezug ansprechen
+* 5–10 Mittelständler:innen-Gespräche (Empfehlung über bestehende Netzwerke)
 
 Ergebnis:
 
-Anmeldungen für Schauabend 1 ≥ 12 Personen, sonst Konzept überprüfen.
+Schauabend-1-Anmeldungen ≥ 12 (wie v0.2). PLUS: mindestens 3 ernsthafte Bedarfs-Skizzen schriftlich von Bedarfsträger:innen.
 
-⸻
+Phase 1: Drei Schauabende und eine Bedarfsschau ohne Plattform (Wochen 5–14)
 
-Phase 1: Drei Schauabende ohne Plattform (Wochen 5–12)
-
-Ziel: Format iterieren, Stammgäste gewinnen, Bedarf für Plattformfunktionen aus realen Treffen ableiten.
+(verlängert um 2 Wochen ggü. v0.2 wegen Bedarfsschau)
 
 Tun:
 
-* Schauabend 1: Format probieren, Feedback einsammeln
-* zwischen Schauabenden: Werke in Notion sammeln, Prüfrunden manuell per E-Mail organisieren
-* Schauabend 2: Format anpassen
-* Schauabend 3: stabiles Format, mindestens 15 Teilnehmer:innen, 50 Prozent Wiederkehrer
-* nach jedem Schauabend: kurze Retro, Pain Points dokumentieren
+* Schauabend 1–3 wie v0.2
+* Bedarfsschau 1 zwischen Schauabend 2 und 3 (Wochen 10–12)
+* Bedarfe und Werkstattbeiträge initial in Notion und per E-Mail verwalten
+* Förder:innen-Verifikationen initial per Telefonat und Notion-Doc
 
-Bauen:
-
-* nichts. Wirklich nichts.
+Bauen: nichts.
 
 Ergebnis-Gate für Phase 2:
 
-Drei Schauabende mit mindestens 8/12/15 Teilnehmer:innen, mindestens 5 dokumentierte Werk-Verbesserungen, mindestens 50 Prozent Wiederkehrer. Sonst: weiter iterieren in Phase 1, keine Plattform.
+Drei Schauabende mit mindestens 8/12/15 Teilnehmer:innen (wie v0.2) PLUS:
 
-⸻
+* Bedarfsschau 1 fand statt mit mindestens 4 Bedarfsträger:innen/Förder:innen
+* mindestens 5 dokumentierte Bedarfe
+* mindestens 1 dokumentierte Vermittlung (Bedarf → Auftrag offline)
 
-Phase 2: Schlanke Plattform (Wochen 13–18)
+Phase 2: Schlanke Plattform mit Bedarfsseite (Wochen 15–22)
 
-Bauen (nur was in Phase 1 nachweislich gefehlt hat, plus die Reziprozitäts-Mechanik):
+(verlängert um 2 Wochen ggü. v0.2 wegen Bedarfsseite)
 
-* Registrierung
-* Werkpass mit Test-Saldo
-* Werkseiten
-* Hamburg-Zirkelseite
-* Prüfrunden mit Reziprozitäts-Durchsetzung (F-201 bis F-209)
-* Terminseiten
-* E-Mail-Benachrichtigung
-* Adminbereich minimal
+Bauen (Macher:innen-Seite wie v0.2 plus):
 
-Ergebnis:
-
-Hamburger Werkzirkel hat eine funktionierende Plattform, die das ersetzt, was bisher Notion/E-Mail/Eventbrite gemacht haben.
-
-⸻
-
-Phase 3: Replikation Berlin und München (Monat 5–8)
-
-Voraussetzung: Hamburg hat drei tragende Schauabende mit ≥15 Teilnehmer:innen und stabilem Kern.
-
-Start je Stadt:
-
-* 1 lokale Kurator:in identifizieren und ausbilden
-* Akquisekanäle aus Hamburg adaptieren (Section 23)
-* erster Schauabend nach Hamburg-Playbook
-* Plattform öffnet Stadt erst, wenn lokale Kurator:in steht
-
-Bewusst NICHT: beide Städte gleichzeitig starten. Berlin zuerst, München mit ca. 4 Wochen Versatz.
+* Bedarfs-Funktionen (F-601 bis F-607)
+* Werkangebote (F-621 bis F-625)
+* Förderprofile (F-701 bis F-706)
+* Schutzmechaniken (F-801 bis F-805)
+* Bedarfsschauen als Termintyp
+* Verifikations-Workflow für Kurator:innen
 
 Ergebnis:
 
-Pro Stadt: 30–50 Mitglieder, 10–15 Werke, erste zwei Schauabende.
+Hamburger Werkzirkel hat Plattform mit Bedarfsseite, die Notion/E-Mail vollständig ersetzt.
 
-⸻
+Phase 3: Replikation Berlin und München (Monat 6–9)
 
-Phase 4: Bezahlmodell testen (ab Monat 8)
+(verschoben um 1 Monat ggü. v0.2, weil Phase 1 und 2 jeweils 2 Wochen länger)
 
-Testen:
+Voraussetzung wie v0.2 plus: Hamburg hat mindestens 2 Bedarfsschauen mit funktionierender Vermittlungs-Quote (mindestens 3 dokumentierte Vermittlungen).
 
-* Fördermitgliedschaft
-* kostenpflichtige Werkgespräche
-* Partnerpakete für lokale Unterstützer
-* Coworking-Kooperationen
+Phase 4: Bezahlmodell testen (ab Monat 9)
 
-Nicht testen:
+(verschoben um 1 Monat ggü. v0.2)
 
-* Jobbörse
+Testen wie v0.2 plus:
+
+* Werkstattbeiträge skaliert
+* Förder-Mitgliedschaften
+* Erfolgsbeiträge (freiwillig) verfolgen — und prüfen, ob ein verbindlicher Modus die Kultur beschädigen würde
+
+Nicht testen (gleich v0.2 plus):
+
 * Provisionen
-* aggressive Werbung
+* automatisches Matching
+* Equity-Vermittlung
 
 ⸻
 
-23. Akquisestrategie Hamburg (neu in v0.2)
+23. Akquisestrategie Hamburg (erweitert v0.3)
 
-Die kritische Frage „woher kommen die ersten 30 Macher:innen" wird nicht durch eine Landingpage gelöst. Es ist Handarbeit.
+Kanäle 1–5 für Macher:innen-Seite wie v0.2.
 
-Kanal 1: Persönliche Direktansprache (höchste Priorität)
+Kanäle 6–10 für Nachfrageseite (neu in v0.3):
 
-* eigenes Netzwerk in Hamburg systematisch durchgehen (LinkedIn, Telefonbuch, alte Kontakte)
-* Ziel: 30 persönliche Nachrichten in Woche 1, davon 10 Termine, davon 5 Erstmitglieder
+Kanal 6: IHK Hamburg + Handwerkskammer
 
-Kanal 2: Bestehende Hamburger Communities anhängen, nicht ersetzen
+* Digitalisierungs-Beauftragte direkt kontaktieren
+* Ziel: 3 Gespräche, 5–10 Empfehlungen an Mitgliedsbetriebe
 
-* SaaS Hamburg, Hamburg Startups, Bytes & Beer, Hamburg Indie Hackers
-* Code & Comedy, Hamburg.dev, Hamburg JS, Webmontag Hamburg
-* Strategie: bei einem Treffen jeder relevanten Gruppe persönlich erscheinen, vorstellen, einladen — nicht Posts in Chats abladen
+Kanal 7: IFB Hamburg + Hamburg Kreativ Gesellschaft
 
-Kanal 3: Coworking-Spaces als Multiplikatoren
+* Programm-Verantwortliche für Indie-/Soloförderung
+* Ziel: 2 Gespräche, mindestens 1 Pilotkooperation
 
-* betahaus Hamburg, Mindspace, WeWork, Nido, kleinere lokale Spaces
-* Ziel: pro Space 1 Gespräch, ggf. Aushang oder kurze Vorstellung
-* Schauabend-Kooperation: Space stellt Raum, Werkzirkel bringt Menschen
+Kanal 8: Mittelständler-Netzwerke
 
-Kanal 4: Hochschulen und Gründungszentren
+* Wirtschaftsjunioren Hamburg, Marketing-Club Hamburg
+* Ziel: persönliches Erscheinen bei 1–2 Treffen, dort einladen
 
-* HAW Hamburg, Universität Hamburg, HSBA, Tutech, Beyond1435
-* Ansprechpartner:innen für studentische Gründer:innen direkt kontaktieren
+Kanal 9: Stiftungen mit Digital-/Bildungs-/Kulturschwerpunkt
 
-Kanal 5: Themennahe lokale Newsletter und Mastodon-DE
+* ZEIT-Stiftung, Joachim Herz Stiftung, Hamburgische Kulturstiftung
+* Ziel: 2 Gespräche, prüfen ob Förderprogramm-Andocken möglich
 
-* Hamburg-spezifische Tech-Newsletter (sofern existent)
-* hh.social und chaos.social mit lokalem Hashtag
+Kanal 10: Lokale Business-Angels
 
-Was nicht funktionieren wird (Erfahrungswerte):
+* Hamburg Angels Network, Indie-Angels über persönliche Empfehlung
+* Ziel: 3 Gespräche, 1 verifiziertes Förderprofil
 
-* Cold-Posts auf LinkedIn ohne persönliche Ansprache
-* Reddit (zu wenig DACH-Tech-Aktivität)
-* breite SEO-Strategie (Werkzirkel hat keinen Suchverkehr-Bedarf, sondern Beziehungs-Bedarf)
-* bezahlte Anzeigen (zu früh, falsche Mechanik)
+Was nicht funktionieren wird (für Bedarfsseite):
 
-Erfolgsmesser Phase 0:
-
-* 30 Direktansprachen
-* 10 Einzelgespräche geführt
-* 20 Anmeldungen für Schauabend 1
-* 12 erschienen
+* Cold-Outreach an Geschäftsführer:innen ohne lokale Empfehlung
+* Stellenanzeigen-Schalten in Bedarfs-Plattform (wäre Identitätsverlust)
+* Kalter Outreach an Förderprogramme ohne Programm-Lesen
+* breite Newsletter ohne lokale Verankerung
 
 ⸻
 
 24. Risiken
 
-Risiko 1: Zu breit
+(Risiken 1–7 aus v0.2 gelten weiter.)
 
-Wenn Werkzirkel „für alle Kreativen" wird, verliert es Fokus.
+Neu in v0.3:
 
-Gegenmaßnahme:
+Risiko 8: Bedarfsseite frisst Macher:innen-Kultur
 
-Fokus bleibt digitale Produkte.
-
-⸻
-
-Risiko 2: Zu viel Networking, zu wenig Machen
-
-Viele Communities reden nur.
+Wenn Bedarfsträger:innen dominieren, mutiert Werkzirkel zur Akquise-Plattform.
 
 Gegenmaßnahme:
 
-Jedes Format braucht ein Ergebnis: Feedback, Fortschritt, Kontakte, nächste Schritte. Reziprozitäts-Pflicht.
+Werkstattbeitrag-Pflicht (Prinzip 5 erweitert), Schutzmechaniken in 11A, kuratierte Bedarfsschau statt Bedarfsfeed, Werkangebote nicht öffentlich.
 
-⸻
+Risiko 9: Förder:innen-Verifikation überfordert Kurator:in
 
-Risiko 3: Zu viel Sales
-
-Freelancer und Agenturen könnten die Plattform als Akquise-Kanal missbrauchen.
+Wenn Verifikation aufwändig wird, blockiert sie Wachstum oder wird lasch.
 
 Gegenmaßnahme:
 
-Keine Kaltakquise. Hilfe zuerst. Sichtbarkeit über Beiträge, nicht über Werbung.
+Klare Checkliste, dokumentierter Workflow, anfangs maximal 5 Förderprofile parallel in Hamburg, Erweiterung erst nach Phase 3.
 
-⸻
+Risiko 10: Erfolgsbeitrag wird als Provision missverstanden
 
-Risiko 4: Zu wenig lokale Dichte
-
-Wenn eine Stadt zu wenige aktive Mitglieder hat, entsteht kein Kreisgefühl.
+Wenn Macher:innen oder Bedarfsträger:innen denken, Werkzirkel verlangt Provision, wirkt das wie ein Marktplatz.
 
 Gegenmaßnahme:
 
-Eine Stadt zuerst (Hamburg). Replikation erst nach Validierung.
+Sprachdisziplin: konsequent „Spende an den Kreis", nie „Provision", „Gebühr" oder „Vermittlungs-Beitrag". Transparente Kassenführung. Beträge in der Werkstatt-Kasse werden quartalsweise veröffentlicht. Plattform stellt nie eine Rechnung.
 
-⸻
+Risiko 11: Pitchwettbewerb entsteht trotz Schutz
 
-Risiko 5: Deutsch-only wird unterschätzt
-
-Viele Tech-Leute rutschen automatisch ins Englische.
+Wenn Bedarfsträger:innen viele Werkangebote sammeln, fühlt es sich für Macher:innen nach Akquise an.
 
 Gegenmaßnahme:
 
-Deutsch ist Produktregel. Auch Begriffe, Buttons, E-Mails und Events bleiben deutsch.
+Maximal 1 Werkangebot pro Werk und Bedarf (F-624), kuratorisches Stichproben-Coaching für Bedarfsträger:innen („bitte nicht mehr als 3 ernsthaft prüfen"), Sprachstichproben.
 
-⸻
+Risiko 12: Plattform wird rechtlich zur Vermittlerin
 
-Risiko 6 (neu in v0.2): Plattform-Falle
-
-Versuchung, früh eine schöne Plattform zu bauen, statt Menschen zusammenzubringen.
+Wenn unklar ist, ob Werkzirkel als Plattform für Vertragsanbahnung gilt, drohen Pflichten (DSA, Plattformregulierung, Steuern).
 
 Gegenmaßnahme:
 
-Phase-1-Verbot: in den ersten 12 Wochen keine Plattformentwicklung. Werkzeuge: Eventbrite, Notion, E-Mail.
-
-⸻
-
-Risiko 7 (neu in v0.2): Gründer-Burnout-Stadt-Stapelung
-
-Drei Städte parallel kurz nach Hamburg-Erfolg überfordert eine Solo-Person.
-
-Gegenmaßnahme:
-
-Berlin und München gestaffelt starten (4 Wochen Versatz), je mit eigener Kurator:in vor Ort, nicht ferngesteuert.
+Konsequent dokumentieren, dass keine Verträge, keine Beteiligungen, keine Zahlungen über die Plattform laufen. Rechtsklärung in Phase 0 mit lokaler Anwält:in einholen (siehe Section 31, Annahmen v0.3).
 
 ⸻
 
 25. Tonalität
 
-Werkzirkel sollte nicht klingen wie ein Startup-Hypeprodukt.
+(Wie v0.2 — Ton bleibt klar, direkt, produktiv, unprätentiös, deutsch, kollegial.)
 
-Nicht so:
+Verbotene Sprachmuster v0.2 gelten weiter. Zusätzlich in v0.3 vermeiden:
 
-„Join the leading founder community for indie builders."
+* „Ausschreibung"
+* „Bewerbung"
+* „Pitch-Deck"
+* „Matching"
+* „Deal"
+* „Provision"
+* „Marktplatz"
+* „Bewerber:innen"
+* „Hire"
+* „Vermittlung" (als Eigenbeschreibung der Plattform — wir vermitteln nicht, wir machen sichtbar)
 
-Sondern so:
+Stattdessen:
 
-„Triff Menschen in Hamburg, die digitale Produkte bauen. Zeig dein Werk, teste andere Werke und komm gemeinsam weiter."
-
-Ton
-
-* klar
-* direkt
-* produktiv
-* unprätentiös
-* deutsch
-* kollegial
-* nicht anbiedernd
-
-Verbotene Sprachmuster
-
-* Hustle
-* Unicorn
-* Scale
-* Disrupt
-* Founder Energy
-* 10x
-* Bro-Marketing
-* „Crush it"
-* „Next big thing"
-* Stack (in nutzergerichteten Texten)
-* Pipeline (in nutzergerichteten Texten)
-* Roadmap (in nutzergerichteten Texten — intern erlaubt)
-* Game-Changer
-* Synergie
-* MVP (extern; intern erlaubt)
-* Onboarding (sag „Einstieg")
-* Touchpoint (sag „Kontaktpunkt")
+Englisch/marktplatz-typisch vermeiden	Werkzirkel-Begriff
+Ausschreibung	Bedarf
+Bewerbung	Werkangebot
+Pitch-Deck	Werkvorstellung
+Matching	Sichtbarkeit
+Marktplatz	Kreis / Werkstatt
+Bewerber:in	Macher:in
+Hire	Beauftragen
+Vermittlungsplattform	Sichtbarkeitsbühne
+Provision	Erfolgsbeitrag (freiwillig)
 
 ⸻
 
 26. Erste Version der Positionierung
 
-Ein-Satz-Positionierung
+Ein-Satz-Positionierung (aktualisiert v0.3)
 
-Werkzirkel ist die deutschsprachige Plattform für unabhängige digitale Macher:innen, die lokal zusammenkommen, ihre Produkte testen und gemeinsam vorankommen.
+Werkzirkel ist die deutschsprachige Plattform für unabhängige digitale Macher:innen, die lokal zusammenkommen, ihre Produkte testen, gemeinsam vorankommen — und in ihrer Stadt von Menschen gesehen werden, die konkrete Bedarfe oder Mittel mitbringen.
 
 Kurzversion
 
-Gemeinsam digitale Produkte bauen.
+Gemeinsam digitale Produkte bauen. Lokal gesehen werden.
 
 Langversion
 
-Werkzirkel verbindet Indie-Developer, Freelancer, Solo-Gründer:innen und digitale Produktmacher:innen im DACH-Raum. In lokalen Zirkeln zeigen Mitglieder ihre Werke, starten Prüfrunden, geben Feedback und treffen sich vor Ort. Deutschsprachig, verbindlich und ohne Startup-Theater. Wir starten in Hamburg.
+Werkzirkel verbindet Indie-Developer, Freelancer, Solo-Gründer:innen und digitale Produktmacher:innen im DACH-Raum. In lokalen Zirkeln zeigen Mitglieder ihre Werke, starten Prüfrunden, geben Feedback, treffen sich vor Ort. Gleichzeitig sehen sie und werden gesehen von lokalen Bedarfsträger:innen — Mittelständler:innen, Vereinen, Initiativen mit konkretem digitalen Bedarf — und von lokalen Förder:innen: Stiftungen, Angels, Wirtschaftsförderung. Werkzirkel ist keine Jobbörse und kein Marktplatz, sondern eine kuratierte Sichtbarkeitsbühne mit Werkstatt-Kultur. Deutschsprachig, verbindlich, ohne Startup-Theater. Wir starten in Hamburg.
 
 ⸻
 
@@ -1410,7 +1156,7 @@ Werkzirkel verbindet Indie-Developer, Freelancer, Solo-Gründer:innen und digita
 
 Wir machen zuerst:
 
-Drei Schauabende in Hamburg, organisiert mit Eventbrite und Notion. Erst danach bauen wir eine schlanke Plattform für Hamburger Werke, Prüfrunden mit Reziprozitäts-Pflicht und lokale Termine.
+Drei Schauabende und eine Bedarfsschau in Hamburg, organisiert mit Eventbrite und Notion. Erst danach bauen wir eine schlanke Plattform für Hamburger Werke, Prüfrunden mit Reziprozitäts-Pflicht, lokale Termine, Bedarfe mit Werkstattbeitrag-Pflicht, Werkangebote ohne Pitchwettbewerb und Förderprofile mit Verifikation.
 
 Nicht mehr.
 Nicht weniger.
@@ -1423,35 +1169,43 @@ Wir starten mit folgender Konfiguration:
 
 Bereich	Entscheidung
 Name	Werkzirkel
-Untertitel	Gemeinsam digitale Produkte bauen.
+Untertitel	Gemeinsam digitale Produkte bauen. Lokal gesehen werden.
 Sprache	ausschließlich Deutsch
 Region	Deutschland, Start Hamburg
 Erste Stadt	Hamburg (alleine)
 Replikation	Berlin, dann München — erst nach Hamburg-Validierung
-Kernfeature	Reale Schauabende (Phase 1)
-Zweites Kernfeature	Prüfrunden mit Reziprozitäts-Pflicht (Phase 2)
-Zentrale Objekte	Werke, Werkpässe, Zirkel
-MVP-Ziel	drei tragende Schauabende in Hamburg
-Kein MVP-Fokus	mehrere Städte parallel, Plattform vor Treffen, Chat, Jobbörse, App
+Kernfeature 1	Reale Schauabende (Phase 1)
+Kernfeature 2	Prüfrunden mit Reziprozitäts-Pflicht (Phase 2)
+Kernfeature 3 (neu v0.3)	Bedarfsschau und Bedarfsseite mit Werkstattbeitrag-Pflicht (Phase 1–2)
+Kernfeature 4 (neu v0.3)	Förderprofile mit Kurator:innen-Verifikation (Phase 2)
+Zentrale Objekte	Werke, Werkpässe, Zirkel, Bedarfe, Werkangebote, Förderprofile
+MVP-Ziel	drei tragende Schauabende plus eine Bedarfsschau in Hamburg
+Kein MVP-Fokus	mehrere Städte parallel, Plattform vor Treffen, Chat, Jobbörse, App, algorithmisches Matching, Vertragsabwicklung, Equity-Vermittlung
 
 ⸻
 
-29. Nächste konkrete Schritte (komplett umgeschrieben in v0.2)
+29. Nächste konkrete Schritte (angepasst v0.3)
 
 In dieser Reihenfolge:
 
-1. Schauabend 1 datieren: Termin in ca. 5–6 Wochen, Wochentag und Uhrzeit festlegen (Empfehlung: Mittwoch- oder Donnerstagabend, 19:00).
-2. Drei Raum-Optionen sichern: betahaus Hamburg, Mindspace, ein weiterer Coworking-Space anfragen.
-3. Eventbrite/Luma-Seite anlegen mit Format, Regeln, Anmeldelink.
-4. Statische Landingpage mit Tally-Warteliste (kein eigenes Backend).
-5. Notion-Seite öffentlich: Konzept, Regeln, Werke der ersten Mitglieder.
-6. 30 persönliche Direktansprachen in Hamburg starten (Section 23).
-7. Drei bestehende Hamburger Tech-Treffen besuchen und persönlich einladen.
-8. Schauabend 1 durchführen mit mindestens 8 Anwesenden.
-9. Retro: was hat gefehlt? Erst daraus folgt Phase-2-Funktionsumfang.
-10. Schauabende 2 und 3 in 3- bis 4-Wochen-Abstand.
+1. Schauabend 1 datieren: Termin in ca. 5–6 Wochen.
+2. Bedarfsschau 1 datieren: Termin in ca. 9–11 Wochen (zwischen Schauabend 2 und 3).
+3. Drei Raum-Optionen sichern (wie v0.2).
+4. Eventbrite/Luma-Seite für Schauabend 1 anlegen.
+5. Statische Landingpage mit Tally-Warteliste — mit drei Rollenpfaden (Macher:in / Bedarfsträger:in / Förder:in).
+6. Notion-Seite öffentlich: Konzept, Regeln, Werkstattbeitrag-Modell, Verifikations-Workflow.
+7. 30 persönliche Direktansprachen Macher:innen-Seite (wie v0.2).
+8. 5 Direktansprachen Bedarfsträger:innen-Seite (Mittelständler:innen, IHK).
+9. 3 Direktansprachen Förderseite (IFB, Stiftung, Angel).
+10. Drei bestehende Hamburger Tech-Treffen besuchen (wie v0.2).
+11. Rechtsklärung Plattform-Status (siehe Annahme v0.3-3).
+12. Schauabend 1 durchführen.
+13. Retro: was hat gefehlt? Daraus Phase-2-Funktionsumfang.
+14. Schauabend 2 in 3–4 Wochen Abstand.
+15. Bedarfsschau 1 durchführen.
+16. Schauabend 3.
 
-Erst wenn 1–10 erledigt sind und das Erfolgsgate aus Phase 1 erreicht ist, beginnt Plattformbau.
+Erst wenn 1–16 erledigt sind und das Erfolgsgate aus Phase 1 erreicht ist, beginnt Plattformbau.
 
 Was wir bewusst NICHT als nächstes tun:
 
@@ -1459,3 +1213,66 @@ Was wir bewusst NICHT als nächstes tun:
 * drei Städte parallel anschieben
 * Final-Texte für die volle Plattform-Landingpage schreiben
 * Datenbank-Schema implementieren
+* Bedarfsfeed bauen
+* Förderprofil-Datenbank ohne Verifikations-Workflow konzipieren
+
+⸻
+
+30. Offene Annahmen v0.3 — was wir in Phase 0/1 validieren müssen
+
+v0.3 trifft drei strategische Annahmen, die noch nicht durch Daten gedeckt sind. Sie müssen vor Phase-2-Plattformbau bestätigt oder verworfen werden.
+
+Annahme v0.3-1: Werkstattbeitrag wird angenommen
+
+Wir nehmen an, dass Bedarfsträger:innen bereit sind, vor dem Bedarfposten einen Werkstattbeitrag zu leisten (Schauabend-Teilnahme, Sachleistung, Geldbeitrag).
+
+Test:
+
+* In Phase 0 mindestens 5 Bedarfsträger:innen ansprechen, das Modell vorstellen, Reaktion dokumentieren.
+* In Phase 1, Bedarfsschau 1: mindestens 4 Bedarfsträger:innen müssen Beitragspfad gewählt haben.
+
+Wenn nein:
+
+Modell anpassen — z.B. Beitragsskala senken, mehr Sachleistungspfade öffnen, oder Bedarfsträger:innen-Seite ganz aussetzen, bis stärkere Pull-Mechanik gefunden ist.
+
+Annahme v0.3-2: Erfolgsbeitrag bleibt freiwillig tragbar
+
+Wir nehmen an, dass freiwillige Erfolgsbeiträge in 5 %-Größenordnung bei mindestens 30–50 % der Vermittlungen tatsächlich gezahlt werden, ohne dass die Plattform Druck macht.
+
+Test:
+
+* In Phase 1/2 die ersten 3–5 Vermittlungen verfolgen, Quote messen.
+* Wenn unter 20 %: prüfen, ob freiwillig ein gangbarer Tragfähigkeits-Pfad ist oder nicht.
+
+Wenn nein:
+
+Drei Optionen erwägen — (a) auf Erfolgsbeitrag verzichten und stärker auf Werkstattbeiträge/Förder-Mitgliedschaften setzen, (b) Erfolgsbeitrag transparent verpflichtend machen (mit Risiko: Marktplatz-Wahrnehmung), (c) ein Coworking- oder Stiftungs-Partner deckt den Differenzbetrag.
+
+Annahme v0.3-3: Plattform bleibt rechtlich keine Vermittlerin
+
+Wir nehmen an, dass eine reine Sichtbarkeitsbühne ohne Vertrags-, Zahlungs- oder Equity-Vermittlung rechtlich nicht als Vermittlungsplattform gilt.
+
+Test:
+
+* In Phase 0 lokale Anwält:in (Hamburg, Plattform-/Medienrecht) für 2–3 Stunden buchen, das Modell vorstellen.
+* Klärung: DSA-Pflichten, Steuerpflichten, evtl. Maklerrecht-Berührungspunkte, Datenschutz-Implikationen Förderprofile.
+
+Wenn das Modell rechtliche Pflichten auslöst:
+
+Anpassen, bevor die Bedarfsseite live geht. Notfalls Bedarfsseite weiter im Notion-/Telefonat-Modus betreiben und Plattformteil nur für Macher:innen-Seite bauen.
+
+⸻
+
+31. Was v0.3 NICHT ist
+
+Damit kein Missverständnis entsteht, hier explizit:
+
+* v0.3 macht Werkzirkel nicht zu einer Freelancer-Plattform.
+* v0.3 führt keine Provision ein.
+* v0.3 führt keinen Suchschlitz „Macher:innen suchen" ein.
+* v0.3 macht Werkzirkel nicht zu einer Investoren-Plattform.
+* v0.3 erlaubt keine Equity-Vermittlung über die Plattform.
+* v0.3 erlaubt keine Direktnachrichten an Bedarfsträger:innen oder Förder:innen.
+* v0.3 ersetzt nicht die Werkstatt-Kultur durch Akquise-Logik. Die Werkstatt-Kultur ist Vorbedingung — Bedarfsseite kommt obendrauf, nicht stattdessen.
+
+Wenn auch nur einer dieser Punkte versehentlich aufweicht — durch ein Feature, eine Sprachregelung, eine Marketing-Aktion — ist das ein Verstoß gegen v0.3 und muss zurückgenommen werden.

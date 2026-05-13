@@ -1,0 +1,1399 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Werkzirkel - Gemeinsam digitale Produkte bauen</title>
+  <meta name="description" content="Werkzirkel bringt unabhängige digitale Macher:innen in deiner Stadt zusammen - zum Austauschen, Testen, Lernen und Vorankommen." />
+  <style>
+    :root {
+      --bg:      oklch(99% 0.002 240);
+      --surface: oklch(100% 0 0);
+      --fg:      oklch(18% 0.012 250);
+      --muted:   oklch(54% 0.012 250);
+      --border:  oklch(92% 0.005 250);
+      --accent:  oklch(58% 0.18 255);
+
+      --font-display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+      --font-body:    -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+
+      --wrap: 1180px;
+      --radius: 8px;
+      --hairline: 1px solid var(--border);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(180deg, color-mix(in oklch, var(--bg) 86%, var(--accent) 14%) 0, var(--bg) 420px);
+      color: var(--fg);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.55;
+      letter-spacing: 0;
+      text-rendering: optimizeLegibility;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .page-shell {
+      min-height: 100vh;
+    }
+
+    .wrap {
+      width: min(100% - 48px, var(--wrap));
+      margin: 0 auto;
+    }
+
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: var(--hairline);
+      background: color-mix(in oklch, var(--surface) 82%, transparent);
+      backdrop-filter: blur(18px);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 68px;
+      gap: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .brand-mark {
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--fg);
+      border-radius: 7px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+      background: var(--surface);
+    }
+
+    .brand-mark span {
+      border: 1px solid var(--fg);
+      border-width: 0 1px 1px 0;
+    }
+
+    .brand-mark span:nth-child(2) {
+      background: var(--accent);
+      border-right: 0;
+    }
+
+    .brand-mark span:nth-child(3) {
+      border-bottom: 0;
+    }
+
+    .brand-mark span:nth-child(4) {
+      border-right: 0;
+      border-bottom: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      color: var(--muted);
+      font-size: 14px;
+      letter-spacing: 0;
+    }
+
+    .nav-links a {
+      transition: color 180ms ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--fg);
+    }
+
+    .nav-cta,
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      border-radius: var(--radius);
+      border: var(--hairline);
+      padding: 0 18px;
+      font-size: 14px;
+      font-weight: 560;
+      letter-spacing: 0.02em;
+      transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+      white-space: nowrap;
+    }
+
+    .nav-cta {
+      background: var(--fg);
+      border-color: var(--fg);
+      color: var(--surface);
+    }
+
+    .button.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--surface);
+    }
+
+    .button.secondary {
+      background: color-mix(in oklch, var(--surface) 78%, transparent);
+      color: var(--fg);
+    }
+
+    .nav-cta:hover,
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .nav-cta:focus-visible,
+    .button:focus-visible,
+    .city-chip:focus-visible,
+    .waitlist input:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    .hero {
+      padding: 82px 0 84px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(430px, 1.05fr);
+      align-items: center;
+      gap: 64px;
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 650;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    .stat-value {
+      font-family: var(--font-display);
+      letter-spacing: -0.03em;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 10ch;
+      font-size: 76px;
+      line-height: 0.94;
+      font-weight: 680;
+    }
+
+    .hero-copy {
+      margin: 26px 0 0;
+      max-width: 59ch;
+      color: var(--muted);
+      font-size: 20px;
+      line-height: 1.45;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .city-picker {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 28px;
+    }
+
+    .city-chip {
+      min-height: 38px;
+      border-radius: 999px;
+      border: var(--hairline);
+      background: color-mix(in oklch, var(--surface) 80%, transparent);
+      color: var(--muted);
+      padding: 0 13px;
+      cursor: pointer;
+      transition: color 180ms ease, border-color 180ms ease, background 180ms ease;
+    }
+
+    .city-chip[aria-pressed="true"] {
+      border-color: var(--fg);
+      background: var(--surface);
+      color: var(--fg);
+    }
+
+    .city-chip:hover {
+      color: var(--fg);
+    }
+
+    .product-frame {
+      border: var(--hairline);
+      border-radius: 18px;
+      background: var(--surface);
+      box-shadow: 0 22px 80px color-mix(in oklch, var(--fg) 12%, transparent);
+      overflow: hidden;
+    }
+
+    .frame-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 54px;
+      border-bottom: var(--hairline);
+      padding: 0 16px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .window-dots {
+      display: flex;
+      gap: 7px;
+    }
+
+    .window-dots span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: var(--hairline);
+      background: var(--bg);
+    }
+
+    .frame-body {
+      display: grid;
+      grid-template-columns: 164px 1fr;
+      min-height: 486px;
+    }
+
+    .mock-sidebar {
+      border-right: var(--hairline);
+      padding: 18px 14px;
+      background: color-mix(in oklch, var(--bg) 74%, var(--surface));
+    }
+
+    .sidebar-title {
+      margin: 0 0 16px;
+      color: var(--fg);
+      font-size: 13px;
+      font-weight: 660;
+      letter-spacing: 0.02em;
+    }
+
+    .side-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 32px;
+      margin: 2px 0;
+      border-radius: 7px;
+      padding: 0 8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .side-item.active {
+      background: var(--surface);
+      color: var(--fg);
+      box-shadow: inset 0 0 0 1px var(--border);
+    }
+
+    .side-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--border);
+    }
+
+    .side-item.active .side-dot {
+      background: var(--fg);
+    }
+
+    .mock-main {
+      padding: 20px;
+    }
+
+    .mock-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .mock-title {
+      margin: 0 0 6px;
+      font-size: 22px;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .mock-sub {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      border-radius: 999px;
+      border: var(--hairline);
+      padding: 0 10px;
+      color: var(--fg);
+      background: color-mix(in oklch, var(--bg) 70%, var(--surface));
+      font-size: 12px;
+      font-weight: 620;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+
+    .mock-grid {
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+      gap: 14px;
+    }
+
+    .mock-card {
+      border: var(--hairline);
+      border-radius: 10px;
+      background: var(--surface);
+      padding: 14px;
+    }
+
+    .mock-card.wide {
+      grid-column: 1 / -1;
+    }
+
+    .mock-label {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 650;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .mock-card strong {
+      display: block;
+      font-size: 16px;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+
+    .mock-card p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .task-list {
+      display: grid;
+      gap: 9px;
+      margin-top: 12px;
+    }
+
+    .task {
+      display: grid;
+      grid-template-columns: 20px 1fr auto;
+      gap: 8px;
+      align-items: center;
+      min-height: 34px;
+      border-top: var(--hairline);
+      padding-top: 9px;
+      font-size: 13px;
+    }
+
+    .task:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .check {
+      width: 18px;
+      height: 18px;
+      border-radius: 5px;
+      border: var(--hairline);
+      display: grid;
+      place-items: center;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .task small {
+      color: var(--muted);
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .section {
+      padding: 88px 0;
+      border-top: var(--hairline);
+    }
+
+    .section.compact {
+      padding: 64px 0;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.75fr) minmax(300px, 0.45fr);
+      gap: 52px;
+      align-items: end;
+      margin-bottom: 36px;
+    }
+
+    h2 {
+      margin: 0;
+      max-width: 13ch;
+      font-size: 50px;
+      line-height: 1;
+      font-weight: 660;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.5;
+      max-width: 56ch;
+    }
+
+    .principle-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: var(--hairline);
+      border-radius: 14px;
+      overflow: hidden;
+      background: var(--surface);
+    }
+
+    .principle-card {
+      min-height: 220px;
+      padding: 28px;
+      border-right: var(--hairline);
+    }
+
+    .principle-card:last-child {
+      border-right: 0;
+    }
+
+    .principle-card .no {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      margin-bottom: 32px;
+      border-radius: 50%;
+      border: var(--hairline);
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+      font-size: 13px;
+    }
+
+    .principle-card h3,
+    .format-card h3,
+    .city-card h3,
+    .audience-card h3 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.12;
+      font-weight: 620;
+      letter-spacing: -0.02em;
+    }
+
+    .principle-card p,
+    .format-card p,
+    .city-card p,
+    .audience-card p {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .format-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .format-card,
+    .city-card,
+    .audience-card {
+      border: var(--hairline);
+      border-radius: 14px;
+      background: var(--surface);
+      padding: 24px;
+    }
+
+    .format-card {
+      min-height: 260px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .format-card .meta {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 650;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .product-section {
+      background: var(--surface);
+    }
+
+    .product-split {
+      display: grid;
+      grid-template-columns: minmax(0, 0.72fr) minmax(360px, 0.58fr);
+      gap: 56px;
+      align-items: start;
+    }
+
+    .work-card {
+      border: var(--hairline);
+      border-radius: 18px;
+      background: var(--surface);
+      overflow: hidden;
+      box-shadow: 0 18px 60px color-mix(in oklch, var(--fg) 8%, transparent);
+    }
+
+    .work-cover {
+      display: grid;
+      place-items: center;
+      min-height: 188px;
+      border-bottom: var(--hairline);
+      background:
+        linear-gradient(90deg, transparent 49%, var(--border) 49% 51%, transparent 51%),
+        linear-gradient(0deg, transparent 49%, var(--border) 49% 51%, transparent 51%),
+        color-mix(in oklch, var(--bg) 72%, var(--surface));
+      background-size: 52px 52px;
+    }
+
+    .work-logo {
+      width: 92px;
+      height: 92px;
+      border-radius: 24px;
+      border: var(--hairline);
+      background: var(--surface);
+      display: grid;
+      place-items: center;
+      color: var(--fg);
+      font-size: 34px;
+      font-weight: 680;
+      letter-spacing: -0.04em;
+    }
+
+    .work-body {
+      padding: 24px;
+    }
+
+    .work-body h3 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+    }
+
+    .work-body p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .work-meta {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .meta-box {
+      border: var(--hairline);
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .meta-box span {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 650;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .meta-box strong {
+      display: block;
+      margin-top: 5px;
+      font-size: 14px;
+      line-height: 1.25;
+    }
+
+    .explain-list {
+      display: grid;
+      gap: 20px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .explain-list li {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 16px;
+      align-items: start;
+      border-top: var(--hairline);
+      padding-top: 20px;
+    }
+
+    .explain-list li:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .step-number {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: var(--hairline);
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      font-size: 13px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .explain-list strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 18px;
+      letter-spacing: -0.01em;
+    }
+
+    .explain-list p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .city-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+
+    .city-card {
+      min-height: 156px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .city-card h3 {
+      font-size: 21px;
+    }
+
+    .city-card .state {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 650;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .audience-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .audience-card ul {
+      margin: 18px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .audience-card li {
+      display: flex;
+      gap: 9px;
+      align-items: baseline;
+      color: var(--fg);
+      font-size: 15px;
+    }
+
+    .audience-card li::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--border);
+      flex: 0 0 auto;
+      transform: translateY(-1px);
+    }
+
+    .flow-band {
+      border: var(--hairline);
+      border-radius: 18px;
+      background: var(--fg);
+      color: var(--surface);
+      padding: 34px;
+      overflow: hidden;
+    }
+
+    .flow-band .eyebrow {
+      color: color-mix(in oklch, var(--surface) 64%, transparent);
+    }
+
+    .flow-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      margin-top: 22px;
+      background: color-mix(in oklch, var(--surface) 18%, transparent);
+      border: 1px solid color-mix(in oklch, var(--surface) 18%, transparent);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .flow-step {
+      background: var(--fg);
+      min-height: 142px;
+      padding: 20px;
+    }
+
+    .flow-step span {
+      color: color-mix(in oklch, var(--surface) 54%, transparent);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .flow-step strong {
+      display: block;
+      margin-top: 26px;
+      font-size: 24px;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    .cta-section {
+      padding: 92px 0 104px;
+    }
+
+    .cta-box {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(360px, 0.62fr);
+      gap: 40px;
+      align-items: end;
+      border: var(--hairline);
+      border-radius: 18px;
+      background: var(--surface);
+      padding: 38px;
+      box-shadow: 0 18px 70px color-mix(in oklch, var(--fg) 8%, transparent);
+    }
+
+    .cta-box h2 {
+      max-width: 12ch;
+      font-size: 58px;
+    }
+
+    .cta-box p {
+      max-width: 58ch;
+      color: var(--muted);
+      font-size: 18px;
+      margin: 22px 0 0;
+    }
+
+    .waitlist {
+      display: grid;
+      gap: 10px;
+    }
+
+    .waitlist label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 650;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .waitlist-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+    }
+
+    .waitlist input {
+      min-height: 48px;
+      border: var(--hairline);
+      border-radius: var(--radius);
+      background: var(--bg);
+      color: var(--fg);
+      padding: 0 14px;
+    }
+
+    .site-footer {
+      border-top: var(--hairline);
+      padding: 28px 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 16px;
+    }
+
+    @media (max-width: 1060px) {
+      .hero-grid,
+      .product-split,
+      .section-head,
+      .cta-box {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-grid {
+        gap: 42px;
+      }
+
+      .format-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .city-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 760px) {
+      .wrap {
+        width: min(100% - 28px, var(--wrap));
+      }
+
+      .nav-inner {
+        min-height: 62px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .nav-cta {
+        min-height: 40px;
+        padding: 0 13px;
+      }
+
+      .hero {
+        padding: 54px 0 60px;
+      }
+
+      h1 {
+        max-width: 9ch;
+        font-size: 52px;
+        line-height: 0.97;
+      }
+
+      .hero-copy,
+      .section-head p,
+      .cta-box p {
+        font-size: 17px;
+      }
+
+      .frame-body {
+        grid-template-columns: 1fr;
+      }
+
+      .mock-sidebar {
+        display: flex;
+        gap: 6px;
+        overflow-x: auto;
+        border-right: 0;
+        border-bottom: var(--hairline);
+      }
+
+      .sidebar-title {
+        display: none;
+      }
+
+      .side-item {
+        white-space: nowrap;
+        flex: 0 0 auto;
+      }
+
+      .mock-grid,
+      .principle-grid,
+      .format-grid,
+      .city-grid,
+      .audience-grid,
+      .flow-row,
+      .waitlist-row,
+      .work-meta {
+        grid-template-columns: 1fr;
+      }
+
+      .principle-card {
+        border-right: 0;
+        border-bottom: var(--hairline);
+      }
+
+      .principle-card:last-child {
+        border-bottom: 0;
+      }
+
+      .section {
+        padding: 64px 0;
+      }
+
+      h2,
+      .cta-box h2 {
+        max-width: 13ch;
+        font-size: 38px;
+        line-height: 1.04;
+      }
+
+      .cta-box,
+      .flow-band {
+        padding: 24px;
+      }
+
+      .footer-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 460px) {
+      .brand {
+        font-size: 16px;
+      }
+
+      .brand-mark {
+        width: 26px;
+        height: 26px;
+      }
+
+      h1 {
+        font-size: 44px;
+      }
+
+      .button,
+      .nav-cta {
+        width: 100%;
+      }
+
+      .hero-actions {
+        align-items: stretch;
+      }
+
+      .product-frame {
+        margin-inline: -4px;
+        border-radius: 14px;
+      }
+
+      .mock-header,
+      .task {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <nav class="site-nav" aria-label="Hauptnavigation">
+      <div class="wrap nav-inner">
+        <a href="#top" class="brand" aria-label="Werkzirkel Start">
+          <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+          <span>Werkzirkel</span>
+        </a>
+        <div class="nav-links" aria-label="Bereiche">
+          <a href="#formate">Formate</a>
+          <a href="#werke">Werke</a>
+          <a href="#kreise">Kreise</a>
+          <a href="#regeln">Regeln</a>
+        </div>
+        <a class="nav-cta" href="#zugang">Frühen Zugang anfragen</a>
+      </div>
+    </nav>
+
+    <header class="hero" id="top">
+      <div class="wrap hero-grid">
+        <div>
+          <p class="eyebrow">Deutschsprachige Arbeitsgemeinschaft</p>
+          <h1 data-od-id="headline">Baue digitale Produkte nicht allein.</h1>
+          <p class="hero-copy">
+            Werkzirkel bringt unabhängige digitale Macher:innen in deiner Stadt zusammen -
+            zum Austauschen, Testen, Lernen und Vorankommen. Lokal, verbindlich und ohne
+            endlosen Nachrichtenstrom.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#zugang">Kreis vormerken</a>
+            <a class="button secondary" href="#formate">Formate ansehen</a>
+          </div>
+          <div class="city-picker" aria-label="Startkreise">
+            <button class="city-chip" type="button" aria-pressed="true">Hamburg</button>
+            <button class="city-chip" type="button" aria-pressed="false">Berlin</button>
+            <button class="city-chip" type="button" aria-pressed="false">München</button>
+            <button class="city-chip" type="button" aria-pressed="false">Wien</button>
+            <button class="city-chip" type="button" aria-pressed="false">Zürich</button>
+          </div>
+        </div>
+
+        <div class="product-frame" aria-label="Produktvorschau Werkzirkel Hamburg" data-od-id="product-mockup">
+          <div class="frame-topbar">
+            <div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+            <span>Werkzirkel Hamburg</span>
+          </div>
+          <div class="frame-body">
+            <aside class="mock-sidebar" aria-label="Bereiche im Produkt">
+              <p class="sidebar-title">Kreis</p>
+              <div class="side-item active"><span class="side-dot"></span><span>Übersicht</span></div>
+              <div class="side-item"><span class="side-dot"></span><span>Werke</span></div>
+              <div class="side-item"><span class="side-dot"></span><span>Prüfrunden</span></div>
+              <div class="side-item"><span class="side-dot"></span><span>Termine</span></div>
+              <div class="side-item"><span class="side-dot"></span><span>Hilfegesuche</span></div>
+            </aside>
+            <main class="mock-main">
+              <div class="mock-header">
+                <div>
+                  <h2 class="mock-title">Nächster Arbeitskreis</h2>
+                  <p class="mock-sub">Für Menschen mit echten digitalen Werken, frühen Versionen und konkreten Fragen.</p>
+                </div>
+                <span class="status-pill">Startkreis</span>
+              </div>
+              <div class="mock-grid">
+                <article class="mock-card">
+                  <p class="mock-label">Prüfrunde</p>
+                  <strong>Bezahlstrecke einer kleinen App testen</strong>
+                  <p>Gesucht: drei ehrliche Testpersonen aus Hamburg, die den ersten Kaufweg prüfen.</p>
+                </article>
+                <article class="mock-card">
+                  <p class="mock-label">Schauabend</p>
+                  <strong>Fünf unfertige Werke, je acht Minuten</strong>
+                  <p>Zeigen, was da ist. Keine Bühne für Selbstdarstellung.</p>
+                </article>
+                <article class="mock-card wide">
+                  <p class="mock-label">Werkstand</p>
+                  <strong>Erst zeigen. Dann testen. Dann verbessern. Dann sichtbar machen.</strong>
+                  <div class="task-list">
+                    <div class="task"><span class="check">✓</span><span>Werkseite angelegt</span><small>erledigt</small></div>
+                    <div class="task"><span class="check">2</span><span>Prüffrage formulieren</span><small>heute</small></div>
+                    <div class="task"><span class="check">3</span><span>Schauabend anfragen</span><small>offen</small></div>
+                  </div>
+                </article>
+              </div>
+            </main>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="section compact" id="regeln">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Nicht noch ein soziales Netzwerk.</h2>
+          <p>
+            Werkzirkel verkauft keinen Kontakt um des Kontakts willen. Die Plattform ist auf
+            Fortschritt gebaut: konkrete Werke, konkrete Fragen, konkrete nächste Schritte.
+          </p>
+        </div>
+        <div class="principle-grid">
+          <article class="principle-card">
+            <span class="no">01</span>
+            <h3>Kein endloser Nachrichtenstrom.</h3>
+            <p>Statt Rauschen gibt es begrenzte Prüfrunden, sichtbare Werkstände und regionale Termine.</p>
+          </article>
+          <article class="principle-card">
+            <span class="no">02</span>
+            <h3>Keine Applaus-Jagd.</h3>
+            <p>Ein Werk wird nicht nach Applaus sortiert, sondern nach Status, Bedarf und nächstem Schritt.</p>
+          </article>
+          <article class="principle-card">
+            <span class="no">03</span>
+            <h3>Keine Gründerbühne.</h3>
+            <p>Unfertige Produkte dürfen unfertig sein. Entscheidend ist, dass andere sie ehrlich prüfen können.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="formate">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Formate, die Arbeit auslösen.</h2>
+          <p>
+            Jeder Kreis hat einfache, wiederkehrende Formate. Sie halten den Austausch klein genug
+            für Vertrauen und konkret genug für echte Verbesserung.
+          </p>
+        </div>
+        <div class="format-grid" data-od-id="formats">
+          <article class="format-card">
+            <div>
+              <span class="meta">Testen</span>
+              <h3>Prüfrunde</h3>
+              <p>Eine Person bringt ein Werk und eine klare Prüffrage mit. Andere testen strukturiert und geben verwertbare Rückmeldung.</p>
+            </div>
+            <span class="status-pill">Geben und nehmen</span>
+          </article>
+          <article class="format-card">
+            <div>
+              <span class="meta">Zeigen</span>
+              <h3>Schauabend</h3>
+              <p>Lokaler Schauabend ohne Bühnenzwang: kurze Werkstände, offene Baustellen, direkte Anschlussfragen.</p>
+            </div>
+            <span class="status-pill">Vor Ort</span>
+          </article>
+          <article class="format-card">
+            <div>
+              <span class="meta">Bauen</span>
+              <h3>Baurunde</h3>
+              <p>Gemeinsames Arbeiten digital oder an einem Ort. Ruhig, verbindlich, mit Ziel für die nächsten Stunden.</p>
+            </div>
+            <span class="status-pill">Fokuszeit</span>
+          </article>
+          <article class="format-card">
+            <div>
+              <span class="meta">Helfen</span>
+              <h3>Hilfegesuch</h3>
+              <p>Eine konkrete Bitte statt vager Suche: Text prüfen, Nutzerfluss testen, Zahlungsfrage klären, erste Käufer:innen verstehen.</p>
+            </div>
+            <span class="status-pill">Konkret</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section product-section" id="werke">
+      <div class="wrap product-split">
+        <div class="work-card" data-od-id="work-page">
+          <div class="work-cover">
+            <div class="work-logo" aria-hidden="true">W</div>
+          </div>
+          <div class="work-body">
+            <span class="status-pill">Werkstand: frühe Version</span>
+            <h3>Ein Werk vor dem ersten echten Marktgespräch</h3>
+            <p>
+              Jede Werkseite zeigt knapp, was gebaut wird, für wen es gedacht ist,
+              welcher Fortschritt sichtbar ist und welche Hilfe gerade gebraucht wird.
+            </p>
+            <div class="work-meta">
+              <div class="meta-box">
+                <span>Bedarf</span>
+                <strong>Fünf Testpersonen für den ersten Ablauf</strong>
+              </div>
+              <div class="meta-box">
+                <span>Nächster Schritt</span>
+                <strong>Prüfrunde im eigenen Kreis anlegen</strong>
+              </div>
+              <div class="meta-box">
+                <span>Kreis</span>
+                <strong>Hamburg</strong>
+              </div>
+              <div class="meta-box">
+                <span>Sprache</span>
+                <strong>Deutsch</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <p class="eyebrow">Werke statt Werkpässe</p>
+          <h2>Der Kern ist nicht, wer du bist. Sondern was du baust.</h2>
+          <ul class="explain-list">
+            <li>
+              <span class="step-number">01</span>
+              <div>
+                <strong>Werk anlegen</strong>
+                <p>Eine App, ein Werkzeug, ein digitales Vorhaben oder ein Nebenprodukt bekommt eine klare Seite.</p>
+              </div>
+            </li>
+            <li>
+              <span class="step-number">02</span>
+              <div>
+                <strong>Werkstand sichtbar machen</strong>
+                <p>Nicht perfekt wirken, sondern zeigen, ob etwas Idee, Prototyp, frühe Version oder laufendes Produkt ist.</p>
+              </div>
+            </li>
+            <li>
+              <span class="step-number">03</span>
+              <div>
+                <strong>Konkrete Hilfe erbitten</strong>
+                <p>Wer Rückmeldung will, beschreibt die Frage. Wer Hilfe bekommt, unterstützt auch andere Werke im Kreis.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="kreise">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>DACH-weit gedacht. Lokal begonnen.</h2>
+          <p>
+            Der Einstieg erfolgt über regionale Kreise. So entstehen Beziehungen, die nicht
+            im Postfach enden, sondern in Prüfrunden, Baurunden und echten Treffen.
+          </p>
+        </div>
+        <div class="city-grid" data-od-id="city-grid">
+          <article class="city-card">
+            <span class="state">Startkreis</span>
+            <h3>Werkzirkel Hamburg</h3>
+            <p>Für den ersten regionalen Kreis.</p>
+          </article>
+          <article class="city-card">
+            <span class="state">Startkreis</span>
+            <h3>Werkzirkel Berlin</h3>
+            <p>Für unabhängige Produktmacher:innen vor Ort.</p>
+          </article>
+          <article class="city-card">
+            <span class="state">Startkreis</span>
+            <h3>Werkzirkel München</h3>
+            <p>Für kleine Teams, unabhängige Entwickler:innen und Nebenprodukte.</p>
+          </article>
+          <article class="city-card">
+            <span class="state">Nächster Kreis</span>
+            <h3>Werkzirkel Wien</h3>
+            <p>Bereit, sobald genug echte Werke zusammenkommen.</p>
+          </article>
+          <article class="city-card">
+            <span class="state">Nächster Kreis</span>
+            <h3>Werkzirkel Zürich</h3>
+            <p>Für DACH-weite Nähe ohne globale Beliebigkeit.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section compact">
+      <div class="wrap">
+        <div class="flow-band" data-od-id="principle-flow">
+          <p class="eyebrow">Leitsatz</p>
+          <div class="flow-row">
+            <div class="flow-step"><span>01</span><strong>Erst zeigen.</strong></div>
+            <div class="flow-step"><span>02</span><strong>Dann testen.</strong></div>
+            <div class="flow-step"><span>03</span><strong>Dann verbessern.</strong></div>
+            <div class="flow-step"><span>04</span><strong>Dann sichtbar machen.</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-label="Zielgruppe">
+      <div class="wrap audience-grid">
+        <article class="audience-card">
+          <p class="eyebrow">Dafür gebaut</p>
+          <h3>Für Menschen mit konkretem Produktinteresse.</h3>
+          <ul>
+            <li>unabhängige Entwickler:innen und App-Macher:innen</li>
+            <li>SaaS-Macher:innen und Solo-Macher:innen</li>
+            <li>Freischaffende mit eigenen digitalen Produkten</li>
+            <li>No-Code-/Low-Code-Macher:innen mit echtem Vorhaben</li>
+            <li>UX-/UI-Designer:innen mit eigenen Ideen</li>
+          </ul>
+        </article>
+        <article class="audience-card">
+          <p class="eyebrow">Bewusst nicht dafür</p>
+          <h3>Kein Ort für reine Selbstdarstellung.</h3>
+          <ul>
+            <li>keine Jobbörse</li>
+            <li>keine Kontaktanfragen-Sammelstelle für Agenturen</li>
+            <li>keine investorengetriebene Gründerbühne</li>
+            <li>keine Krypto-, Trend- oder Schneeballsysteme</li>
+            <li>keine rein englischsprachige Produktgruppe</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="cta-section" id="zugang">
+      <div class="wrap cta-box" data-od-id="waitlist">
+        <div>
+          <p class="eyebrow">Erste Kreise</p>
+          <h2>Wähle deinen Werkzirkel.</h2>
+          <p>
+            Hamburg, Berlin und München starten als erste regionale Kreise. Wien und Zürich folgen,
+            sobald dort genug digitale Werke und verbindliche Macher:innen zusammenkommen.
+          </p>
+        </div>
+        <form class="waitlist" action="#" method="get">
+          <label for="mail">Frühen Zugang anfragen</label>
+          <div class="waitlist-row">
+            <input id="mail" name="mail" type="email" inputmode="email" autocomplete="email" placeholder="deine-mail@beispiel.de" aria-label="E-Mail-Adresse" />
+            <button class="button primary" type="submit">Vormerken</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <span>Werkzirkel - Gemeinsam digitale Produkte bauen.</span>
+        <div class="footer-links" aria-label="Fußnavigation">
+          <a href="#formate">Formate</a>
+          <a href="#werke">Werke</a>
+          <a href="#kreise">Kreise</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const cityButtons = Array.from(document.querySelectorAll('.city-chip'));
+    cityButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        cityButtons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+      });
+    });
+  </script>
+</body>
+</html>

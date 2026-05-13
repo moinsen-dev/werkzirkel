@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import './landingpages.css';
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.APP_URL ?? 'http://localhost:3000'),

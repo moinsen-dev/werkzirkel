@@ -11,7 +11,6 @@ import { env } from '../env';
  * Connection-Pool-Leak entsteht.
  */
 declare global {
-  // eslint-disable-next-line no-var
   var __werkzirkelDb: ReturnType<typeof postgres> | undefined;
 }
 

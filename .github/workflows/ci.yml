@@ -1,0 +1,101 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  quality:
+    name: Lint · Typecheck · Test · Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: werkzirkel
+          POSTGRES_PASSWORD: werkzirkel_ci
+          POSTGRES_DB: werkzirkel
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U werkzirkel"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      DATABASE_URL: postgresql://werkzirkel:werkzirkel_ci@localhost:5432/werkzirkel
+      BETTER_AUTH_SECRET: ci-secret-thirtytwo-bytes-minimum-pad
+      BETTER_AUTH_URL: http://localhost:3000
+      APP_URL: http://localhost:3000
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.1.1
+          run_install: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Format check
+        run: pnpm format:check
+        continue-on-error: true # weich, bis Codebase formatiert ist
+
+      - name: DB-Migration (Dry-Run)
+        run: pnpm db:migrate
+        working-directory: apps/web
+
+      - name: Unit & Integration Tests
+        run: pnpm test
+
+      - name: Production Build
+        run: pnpm build
+
+  docker:
+    name: Docker-Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: quality
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build (no push)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: false
+          tags: werkzirkel:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

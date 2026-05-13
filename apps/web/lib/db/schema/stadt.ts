@@ -1,4 +1,4 @@
-import { pgTable, text, integer, timestamp, index } from 'drizzle-orm/pg-core';
+import { pgTable, text, integer, index } from 'drizzle-orm/pg-core';
 import { erstelltAm, aktualisiertAm } from './_helpers';
 import type { StadtStatus } from './enums';
 

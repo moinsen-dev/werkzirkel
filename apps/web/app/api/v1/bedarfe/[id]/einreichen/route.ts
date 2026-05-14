@@ -19,9 +19,9 @@
  * PRD-Referenz: §F-602, §F-603, §14.3, §11A.
  */
 
-import { and, eq, gt, isNull, lt, or } from 'drizzle-orm';
+import { and, arrayContains, eq, gt, isNull, lt, ne, or } from 'drizzle-orm';
 import { db } from '@/lib/db';
-import { auditLog, bedarf, werkstattbeitrag } from '@/lib/db/schema';
+import { auditLog, bedarf, nutzer, werkstattbeitrag } from '@/lib/db/schema';
 import { getSessionFromRequest } from '@/lib/auth/session';
 import { rejectIfBadOrigin } from '@/lib/auth/csrf';
 import { sendMail } from '@/lib/email/send';
@@ -120,7 +120,7 @@ export async function POST(req: Request, ctx: RouteContext): Promise<Response> {
     .returning();
   const updatedRow = updated[0]!;
 
-  // T-301 Bestaetigung
+  // T-301 Bestaetigung an die Bedarfstraeger:in.
   try {
     await sendMail({
       to: sess.nutzer.email,
@@ -134,6 +134,41 @@ export async function POST(req: Request, ctx: RouteContext): Promise<Response> {
     });
   } catch (err) {
     console.error('[bedarf-einreichen] sendMail T-301 failed:', err);
+  }
+
+  // T-304 Push-Notification an alle Kurator:innen der Stadt. Ergänzt das
+  // bestehende Pull-Postfach (PRD §11A.S8) — ohne diese Mail merkt der
+  // Kurator nur durch aktives Reinschauen, dass etwas zu prüfen ist.
+  try {
+    const kuratoren = await db
+      .select({ id: nutzer.id, email: nutzer.email })
+      .from(nutzer)
+      .where(
+        and(
+          eq(nutzer.stadtId, row.stadtId),
+          arrayContains(nutzer.rollen, ['kurator']),
+          eq(nutzer.status, 'aktiv'),
+          ne(nutzer.id, sess.nutzerId),
+        ),
+      );
+    for (const k of kuratoren) {
+      try {
+        await sendMail({
+          to: k.email,
+          nutzerId: k.id,
+          template: 'T-304',
+          props: {
+            titel: row.titel,
+            sprachCheckTreffer: sprache.treffer,
+            postfachUrl: `${APP_URL}/kurator/bedarfe-in-pruefung`,
+          },
+        });
+      } catch (err) {
+        console.error('[bedarf-einreichen] sendMail T-304 failed:', err);
+      }
+    }
+  } catch (err) {
+    console.error('[bedarf-einreichen] kurator-lookup failed:', err);
   }
 
   try {

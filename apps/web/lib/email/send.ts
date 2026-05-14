@@ -152,6 +152,11 @@ import {
   type BedarfAbgelehntProps,
 } from './templates/t-303-bedarf-abgelehnt';
 import {
+  KuratorNeuerBedarfZurPruefung,
+  T304_BETREFF,
+  type KuratorNeuerBedarfZurPruefungProps,
+} from './templates/t-304-kurator-neuer-bedarf-zur-pruefung';
+import {
   WerkangebotEingegangen,
   T201_BETREFF,
   type WerkangebotEingegangenProps,
@@ -198,6 +203,7 @@ export type MailTemplate =
   | { template: 'T-301'; props: BedarfEingereichtBestaetigungProps }
   | { template: 'T-302'; props: BedarfVeroeffentlichtProps }
   | { template: 'T-303'; props: BedarfAbgelehntProps }
+  | { template: 'T-304'; props: KuratorNeuerBedarfZurPruefungProps }
   | { template: 'T-201'; props: WerkangebotEingegangenProps }
   | { template: 'T-202'; props: WerkangebotStatusGeaendertProps }
   | { template: 'T-801'; props: StadtDigestWoechentlichProps };
@@ -363,6 +369,11 @@ function buildEmail(
         element: React.createElement(BedarfAbgelehnt, opts.props),
         betreff: T303_BETREFF,
       };
+    case 'T-304':
+      return {
+        element: React.createElement(KuratorNeuerBedarfZurPruefung, opts.props),
+        betreff: T304_BETREFF,
+      };
     case 'T-201':
       return {
         element: React.createElement(WerkangebotEingegangen, opts.props),
@@ -474,6 +485,29 @@ export async function sendMail(opts: SendMailOpts): Promise<SendMailResult> {
         anhaenge: attachments?.map((a) => a.filename) ?? [],
       }),
     );
+    // Optional JSONL-Sink (Dev-only, gated). Schreibt die volle Mail inkl.
+    // text/html in eine Datei — fuer agentic test-gate autorun, der den
+    // Magic-Link aus dem Mail-Body lesen muss. NIE in Produktion einschalten.
+    const sink = process.env.EMAIL_MOCK_SINK?.trim();
+    if (sink && process.env.NODE_ENV !== 'production') {
+      try {
+        const { appendFile } = await import('node:fs/promises');
+        await appendFile(
+          sink,
+          JSON.stringify({
+            timestamp: new Date().toISOString(),
+            to,
+            template: opts.template,
+            betreff,
+            nutzerId,
+            text,
+            html,
+          }) + '\n',
+        );
+      } catch {
+        // sink optional — silent fail
+      }
+    }
     await persistLog({
       nutzerId,
       to,

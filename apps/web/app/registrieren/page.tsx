@@ -71,7 +71,16 @@ async function registrierungAbschliessenAction(formData: FormData): Promise<void
 
   const klarname = String(formData.get('klarname') ?? '').trim();
   const organisation = String(formData.get('organisation') ?? '').trim();
+  const agbZugestimmt = formData.get('agb_zustimmung') === 'ja';
 
+  if (!agbZugestimmt) {
+    redirect(
+      `/registrieren?rolle=${rolle}&fehler=` +
+        encodeURIComponent(
+          'Bitte stimme den Werkstatt-Regeln und der AGB zu, bevor du fortfaehrst.',
+        ),
+    );
+  }
   if (klarname.length === 0) {
     redirect(
       `/registrieren?rolle=${rolle}&fehler=` +
@@ -221,6 +230,37 @@ export default async function RegistrierenPage(props: {
           <small style={{ color: 'var(--muted)' }}>
             Verein, Unternehmen, Stiftung, freiberuflich — was zutrifft.
           </small>
+        </div>
+
+        <div
+          style={{
+            display: 'flex',
+            gap: 8,
+            alignItems: 'flex-start',
+            padding: '10px 12px',
+            borderRadius: 10,
+            background: 'var(--surface-alt, #f6f6f1)',
+          }}
+        >
+          <input
+            type="checkbox"
+            id="agb_zustimmung"
+            name="agb_zustimmung"
+            value="ja"
+            required
+            style={{ marginTop: 4 }}
+          />
+          <label htmlFor="agb_zustimmung" style={{ fontSize: 14 }}>
+            Ich habe die{' '}
+            <Link href="/regeln" target="_blank" rel="noopener">
+              Werkstatt-Regeln
+            </Link>{' '}
+            und die{' '}
+            <Link href="/agb" target="_blank" rel="noopener">
+              AGB
+            </Link>{' '}
+            gelesen und stimme ihnen zu.
+          </label>
         </div>
 
         <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>

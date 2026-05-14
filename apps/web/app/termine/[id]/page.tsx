@@ -147,6 +147,29 @@ async function zaehleAngemeldet(terminId: string): Promise<number> {
   return rows[0]?.anzahl ?? 0;
 }
 
+/**
+ * Berechnet die 1-basierte Position einer Wartelisten-Anmeldung im FIFO.
+ * Reihenfolge: erstellt_am ASC (gleiche Logik wie der Hochrueck-Mechanismus).
+ * Liefert `null`, wenn die Anmeldung nicht auf der Warteliste steht.
+ */
+async function berechneWartelistenPosition(
+  terminId: string,
+  nutzerId: string,
+): Promise<number | null> {
+  const rows = await db.execute<{ position: number }>(sql`
+    SELECT position::int FROM (
+      SELECT nutzer_id,
+             row_number() OVER (ORDER BY erstellt_am ASC, id ASC) AS position
+        FROM termin_anmeldung
+       WHERE termin_id = ${terminId}
+         AND status = 'warteliste'
+    ) ranked
+    WHERE nutzer_id = ${nutzerId}
+    LIMIT 1
+  `);
+  return rows[0]?.position ?? null;
+}
+
 async function zaehleWarteliste(terminId: string): Promise<number> {
   const rows = await db
     .select({ anzahl: sql<number>`count(*)::int` })
@@ -686,6 +709,12 @@ export default async function TerminDetailPage({
     ? await ladeEigeneAnmeldung(id, sess.nutzerId)
     : null;
 
+  // Persönliche Wartelisten-Position (nur wenn auf der Warteliste).
+  const eigeneWartelistenPosition =
+    sess && eigeneAnmeldung?.status === 'warteliste'
+      ? await berechneWartelistenPosition(id, sess.nutzerId)
+      : null;
+
   const istVergangen = row.datumUhrzeit.getTime() < Date.now();
   const istAbgesagt = row.status === 'abgesagt';
   const istDurchgefuehrt = row.status === 'durchgefuehrt';
@@ -1173,6 +1202,18 @@ function ActionContent(props: ActionContentProps) {
           <p style={{ margin: 0 }}>
             <strong>{td.action_du_warteliste}</strong>
           </p>
+          {eigeneWartelistenPosition !== null ? (
+            <p
+              style={{
+                margin: '6px 0 0',
+                fontSize: 14,
+                color: 'var(--muted)',
+              }}
+            >
+              Position {eigeneWartelistenPosition} auf der Warteliste — du
+              rückst automatisch nach, sobald ein Platz frei wird.
+            </p>
+          ) : null}
           <div style={{ marginTop: 12 }}>
             <form action={stornierenAction}>
               <button type="submit" className="button secondary">

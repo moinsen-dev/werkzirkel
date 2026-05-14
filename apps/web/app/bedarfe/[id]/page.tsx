@@ -344,6 +344,11 @@ export default async function BedarfDetailPage({
                 kind="ok"
                 text="Vielen Dank! Deine Spende geht in die Werkstatt-Kasse Hamburg."
               />
+            ) : sp.erfolg === 'erfolgsbeitrag_uebersprungen' ? (
+              <Banner
+                kind="ok"
+                text="Vorgang abgeschlossen — kein Beitrag, alles gut. Werkzirkel nimmt keine Provision."
+              />
             ) : null}
             {sp.fehler === 'kein_zugriff' ? (
               <Banner kind="fehler" text="Du darfst das nicht setzen." />
@@ -662,7 +667,8 @@ function ErfolgsbeitragPanel({ bedarfId }: { bedarfId: string }) {
       </p>
       <p style={{ margin: '8px 0', fontSize: 13, color: 'var(--muted)' }}>
         Werkzirkel nimmt keine Provision. Wenn du magst, spende einen Anteil an
-        die Werkstatt-Kasse Hamburg — z.&nbsp;B. 5&nbsp;%.
+        die Werkstatt-Kasse Hamburg — z.&nbsp;B. 5&nbsp;%. Du kannst auch{' '}
+        <strong>ohne Beitrag fortfahren</strong>.
       </p>
       <form
         action={`/api/v1/bedarfe/${bedarfId}/erfolgsbeitrag`}
@@ -696,6 +702,25 @@ function ErfolgsbeitragPanel({ bedarfId }: { bedarfId: string }) {
         </label>
         <button type="submit" className="button primary" style={{ fontSize: 13 }}>
           Spenden
+        </button>
+      </form>
+      <form
+        action={`/api/v1/bedarfe/${bedarfId}/erfolgsbeitrag/ueberspringen`}
+        method="post"
+        style={{ marginTop: 10 }}
+      >
+        <button
+          type="submit"
+          className="button"
+          style={{
+            fontSize: 13,
+            width: '100%',
+            background: 'transparent',
+            border: '1px solid var(--border, #d6d3d1)',
+            color: 'inherit',
+          }}
+        >
+          Ohne Beitrag fortfahren
         </button>
       </form>
     </div>

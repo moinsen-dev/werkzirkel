@@ -73,6 +73,10 @@ export async function GET(req: Request): Promise<Response> {
 
   const existing = found[0];
   if (existing) {
+    // Gesperrte Konten: Defense-in-Depth gegen Bypass via vorab ausgestellte
+    // Tokens — selbst wenn requestMagicLink den Schutz greift, lehnt das
+    // Verify einen Token fuer ein gesperrtes Konto hart ab.
+    if (existing.status === 'gesperrt') return redirectInvalid();
     nutzerId = existing.id;
     // E-Mail-Verifikation nachziehen, falls noch nicht passiert.
     if (!existing.emailVerifiziertAm) {

@@ -96,13 +96,19 @@ export async function requestMagicLink(input: {
 
   // ── User-Enumeration-Schutz: bei unbekannter Email beim Login NO-OP ────
   const knownNutzer = await db
-    .select({ id: nutzer.id, anzeigename: nutzer.anzeigename })
+    .select({ id: nutzer.id, anzeigename: nutzer.anzeigename, status: nutzer.status })
     .from(nutzer)
     .where(eq(nutzer.email, normalizedEmail))
     .limit(1);
 
   if (input.zweck === 'login' && knownNutzer.length === 0) {
     // unbekannte Mail beim Login → leise Erfolgsmeldung, kein Token, keine Mail
+    return { ok: true };
+  }
+
+  // Gesperrte Konten: gleicher Schutz wie unbekannte Email — leiser NO-OP,
+  // damit `gesperrt`-Status nicht per Antwort-Unterschied geleakt wird.
+  if (knownNutzer[0]?.status === 'gesperrt') {
     return { ok: true };
   }
 

@@ -1,5 +1,6 @@
 ---
-acceptance_criteria: []
+acceptance_criteria:
+  - Plattform technisch verfügbar mit Public-Launch Hamburg gemäß PRD §42 Sprint 16
 created_at: 2026-05-13T09:42:25.267Z
 created_by: human
 edges:
@@ -21,7 +22,7 @@ summary: "Deutschsprachige lokale Hybrid-Plattform für unabhängige digitale Ma
 tags: []
 title: Werkzirkel v1.0 — Plattform bauen
 type: goal
-updated_at: 2026-05-13T09:42:25.267Z
+updated_at: 2026-05-14T05:38:17.085Z
 ---
 
 # Werkzirkel v1.0 — Plattform bauen

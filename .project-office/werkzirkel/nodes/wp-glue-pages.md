@@ -1,5 +1,6 @@
 ---
-acceptance_criteria: []
+acceptance_criteria:
+  - DB-Cleanup-Helper truncateAll in apps/web/tests/_helpers/db-cleanup.ts verfügbar
 created_at: 2026-05-13T11:30:47.685Z
 created_by: human
 edges:
@@ -22,7 +23,7 @@ summary: "Mini-Sprint: vier kleine Tasks, die nach der visuellen Sichtpruefung a
 tags: []
 title: "Glue-Pages: /anmelden, /uebersicht, deutsche 404, Test-DB-Cleanup"
 type: workpackage
-updated_at: 2026-05-13T12:16:16.046Z
+updated_at: 2026-05-14T05:38:17.379Z
 ---
 
 # Glue-Pages: /anmelden, /uebersicht, deutsche 404, Test-DB-Cleanup

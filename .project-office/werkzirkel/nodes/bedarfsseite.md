@@ -11,6 +11,14 @@ created_by: human
 edges:
   composed_of:
     - id: goal-root
+  decomposes_into:
+    - id: task-bedarfstraeger-foerderer-rolle-flow
+    - id: task-werkstattbeitrag-api
+    - id: task-bedarf-crud-api
+    - id: task-werkangebot-api
+    - id: task-foerderprofil-api
+    - id: task-bedarfsschau-integration
+    - id: task-bedarfsseite-pages
 id: bedarfsseite
 is_root: false
 open_questions: []
@@ -18,12 +26,12 @@ owner: null
 parent: goal-root
 private: false
 risks: []
-status: draft
+status: done
 summary: Die Nachfrageseite mit den fünf Schutzmechaniken aus PRD §11A. Bedarfsträger:innen-Rolle, Werkstattbeitrag-Pfade (Schauabend/Geld/Sachleistung), Bedarf-CRUD mit Sprach-Check, Werkangebote nicht öffentlich, Förderprofile mit Kurator:innen-Verifikation und Auto-Pause.
 tags: []
 title: "Bedarfsseite: Bedarfsträger:innen, Werkstattbeitrag, Werkangebote, Förderprofile"
 type: subproject
-updated_at: 2026-05-13T09:48:12.162Z
+updated_at: 2026-05-14T07:56:31.677Z
 ---
 
 ## Was hier gebaut wird

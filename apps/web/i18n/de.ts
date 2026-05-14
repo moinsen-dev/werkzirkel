@@ -480,6 +480,323 @@ export const de = {
       termin_vergangen: 'Dieser Termin ist bereits vorbei.',
       bereits_storniert: 'Deine Anmeldung ist bereits storniert.',
     },
+    bedarfsschau: {
+      sektion_bedarfe_titel: 'Bedarfe in dieser Schau',
+      sektion_bedarfe_leer:
+        'Für diese Bedarfsschau wurden noch keine Bedarfe ausgewählt.',
+      sektion_foerderprofile_titel: 'Förderprofile in dieser Schau',
+      sektion_foerderprofile_leer:
+        'Für diese Bedarfsschau wurden noch keine Förderprofile ausgewählt.',
+      bearbeiten_bedarfe_titel: 'Bedarfe für diese Bedarfsschau auswählen',
+      bearbeiten_bedarfe_hinweis:
+        'Wähle die öffentlichen Bedarfe der Stadt aus, die bei dieser Bedarfsschau vorgestellt werden.',
+      bearbeiten_foerderprofile_titel:
+        'Förderprofile für diese Bedarfsschau auswählen',
+      bearbeiten_foerderprofile_hinweis:
+        'Wähle die verifizierten Förderprofile der Stadt aus, die sich auf dieser Bedarfsschau persönlich vorstellen.',
+      button_bedarfe_speichern: 'Bedarfe speichern',
+      button_foerderprofile_speichern: 'Förderprofile speichern',
+      keine_bedarfe_verfuegbar:
+        'Aktuell gibt es keine öffentlichen Bedarfe in dieser Stadt.',
+      keine_foerderprofile_verfuegbar:
+        'Aktuell gibt es keine verifizierten Förderprofile in dieser Stadt.',
+      erfolg_bedarfe_gespeichert: 'Bedarfe der Bedarfsschau gespeichert.',
+      erfolg_foerderprofile_gespeichert:
+        'Förderprofile der Bedarfsschau gespeichert.',
+    },
+  },
+  bedarfsseite: {
+    nav_bedarfe: 'Bedarfe',
+    nav_foerderprofile: 'Förderprofile',
+    nav_meine_bedarfe: 'Meine Bedarfe',
+    nav_meine_werkangebote: 'Meine Werkangebote',
+    nav_mein_foerderprofil: 'Mein Förderprofil',
+    nav_werkstattbeitrag: 'Werkstattbeitrag',
+    foerderart_label: {
+      geld: 'Geld',
+      raum: 'Raum',
+      mentoring: 'Mentoring',
+      sachmittel: 'Sachmittel',
+      vertriebszugang: 'Vertriebszugang',
+      mischung: 'Mischung',
+    },
+    gegenleistung_typ_label: {
+      keine: 'Keine Gegenleistung',
+      sichtbarkeit: 'Sichtbarkeit',
+      berichterstattung: 'Berichterstattung',
+      equity_offline: 'Equity (offline besprochen)',
+      mischung: 'Mischung',
+    },
+    bedarf_status_label: {
+      entwurf: 'Entwurf',
+      in_pruefung: 'In Prüfung',
+      oeffentlich: 'Öffentlich',
+      in_gespraechen: 'In Gesprächen',
+      erfuellt: 'Erfüllt',
+      eingestellt: 'Eingestellt',
+    },
+    werkangebot_status_label: {
+      eingereicht: 'Eingereicht',
+      in_gespraechen: 'In Gesprächen',
+      beauftragt: 'Beauftragt',
+      nicht_gewaehlt: 'Nicht gewählt',
+      zurueckgezogen: 'Zurückgezogen',
+    },
+    werkstattbeitrag_art_label: {
+      schauabend_teilnahme: 'Schauabend-Teilnahme',
+      geldbeitrag: 'Geldbeitrag',
+      sachleistung: 'Sachleistung',
+    },
+    werkstattbeitrag_status_label: {
+      erfasst: 'Erfasst',
+      verifiziert: 'Verifiziert',
+      abgelehnt: 'Abgelehnt',
+    },
+    foerderprofil_status_label: {
+      entwurf: 'Entwurf',
+      in_verifikation: 'In Verifikation',
+      verifiziert: 'Verifiziert',
+      pausiert: 'Pausiert',
+      abgelehnt: 'Abgelehnt',
+    },
+    bedarfe_liste: {
+      eyebrow: 'Werkzirkel · Bedarfe',
+      titel: 'Bedarfe im Werkzirkel',
+      untertitel:
+        'Hamburger Bedarfsträger:innen suchen Macher:innen. Werkangebote entstehen aus einer konkreten Werk-Erfahrung — Werkzirkel vermittelt nicht, sondern macht sichtbar.',
+      counter: (n: number) =>
+        n === 1
+          ? '1 öffentlicher Bedarf wartet auf Werkangebote.'
+          : `${n} öffentliche Bedarfe warten auf Werkangebote.`,
+      filter_titel: 'Filter',
+      filter_stadt: 'Stadt',
+      filter_anwenden: 'Filter anwenden',
+      leer_titel: 'Aktuell keine öffentlichen Bedarfe.',
+      leer_text:
+        'Schau bald wieder vorbei oder bring einen eigenen Bedarf ein.',
+      zum_detail: 'Bedarf ansehen',
+      frist_label: 'Frist',
+      geldrahmen_label: 'Geldrahmen',
+      bevorzugter_werkstand_label: 'Bevorzugter Werkstand',
+      neuer_bedarf: 'Bedarf einbringen',
+    },
+    bedarf_detail: {
+      eyebrow: 'Werkzirkel · Bedarf',
+      sektion_problem: 'Das Problem',
+      sektion_nutzen: 'Der erwartete Nutzen',
+      sektion_groesse: 'Größenordnung',
+      sektion_frist: 'Frist',
+      sektion_organisation: 'Organisation',
+      action_anonym: 'Anmelden, um auf diesen Bedarf zu reagieren',
+      action_macher_werkangebot: 'Werkangebot abgeben',
+      action_macher_hinweis:
+        'Du antwortest mit einem deiner Werke. Sichtbar wird das Werkangebot nur für die Bedarfsträger:in und dich — kein öffentlicher Pitch-Wettbewerb.',
+      action_kein_macher_hinweis:
+        'Nur Macher:innen können Werkangebote abgeben. Lege erst einen Werkpass an.',
+      action_kein_zugriff:
+        'Nur die Bedarfsträger:in und Macher:innen mit eigenem Werkangebot sehen dieses Aktions-Panel.',
+      verwalten_titel: 'Deine Werkangebote',
+      verwalten_keine:
+        'Noch keine Werkangebote zu diesem Bedarf eingegangen.',
+      verwalten_status_setzen: 'Status setzen',
+      verwalten_in_gespraechen: 'In Gespräche aufnehmen',
+      verwalten_beauftragt: 'Beauftragt markieren',
+      verwalten_nicht_gewaehlt: 'Nicht gewählt markieren',
+      verwalten_erfuellt: 'Bedarf als erfüllt markieren',
+      verwalten_erfuellt_hinweis:
+        'Markiere den Bedarf als erfüllt, wenn du dich offline mit einer Macher:in geeinigt hast. Ein Erfolgsbeitrag an die Werkstatt-Kasse ist freiwillig.',
+    },
+    bedarf_neu: {
+      eyebrow: 'Werkzirkel · Neuer Bedarf',
+      titel: 'Bedarf einbringen',
+      untertitel:
+        'In drei Schritten: Werkstattbeitrag wählen, Bedarf beschreiben, einreichen. Eine Kurator:in prüft sprachlich und schaltet öffentlich frei.',
+      schritt_1_titel: 'Schritt 1: Werkstattbeitrag',
+      schritt_1_hinweis:
+        'Bevor dein Bedarf öffentlich wird, brauchst du einen Werkstattbeitrag. Drei Wege — du wählst, was zu dir passt.',
+      schritt_1_bestehend_titel: 'Du hast bereits einen gültigen Werkstattbeitrag.',
+      schritt_1_bestehend_weiter: 'Weiter mit diesem Beitrag',
+      schritt_1_pfad_a_titel: 'Schauabend besuchen',
+      schritt_1_pfad_a_text:
+        'Komm zum nächsten Hamburger Schauabend. Anwesenheit wird dokumentiert und schaltet deinen Bedarf frei.',
+      schritt_1_pfad_a_button: 'Termine ansehen',
+      schritt_1_pfad_b_titel: 'Geldbeitrag (50 / 100 / 150 €)',
+      schritt_1_pfad_b_text:
+        'Bezahle online via Stripe — gültig für 4 Bedarfe oder 6 Monate.',
+      schritt_1_pfad_b_button: 'Geldbeitrag wählen',
+      schritt_1_pfad_c_titel: 'Sachleistung anbieten',
+      schritt_1_pfad_c_text:
+        'Raum, Mentoring, Material — beschreibe deinen Beitrag, die Kurator:in verifiziert ihn.',
+      schritt_1_pfad_c_button: 'Sachleistung beschreiben',
+      schritt_1_pfad_c_label: 'Sachleistung beschreiben',
+      schritt_1_pfad_c_textarea_label:
+        'Beschreibe deine Sachleistung (mindestens 30 Zeichen)',
+      schritt_1_pfad_c_submit: 'Sachleistung einreichen',
+      schritt_2_titel: 'Schritt 2: Bedarf beschreiben',
+      schritt_2_label_organisation: 'Deine Organisation',
+      schritt_2_label_titel: 'Titel des Bedarfs',
+      schritt_2_label_problem: 'Welches Problem soll gelöst werden?',
+      schritt_2_label_nutzen: 'Welchen Nutzen erwartest du?',
+      schritt_2_label_groesse_zeit: 'Größenordnung Zeit (Wochen, optional)',
+      schritt_2_label_groesse_aufwand: 'Größenordnung Aufwand (Tage, optional)',
+      schritt_2_label_geldrahmen_min: 'Geldrahmen min (€, optional)',
+      schritt_2_label_geldrahmen_max: 'Geldrahmen max (€, optional)',
+      schritt_2_label_frist: 'Frist (mindestens morgen)',
+      schritt_2_label_branche: 'Branche (optional)',
+      schritt_2_label_werkstand: 'Bevorzugter Werkstand (optional)',
+      schritt_2_button: 'Bedarf anlegen und einreichen',
+      schritt_3_titel: 'Schritt 3: Bestätigung',
+      schritt_3_text:
+        'Dein Bedarf ist eingereicht und wird von einer Kurator:in geprüft. Du erhältst eine Bestätigung per E-Mail.',
+      fehler_keine_rolle:
+        'Du brauchst eine Bedarfsträger:innen-Rolle, um einen Bedarf einzubringen.',
+      fehler_keine_rolle_link: 'Bedarfsträger:innen-Rolle hinzufügen',
+      fehler_klarname_fehlt:
+        'Bitte ergänze deinen Klarnamen in den Einstellungen, bevor du einen Bedarf einbringst.',
+      fehler_validierung: 'Bitte prüfe die markierten Felder.',
+      fehler_werkstattbeitrag_fehlt:
+        'Bitte hinterlege zuerst einen gültigen Werkstattbeitrag.',
+      fehler_unbekannt: 'Etwas ist schiefgelaufen.',
+    },
+    werkangebot_neu: {
+      eyebrow: 'Werkzirkel · Werkangebot',
+      titel: 'Werkangebot abgeben',
+      untertitel:
+        'Du antwortest mit einem deiner Werke. Beschreibe konkretes Vorgehen, expliziten Ausschluss und einen ersten Liefer-Meilenstein — kein Pitch, kein Preis.',
+      label_werk: 'Werk, mit dem du antwortest',
+      label_werk_hilfe: 'Wähle eines deiner bestehenden Werke aus.',
+      label_konkretes_vorgehen:
+        'Konkretes Vorgehen (mindestens 50 Zeichen)',
+      label_ausschluss:
+        'Was ist ausdrücklich NICHT enthalten? (mindestens 20 Zeichen)',
+      label_meilenstein:
+        'Erster prüfbarer Liefer-Meilenstein (mindestens 20 Zeichen)',
+      button_abgeben: 'Werkangebot abgeben',
+      button_abbrechen: 'Abbrechen',
+      fehler_keine_rolle:
+        'Du brauchst eine Macher:innen-Rolle, um Werkangebote abzugeben.',
+      fehler_kein_werk:
+        'Du brauchst zuerst ein eigenes Werk, um auf Bedarfe zu antworten.',
+      fehler_validierung: 'Bitte prüfe die markierten Felder.',
+      fehler_bereits_eingereicht:
+        'Du hast mit diesem Werk bereits ein Werkangebot zu diesem Bedarf eingereicht.',
+      fehler_bedarf_nicht_offen:
+        'Zu diesem Bedarf können aktuell keine Werkangebote eingereicht werden.',
+    },
+    foerderprofile_liste: {
+      eyebrow: 'Werkzirkel · Förderprofile',
+      titel: 'Förderprofile im Werkzirkel',
+      untertitel:
+        'Verifizierte Förder:innen, die persönlich auf einer Bedarfsschau sichtbar werden. Werkzirkel vermittelt keine Beteiligungen — Equity-Gespräche finden offline statt.',
+      counter: (n: number) =>
+        n === 1
+          ? '1 verifiziertes Förderprofil.'
+          : `${n} verifizierte Förderprofile.`,
+      filter_titel: 'Filter',
+      filter_foerderart: 'Förderart',
+      filter_gegenleistung: 'Gegenleistung-Typ',
+      filter_anwenden: 'Filter anwenden',
+      leer_titel: 'Noch keine verifizierten Förderprofile.',
+      leer_text:
+        'Schau bald wieder vorbei oder lege ein eigenes Förderprofil an.',
+      zum_detail: 'Förderprofil ansehen',
+      equity_badge: 'Equity offline',
+      neues_profil: 'Förderprofil anlegen',
+    },
+    foerderprofil_detail: {
+      eyebrow: 'Werkzirkel · Förderprofil',
+      sektion_organisation: 'Organisation',
+      sektion_foerderart: 'Förderart',
+      sektion_foerderrahmen: 'Förderrahmen',
+      sektion_bevorzugte_werke: 'Bevorzugte Werke',
+      sektion_gegenleistung: 'Gegenleistung',
+      equity_hinweis_titel: 'Hinweis zu Equity-Beteiligungen',
+      kontakt_titel: 'Kontakt',
+      kontakt_werkpass_link: 'Werkpass dieser Person ansehen',
+      kontakt_anonym_hinweis:
+        'Anmelden, um Förder:in zu kontaktieren.',
+      kontakt_bedarfsschau_hinweis:
+        'Auf einer Bedarfsschau lernst du diese Person persönlich kennen.',
+    },
+    foerderprofil_neu: {
+      eyebrow: 'Werkzirkel · Neues Förderprofil',
+      titel: 'Förderprofil anlegen',
+      untertitel:
+        'Beschreibe deine Förderung und die gewünschte Gegenleistung. Eine Kurator:in prüft und verifiziert dein Profil persönlich.',
+      label_organisation: 'Organisation',
+      label_foerderart: 'Förderart',
+      label_foerderrahmen_jahr_min: 'Förderrahmen pro Jahr min (€, optional)',
+      label_foerderrahmen_jahr_max: 'Förderrahmen pro Jahr max (€, optional)',
+      label_foerderrahmen_einzel: 'Maximaler Einzelförder-Betrag (€, optional)',
+      label_bevorzugte_werke:
+        'Bevorzugte Werke / Themen (optional, Freitext)',
+      label_gegenleistung_typ: 'Art der Gegenleistung',
+      label_gegenleistung_text: 'Beschreibung der Gegenleistung (optional)',
+      equity_hinweis:
+        'Achtung: Werkzirkel vermittelt keine Beteiligungen. Equity-Gespräche finden ausschließlich offline statt.',
+      button_anlegen: 'Förderprofil anlegen und einreichen',
+      button_abbrechen: 'Abbrechen',
+      fehler_keine_rolle:
+        'Du brauchst eine Förder:innen-Rolle, um ein Profil anzulegen.',
+      fehler_bereits_vorhanden:
+        'Du hast bereits ein Förderprofil. Bearbeite es über deine Übersicht.',
+      fehler_validierung: 'Bitte prüfe die markierten Felder.',
+    },
+    uebersicht_bedarfe: {
+      eyebrow: 'Werkzirkel · Meine Bedarfe',
+      titel: 'Meine Bedarfe',
+      untertitel:
+        'Eigene Bedarfe, gruppiert nach Status. Hier siehst du auch deinen Werkstattbeitrag-Stand.',
+      neu_button: 'Neuen Bedarf einbringen',
+      leer_titel: 'Du hast noch keinen Bedarf eingebracht.',
+      leer_text:
+        'Lege deinen ersten Bedarf an — drei Schritte, dann prüft eine Kurator:in.',
+      sektion_aktiv: 'Aktive Bedarfe',
+      sektion_in_pruefung: 'In Prüfung',
+      sektion_entwuerfe: 'Entwürfe',
+      sektion_abgeschlossen: 'Erfüllte und eingestellte Bedarfe',
+      werkstattbeitrag_titel: 'Mein Werkstattbeitrag',
+      werkstattbeitrag_aktiv: (anzahl: number, bis: string) =>
+        `Aktiv: ${anzahl} ${anzahl === 1 ? 'Beitrag' : 'Beiträge'} (gültig bis ${bis}).`,
+      werkstattbeitrag_keiner:
+        'Aktuell kein gültiger Werkstattbeitrag. Bei deinem nächsten Bedarf wirst du gefragt.',
+    },
+    uebersicht_werkangebote: {
+      eyebrow: 'Werkzirkel · Meine Werkangebote',
+      titel: 'Meine Werkangebote',
+      untertitel:
+        'Werkangebote, die du als Macher:in zu Bedarfen eingereicht hast.',
+      leer_titel: 'Du hast noch kein Werkangebot eingereicht.',
+      leer_text:
+        'Schau dir die öffentlichen Bedarfe an und antworte mit einem deiner Werke.',
+      bedarfe_durchsuchen: 'Bedarfe durchsuchen',
+    },
+    uebersicht_foerderprofil: {
+      eyebrow: 'Werkzirkel · Mein Förderprofil',
+      titel: 'Mein Förderprofil',
+      untertitel:
+        'Verifikations-Status, letzte Bedarfsschau-Teilnahme und Förderrahmen.',
+      leer_titel: 'Du hast noch kein Förderprofil angelegt.',
+      leer_text:
+        'Lege ein Förderprofil an, damit Kurator:innen dich auf eine Bedarfsschau einladen können.',
+      bearbeiten: 'Förderprofil bearbeiten',
+      letzte_bedarfsschau: (datum: string) =>
+        `Letzte Bedarfsschau-Teilnahme: ${datum}`,
+      keine_bedarfsschau:
+        'Bisher keine Bedarfsschau-Teilnahme dokumentiert.',
+    },
+    uebersicht_werkstattbeitrag: {
+      eyebrow: 'Werkzirkel · Werkstattbeitrag',
+      titel: 'Mein Werkstattbeitrag',
+      untertitel:
+        'Schauabend-Teilnahmen, Geldbeiträge und Sachleistungen — Status und Gültigkeit auf einen Blick.',
+      leer_titel: 'Noch kein Werkstattbeitrag erfasst.',
+      leer_text:
+        'Bei deinem ersten Bedarf wirst du gefragt, welchen der drei Pfade du wählst.',
+      banner_erfolg: 'Geldbeitrag erfolgreich verbucht. Danke!',
+      banner_abgebrochen:
+        'Geldbeitrag abgebrochen. Du kannst es jederzeit erneut versuchen.',
+    },
   },
   anmelden: {
     eyebrow: 'Hamburger Werkzirkel',
@@ -490,6 +807,8 @@ export const de = {
     email_placeholder: 'deine-mail@beispiel.de',
     button_login: 'Anmelden',
     button_registrieren: 'Werkpass anlegen',
+    button_bedarf: 'Bedarf einbringen',
+    button_foerderer: 'Förder:in werden',
     erfolg:
       'Wir haben dir eine E-Mail geschickt. Schau in deinem Postfach (auch im Spam-Ordner). Der Link ist 15 Minuten gültig.',
     fehler_token_ungueltig:

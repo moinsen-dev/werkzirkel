@@ -49,7 +49,11 @@ export function hashMagicLinkToken(clearToken: string): string {
 
 const MAGIC_LINK_EXPIRY_MIN = 15;
 
-export type MagicLinkZweckType = 'login' | 'registrierung';
+export type MagicLinkZweckType =
+  | 'login'
+  | 'registrierung'
+  | 'registrierung-bedarf'
+  | 'registrierung-foerder';
 
 export type RequestMagicLinkResult =
   | { ok: true }

@@ -23,6 +23,7 @@ import { getSessionFromRequest } from '@/lib/auth/session';
 import { rejectIfBadOrigin } from '@/lib/auth/csrf';
 import { istKuratorVon } from '@/lib/auth/permissions';
 import { maybeCreateSchauabendBeitrag } from '@/lib/werkstattbeitrag/schauabend-hook';
+import { maybeUpdateFoerderprofilBedarfsschau } from '@/lib/foerderprofil/bedarfsschau-hook';
 
 interface RouteContext {
   params: Promise<{ id: string }>;
@@ -131,6 +132,18 @@ export async function PATCH(req: Request, ctx: RouteContext): Promise<Response> 
     } catch (err) {
       console.error(
         '[termin-anmeldung-status] maybeCreateSchauabendBeitrag failed:',
+        err,
+      );
+    }
+    try {
+      await maybeUpdateFoerderprofilBedarfsschau({
+        nutzer_id: row.nutzerId,
+        termin_id: row.terminId,
+        termin_typ: row.typ,
+      });
+    } catch (err) {
+      console.error(
+        '[termin-anmeldung-status] maybeUpdateFoerderprofilBedarfsschau failed:',
         err,
       );
     }

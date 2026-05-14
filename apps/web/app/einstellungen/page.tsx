@@ -23,6 +23,7 @@ import {
   rolle as rolleEnum,
   teilnahmeart as teilnahmeartEnum,
 } from '@/lib/db/schema/enums';
+import type { Rolle } from '@/lib/db/schema/enums';
 import { getSessionFromRequest } from '@/lib/auth/session';
 import { generateMagicLinkToken } from '@/lib/auth/magic-link';
 import { sendMail } from '@/lib/email/send';
@@ -68,6 +69,56 @@ async function buildRequestFromHeaders(): Promise<Request> {
   return new Request('http://internal.werkzirkel/einstellungen', {
     headers: headerInit,
   });
+}
+
+/**
+ * Rolle hinzufuegen — Server Action fuer die 'Weitere Rollen'-Sektion.
+ *
+ * Akzeptiert `rolle` in FormData (bedarfstraeger | foerderer). Erzwingt
+ * Klarname-Pflicht via `rollenErforderlichKlarname()` — wenn der aktuelle
+ * Klarname leer ist, redirect mit deutscher Fehlermeldung (422-Equivalent
+ * via Query-Param). Sonst Rollen-Array um die neue Rolle ergaenzen.
+ */
+async function rolleHinzufuegenAction(formData: FormData): Promise<void> {
+  'use server';
+
+  const req = await buildRequestFromHeaders();
+  const sess = await getSessionFromRequest(req);
+  if (!sess) {
+    redirect('/anmelden?fehler=session-abgelaufen');
+  }
+
+  const rolleRaw = String(formData.get('rolle') ?? '');
+  if (rolleRaw !== 'bedarfstraeger' && rolleRaw !== 'foerderer') {
+    redirect('/einstellungen?tab=profil&fehler=' + encodeURIComponent('Unbekannte Rolle.'));
+  }
+
+  const aktuelleRollen = sess.nutzer.rollen ?? [];
+  if (aktuelleRollen.includes(rolleRaw as Rolle)) {
+    // Idempotent — schon drin.
+    redirect('/einstellungen?tab=profil&ok=1');
+  }
+
+  const neueRollen = [...aktuelleRollen, rolleRaw as Rolle];
+
+  if (
+    rollenErforderlichKlarname(neueRollen) &&
+    (sess.nutzer.klarname ?? '').trim().length === 0
+  ) {
+    redirect(
+      '/einstellungen?tab=profil&fehler=' +
+        encodeURIComponent(
+          'Fuer Rollen Bedarfstraeger:in / Foerder:in ist ein Klarname Pflicht. Bitte ergaenze zuerst deinen Klarnamen oben im Formular.',
+        ),
+    );
+  }
+
+  await db
+    .update(nutzer)
+    .set({ rollen: neueRollen, aktualisiertAm: new Date() })
+    .where(eq(nutzer.id, sess.nutzerId));
+
+  redirect('/einstellungen?tab=profil&ok=1');
 }
 
 async function profilSpeichernAction(formData: FormData): Promise<void> {
@@ -340,6 +391,7 @@ export default async function EinstellungenPage(props: {
           me={me}
           staedte={staedte}
           profilSpeichernAction={profilSpeichernAction}
+          rolleHinzufuegenAction={rolleHinzufuegenAction}
         />
       ) : null}
       {tab === 'benachrichtigungen' ? (
@@ -408,8 +460,11 @@ function ProfilTab(props: {
   me: typeof nutzer.$inferSelect;
   staedte: Array<typeof stadt.$inferSelect>;
   profilSpeichernAction: (formData: FormData) => Promise<void>;
+  rolleHinzufuegenAction: (formData: FormData) => Promise<void>;
 }) {
-  const { me, staedte, profilSpeichernAction } = props;
+  const { me, staedte, profilSpeichernAction, rolleHinzufuegenAction } = props;
+  const istBedarfstraegerJetzt = (me.rollen ?? []).includes('bedarfstraeger');
+  const istFoerdererJetzt = (me.rollen ?? []).includes('foerderer');
 
   return (
     <section>
@@ -587,6 +642,51 @@ function ProfilTab(props: {
       <p style={{ color: 'var(--muted)', fontSize: 13 }}>
         JPEG, PNG oder WebP. Max. 2 MB.
       </p>
+
+      {!istBedarfstraegerJetzt || !istFoerdererJetzt ? (
+        <>
+          <hr
+            style={{
+              margin: '32px 0',
+              border: 0,
+              borderTop: '1px solid var(--border)',
+            }}
+          />
+          <h2>Weitere Rollen</h2>
+          <p style={{ maxWidth: 640, color: 'var(--muted)' }}>
+            Bedarfstraeger:innen und Foerder:innen treten im Werkzirkel mit
+            Klarnamen auf. Pseudonyme sind dafuer nicht erlaubt. Wenn dein
+            Klarname oben noch leer ist, ergaenze ihn zuerst und speichere
+            das Profil.
+          </p>
+          <div
+            style={{
+              display: 'flex',
+              gap: 12,
+              flexWrap: 'wrap',
+              marginTop: 12,
+              maxWidth: 640,
+            }}
+          >
+            {!istBedarfstraegerJetzt ? (
+              <form action={rolleHinzufuegenAction}>
+                <input type="hidden" name="rolle" value="bedarfstraeger" />
+                <button type="submit" className="button secondary">
+                  Bedarfstraeger:innen-Rolle hinzufuegen
+                </button>
+              </form>
+            ) : null}
+            {!istFoerdererJetzt ? (
+              <form action={rolleHinzufuegenAction}>
+                <input type="hidden" name="rolle" value="foerderer" />
+                <button type="submit" className="button secondary">
+                  Foerder:innen-Rolle hinzufuegen
+                </button>
+              </form>
+            ) : null}
+          </div>
+        </>
+      ) : null}
     </section>
   );
 }

@@ -170,3 +170,56 @@ export const termineListQuerySchema = z
   .strict();
 
 export type TermineListQuery = z.infer<typeof termineListQuerySchema>;
+
+/**
+ * Body fuer POST /api/v1/termine/:id/bedarfe — Kurator setzt die Bedarf-Bezuege
+ * eines Bedarfsschau-Termins. Idempotent: `bedarf_ids` ist die Wunsch-Liste,
+ * der Endpoint ersetzt die existierenden Bezuege per DELETE + INSERT in einer
+ * Transaktion.
+ */
+export const terminBedarfeSetzenSchema = z
+  .object({
+    bedarf_ids: z
+      .array(
+        z
+          .string({ errorMap: () => ({ message: 'Bedarf-ID ist ungueltig.' }) })
+          .min(1, { message: 'Bedarf-ID darf nicht leer sein.' })
+          .max(40, { message: 'Bedarf-ID ist zu lang.' }),
+      )
+      .max(50, { message: 'Maximal 50 Bedarfe pro Bedarfsschau.' }),
+    reihenfolge: z
+      .record(
+        z.string().min(1).max(40),
+        z.number().int().min(0).max(10000),
+      )
+      .optional(),
+  })
+  .strict();
+
+export type TerminBedarfeSetzenInput = z.infer<typeof terminBedarfeSetzenSchema>;
+
+/**
+ * Body fuer POST /api/v1/termine/:id/foerderprofile — analog zu Bedarfen.
+ */
+export const terminFoerderprofileSetzenSchema = z
+  .object({
+    foerderprofil_ids: z
+      .array(
+        z
+          .string({ errorMap: () => ({ message: 'Foerderprofil-ID ist ungueltig.' }) })
+          .min(1, { message: 'Foerderprofil-ID darf nicht leer sein.' })
+          .max(40, { message: 'Foerderprofil-ID ist zu lang.' }),
+      )
+      .max(50, { message: 'Maximal 50 Foerderprofile pro Bedarfsschau.' }),
+    reihenfolge: z
+      .record(
+        z.string().min(1).max(40),
+        z.number().int().min(0).max(10000),
+      )
+      .optional(),
+  })
+  .strict();
+
+export type TerminFoerderprofileSetzenInput = z.infer<
+  typeof terminFoerderprofileSetzenSchema
+>;

@@ -81,8 +81,18 @@ export async function GET(req: Request): Promise<Response> {
         .set({ emailVerifiziertAm: new Date() })
         .where(eq(nutzer.id, nutzerId));
     }
-  } else if (tok.zweck === 'registrierung') {
+  } else if (
+    tok.zweck === 'registrierung' ||
+    tok.zweck === 'registrierung-bedarf' ||
+    tok.zweck === 'registrierung-foerder'
+  ) {
     const localPart = tok.email.split('@')[0] ?? 'macher';
+    const initialRollen =
+      tok.zweck === 'registrierung-bedarf'
+        ? (['bedarfstraeger'] as const)
+        : tok.zweck === 'registrierung-foerder'
+          ? (['foerderer'] as const)
+          : (['macher'] as const);
     const insertedNutzer = await db
       .insert(nutzer)
       .values({
@@ -91,7 +101,7 @@ export async function GET(req: Request): Promise<Response> {
         klarname: '',
         anzeigename: localPart,
         stadtId: 'hh',
-        rollen: ['macher'],
+        rollen: [...initialRollen],
       })
       .returning({ id: nutzer.id });
     const created = insertedNutzer[0];
@@ -110,10 +120,19 @@ export async function GET(req: Request): Promise<Response> {
     ipAdresse: clientIp(req),
   });
 
-  // Redirect-Ziel bestimmen: `next_path` aus dem Token bevorzugen, wenn
-  // gesetzt UND eindeutig same-origin (`/...`, NICHT `//evil.com/...`).
-  // Sonst Default `/uebersicht`.
-  const safeNext = isSafeNextPath(tok.nextPath) ? tok.nextPath! : '/uebersicht';
+  // Redirect-Ziel bestimmen:
+  // - registrierung-bedarf/-foerder: zwingt nach /registrieren?rolle=...
+  //   (Klarname-Pflicht muss noch erfuellt werden, bevor /uebersicht zugaenglich ist).
+  // - Sonst: `next_path` aus dem Token bevorzugen, wenn gesetzt UND eindeutig
+  //   same-origin. Fallback Default `/uebersicht`.
+  let safeNext: string;
+  if (tok.zweck === 'registrierung-bedarf') {
+    safeNext = '/registrieren?rolle=bedarf';
+  } else if (tok.zweck === 'registrierung-foerder') {
+    safeNext = '/registrieren?rolle=foerder';
+  } else {
+    safeNext = isSafeNextPath(tok.nextPath) ? tok.nextPath! : '/uebersicht';
+  }
 
   const headers = new Headers({
     location: `${env.APP_URL}${safeNext}`,

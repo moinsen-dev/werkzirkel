@@ -246,6 +246,9 @@ export default async function UebersichtPage() {
     me.klarname && me.klarname.trim().length > 0 ? me.klarname : me.anzeigename;
 
   const rollen = (me.rollen ?? []).map((r) => ROLLE_LABEL[r] ?? r);
+  const istMacher = (me.rollen ?? []).includes('macher');
+  const istBedarf = (me.rollen ?? []).includes('bedarfstraeger');
+  const istFoerd = (me.rollen ?? []).includes('foerderer');
 
   return (
     <div className="page-shell">
@@ -475,15 +478,73 @@ export default async function UebersichtPage() {
             </div>
           </div>
           <div className="mock-grid">
-            <Link
-              href="/uebersicht/werke"
-              className="mock-card wide"
-              style={{ textDecoration: 'none', color: 'inherit' }}
-            >
-              <p className="mock-label">{t.meine_werke}</p>
-              <strong>{t.meine_werke}</strong>
-              <p>Lege Werke an, bearbeite Werkstand und Screenshots.</p>
-            </Link>
+            {istMacher ? (
+              <Link
+                href="/uebersicht/werke"
+                className="mock-card wide"
+                style={{ textDecoration: 'none', color: 'inherit' }}
+              >
+                <p className="mock-label">{t.meine_werke}</p>
+                <strong>{t.meine_werke}</strong>
+                <p>Lege Werke an, bearbeite Werkstand und Screenshots.</p>
+              </Link>
+            ) : null}
+            {istBedarf ? (
+              <>
+                <Link
+                  href="/uebersicht/bedarfe"
+                  className="mock-card"
+                  style={{ textDecoration: 'none', color: 'inherit' }}
+                >
+                  <p className="mock-label">Meine Bedarfe</p>
+                  <strong>Meine Bedarfe</strong>
+                  <p>
+                    Eigene Bedarfe, Status der Werkstattbeiträge und
+                    Werkangebote von Macher:innen.
+                  </p>
+                </Link>
+                <Link
+                  href="/uebersicht/werkstattbeitrag"
+                  className="mock-card"
+                  style={{ textDecoration: 'none', color: 'inherit' }}
+                >
+                  <p className="mock-label">Werkstattbeitrag</p>
+                  <strong>Werkstattbeitrag</strong>
+                  <p>
+                    Schauabend-Teilnahmen, Geldbeiträge und Sachleistungen auf
+                    einen Blick.
+                  </p>
+                </Link>
+              </>
+            ) : null}
+            {istMacher ? (
+              <Link
+                href="/uebersicht/werkangebote"
+                className="mock-card"
+                style={{ textDecoration: 'none', color: 'inherit' }}
+              >
+                <p className="mock-label">Meine Werkangebote</p>
+                <strong>Meine Werkangebote</strong>
+                <p>
+                  Werkangebote, die du als Macher:in zu Bedarfen eingereicht
+                  hast.
+                </p>
+              </Link>
+            ) : null}
+            {istFoerd ? (
+              <Link
+                href="/uebersicht/foerderprofil"
+                className="mock-card"
+                style={{ textDecoration: 'none', color: 'inherit' }}
+              >
+                <p className="mock-label">Mein Förderprofil</p>
+                <strong>Mein Förderprofil</strong>
+                <p>
+                  Verifikations-Status, Bedarfsschau-Teilnahmen und
+                  Förderrahmen verwalten.
+                </p>
+              </Link>
+            ) : null}
             <Link
               href="/uebersicht/pruefrunden"
               className="mock-card"

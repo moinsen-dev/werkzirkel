@@ -9,12 +9,19 @@
  *      der Stadt-Row, gesetzt per Seed/Admin)
  *
  * Genutzt z.B. von der Termin-CRUD-API.
+ *
+ * `hasRolle()`, `istBedarfstraeger()`, `istFoerderer()` sind reine
+ * In-Memory-Helper, die gegen die Rollen-Array eines bereits geladenen
+ * `nutzer`-Records pruefen (kein DB-Hit). Werden in API-Routes der
+ * Bedarfsseite (Bedarf-CRUD, Werkangebote, Foerderprofile) verwendet,
+ * nachdem `getSessionFromRequest()` den Nutzer geladen hat.
  */
 
 import { eq } from 'drizzle-orm';
 import { db } from '@/lib/db';
 import { nutzer } from '@/lib/db/schema/nutzer';
 import { stadt } from '@/lib/db/schema/stadt';
+import type { Rolle } from '@/lib/db/schema/enums';
 
 export async function istKuratorVon(
   nutzerId: string,
@@ -43,4 +50,30 @@ export async function istKuratorVon(
   if (stadtRows[0]?.kuratorId === nutzerId) return true;
 
   return false;
+}
+
+/**
+ * Pruest, ob ein bereits geladener Nutzer eine bestimmte Rolle hat.
+ *
+ * Reine In-Memory-Pruefung — kein DB-Hit. Akzeptiert ein minimales Objekt
+ * `{ rollen: string[] | Rolle[] }`, damit auch Test-Fixtures damit arbeiten
+ * koennen, ohne ein vollstaendiges `Nutzer`-Objekt aufzubauen.
+ */
+export function hasRolle(
+  nutzerLike: { rollen: readonly string[] },
+  rolle: Rolle,
+): boolean {
+  return nutzerLike.rollen.includes(rolle);
+}
+
+export function istBedarfstraeger(nutzerLike: {
+  rollen: readonly string[];
+}): boolean {
+  return hasRolle(nutzerLike, 'bedarfstraeger');
+}
+
+export function istFoerderer(nutzerLike: {
+  rollen: readonly string[];
+}): boolean {
+  return hasRolle(nutzerLike, 'foerderer');
 }

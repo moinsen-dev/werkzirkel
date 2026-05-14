@@ -37,6 +37,11 @@ import { istKuratorVon } from '@/lib/auth/permissions';
 import { renderPruefrundeMarkdown } from '@/lib/pruefrunde/markdown';
 import { sendMail } from '@/lib/email/send';
 import { env } from '@/lib/env';
+import {
+  ladeBedarfBezuege,
+  ladeFoerderprofilBezuege,
+} from '@/lib/termin/bezuege';
+import { EQUITY_HINWEISTEXT } from '@/lib/foerderprofil/serialize';
 
 const td = de.termine.detail;
 const tnav = de.uebersicht;
@@ -663,6 +668,20 @@ export default async function TerminDetailPage({
     zaehleWarteliste(id),
   ]);
 
+  // Bei Bedarfsschau: verknuepfte Bedarfe und Foerderprofile fuer die UI laden.
+  type BedarfBezugUI = Awaited<ReturnType<typeof ladeBedarfBezuege>>[number];
+  type FoerderprofilBezugUI = Awaited<
+    ReturnType<typeof ladeFoerderprofilBezuege>
+  >[number];
+  let bedarfBezuege: BedarfBezugUI[] = [];
+  let foerderprofilBezuege: FoerderprofilBezugUI[] = [];
+  if (row.typ === 'bedarfsschau') {
+    [bedarfBezuege, foerderprofilBezuege] = await Promise.all([
+      ladeBedarfBezuege(id),
+      ladeFoerderprofilBezuege(id),
+    ]);
+  }
+
   const eigeneAnmeldung = sess
     ? await ladeEigeneAnmeldung(id, sess.nutzerId)
     : null;
@@ -798,6 +817,134 @@ export default async function TerminDetailPage({
                 </p>
               ) : null}
             </div>
+
+            {row.typ === 'bedarfsschau' ? (
+              <>
+                <h2 style={{ fontSize: 24, marginTop: 32 }}>
+                  {de.termine.bedarfsschau.sektion_bedarfe_titel}
+                </h2>
+                {bedarfBezuege.length === 0 ? (
+                  <p style={{ margin: '8px 0 0', color: 'var(--muted)' }}>
+                    {de.termine.bedarfsschau.sektion_bedarfe_leer}
+                  </p>
+                ) : (
+                  <ul
+                    style={{
+                      listStyle: 'none',
+                      margin: '12px 0 0',
+                      padding: 0,
+                      display: 'grid',
+                      gap: 10,
+                    }}
+                  >
+                    {bedarfBezuege.map((b) => {
+                      const bb = b.bedarf as Record<string, unknown>;
+                      const bId = String(bb.id);
+                      return (
+                        <li
+                          key={b.bezug_id}
+                          className="work-card"
+                          style={{ padding: '12px 14px' }}
+                        >
+                          <strong>{String(bb.titel)}</strong>
+                          <br />
+                          <span
+                            style={{
+                              color: 'var(--muted)',
+                              fontSize: 13,
+                            }}
+                          >
+                            {String(bb.organisation)}
+                          </span>
+                          {sess ? (
+                            <div style={{ marginTop: 6 }}>
+                              <Link
+                                href={`/bedarfe/${bId}`}
+                                style={{
+                                  fontSize: 13,
+                                  color: 'var(--fg)',
+                                }}
+                              >
+                                Bedarf ansehen →
+                              </Link>
+                            </div>
+                          ) : null}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
+
+                <h2 style={{ fontSize: 24, marginTop: 32 }}>
+                  {de.termine.bedarfsschau.sektion_foerderprofile_titel}
+                </h2>
+                {foerderprofilBezuege.length === 0 ? (
+                  <p style={{ margin: '8px 0 0', color: 'var(--muted)' }}>
+                    {de.termine.bedarfsschau.sektion_foerderprofile_leer}
+                  </p>
+                ) : (
+                  <ul
+                    style={{
+                      listStyle: 'none',
+                      margin: '12px 0 0',
+                      padding: 0,
+                      display: 'grid',
+                      gap: 10,
+                    }}
+                  >
+                    {foerderprofilBezuege.map((f) => {
+                      const fp = f.foerderprofil as Record<string, unknown>;
+                      const fId = String(fp.id);
+                      const equity =
+                        fp.gegenleistung_typ === 'equity_offline';
+                      return (
+                        <li
+                          key={f.bezug_id}
+                          className="work-card"
+                          style={{ padding: '12px 14px' }}
+                        >
+                          <strong>{String(fp.organisation)}</strong>
+                          <br />
+                          <span
+                            style={{
+                              color: 'var(--muted)',
+                              fontSize: 13,
+                            }}
+                          >
+                            {String(fp.foerderart)}
+                          </span>
+                          {equity ? (
+                            <p
+                              style={{
+                                margin: '8px 0 0',
+                                fontSize: 12,
+                                color: 'var(--muted)',
+                                fontStyle: 'italic',
+                              }}
+                            >
+                              {EQUITY_HINWEISTEXT}
+                            </p>
+                          ) : null}
+                          {sess ? (
+                            <div style={{ marginTop: 6 }}>
+                              <Link
+                                href={`/foerderprofile/${fId}`}
+                                style={{
+                                  fontSize: 13,
+                                  color: 'var(--fg)',
+                                }}
+                              >
+                                Förderprofil ansehen →
+                              </Link>
+                            </div>
+                          ) : null}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
+              </>
+            ) : null}
           </div>
 
           <aside aria-label="Aktionen" style={{ display: 'grid', gap: 16 }}>

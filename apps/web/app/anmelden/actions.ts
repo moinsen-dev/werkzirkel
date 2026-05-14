@@ -28,7 +28,12 @@ import { requestMagicLink } from '@/lib/auth/magic-link';
 
 const schema = z.object({
   email: z.string().email().max(320),
-  zweck: z.enum(['login', 'registrierung']),
+  zweck: z.enum([
+    'login',
+    'registrierung',
+    'registrierung-bedarf',
+    'registrierung-foerder',
+  ]),
 });
 
 export async function magicLinkAnfordern(formData: FormData): Promise<void> {

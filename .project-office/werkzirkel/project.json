@@ -7,22 +7,22 @@
 		"title": "Werkzirkel v1.0 — Plattform bauen",
 		"status": "draft"
 	},
-	"generated_at": "2026-05-14T05:38:17.379Z",
+	"generated_at": "2026-05-14T07:56:31.678Z",
 	"stats": {
-		"node_count": 54,
-		"edge_count": 168,
+		"node_count": 61,
+		"edge_count": 198,
 		"agent_count": 0,
 		"decision_count": 5,
 		"by_type": {
-			"task": 32,
+			"task": 39,
 			"subproject": 7,
 			"workpackage": 5,
 			"decision": 9,
 			"goal": 1
 		},
 		"by_status": {
-			"done": 44,
-			"draft": 10
+			"done": 52,
+			"draft": 9
 		},
 		"readiness": {
 			"passed": 0,
@@ -128,7 +128,7 @@
 			"type": "subproject",
 			"title": "Bedarfsseite: Bedarfsträger:innen, Werkstattbeitrag, Werkangebote, Förderprofile",
 			"summary": "Die Nachfrageseite mit den fünf Schutzmechaniken aus PRD §11A. Bedarfsträger:innen-Rolle, Werkstattbeitrag-Pfade (Schauabend/Geld/Sachleistung), Bedarf-CRUD mit Sprach-Check, Werkangebote nicht öffentlich, Förderprofile mit Kurator:innen-Verifikation und Auto-Pause.",
-			"status": "draft",
+			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
 		},
@@ -138,6 +138,15 @@
 			"title": "Geld: Erfolgsbeitrag, Werkstatt-Kasse, Fördermitgliedschaft",
 			"summary": "Stripe-Integration jenseits Werkstattbeitrag. Erfolgsbeitrag als freiwillige Spende, transparente Werkstatt-Kasse pro Stadt mit Quartalsabschluss, Fördermitgliedschaft-Subscriptions in vier Stufen.",
 			"status": "draft",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "task-bedarfsschau-integration",
+			"type": "task",
+			"title": "Bedarfsschau-Termin-Typ: Bedarf+Foerderprofil-Verknuepfung + UI auf Termin-Detail",
+			"summary": "termin_bedarf_bezug und termin_foerderprofil_bezug fuer Bedarfsschau-Termine. UI auf /termine/[id] und /kurator/termine/[id]/bearbeiten erweitert um Bedarf-Foerderprofil-Selektion. PRD §8.8 Bedarfsschau-Format.",
+			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
 		},
@@ -232,6 +241,15 @@
 			"readiness": "unknown"
 		},
 		{
+			"id": "task-werkstattbeitrag-api",
+			"type": "task",
+			"title": "Werkstattbeitrag-Workflow: Stripe-Geldbeitrag + Sachleistungs-Verifikation + Email-Templates",
+			"summary": "Drei Werkstattbeitrag-Pfade: Schauabend-Hook (existiert), Geldbeitrag via Stripe Checkout (50/100/150 EUR), Sachleistung mit Kurator-Verifikation. Plus T-601..T-603 Emails. Stripe-Webhook-Handler.",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
 			"id": "task-test-cleanup",
 			"type": "task",
 			"title": "Test-DB-Cleanup-Helper + Aufraeumen existierender Test-Daten",
@@ -264,6 +282,15 @@
 			"title": "Design System",
 			"summary": "Foundation pillar: design-system. Run `po decide design-system-decision-pick \"<title>\" --foundation-scope design-system --affects design-system-decision` to satisfy.",
 			"status": "draft",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "task-bedarfstraeger-foerderer-rolle-flow",
+			"type": "task",
+			"title": "Bedarfstraeger:in/Foerder:in-Rolle: Registrierung, Klarname-Validierung, UI-Switch",
+			"summary": "Erweitert das Auth-Flow um drei Rollen-Pfade: /anmelden mit zweck=registrierung-bedarf|registrierung-foerder. /einstellungen erlaubt Rollen-Hinzufuegen mit Klarname-Validierung. Macht alle Bedarfsseiten-Routen rollen-bewusst.",
+			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
 		},
@@ -340,6 +367,15 @@
 			"readiness": "unknown"
 		},
 		{
+			"id": "task-bedarf-crud-api",
+			"type": "task",
+			"title": "Bedarf-CRUD-API: Status-Maschine, Werkstattbeitrag-Gate, Sprach-Check, Kurator-Moderation",
+			"summary": "Bedarf-Endpunkte gemaess PRD §15.5 + §F-601..§F-607. Status-Maschine entwurf → in_pruefung → oeffentlich → in_gespraechen → erfuellt | eingestellt. Sprach-Check via verbotener Begriffe. Werkstattbeitrag-Gate beim Einreichen. T-301..T-304 Emails.",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
 			"id": "tech-stack-pick",
 			"type": "decision",
 			"title": "TS-First-Stack: Next.js + Drizzle + Better-Auth + Stripe + Resend, Docker auf Hetzner",
@@ -358,10 +394,28 @@
 			"readiness": "unknown"
 		},
 		{
+			"id": "task-werkangebot-api",
+			"type": "task",
+			"title": "Werkangebot-API: Privacy-Layer S2/S3, max 1 pro Werk × Bedarf, T-201/T-202",
+			"summary": "POST/GET/PATCH /api/v1/bedarfe/:id/werkangebote mit Schutzmechaniken: Werkangebote sind NICHT oeffentlich, nur Bedarfstraeger:in und Werk-Inhaber:in sehen sie. PRD-Schutz S2/S3.",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
 			"id": "task-werke-overview",
 			"type": "task",
 			"title": "Werke-Uebersicht mit Filter-Sidebar (Stadt, Werkstand, Hilfebedarf)",
 			"summary": "Oeffentliche Seite /werke listet alle oeffentlichen Werke. Filter-Sidebar links (Stadt-Dropdown, Werkstand-Mehrfach-Checkbox, Hilfebedarf-Mehrfach-Checkbox), Sortier-Default aktualisiert_am DESC. KEIN Suchschlitz (P4 — Verbindlichkeit statt Rauschen). Pagination via Cursor.",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "task-bedarfsseite-pages",
+			"type": "task",
+			"title": "Bedarfsseite-UI: 10 Pages fuer Bedarfstraeger:innen, Foerder:innen, Macher:innen-Werkangebote",
+			"summary": "Komplette UI-Schicht: /bedarfe Liste, /bedarfe/[id] Detail, /bedarfe/neu Anlege-Flow mit Werkstattbeitrag, /foerderprofile Liste, /foerderprofile/[id] Detail, /foerderprofile/neu, /uebersicht/bedarfe, /uebersicht/werkangebote, /uebersicht/foerderprofil, /uebersicht/werkstattbeitrag.",
 			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
@@ -470,6 +524,15 @@
 			"type": "task",
 			"title": "E-Mail-Templates T-401 bis T-404 fuer Termin-Lifecycle",
 			"summary": "Vier React-Email-Templates: T-401 Anmeldung bestaetigt, T-402 Erinnerung 7 Tage vor Termin, T-403 Erinnerung 1 Tag vor Termin, T-404 Termin abgesagt. Deutsch, Plain-Text-Fallback, eingebunden in sendMail-Helper.",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "task-foerderprofil-api",
+			"type": "task",
+			"title": "Foerderprofil-API + Kurator-Verifikation + Auto-Pause-Cron",
+			"summary": "POST/GET/PATCH /api/v1/foerderprofile mit Verifikations-Workflow. Cron pausiert Profile automatisch wenn 4 Quartale ohne Bedarfsschau-Teilnahme. T-501..T-505 Emails.",
 			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
@@ -720,9 +783,69 @@
 			"confidence": 1
 		},
 		{
+			"from": "bedarfsseite",
+			"to": "task-bedarfstraeger-foerderer-rolle-flow",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "bedarfsseite",
+			"to": "task-werkstattbeitrag-api",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "bedarfsseite",
+			"to": "task-bedarf-crud-api",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "bedarfsseite",
+			"to": "task-werkangebot-api",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "bedarfsseite",
+			"to": "task-foerderprofil-api",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "bedarfsseite",
+			"to": "task-bedarfsschau-integration",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "bedarfsseite",
+			"to": "task-bedarfsseite-pages",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
 			"from": "geld-und-mitgliedschaft",
 			"to": "goal-root",
 			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-bedarfsschau-integration",
+			"to": "task-bedarfsseite-pages",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-bedarfsschau-integration",
+			"to": "bedarfsseite",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-bedarfsschau-integration",
+			"to": "task-foerderprofil-api",
+			"type": "depends_on",
 			"confidence": 1
 		},
 		{
@@ -900,6 +1023,24 @@
 			"confidence": 1
 		},
 		{
+			"from": "task-werkstattbeitrag-api",
+			"to": "task-bedarf-crud-api",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-werkstattbeitrag-api",
+			"to": "bedarfsseite",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-werkstattbeitrag-api",
+			"to": "task-bedarfstraeger-foerderer-rolle-flow",
+			"type": "depends_on",
+			"confidence": 1
+		},
+		{
 			"from": "task-test-cleanup",
 			"to": "wp-glue-pages",
 			"type": "composed_of",
@@ -945,6 +1086,24 @@
 			"from": "design-system-decision",
 			"to": "design-system-pick",
 			"type": "decided_by",
+			"confidence": 1
+		},
+		{
+			"from": "task-bedarfstraeger-foerderer-rolle-flow",
+			"to": "task-werkstattbeitrag-api",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-bedarfstraeger-foerderer-rolle-flow",
+			"to": "task-foerderprofil-api",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-bedarfstraeger-foerderer-rolle-flow",
+			"to": "bedarfsseite",
+			"type": "composed_of",
 			"confidence": 1
 		},
 		{
@@ -1146,6 +1305,24 @@
 			"confidence": 1
 		},
 		{
+			"from": "task-bedarf-crud-api",
+			"to": "task-werkangebot-api",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-bedarf-crud-api",
+			"to": "bedarfsseite",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-bedarf-crud-api",
+			"to": "task-werkstattbeitrag-api",
+			"type": "depends_on",
+			"confidence": 1
+		},
+		{
 			"from": "tech-stack-pick",
 			"to": "tech-stack-decision",
 			"type": "decision_affects",
@@ -1170,6 +1347,24 @@
 			"confidence": 1
 		},
 		{
+			"from": "task-werkangebot-api",
+			"to": "task-bedarfsseite-pages",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-werkangebot-api",
+			"to": "bedarfsseite",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-werkangebot-api",
+			"to": "task-bedarf-crud-api",
+			"type": "depends_on",
+			"confidence": 1
+		},
+		{
 			"from": "task-werke-overview",
 			"to": "task-zirkel-stadt-seite",
 			"type": "blocks",
@@ -1184,6 +1379,30 @@
 		{
 			"from": "task-werke-overview",
 			"to": "task-werk-detail-page",
+			"type": "depends_on",
+			"confidence": 1
+		},
+		{
+			"from": "task-bedarfsseite-pages",
+			"to": "bedarfsseite",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-bedarfsseite-pages",
+			"to": "task-werkangebot-api",
+			"type": "depends_on",
+			"confidence": 1
+		},
+		{
+			"from": "task-bedarfsseite-pages",
+			"to": "task-foerderprofil-api",
+			"type": "depends_on",
+			"confidence": 1
+		},
+		{
+			"from": "task-bedarfsseite-pages",
+			"to": "task-bedarfsschau-integration",
 			"type": "depends_on",
 			"confidence": 1
 		},
@@ -1455,6 +1674,30 @@
 			"from": "task-email-templates-termine",
 			"to": "wp-termine",
 			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-foerderprofil-api",
+			"to": "task-bedarfsschau-integration",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-foerderprofil-api",
+			"to": "task-bedarfsseite-pages",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-foerderprofil-api",
+			"to": "bedarfsseite",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-foerderprofil-api",
+			"to": "task-bedarfstraeger-foerderer-rolle-flow",
+			"type": "depends_on",
 			"confidence": 1
 		},
 		{

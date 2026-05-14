@@ -101,8 +101,10 @@ export const nutzerProfilUpdateSchema = z
   })
   .strict()
   .superRefine((data, ctx) => {
-    // App-Validierung Klarname-Pflicht: wenn rollen + klarname zusammen
-    // mitgesendet werden, muss klarname gegen die Pflicht passen.
+    // App-Validierung Klarname-Pflicht: wenn rollen 'bedarfstraeger' oder
+    // 'foerderer' enthaelt und klarname im selben Patch mitkommt, muss
+    // klarname nicht-leer sein. Server-Handling muss zusaetzlich pruefen,
+    // ob der bisherige Klarname reicht, wenn nur `rollen` im Patch ist.
     if (data.rollen && rollenErforderlichKlarname(data.rollen)) {
       const klarname = data.klarname;
       if (klarname !== undefined && klarname.trim().length === 0) {

@@ -22,6 +22,10 @@ import { rejectIfBadOrigin } from '@/lib/auth/csrf';
 import { istKuratorVon } from '@/lib/auth/permissions';
 import { terminPatchSchema } from '@/lib/validators/termin';
 import { serializeTermin } from '@/lib/termin/serialize';
+import {
+  ladeBedarfBezuege,
+  ladeFoerderprofilBezuege,
+} from '@/lib/termin/bezuege';
 
 interface RouteContext {
   params: Promise<{ id: string }>;
@@ -85,12 +89,30 @@ export async function GET(req: Request, ctx: RouteContext): Promise<Response> {
     zaehleWarteliste(row.id),
   ]);
 
+  // Bei Bedarfsschau-Terminen liefern wir die verknuepften Bedarfe und
+  // Foerderprofile mit, damit Frontends in einem Roundtrip rendern koennen
+  // (PRD §8.8, §13.19, §13.20).
+  let bedarfe:
+    | Array<Awaited<ReturnType<typeof ladeBedarfBezuege>>[number]>
+    | undefined;
+  let foerderprofile:
+    | Array<Awaited<ReturnType<typeof ladeFoerderprofilBezuege>>[number]>
+    | undefined;
+  if (row.typ === 'bedarfsschau') {
+    [bedarfe, foerderprofile] = await Promise.all([
+      ladeBedarfBezuege(row.id),
+      ladeFoerderprofilBezuege(row.id),
+    ]);
+  }
+
   return Response.json({
     termin: serializeTermin(row),
     counts: {
       angemeldet,
       warteliste,
     },
+    ...(bedarfe !== undefined ? { bedarfe } : {}),
+    ...(foerderprofile !== undefined ? { foerderprofile } : {}),
   });
 }
 

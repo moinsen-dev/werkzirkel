@@ -96,6 +96,72 @@ import {
   T404_BETREFF,
   type TerminAbgesagtProps,
 } from './templates/t-404-termin-abgesagt';
+import {
+  FoerderprofilEingereicht,
+  T501_BETREFF,
+  type FoerderprofilEingereichtProps,
+} from './templates/t-501-foerderprofil-eingereicht';
+import {
+  FoerderprofilVerifiziert,
+  T502_BETREFF,
+  type FoerderprofilVerifiziertProps,
+} from './templates/t-502-foerderprofil-verifiziert';
+import {
+  FoerderprofilAbgelehnt,
+  T503_BETREFF,
+  type FoerderprofilAbgelehntProps,
+} from './templates/t-503-foerderprofil-abgelehnt';
+import {
+  FoerderprofilPausiert,
+  T504_BETREFF,
+  type FoerderprofilPausiertProps,
+} from './templates/t-504-foerderprofil-pausiert';
+import {
+  FoerderprofilBedarfsschauErinnerung,
+  T505_BETREFF,
+  type FoerderprofilBedarfsschauErinnerungProps,
+} from './templates/t-505-foerderprofil-bedarfsschau-erinnerung';
+import {
+  WerkstattbeitragBezahlt,
+  T601_BETREFF,
+  type WerkstattbeitragBezahltProps,
+} from './templates/t-601-werkstattbeitrag-bezahlt';
+import {
+  WerkstattbeitragVerifiziert,
+  T602_BETREFF,
+  type WerkstattbeitragVerifiziertProps,
+} from './templates/t-602-werkstattbeitrag-verifiziert';
+import {
+  WerkstattbeitragAblaufWarnung,
+  T603_BETREFF,
+  type WerkstattbeitragAblaufWarnungProps,
+} from './templates/t-603-werkstattbeitrag-ablauf-warnung';
+import {
+  BedarfEingereichtBestaetigung,
+  T301_BETREFF,
+  type BedarfEingereichtBestaetigungProps,
+} from './templates/t-301-bedarf-eingereicht-bestaetigung';
+import {
+  BedarfVeroeffentlicht,
+  T302_BETREFF,
+  type BedarfVeroeffentlichtProps,
+} from './templates/t-302-bedarf-veroeffentlicht';
+import {
+  BedarfAbgelehnt,
+  T303_BETREFF,
+  type BedarfAbgelehntProps,
+} from './templates/t-303-bedarf-abgelehnt';
+import {
+  WerkangebotEingegangen,
+  T201_BETREFF,
+  type WerkangebotEingegangenProps,
+} from './templates/t-201-werkangebot-eingegangen';
+import {
+  WerkangebotStatusGeaendert,
+  T202_BETREFF,
+  betreffFor as t202BetreffFor,
+  type WerkangebotStatusGeaendertProps,
+} from './templates/t-202-werkangebot-status-geaendert';
 
 /**
  * Diskriminierte Union aller bekannten Templates.
@@ -115,7 +181,20 @@ export type MailTemplate =
   | { template: 'T-401'; props: TerminAnmeldungBestaetigtProps }
   | { template: 'T-402'; props: TerminErinnerung7dProps }
   | { template: 'T-403'; props: TerminErinnerung1dProps }
-  | { template: 'T-404'; props: TerminAbgesagtProps };
+  | { template: 'T-404'; props: TerminAbgesagtProps }
+  | { template: 'T-501'; props: FoerderprofilEingereichtProps }
+  | { template: 'T-502'; props: FoerderprofilVerifiziertProps }
+  | { template: 'T-503'; props: FoerderprofilAbgelehntProps }
+  | { template: 'T-504'; props: FoerderprofilPausiertProps }
+  | { template: 'T-505'; props: FoerderprofilBedarfsschauErinnerungProps }
+  | { template: 'T-601'; props: WerkstattbeitragBezahltProps }
+  | { template: 'T-602'; props: WerkstattbeitragVerifiziertProps }
+  | { template: 'T-603'; props: WerkstattbeitragAblaufWarnungProps }
+  | { template: 'T-301'; props: BedarfEingereichtBestaetigungProps }
+  | { template: 'T-302'; props: BedarfVeroeffentlichtProps }
+  | { template: 'T-303'; props: BedarfAbgelehntProps }
+  | { template: 'T-201'; props: WerkangebotEingegangenProps }
+  | { template: 'T-202'; props: WerkangebotStatusGeaendertProps };
 
 /**
  * Datei-Anhang. Folgt dem Resend-Format, ist hier aber lokal getypt damit
@@ -223,8 +302,79 @@ function buildEmail(
         element: React.createElement(TerminAbgesagt, opts.props),
         betreff: T404_BETREFF,
       };
+    case 'T-501':
+      return {
+        element: React.createElement(FoerderprofilEingereicht, opts.props),
+        betreff: T501_BETREFF,
+      };
+    case 'T-502':
+      return {
+        element: React.createElement(FoerderprofilVerifiziert, opts.props),
+        betreff: T502_BETREFF,
+      };
+    case 'T-503':
+      return {
+        element: React.createElement(FoerderprofilAbgelehnt, opts.props),
+        betreff: T503_BETREFF,
+      };
+    case 'T-504':
+      return {
+        element: React.createElement(FoerderprofilPausiert, opts.props),
+        betreff: T504_BETREFF,
+      };
+    case 'T-505':
+      return {
+        element: React.createElement(FoerderprofilBedarfsschauErinnerung, opts.props),
+        betreff: T505_BETREFF,
+      };
+    case 'T-601':
+      return {
+        element: React.createElement(WerkstattbeitragBezahlt, opts.props),
+        betreff: T601_BETREFF,
+      };
+    case 'T-602':
+      return {
+        element: React.createElement(WerkstattbeitragVerifiziert, opts.props),
+        betreff: T602_BETREFF,
+      };
+    case 'T-603':
+      return {
+        element: React.createElement(WerkstattbeitragAblaufWarnung, opts.props),
+        betreff: T603_BETREFF,
+      };
+    case 'T-301':
+      return {
+        element: React.createElement(BedarfEingereichtBestaetigung, opts.props),
+        betreff: T301_BETREFF,
+      };
+    case 'T-302':
+      return {
+        element: React.createElement(BedarfVeroeffentlicht, opts.props),
+        betreff: T302_BETREFF,
+      };
+    case 'T-303':
+      return {
+        element: React.createElement(BedarfAbgelehnt, opts.props),
+        betreff: T303_BETREFF,
+      };
+    case 'T-201':
+      return {
+        element: React.createElement(WerkangebotEingegangen, opts.props),
+        betreff: T201_BETREFF,
+      };
+    case 'T-202':
+      return {
+        element: React.createElement(WerkangebotStatusGeaendert, opts.props),
+        // Betreff dynamisch vom status abhaengig.
+        betreff: t202BetreffFor(opts.props.neuerStatus),
+      };
   }
 }
+
+// Sicherstellen, dass die statisch importierte T202-Konstante referenziert
+// bleibt (Tree-Shaker koennte sie sonst entfernen, was die Modul-Schnittstelle
+// brechen wuerde, weil andere Files sie als gueltigen Default-Betreff lesen).
+void T202_BETREFF;
 
 /**
  * Rendert ein Template einmal vollstaendig zu HTML + Plain-Text.

@@ -22,7 +22,12 @@ import { requestMagicLink } from '@/lib/auth/magic-link';
 
 const bodySchema = z.object({
   email: z.string().email().max(320),
-  zweck: z.enum(['login', 'registrierung']),
+  zweck: z.enum([
+    'login',
+    'registrierung',
+    'registrierung-bedarf',
+    'registrierung-foerder',
+  ]),
 });
 
 function clientIp(req: Request): string {

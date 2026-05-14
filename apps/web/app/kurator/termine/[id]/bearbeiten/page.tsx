@@ -12,11 +12,19 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { headers } from 'next/headers';
 import { notFound, redirect } from 'next/navigation';
-import { eq } from 'drizzle-orm';
+import { and, eq, inArray } from 'drizzle-orm';
 
 import { de } from '@/i18n/de';
 import { db } from '@/lib/db';
-import { auditLog, termin } from '@/lib/db/schema';
+import {
+  auditLog,
+  bedarf,
+  foerderprofil,
+  nutzer,
+  termin,
+  terminBedarfBezug,
+  terminFoerderprofilBezug,
+} from '@/lib/db/schema';
 import { terminTyp } from '@/lib/db/schema/enums';
 import { getSessionFromRequest } from '@/lib/auth/session';
 import { istKuratorVon } from '@/lib/auth/permissions';
@@ -143,6 +151,148 @@ export async function terminAktualisierenAction(
   redirect(`${path}?erfolg=gespeichert`);
 }
 
+/* ─────────────────────  Bedarfsschau-Bezuege  ───────────────────── */
+
+export async function bedarfsschauBedarfeSetzenAction(
+  terminId: string,
+  formData: FormData,
+): Promise<void> {
+  'use server';
+
+  const path = `/kurator/termine/${terminId}/bearbeiten`;
+  const req = await buildRequestFromHeaders(path);
+  const sess = await getSessionFromRequest(req);
+  if (!sess) {
+    redirect(`/anmelden?next=${path}`);
+  }
+
+  const row = await ladeTermin(terminId);
+  if (!row) notFound();
+  const erlaubt = await istKuratorVon(sess.nutzerId, row.stadtId);
+  if (!erlaubt) notFound();
+  if (row.typ !== 'bedarfsschau') {
+    redirect(`${path}?fehler=falscher_typ`);
+  }
+
+  // Mehrfach-Auswahl: FormData liefert "bedarf_ids" mit allen ausgewaehlten
+  // Checkbox-Werten.
+  const rawIds = formData.getAll('bedarf_ids').map((v) => String(v));
+  const uniqueIds = Array.from(new Set(rawIds.filter((v) => v.length > 0)));
+
+  // Pruefen: Bedarfe muessen zur Stadt gehoeren.
+  let gueltigeIds: string[] = [];
+  if (uniqueIds.length > 0) {
+    const found = await db
+      .select({ id: bedarf.id, stadtId: bedarf.stadtId })
+      .from(bedarf)
+      .where(inArray(bedarf.id, uniqueIds));
+    gueltigeIds = found
+      .filter((f) => f.stadtId === row.stadtId)
+      .map((f) => f.id);
+  }
+
+  await db.transaction(async (tx) => {
+    await tx
+      .delete(terminBedarfBezug)
+      .where(eq(terminBedarfBezug.terminId, terminId));
+    if (gueltigeIds.length > 0) {
+      await tx.insert(terminBedarfBezug).values(
+        gueltigeIds.map((bid, idx) => ({
+          terminId,
+          bedarfId: bid,
+          reihenfolge: idx,
+        })),
+      );
+    }
+  });
+
+  try {
+    await db.insert(auditLog).values({
+      nutzerId: sess.nutzerId,
+      aktion: 'termin.bedarfe_gesetzt',
+      referenzTyp: 'termin',
+      referenzId: terminId,
+      metadaten: { anzahl: gueltigeIds.length, bedarf_ids: gueltigeIds },
+    });
+  } catch {
+    /* ignore */
+  }
+
+  redirect(`${path}?erfolg=bedarfe_gespeichert`);
+}
+
+export async function bedarfsschauFoerderprofileSetzenAction(
+  terminId: string,
+  formData: FormData,
+): Promise<void> {
+  'use server';
+
+  const path = `/kurator/termine/${terminId}/bearbeiten`;
+  const req = await buildRequestFromHeaders(path);
+  const sess = await getSessionFromRequest(req);
+  if (!sess) {
+    redirect(`/anmelden?next=${path}`);
+  }
+
+  const row = await ladeTermin(terminId);
+  if (!row) notFound();
+  const erlaubt = await istKuratorVon(sess.nutzerId, row.stadtId);
+  if (!erlaubt) notFound();
+  if (row.typ !== 'bedarfsschau') {
+    redirect(`${path}?fehler=falscher_typ`);
+  }
+
+  const rawIds = formData.getAll('foerderprofil_ids').map((v) => String(v));
+  const uniqueIds = Array.from(new Set(rawIds.filter((v) => v.length > 0)));
+
+  let gueltigeIds: string[] = [];
+  if (uniqueIds.length > 0) {
+    const found = await db
+      .select({
+        id: foerderprofil.id,
+        nutzerStadtId: nutzer.stadtId,
+      })
+      .from(foerderprofil)
+      .innerJoin(nutzer, eq(nutzer.id, foerderprofil.nutzerId))
+      .where(inArray(foerderprofil.id, uniqueIds));
+    gueltigeIds = found
+      .filter((f) => f.nutzerStadtId === row.stadtId)
+      .map((f) => f.id);
+  }
+
+  await db.transaction(async (tx) => {
+    await tx
+      .delete(terminFoerderprofilBezug)
+      .where(eq(terminFoerderprofilBezug.terminId, terminId));
+    if (gueltigeIds.length > 0) {
+      await tx.insert(terminFoerderprofilBezug).values(
+        gueltigeIds.map((fid, idx) => ({
+          terminId,
+          foerderprofilId: fid,
+          reihenfolge: idx,
+        })),
+      );
+    }
+  });
+
+  try {
+    await db.insert(auditLog).values({
+      nutzerId: sess.nutzerId,
+      aktion: 'termin.foerderprofile_gesetzt',
+      referenzTyp: 'termin',
+      referenzId: terminId,
+      metadaten: {
+        anzahl: gueltigeIds.length,
+        foerderprofil_ids: gueltigeIds,
+      },
+    });
+  } catch {
+    /* ignore */
+  }
+
+  redirect(`${path}?erfolg=foerderprofile_gespeichert`);
+}
+
 function terminTypLabel(t: string): string {
   return (de.termin_typ as Record<string, string>)[t] ?? t;
 }
@@ -195,6 +345,10 @@ function ErfolgBanner({
   let text: string | null = null;
   if (frisch === '1') text = tb.erfolg_frisch_angelegt;
   else if (erfolg === 'gespeichert') text = tb.erfolg_gespeichert;
+  else if (erfolg === 'bedarfe_gespeichert')
+    text = de.termine.bedarfsschau.erfolg_bedarfe_gespeichert;
+  else if (erfolg === 'foerderprofile_gespeichert')
+    text = de.termine.bedarfsschau.erfolg_foerderprofile_gespeichert;
   if (!text) return null;
   return (
     <div
@@ -235,9 +389,68 @@ export default async function TerminBearbeitenPage({
   if (!erlaubt) notFound();
 
   const aktualisierenBound = terminAktualisierenAction.bind(null, id);
+  const bedarfeSetzenBound = bedarfsschauBedarfeSetzenAction.bind(null, id);
+  const foerderprofileSetzenBound =
+    bedarfsschauFoerderprofileSetzenAction.bind(null, id);
 
   const istEditierbar =
     row.status === 'geplant' || row.status === 'veroeffentlicht';
+
+  // Bedarfsschau-spezifische Daten: verfuegbare Optionen + aktuell gesetzte
+  // Bezuege.
+  type BedarfOption = { id: string; titel: string; organisation: string };
+  type FoerderprofilOption = { id: string; organisation: string };
+  let bedarfOptionen: BedarfOption[] = [];
+  let foerderprofilOptionen: FoerderprofilOption[] = [];
+  let gewaehlteBedarfIds: string[] = [];
+  let gewaehlteFoerderprofilIds: string[] = [];
+  if (row.typ === 'bedarfsschau') {
+    const [bedarfeRows, foerderprofileRows, gewaehlteBedarfeRows, gewaehlteFoerderprofileRows] =
+      await Promise.all([
+        db
+          .select({
+            id: bedarf.id,
+            titel: bedarf.titel,
+            organisation: bedarf.organisation,
+          })
+          .from(bedarf)
+          .where(
+            and(
+              eq(bedarf.stadtId, row.stadtId),
+              inArray(bedarf.status, ['oeffentlich', 'in_gespraechen']),
+            ),
+          ),
+        db
+          .select({
+            id: foerderprofil.id,
+            organisation: foerderprofil.organisation,
+          })
+          .from(foerderprofil)
+          .innerJoin(nutzer, eq(nutzer.id, foerderprofil.nutzerId))
+          .where(
+            and(
+              eq(nutzer.stadtId, row.stadtId),
+              eq(foerderprofil.verifikationStatus, 'verifiziert'),
+            ),
+          ),
+        db
+          .select({ bedarfId: terminBedarfBezug.bedarfId })
+          .from(terminBedarfBezug)
+          .where(eq(terminBedarfBezug.terminId, id)),
+        db
+          .select({
+            foerderprofilId: terminFoerderprofilBezug.foerderprofilId,
+          })
+          .from(terminFoerderprofilBezug)
+          .where(eq(terminFoerderprofilBezug.terminId, id)),
+      ]);
+    bedarfOptionen = bedarfeRows;
+    foerderprofilOptionen = foerderprofileRows;
+    gewaehlteBedarfIds = gewaehlteBedarfeRows.map((r) => r.bedarfId);
+    gewaehlteFoerderprofilIds = gewaehlteFoerderprofileRows.map(
+      (r) => r.foerderprofilId,
+    );
+  }
 
   return (
     <div className="page-shell">
@@ -416,6 +629,157 @@ export default async function TerminBearbeitenPage({
               </div>
             </form>
           )}
+
+          {row.typ === 'bedarfsschau' ? (
+            <>
+              <form
+                action={bedarfeSetzenBound}
+                style={{
+                  display: 'grid',
+                  gap: 12,
+                  marginTop: 40,
+                  paddingTop: 24,
+                  borderTop: 'var(--hairline)',
+                }}
+              >
+                <h2 style={{ margin: 0, fontSize: 22 }}>
+                  {de.termine.bedarfsschau.bearbeiten_bedarfe_titel}
+                </h2>
+                <p
+                  style={{
+                    margin: 0,
+                    color: 'var(--muted)',
+                    fontSize: 14,
+                  }}
+                >
+                  {de.termine.bedarfsschau.bearbeiten_bedarfe_hinweis}
+                </p>
+                {bedarfOptionen.length === 0 ? (
+                  <p style={{ margin: 0, color: 'var(--muted)' }}>
+                    {de.termine.bedarfsschau.keine_bedarfe_verfuegbar}
+                  </p>
+                ) : (
+                  <ul
+                    style={{
+                      listStyle: 'none',
+                      margin: 0,
+                      padding: 0,
+                      display: 'grid',
+                      gap: 8,
+                    }}
+                  >
+                    {bedarfOptionen.map((b) => {
+                      const checked = gewaehlteBedarfIds.includes(b.id);
+                      return (
+                        <li key={b.id}>
+                          <label
+                            style={{
+                              display: 'flex',
+                              gap: 10,
+                              alignItems: 'flex-start',
+                            }}
+                          >
+                            <input
+                              type="checkbox"
+                              name="bedarf_ids"
+                              value={b.id}
+                              defaultChecked={checked}
+                            />
+                            <span>
+                              <strong>{b.titel}</strong>
+                              <br />
+                              <span
+                                style={{
+                                  color: 'var(--muted)',
+                                  fontSize: 13,
+                                }}
+                              >
+                                {b.organisation}
+                              </span>
+                            </span>
+                          </label>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
+                <div>
+                  <button type="submit" className="button primary">
+                    {de.termine.bedarfsschau.button_bedarfe_speichern}
+                  </button>
+                </div>
+              </form>
+
+              <form
+                action={foerderprofileSetzenBound}
+                style={{
+                  display: 'grid',
+                  gap: 12,
+                  marginTop: 40,
+                  paddingTop: 24,
+                  borderTop: 'var(--hairline)',
+                }}
+              >
+                <h2 style={{ margin: 0, fontSize: 22 }}>
+                  {de.termine.bedarfsschau.bearbeiten_foerderprofile_titel}
+                </h2>
+                <p
+                  style={{
+                    margin: 0,
+                    color: 'var(--muted)',
+                    fontSize: 14,
+                  }}
+                >
+                  {de.termine.bedarfsschau.bearbeiten_foerderprofile_hinweis}
+                </p>
+                {foerderprofilOptionen.length === 0 ? (
+                  <p style={{ margin: 0, color: 'var(--muted)' }}>
+                    {de.termine.bedarfsschau.keine_foerderprofile_verfuegbar}
+                  </p>
+                ) : (
+                  <ul
+                    style={{
+                      listStyle: 'none',
+                      margin: 0,
+                      padding: 0,
+                      display: 'grid',
+                      gap: 8,
+                    }}
+                  >
+                    {foerderprofilOptionen.map((f) => {
+                      const checked = gewaehlteFoerderprofilIds.includes(f.id);
+                      return (
+                        <li key={f.id}>
+                          <label
+                            style={{
+                              display: 'flex',
+                              gap: 10,
+                              alignItems: 'flex-start',
+                            }}
+                          >
+                            <input
+                              type="checkbox"
+                              name="foerderprofil_ids"
+                              value={f.id}
+                              defaultChecked={checked}
+                            />
+                            <span>
+                              <strong>{f.organisation}</strong>
+                            </span>
+                          </label>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
+                <div>
+                  <button type="submit" className="button primary">
+                    {de.termine.bedarfsschau.button_foerderprofile_speichern}
+                  </button>
+                </div>
+              </form>
+            </>
+          ) : null}
         </div>
       </section>
     </div>

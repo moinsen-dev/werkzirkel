@@ -135,7 +135,7 @@ export default async function AnmeldenPage({ searchParams }: Params) {
                 <input type="hidden" name="next" value={next} />
                 <div
                   className="hero-actions"
-                  style={{ marginTop: '12px', flexWrap: 'wrap' }}
+                  style={{ marginTop: '12px', flexWrap: 'wrap', gap: '8px' }}
                 >
                   <button
                     className="button primary"
@@ -152,6 +152,22 @@ export default async function AnmeldenPage({ searchParams }: Params) {
                     value="registrierung"
                   >
                     {t.button_registrieren}
+                  </button>
+                  <button
+                    className="button secondary"
+                    type="submit"
+                    name="zweck"
+                    value="registrierung-bedarf"
+                  >
+                    {t.button_bedarf}
+                  </button>
+                  <button
+                    className="button secondary"
+                    type="submit"
+                    name="zweck"
+                    value="registrierung-foerder"
+                  >
+                    {t.button_foerderer}
                   </button>
                 </div>
               </form>

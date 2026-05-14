@@ -20,6 +20,8 @@ export type Teilnahmeart = (typeof teilnahmeart)[number];
 export const magicLinkZweck = [
   'login',
   'registrierung',
+  'registrierung-bedarf',
+  'registrierung-foerder',
   'konto_loeschen_bestaetigung',
 ] as const;
 export type MagicLinkZweck = (typeof magicLinkZweck)[number];

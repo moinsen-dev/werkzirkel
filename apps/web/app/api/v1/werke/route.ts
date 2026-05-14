@@ -14,6 +14,7 @@ import {
   auditLog,
   nutzer,
   werk,
+  werkHistorie,
 } from '@/lib/db/schema';
 import { getSessionFromRequest } from '@/lib/auth/session';
 import { rejectIfBadOrigin } from '@/lib/auth/csrf';
@@ -94,6 +95,20 @@ export async function POST(req: Request): Promise<Response> {
   const row = inserted[0];
   if (!row) {
     return Response.json({ fehler: 'unbekannt' }, { status: 500 });
+  }
+
+  // Initialer Werkstand-Historie-Eintrag: werkstand_alt=null markiert die
+  // Anlage. Spätere Werkstand-Wechsel knüpfen daran an, sodass der Verlauf
+  // auf der Werkseite mindestens N+1 Einträge bei N Änderungen zeigt.
+  try {
+    await db.insert(werkHistorie).values({
+      werkId: row.id,
+      werkstandAlt: null,
+      werkstandNeu: row.werkstand,
+      geaendertVon: sess.nutzerId,
+    });
+  } catch {
+    // Historie-Insert ist best-effort — Werk steht auch ohne Initial-Eintrag.
   }
 
   try {

@@ -376,8 +376,9 @@ export default function WerkDetailView({
                   <span className="step-number">{historie.length - i}</span>
                   <div>
                     <strong>
-                      Werkstand geändert von {werkstandLabel(h.werkstandAlt)}{' '}
-                      auf {werkstandLabel(h.werkstandNeu)}
+                      {h.werkstandAlt === null
+                        ? `Werk angelegt mit Werkstand ${werkstandLabel(h.werkstandNeu)}`
+                        : `Werkstand geändert von ${werkstandLabel(h.werkstandAlt)} auf ${werkstandLabel(h.werkstandNeu)}`}
                     </strong>
                     <p>
                       {formatDatum(h.geaendertAm)} ·{' '}

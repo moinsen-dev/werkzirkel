@@ -224,7 +224,7 @@ describe('PATCH /api/v1/werke/:id', () => {
     return data.werk.id;
   }
 
-  it('Werkstand-Wechsel idee → prototyp erzeugt genau eine werk_historie-Row', async () => {
+  it('Werkstand-Wechsel idee → prototyp erzeugt zusätzlich zur Anlage-Row eine Transitions-Row', async () => {
     const userId = await macherAnlegen({ email: 'patch-1@test.werkzirkel.de' });
     const sid = await sessionAnlegen(userId);
     const wId = await werkPosten(sid);
@@ -243,14 +243,19 @@ describe('PATCH /api/v1/werke/:id', () => {
     const historie = await db
       .select()
       .from(werkHistorie)
-      .where(eq(werkHistorie.werkId, wId));
-    expect(historie.length).toBe(1);
-    expect(historie[0]?.werkstandAlt).toBe('idee');
-    expect(historie[0]?.werkstandNeu).toBe('prototyp');
-    expect(historie[0]?.geaendertVon).toBe(userId);
+      .where(eq(werkHistorie.werkId, wId))
+      .orderBy(werkHistorie.geaendertAm);
+    // 1) Initial bei werk-create (werkstandAlt=null, werkstandNeu='idee')
+    // 2) Transition durch PATCH (werkstandAlt='idee', werkstandNeu='prototyp')
+    expect(historie.length).toBe(2);
+    expect(historie[0]?.werkstandAlt).toBe(null);
+    expect(historie[0]?.werkstandNeu).toBe('idee');
+    expect(historie[1]?.werkstandAlt).toBe('idee');
+    expect(historie[1]?.werkstandNeu).toBe('prototyp');
+    expect(historie[1]?.geaendertVon).toBe(userId);
   });
 
-  it('PATCH mit gleichem Werkstand → KEIN werk_historie-Eintrag', async () => {
+  it('PATCH mit gleichem Werkstand → KEIN zusätzlicher werk_historie-Eintrag (nur Anlage-Row)', async () => {
     const userId = await macherAnlegen({ email: 'patch-2@test.werkzirkel.de' });
     const sid = await sessionAnlegen(userId);
     const wId = await werkPosten(sid);
@@ -270,7 +275,9 @@ describe('PATCH /api/v1/werke/:id', () => {
       .select()
       .from(werkHistorie)
       .where(eq(werkHistorie.werkId, wId));
-    expect(historie.length).toBe(0);
+    // Nur die Anlage-Row, kein Transitions-Insert bei No-Op-PATCH.
+    expect(historie.length).toBe(1);
+    expect(historie[0]?.werkstandAlt).toBe(null);
   });
 
   it('PATCH von fremdem Nutzer → 403', async () => {
@@ -345,7 +352,8 @@ describe('DELETE /api/v1/werke/:id', () => {
       .select()
       .from(werkHistorie)
       .where(eq(werkHistorie.werkId, wId));
-    expect(histVor.length).toBe(1);
+    // 1) Anlage (werkstandAlt=null), 2) PATCH-Transition
+    expect(histVor.length).toBe(2);
 
     const delRes = await werkDelete(
       buildRequest({

@@ -7,22 +7,22 @@
 		"title": "Werkzirkel v1.0 — Plattform bauen",
 		"status": "draft"
 	},
-	"generated_at": "2026-05-14T08:43:49.592Z",
+	"generated_at": "2026-05-14T09:51:28.437Z",
 	"stats": {
-		"node_count": 64,
-		"edge_count": 208,
+		"node_count": 67,
+		"edge_count": 218,
 		"agent_count": 0,
 		"decision_count": 5,
 		"by_type": {
-			"task": 42,
+			"task": 45,
 			"subproject": 7,
 			"workpackage": 5,
 			"decision": 9,
 			"goal": 1
 		},
 		"by_status": {
-			"done": 56,
-			"draft": 8
+			"done": 60,
+			"draft": 7
 		},
 		"readiness": {
 			"passed": 0,
@@ -241,6 +241,15 @@
 			"readiness": "unknown"
 		},
 		{
+			"id": "task-admin-backoffice",
+			"type": "task",
+			"title": "Admin-Backoffice: Nutzer-Suche/Sperren + Städte-Verwaltung + Audit-Log-Browser + E-Mail-Log",
+			"summary": "Vollständiges Admin-Tool: /admin/nutzer mit Suche+Sperren+Entsperren. /admin/staedte mit Anlegen+Kurator-Ernennen. /admin/audit-log. /admin/email-log. PRD §15.14 + §26.",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
 			"id": "task-werkstattbeitrag-api",
 			"type": "task",
 			"title": "Werkstattbeitrag-Workflow: Stripe-Geldbeitrag + Sachleistungs-Verifikation + Email-Templates",
@@ -254,6 +263,15 @@
 			"type": "task",
 			"title": "Test-DB-Cleanup-Helper + Aufraeumen existierender Test-Daten",
 			"summary": "Wiederverwendbarer Cleanup-Helper fuer Integration-Tests in apps/web/tests/_helpers/db-cleanup.ts. Macht TRUNCATE fuer eine Liste von Tabellen mit CASCADE. Einmal-Skript um die existierenden Test-Reste aus der Dev-DB zu loeschen.",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "task-meldungen-system",
+			"type": "task",
+			"title": "Melde-System: POST /meldungen + Kurator-Postfach + Resolution-Workflow",
+			"summary": "Melden-Knopf an jedem Nutzerinhalt (Werk, Bedarf, Werkangebot, Förderprofil, Nutzer:in, Feedback, Hilfegesuch-Antwort). Kurator-Postfach mit SLA 48h. PRD §27.",
 			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
@@ -344,7 +362,7 @@
 			"type": "subproject",
 			"title": "Moderation, Admin, Hilfegesuche",
 			"summary": "Governance-Layer: Hilfegesuche mit Kommentaren, Meldungssystem mit Kurator:innen-Postfach, Admin-Backoffice für Nutzer:innen-Sperrung, Stadt-Verwaltung, Audit-Log-Browser.",
-			"status": "draft",
+			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
 		},
@@ -506,6 +524,15 @@
 			"type": "subproject",
 			"title": "Foundation",
 			"summary": "Architecture, data model, tech stack, design system, cross-cutting concerns. Must be done before any build-subproject starts. PRD §13.",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "task-hilfegesuche-api-und-pages",
+			"type": "task",
+			"title": "Hilfegesuche: CRUD + Antworten als Kommentare + UI",
+			"summary": "POST/GET/DELETE /api/v1/hilfegesuche + POST /:id/antwort. Max 14 Tage Gültigkeit. Stadt/Tag-Filter. PRD §8.15. Plus UI /hilfegesuche-Liste + Detail + Anlege-Form.",
 			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
@@ -1068,6 +1095,18 @@
 			"confidence": 1
 		},
 		{
+			"from": "task-admin-backoffice",
+			"to": "moderation-admin-hilfegesuche",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-admin-backoffice",
+			"to": "task-meldungen-system",
+			"type": "depends_on",
+			"confidence": 1
+		},
+		{
 			"from": "task-werkstattbeitrag-api",
 			"to": "task-bedarf-crud-api",
 			"type": "blocks",
@@ -1089,6 +1128,24 @@
 			"from": "task-test-cleanup",
 			"to": "wp-glue-pages",
 			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-meldungen-system",
+			"to": "task-admin-backoffice",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-meldungen-system",
+			"to": "moderation-admin-hilfegesuche",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-meldungen-system",
+			"to": "task-hilfegesuche-api-und-pages",
+			"type": "depends_on",
 			"confidence": 1
 		},
 		{
@@ -1287,6 +1344,24 @@
 			"from": "moderation-admin-hilfegesuche",
 			"to": "goal-root",
 			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "moderation-admin-hilfegesuche",
+			"to": "task-hilfegesuche-api-und-pages",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "moderation-admin-hilfegesuche",
+			"to": "task-meldungen-system",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "moderation-admin-hilfegesuche",
+			"to": "task-admin-backoffice",
+			"type": "decomposes_into",
 			"confidence": 1
 		},
 		{
@@ -1689,6 +1764,18 @@
 			"from": "foundation",
 			"to": "cross-cutting-decision",
 			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "task-hilfegesuche-api-und-pages",
+			"to": "task-meldungen-system",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-hilfegesuche-api-und-pages",
+			"to": "moderation-admin-hilfegesuche",
+			"type": "composed_of",
 			"confidence": 1
 		},
 		{

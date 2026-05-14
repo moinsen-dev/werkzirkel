@@ -77,3 +77,13 @@ export function istFoerderer(nutzerLike: {
 }): boolean {
   return hasRolle(nutzerLike, 'foerderer');
 }
+
+/**
+ * Reine In-Memory-Pruefung gegen ein bereits geladenes Nutzer-Objekt.
+ *
+ * Wird von allen `/api/v1/admin/*`-Routes und allen `/admin/*`-Pages genutzt,
+ * um den Permission-Gate vor jedem Schreibzugriff zu setzen.
+ */
+export function istAdmin(nutzerLike: { rollen: readonly string[] }): boolean {
+  return hasRolle(nutzerLike, 'admin');
+}

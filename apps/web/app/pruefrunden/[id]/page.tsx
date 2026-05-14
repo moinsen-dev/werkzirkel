@@ -28,6 +28,7 @@ import { and, asc, eq, inArray, sql } from 'drizzle-orm';
 import { createId } from '@paralleldrive/cuid2';
 
 import { de } from '@/i18n/de';
+import MeldenButton from '@/components/ui/melden-button';
 import { db } from '@/lib/db';
 import {
   auditLog,
@@ -644,6 +645,15 @@ export default async function PruefrundeDetailPage({
               </div>
             </article>
           </aside>
+        </div>
+      </section>
+
+      <section className="section compact" aria-label="Inhalt melden">
+        <div
+          className="wrap"
+          style={{ display: 'flex', justifyContent: 'flex-end' }}
+        >
+          <MeldenButton referenzTyp="nutzer" referenzId={pr.inhaberId} />
         </div>
       </section>
     </div>

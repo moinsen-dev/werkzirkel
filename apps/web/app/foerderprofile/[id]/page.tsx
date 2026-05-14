@@ -14,6 +14,7 @@ import { notFound } from 'next/navigation';
 import { eq } from 'drizzle-orm';
 
 import { de } from '@/i18n/de';
+import MeldenButton from '@/components/ui/melden-button';
 import { db } from '@/lib/db';
 import { foerderprofil, nutzer } from '@/lib/db/schema';
 import { getSessionFromRequest } from '@/lib/auth/session';
@@ -283,6 +284,15 @@ export default async function FoerderprofilDetailPage({ params }: PageParams) {
               </div>
             </article>
           </aside>
+        </div>
+      </section>
+
+      <section className="section compact" aria-label="Inhalt melden">
+        <div
+          className="wrap"
+          style={{ display: 'flex', justifyContent: 'flex-end' }}
+        >
+          <MeldenButton referenzTyp="foerderprofil" referenzId={id} />
         </div>
       </section>
     </div>

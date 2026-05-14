@@ -22,6 +22,7 @@ import { revalidatePath } from 'next/cache';
 import { and, eq } from 'drizzle-orm';
 
 import { de } from '@/i18n/de';
+import MeldenButton from '@/components/ui/melden-button';
 import { db } from '@/lib/db';
 import {
   auditLog,
@@ -475,6 +476,15 @@ export default async function BedarfDetailPage({
               </div>
             </article>
           </aside>
+        </div>
+      </section>
+
+      <section className="section compact" aria-label="Inhalt melden">
+        <div
+          className="wrap"
+          style={{ display: 'flex', justifyContent: 'flex-end' }}
+        >
+          <MeldenButton referenzTyp="bedarf" referenzId={id} />
         </div>
       </section>
     </div>

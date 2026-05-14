@@ -13,6 +13,7 @@
 import Link from 'next/link';
 
 import { de } from '@/i18n/de';
+import MeldenButton from '@/components/ui/melden-button';
 import type { Werk } from '@/lib/db/schema';
 import type { Hilfebedarf } from '@/lib/db/schema/enums';
 
@@ -390,6 +391,15 @@ export default function WerkDetailView({
           </div>
         </section>
       ) : null}
+
+      <section className="section compact" aria-label="Inhalt melden">
+        <div
+          className="wrap"
+          style={{ display: 'flex', justifyContent: 'flex-end' }}
+        >
+          <MeldenButton referenzTyp="werk" referenzId={werk.id} />
+        </div>
+      </section>
 
       <footer className="site-footer">
         <div className="wrap footer-inner">

@@ -17,6 +17,7 @@
 import Link from 'next/link';
 
 import { de } from '@/i18n/de';
+import MeldenButton from '@/components/ui/melden-button';
 import type {
   Hilfebedarf,
   Teilnahmeart,
@@ -522,6 +523,15 @@ export default function WerkpassView({
             sich, es innerhalb von 14 Tagen zu tun. Das Test-Saldo macht das
             öffentlich sichtbar.
           </p>
+        </div>
+      </section>
+
+      <section className="section compact" aria-label="Nutzer:in melden">
+        <div
+          className="wrap"
+          style={{ display: 'flex', justifyContent: 'flex-end' }}
+        >
+          <MeldenButton referenzTyp="nutzer" referenzId={nutzer.id} />
         </div>
       </section>
 

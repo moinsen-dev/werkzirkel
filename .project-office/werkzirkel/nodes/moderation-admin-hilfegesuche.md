@@ -10,6 +10,10 @@ created_by: human
 edges:
   composed_of:
     - id: goal-root
+  decomposes_into:
+    - id: task-hilfegesuche-api-und-pages
+    - id: task-meldungen-system
+    - id: task-admin-backoffice
 id: moderation-admin-hilfegesuche
 is_root: false
 open_questions: []
@@ -17,12 +21,12 @@ owner: null
 parent: goal-root
 private: false
 risks: []
-status: draft
+status: done
 summary: "Governance-Layer: Hilfegesuche mit Kommentaren, Meldungssystem mit Kurator:innen-Postfach, Admin-Backoffice für Nutzer:innen-Sperrung, Stadt-Verwaltung, Audit-Log-Browser."
 tags: []
 title: Moderation, Admin, Hilfegesuche
 type: subproject
-updated_at: 2026-05-13T09:48:12.162Z
+updated_at: 2026-05-14T09:51:28.436Z
 ---
 
 ## Was hier gebaut wird

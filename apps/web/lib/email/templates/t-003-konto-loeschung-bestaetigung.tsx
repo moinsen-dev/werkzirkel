@@ -15,6 +15,8 @@ import { Layout } from './_layout';
 export interface KontoLoeschungBestaetigungProps {
   /** Klickbare URL zur Bestaetigung der Loeschung. */
   confirmUrl: string;
+  /** Voraussichtliches Loeschdatum (heute + 7 Tage zum Zeitpunkt des Versands). */
+  voraussichtlichesLoeschdatum: string;
   /** App-URL fuer Footer-Links. */
   appUrl?: string;
 }
@@ -45,10 +47,14 @@ const linkBlockStyle = {
 export function KontoLoeschungBestaetigung(
   props: KontoLoeschungBestaetigungProps,
 ): React.JSX.Element {
-  const { confirmUrl, appUrl = 'https://werkzirkel.de' } = props;
+  const {
+    confirmUrl,
+    voraussichtlichesLoeschdatum,
+    appUrl = 'https://werkzirkel.de',
+  } = props;
   return (
     <Layout
-      vorschau="Klick zur Bestätigung — danach läuft eine 7-tägige Karenzfrist."
+      vorschau={`Klick zur Bestätigung — Löschung am ${voraussichtlichesLoeschdatum}.`}
       appUrl={appUrl}
     >
       <Heading as="h1" style={{ fontSize: '20px', margin: '0 0 16px 0' }}>
@@ -63,8 +69,10 @@ export function KontoLoeschungBestaetigung(
       <Text style={{ margin: '0 0 16px 0' }}>
         Mit einem Klick auf den Knopf unten startet eine 7-tägige Karenzzeit.
         In diesen 7 Tagen kannst du die Löschung jederzeit widerrufen.
-        Danach werden deine Werke, dein Profil und alle persönlichen Daten
-        endgültig entfernt.
+        Wenn du den Knopf jetzt klickst, wird dein Konto{' '}
+        <strong>voraussichtlich am {voraussichtlichesLoeschdatum}</strong>{' '}
+        endgültig gelöscht — mit all deinen Werken, deinem Profil und allen
+        persönlichen Daten.
       </Text>
 
       <Section style={{ textAlign: 'center', margin: '24px 0' }}>

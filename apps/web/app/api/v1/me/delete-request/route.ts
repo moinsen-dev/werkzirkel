@@ -64,11 +64,25 @@ export async function POST(req: Request): Promise<Response> {
   });
 
   // ── T-003 versenden ──────────────────────────────────────────────────────
+  // Voraussichtliches Loeschdatum: heute + 7 Tage. Der User hat 15min zum
+  // Confirmen; Karenz startet ab Confirm-Klick. Die Differenz ist <0,1 Tag,
+  // also rundet "heute+7T" zuverlaessig auf das tatsaechliche Datum.
   const confirmUrl = `${env.APP_URL}/api/v1/me/delete-confirm?token=${encodeURIComponent(clearToken)}`;
+  const voraussichtlichesLoeschdatum = new Date(
+    Date.now() + 7 * 24 * 60 * 60 * 1000,
+  ).toLocaleDateString('de-DE', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  });
   await sendMail({
     to: email,
     template: 'T-003',
-    props: { confirmUrl, appUrl: env.APP_URL },
+    props: {
+      confirmUrl,
+      voraussichtlichesLoeschdatum,
+      appUrl: env.APP_URL,
+    },
     nutzerId: sess.nutzerId,
   });
 

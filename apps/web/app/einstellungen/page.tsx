@@ -18,7 +18,16 @@ import { and, eq, isNull } from 'drizzle-orm';
 
 import { de } from '@/i18n/de';
 import { db } from '@/lib/db';
-import { auditLog, magicLinkToken, nutzer, stadt } from '@/lib/db/schema';
+import {
+  auditLog,
+  foerdermitgliedschaft,
+  magicLinkToken,
+  nutzer,
+  stadt,
+} from '@/lib/db/schema';
+import { STUFEN, priceIdForStufe } from '@/lib/foerdermitgliedschaft/stufen';
+import { isStripeConfigured } from '@/lib/stripe/client';
+import type { FoermitglStufe, FoermitglStatus } from '@/lib/db/schema/enums';
 import {
   rolle as rolleEnum,
   teilnahmeart as teilnahmeartEnum,
@@ -41,16 +50,25 @@ export const metadata: Metadata = {
   title: 'Einstellungen',
 };
 
-type Tab = 'profil' | 'benachrichtigungen' | 'datenschutz';
+type Tab = 'profil' | 'benachrichtigungen' | 'datenschutz' | 'foerdermitgliedschaft';
 
 const TABS: ReadonlyArray<{ id: Tab; label: string }> = [
   { id: 'profil', label: de.einstellungen.tab_profil },
   { id: 'benachrichtigungen', label: de.einstellungen.tab_benachrichtigungen },
+  {
+    id: 'foerdermitgliedschaft',
+    label: 'Foerdermitgliedschaft',
+  },
   { id: 'datenschutz', label: de.einstellungen.tab_datenschutz },
 ];
 
 function parseTab(raw: string | undefined): Tab {
-  if (raw === 'benachrichtigungen' || raw === 'datenschutz') return raw;
+  if (
+    raw === 'benachrichtigungen' ||
+    raw === 'datenschutz' ||
+    raw === 'foerdermitgliedschaft'
+  )
+    return raw;
   return 'profil';
 }
 
@@ -308,6 +326,147 @@ async function kontoLoeschenAnfordernAction(): Promise<void> {
   redirect('/einstellungen?tab=datenschutz&ok=loeschung-angefordert');
 }
 
+/**
+ * Foerdermitgliedschaft starten — Server Action. Ruft den
+ * /api/v1/me/foerdermitgliedschaft/start-Endpoint indirekt nach (gleiche
+ * Logik inline, kein HTTP-Selbstaufruf): legt nichts in der DB an, erstellt
+ * eine Stripe-Checkout-Session und leitet die Nutzer:in an Stripe weiter.
+ */
+async function foerdermitgliedschaftStartenAction(formData: FormData): Promise<void> {
+  'use server';
+
+  const req = await buildRequestFromHeaders();
+  const sess = await getSessionFromRequest(req);
+  if (!sess) redirect('/anmelden?fehler=session-abgelaufen');
+
+  const stufeRaw = String(formData.get('stufe') ?? '');
+  const stufe = stufeRaw as FoermitglStufe;
+  if (!STUFEN.find((s) => s.stufe === stufe)) {
+    redirect(
+      '/einstellungen?tab=foerdermitgliedschaft&fehler=' +
+        encodeURIComponent('Unbekannte Stufe.'),
+    );
+  }
+
+  // Bereits aktive Mitgliedschaft? → Hinweis statt zweite Subscription.
+  const bestehend = await db
+    .select({ id: foerdermitgliedschaft.id, status: foerdermitgliedschaft.status })
+    .from(foerdermitgliedschaft)
+    .where(eq(foerdermitgliedschaft.nutzerId, sess.nutzerId))
+    .limit(1);
+  if (bestehend[0]?.status === 'aktiv') {
+    redirect(
+      '/einstellungen?tab=foerdermitgliedschaft&fehler=' +
+        encodeURIComponent('Du hast bereits eine aktive Mitgliedschaft.'),
+    );
+  }
+
+  if (!isStripeConfigured()) {
+    redirect(
+      '/einstellungen?tab=foerdermitgliedschaft&fehler=' +
+        encodeURIComponent('Stripe ist nicht konfiguriert.'),
+    );
+  }
+  const priceId = priceIdForStufe(stufe);
+  if (!priceId) {
+    redirect(
+      '/einstellungen?tab=foerdermitgliedschaft&fehler=' +
+        encodeURIComponent(`Fuer die Stufe '${stufe}' ist keine Preis-ID hinterlegt.`),
+    );
+  }
+
+  const { getStripe } = await import('@/lib/stripe/client');
+  let checkoutUrl: string;
+  try {
+    const stripe = getStripe();
+    const session = await stripe.checkout.sessions.create({
+      mode: 'subscription',
+      payment_method_types: ['card', 'sepa_debit', 'paypal'],
+      line_items: [{ quantity: 1, price: priceId }],
+      customer_email: sess.nutzer.email,
+      metadata: {
+        zweck: 'foerdermitgliedschaft',
+        nutzer_id: sess.nutzerId,
+        stufe,
+      },
+      subscription_data: {
+        metadata: {
+          zweck: 'foerdermitgliedschaft',
+          nutzer_id: sess.nutzerId,
+          stufe,
+        },
+      },
+      success_url: `${env.APP_URL}/einstellungen?tab=foerdermitgliedschaft&ok=foerdermitgliedschaft_aktiv`,
+      cancel_url: `${env.APP_URL}/einstellungen?tab=foerdermitgliedschaft&fehler=foerdermitgliedschaft_abgebrochen`,
+    });
+    if (!session.url) {
+      throw new Error('Stripe-Session ohne URL.');
+    }
+    checkoutUrl = session.url;
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error('[foerdermitgliedschaft-start-action] Stripe failed:', message);
+    redirect(
+      '/einstellungen?tab=foerdermitgliedschaft&fehler=' +
+        encodeURIComponent('Stripe-Checkout konnte nicht erstellt werden.'),
+    );
+  }
+
+  redirect(checkoutUrl);
+}
+
+/**
+ * Foerdermitgliedschaft verwalten — Server Action. Erstellt einen
+ * Stripe-Customer-Portal-Link und leitet die Nutzer:in dorthin weiter.
+ */
+async function foerdermitgliedschaftPortalAction(): Promise<void> {
+  'use server';
+
+  const req = await buildRequestFromHeaders();
+  const sess = await getSessionFromRequest(req);
+  if (!sess) redirect('/anmelden?fehler=session-abgelaufen');
+
+  const rows = await db
+    .select({ stripeCustomerId: foerdermitgliedschaft.stripeCustomerId })
+    .from(foerdermitgliedschaft)
+    .where(eq(foerdermitgliedschaft.nutzerId, sess.nutzerId))
+    .limit(1);
+  const stripeCustomerId = rows[0]?.stripeCustomerId;
+  if (!stripeCustomerId) {
+    redirect(
+      '/einstellungen?tab=foerdermitgliedschaft&fehler=' +
+        encodeURIComponent('Keine Foerdermitgliedschaft gefunden.'),
+    );
+  }
+
+  if (!isStripeConfigured()) {
+    redirect(
+      '/einstellungen?tab=foerdermitgliedschaft&fehler=' +
+        encodeURIComponent('Stripe ist nicht konfiguriert.'),
+    );
+  }
+
+  const { getStripe } = await import('@/lib/stripe/client');
+  let portalUrl: string;
+  try {
+    const stripe = getStripe();
+    const portal = await stripe.billingPortal.sessions.create({
+      customer: stripeCustomerId,
+      return_url: `${env.APP_URL}/einstellungen?tab=foerdermitgliedschaft`,
+    });
+    portalUrl = portal.url;
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error('[foerdermitgliedschaft-portal-action] Stripe failed:', message);
+    redirect(
+      '/einstellungen?tab=foerdermitgliedschaft&fehler=' +
+        encodeURIComponent('Customer-Portal-Link konnte nicht erstellt werden.'),
+    );
+  }
+
+  redirect(portalUrl);
+}
+
 async function loeschungWiderrufenAction(): Promise<void> {
   'use server';
   const req = await buildRequestFromHeaders();
@@ -344,6 +503,13 @@ export default async function EinstellungenPage(props: {
   const staedte = await db.select().from(stadt);
   const me = sess.nutzer;
   const be = mergeBenachrichtigungsEinstellungen(me.benachrichtigungsEinstellungen);
+
+  const mitgliedschaftRows = await db
+    .select()
+    .from(foerdermitgliedschaft)
+    .where(eq(foerdermitgliedschaft.nutzerId, sess.nutzerId))
+    .limit(1);
+  const mitgliedschaft = mitgliedschaftRows[0] ?? null;
 
   return (
     <main className="wrap" style={{ paddingTop: 32, paddingBottom: 64 }}>
@@ -400,6 +566,13 @@ export default async function EinstellungenPage(props: {
           benachrichtigungenSpeichernAction={benachrichtigungenSpeichernAction}
         />
       ) : null}
+      {tab === 'foerdermitgliedschaft' ? (
+        <FoerdermitgliedschaftTab
+          mitgliedschaft={mitgliedschaft}
+          startenAction={foerdermitgliedschaftStartenAction}
+          portalAction={foerdermitgliedschaftPortalAction}
+        />
+      ) : null}
       {tab === 'datenschutz' ? (
         <DatenschutzTab
           status={me.status}
@@ -440,6 +613,8 @@ function mapOkText(code: string): string {
     return de.einstellungen.konto_loeschen_bestaetigung_versendet;
   if (code === 'loeschung-widerrufen')
     return de.einstellungen.konto_loeschen_widerrufen_ok;
+  if (code === 'foerdermitgliedschaft_aktiv')
+    return 'Vielen Dank! Deine Foerdermitgliedschaft ist jetzt aktiv.';
   // Fallbacks fuer ok=1 je nach Tab — wir bleiben generisch.
   return 'Gespeichert.';
 }
@@ -810,6 +985,116 @@ function DatenschutzTab(props: {
             </form>
           </>
         )}
+      </div>
+    </section>
+  );
+}
+
+function FoerdermitgliedschaftTab(props: {
+  mitgliedschaft: typeof foerdermitgliedschaft.$inferSelect | null;
+  startenAction: (formData: FormData) => Promise<void>;
+  portalAction: () => Promise<void>;
+}) {
+  const { mitgliedschaft, startenAction, portalAction } = props;
+  const aktivOderOffen =
+    mitgliedschaft && mitgliedschaft.status !== 'gekuendigt';
+  const statusLabel: Record<FoermitglStatus, string> = {
+    aktiv: 'aktiv',
+    gekuendigt: 'gekuendigt',
+    zahlung_fehlt: 'Zahlung fehlt',
+  };
+  const stufenLabel: Record<FoermitglStufe, string> = Object.fromEntries(
+    STUFEN.map((s) => [s.stufe, s.label]),
+  ) as Record<FoermitglStufe, string>;
+
+  return (
+    <section style={{ display: 'grid', gap: 24, maxWidth: 880 }}>
+      <div>
+        <p>
+          Mit einer Foerdermitgliedschaft tragt ihr die Werkstatt nachhaltig
+          mit. Werkzirkel nimmt keine Provision auf Vermittlungen — der
+          Beitrag fliesst transparent in die Werkstatt-Kasse. Mitglieder mit
+          aktivem Status koennen mehr als fuenf Werke anlegen.
+        </p>
+      </div>
+
+      {aktivOderOffen ? (
+        <div
+          style={{
+            border: '1px solid var(--border)',
+            background: 'var(--surface)',
+            padding: 16,
+            borderRadius: 8,
+          }}
+        >
+          <h2 style={{ marginTop: 0 }}>
+            Deine Mitgliedschaft: {stufenLabel[mitgliedschaft.stufe]}
+          </h2>
+          <p>Status: {statusLabel[mitgliedschaft.status]}</p>
+          {mitgliedschaft.beginn ? (
+            <p style={{ color: 'var(--muted)', fontSize: 13 }}>
+              Beginn: {mitgliedschaft.beginn.toISOString().slice(0, 10)}
+            </p>
+          ) : null}
+          <form action={portalAction}>
+            <button type="submit" className="button primary">
+              Verwalten (Stripe Customer Portal)
+            </button>
+          </form>
+        </div>
+      ) : null}
+
+      <div>
+        <h2>{aktivOderOffen ? 'Stufe wechseln' : 'Stufe auswaehlen'}</h2>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+            gap: 16,
+          }}
+        >
+          {STUFEN.map((s) => (
+            <div
+              key={s.stufe}
+              style={{
+                border: '1px solid var(--border)',
+                padding: 16,
+                borderRadius: 8,
+                display: 'grid',
+                gap: 8,
+                background: 'var(--surface)',
+              }}
+            >
+              <h3 style={{ margin: 0 }}>{s.label}</h3>
+              <p style={{ margin: 0, fontWeight: 600 }}>{s.preisText}</p>
+              <p
+                style={{
+                  margin: 0,
+                  color: 'var(--muted)',
+                  fontSize: 13,
+                  flexGrow: 1,
+                }}
+              >
+                {s.beschreibung}
+              </p>
+              <form action={startenAction}>
+                <input type="hidden" name="stufe" value={s.stufe} />
+                <button
+                  type="submit"
+                  className="button primary"
+                  disabled={aktivOderOffen ?? undefined}
+                >
+                  Aktivieren
+                </button>
+              </form>
+            </div>
+          ))}
+        </div>
+        {aktivOderOffen ? (
+          <p style={{ color: 'var(--muted)', fontSize: 13, marginTop: 12 }}>
+            Wechsel der Stufe geht ueber das Stripe Customer Portal oben.
+          </p>
+        ) : null}
       </div>
     </section>
   );

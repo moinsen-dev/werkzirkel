@@ -7,22 +7,22 @@
 		"title": "Werkzirkel v1.0 — Plattform bauen",
 		"status": "draft"
 	},
-	"generated_at": "2026-05-14T07:56:31.678Z",
+	"generated_at": "2026-05-14T08:43:49.592Z",
 	"stats": {
-		"node_count": 61,
-		"edge_count": 198,
+		"node_count": 64,
+		"edge_count": 208,
 		"agent_count": 0,
 		"decision_count": 5,
 		"by_type": {
-			"task": 39,
+			"task": 42,
 			"subproject": 7,
 			"workpackage": 5,
 			"decision": 9,
 			"goal": 1
 		},
 		"by_status": {
-			"done": 52,
-			"draft": 9
+			"done": 56,
+			"draft": 8
 		},
 		"readiness": {
 			"passed": 0,
@@ -137,7 +137,7 @@
 			"type": "subproject",
 			"title": "Geld: Erfolgsbeitrag, Werkstatt-Kasse, Fördermitgliedschaft",
 			"summary": "Stripe-Integration jenseits Werkstattbeitrag. Erfolgsbeitrag als freiwillige Spende, transparente Werkstatt-Kasse pro Stadt mit Quartalsabschluss, Fördermitgliedschaft-Subscriptions in vier Stufen.",
-			"status": "draft",
+			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
 		},
@@ -511,6 +511,15 @@
 			"readiness": "unknown"
 		},
 		{
+			"id": "task-foerdermitgliedschaft-subscription",
+			"type": "task",
+			"title": "Fördermitgliedschaft: Stripe-Subscriptions in 4 Stufen",
+			"summary": "POST /api/v1/me/foerdermitgliedschaft/start mit Stufe (monatlich 9€, jährlich 90€, foerderer_privat 240€/Jahr, foerderer_organisation 1200€/Jahr). Webhook syncs subscription-status auf nutzer.foerdermitglied_seit/bis.",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
 			"id": "data-model-decision",
 			"type": "decision",
 			"title": "Data Model",
@@ -560,6 +569,24 @@
 			"type": "task",
 			"title": "Cron: Termin-Erinnerungen 7d/1d versenden",
 			"summary": "Stuendlicher Cron /api/v1/cron/termin-erinnerung-versenden mit X-Cron-Secret. Versendet T-402 (7 Tage vor Termin) und T-403 (1 Tag vor Termin) idempotent via audit_log-Dedup an alle angemeldeten Nutzer:innen (nicht Warteliste).",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "task-werkstatt-kasse-pages",
+			"type": "task",
+			"title": "Werkstatt-Kasse: öffentliche Quartalsübersicht + Kurator-CRUD + Cron-Reports",
+			"summary": "Pro Stadt /kasse/[stadt]-Page mit Quartals-Eingang/Ausgang. Kurator legt Einträge an, Admin gibt frei. PRD §8.11.",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "task-erfolgsbeitrag-stripe",
+			"type": "task",
+			"title": "Erfolgsbeitrag-Stripe-Flow: freiwillige Spende bei Bedarf-Erfüllung",
+			"summary": "POST /api/v1/bedarfe/:id/erfolgsbeitrag erzeugt Stripe Checkout für freiwilligen 5%-Beitrag an Werkstatt-Kasse. Webhook erfasst Zahlung + Kasse-Eintrag. KEINE Provision — Spende-Status klar in UI.",
 			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
@@ -828,6 +855,24 @@
 			"from": "geld-und-mitgliedschaft",
 			"to": "goal-root",
 			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "geld-und-mitgliedschaft",
+			"to": "task-erfolgsbeitrag-stripe",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "geld-und-mitgliedschaft",
+			"to": "task-foerdermitgliedschaft-subscription",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "geld-und-mitgliedschaft",
+			"to": "task-werkstatt-kasse-pages",
+			"type": "decomposes_into",
 			"confidence": 1
 		},
 		{
@@ -1647,6 +1692,24 @@
 			"confidence": 1
 		},
 		{
+			"from": "task-foerdermitgliedschaft-subscription",
+			"to": "task-werkstatt-kasse-pages",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-foerdermitgliedschaft-subscription",
+			"to": "geld-und-mitgliedschaft",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-foerdermitgliedschaft-subscription",
+			"to": "task-erfolgsbeitrag-stripe",
+			"type": "depends_on",
+			"confidence": 1
+		},
+		{
 			"from": "data-model-decision",
 			"to": "foundation",
 			"type": "composed_of",
@@ -1746,6 +1809,30 @@
 			"from": "task-termin-cron-erinnerungen",
 			"to": "task-email-templates-termine",
 			"type": "depends_on",
+			"confidence": 1
+		},
+		{
+			"from": "task-werkstatt-kasse-pages",
+			"to": "geld-und-mitgliedschaft",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-werkstatt-kasse-pages",
+			"to": "task-foerdermitgliedschaft-subscription",
+			"type": "depends_on",
+			"confidence": 1
+		},
+		{
+			"from": "task-erfolgsbeitrag-stripe",
+			"to": "task-foerdermitgliedschaft-subscription",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-erfolgsbeitrag-stripe",
+			"to": "geld-und-mitgliedschaft",
+			"type": "composed_of",
 			"confidence": 1
 		},
 		{

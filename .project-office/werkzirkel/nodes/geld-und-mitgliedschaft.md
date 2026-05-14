@@ -10,6 +10,10 @@ created_by: human
 edges:
   composed_of:
     - id: goal-root
+  decomposes_into:
+    - id: task-erfolgsbeitrag-stripe
+    - id: task-foerdermitgliedschaft-subscription
+    - id: task-werkstatt-kasse-pages
 id: geld-und-mitgliedschaft
 is_root: false
 open_questions: []
@@ -17,12 +21,12 @@ owner: null
 parent: goal-root
 private: false
 risks: []
-status: draft
+status: done
 summary: Stripe-Integration jenseits Werkstattbeitrag. Erfolgsbeitrag als freiwillige Spende, transparente Werkstatt-Kasse pro Stadt mit Quartalsabschluss, Fördermitgliedschaft-Subscriptions in vier Stufen.
 tags: []
 title: "Geld: Erfolgsbeitrag, Werkstatt-Kasse, Fördermitgliedschaft"
 type: subproject
-updated_at: 2026-05-13T09:48:12.162Z
+updated_at: 2026-05-14T08:43:49.592Z
 ---
 
 ## Was hier gebaut wird

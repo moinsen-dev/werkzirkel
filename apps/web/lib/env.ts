@@ -20,6 +20,13 @@ const envSchema = z.object({
   STRIPE_SECRET_KEY: z.string().optional(),
   STRIPE_WEBHOOK_SECRET: z.string().optional(),
 
+  // Fördermitgliedschaft — vier Stripe-Subscription-Preise. Ohne diese
+  // Werte bleibt der Start-Endpoint (Stripe-Checkout) deaktiviert.
+  STRIPE_PRICE_FOERDER_MONATLICH: z.string().optional(),
+  STRIPE_PRICE_FOERDER_JAEHRLICH: z.string().optional(),
+  STRIPE_PRICE_FOERDERER_PRIVAT: z.string().optional(),
+  STRIPE_PRICE_FOERDERER_ORG: z.string().optional(),
+
   R2_ACCOUNT_ID: z.string().optional(),
   R2_ACCESS_KEY_ID: z.string().optional(),
   R2_SECRET_ACCESS_KEY: z.string().optional(),

@@ -20,7 +20,13 @@
  */
 
 import { getStripe, isStripeConfigured } from '@/lib/stripe/client';
-import { handleCheckoutSessionCompleted } from '@/lib/stripe/webhook';
+import {
+  handleCheckoutSessionCompleted,
+  handleInvoicePaymentFailed,
+  handleInvoicePaymentSucceeded,
+  handleSubscriptionDeleted,
+  handleSubscriptionUpdated,
+} from '@/lib/stripe/webhook';
 import { env } from '@/lib/env';
 
 export async function POST(req: Request): Promise<Response> {
@@ -64,6 +70,22 @@ export async function POST(req: Request): Promise<Response> {
     switch (event.type) {
       case 'checkout.session.completed': {
         await handleCheckoutSessionCompleted(event.data.object);
+        break;
+      }
+      case 'customer.subscription.updated': {
+        await handleSubscriptionUpdated(event.data.object);
+        break;
+      }
+      case 'customer.subscription.deleted': {
+        await handleSubscriptionDeleted(event.data.object);
+        break;
+      }
+      case 'invoice.payment_succeeded': {
+        await handleInvoicePaymentSucceeded(event.data.object);
+        break;
+      }
+      case 'invoice.payment_failed': {
+        await handleInvoicePaymentFailed(event.data.object);
         break;
       }
       default:

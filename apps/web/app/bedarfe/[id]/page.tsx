@@ -338,6 +338,11 @@ export default async function BedarfDetailPage({
                 kind="ok"
                 text="Danke — der Bedarf ist als erfüllt markiert."
               />
+            ) : sp.erfolg === 'erfolgsbeitrag_bezahlt' ? (
+              <Banner
+                kind="ok"
+                text="Vielen Dank! Deine Spende geht in die Werkstatt-Kasse Hamburg."
+              />
             ) : null}
             {sp.fehler === 'kein_zugriff' ? (
               <Banner kind="fehler" text="Du darfst das nicht setzen." />
@@ -345,6 +350,11 @@ export default async function BedarfDetailPage({
               <Banner
                 kind="fehler"
                 text="Status-Wechsel in diesem Zustand nicht möglich."
+              />
+            ) : sp.fehler === 'erfolgsbeitrag_abgebrochen' ? (
+              <Banner
+                kind="fehler"
+                text="Erfolgsbeitrag wurde abgebrochen — du kannst es jederzeit erneut versuchen."
               />
             ) : null}
 
@@ -601,7 +611,84 @@ function OwnerPanel({ bedarfId, bedarfStatus, werkangebote }: OwnerPanelProps) {
           </p>
         </div>
       ) : null}
+
+      {bedarfStatus === 'erfuellt' ? (
+        <ErfolgsbeitragPanel bedarfId={bedarfId} />
+      ) : null}
     </>
+  );
+}
+
+/**
+ * Spende-Modal-Stub fuer den Erfolgsbeitrag.
+ *
+ * Slider 0–10 % (default 5 %). Bedarfstraeger:in waehlt einen Prozent-
+ * Satz und einen Cent-Betrag (Default-Annahme: 1.000 € Auftrag, Slider
+ * 5 % → 50 €); fuer den Stub reicht ein einfacher Number-Input + Range.
+ * Echte Auftrags-Groesse koennte spaeter aus `selbstauskunft_*` gelesen
+ * werden.
+ *
+ * Form posted gegen `/api/v1/bedarfe/:id/erfolgsbeitrag`; bei Erfolg
+ * leitet die API per `checkoutUrl` zu Stripe um (clientseitige Redirect-
+ * Logik wuerde JS verlangen — hier zeigen wir den Link sichtbar).
+ *
+ * NB: das Modal ist progressively-enhanced. Ohne JS sieht die Person
+ * den Slider und kann via Submit den Endpoint anrufen — die Antwort
+ * enthaelt `checkoutUrl`, die wir per `<meta http-equiv="refresh">` als
+ * naechsten Schritt zeigen (siehe Server-Action unten).
+ */
+function ErfolgsbeitragPanel({ bedarfId }: { bedarfId: string }) {
+  return (
+    <div
+      style={{
+        marginTop: 18,
+        padding: 14,
+        borderRadius: 10,
+        background: 'var(--surface-alt, #f6f6f1)',
+      }}
+    >
+      <p className="eyebrow" style={{ margin: 0 }}>
+        Erfolgsbeitrag (freiwillig)
+      </p>
+      <p style={{ margin: '8px 0', fontSize: 13, color: 'var(--muted)' }}>
+        Werkzirkel nimmt keine Provision. Wenn du magst, spende einen Anteil an
+        die Werkstatt-Kasse Hamburg — z.&nbsp;B. 5&nbsp;%.
+      </p>
+      <form
+        action={`/api/v1/bedarfe/${bedarfId}/erfolgsbeitrag`}
+        method="post"
+        encType="application/json"
+        style={{ display: 'grid', gap: 8 }}
+      >
+        <label style={{ fontSize: 13 }}>
+          Prozent-Satz
+          <input
+            type="range"
+            name="prozent_satz"
+            min={0}
+            max={10}
+            step={0.5}
+            defaultValue={5}
+            style={{ display: 'block', width: '100%', marginTop: 4 }}
+          />
+        </label>
+        <label style={{ fontSize: 13 }}>
+          Betrag in Cent (1 € = 100)
+          <input
+            type="number"
+            name="hoehe_euro_cent"
+            min={100}
+            max={10_000_000}
+            step={100}
+            defaultValue={5000}
+            style={{ display: 'block', width: '100%', marginTop: 4 }}
+          />
+        </label>
+        <button type="submit" className="button primary" style={{ fontSize: 13 }}>
+          Spenden
+        </button>
+      </form>
+    </div>
   );
 }
 

@@ -25,14 +25,19 @@ import { notFound } from 'next/navigation';
 
 import { db } from '@/lib/db';
 import {
+  feedback,
   foerdermitgliedschaft,
   nutzer,
+  pruefrunde,
   stadt,
+  termin,
+  terminAnmeldung,
   werk,
 } from '@/lib/db/schema';
 import { getSaldoForUser } from '@/lib/reziprozitaet/saldo';
 
 import WerkpassView, {
+  type WerkpassAktivitaetEintrag,
   type WerkpassNutzer,
   type WerkpassTestSaldo,
   type WerkpassWerk,
@@ -206,6 +211,80 @@ async function ladeWerke(nutzerId: string): Promise<WerkeResult> {
   };
 }
 
+const AKTIVITAET_LIMIT = 8;
+
+interface AktivitaetResult {
+  eintraege: WerkpassAktivitaetEintrag[];
+  schauabendeTotal: number;
+  feedbacksTotal: number;
+}
+
+/**
+ * Lädt die jüngsten Schauabend-Teilnahmen (`termin_anmeldung.status='anwesend'`)
+ * und gegebenen Feedbacks (`feedback.tester_id=<nutzerId>`). Privacy: nur
+ * öffentliche Felder (Werk-Name, Termin-Titel, Zeitpunkt) — niemals der
+ * Feedback-Inhalt selbst (gehört nur dem Werk-Inhaber).
+ */
+async function ladeAktivitaet(nutzerId: string): Promise<AktivitaetResult> {
+  const schauabendeRows = await db
+    .select({
+      terminId: termin.id,
+      titel: termin.titel,
+      datum: termin.datumUhrzeit,
+    })
+    .from(terminAnmeldung)
+    .innerJoin(termin, eq(termin.id, terminAnmeldung.terminId))
+    .where(
+      and(
+        eq(terminAnmeldung.nutzerId, nutzerId),
+        eq(terminAnmeldung.status, 'anwesend'),
+      ),
+    )
+    .orderBy(desc(termin.datumUhrzeit))
+    .limit(AKTIVITAET_LIMIT);
+
+  const feedbackRows = await db
+    .select({
+      feedbackId: feedback.id,
+      pruefrundeId: pruefrunde.id,
+      pruefrundeTitel: pruefrunde.titel,
+      werkName: werk.name,
+      gegebenAm: feedback.erstelltAm,
+    })
+    .from(feedback)
+    .innerJoin(pruefrunde, eq(pruefrunde.id, feedback.pruefrundeId))
+    .innerJoin(werk, eq(werk.id, pruefrunde.werkId))
+    .where(eq(feedback.testerId, nutzerId))
+    .orderBy(desc(feedback.erstelltAm))
+    .limit(AKTIVITAET_LIMIT);
+
+  // Schauabende + Feedbacks chronologisch zusammenführen.
+  const merged: WerkpassAktivitaetEintrag[] = [
+    ...schauabendeRows.map((r) => ({
+      art: 'schauabend' as const,
+      zeitpunkt: r.datum,
+      titel: r.titel,
+      sekundaer: 'Schauabend besucht',
+      ref: `/termine/${r.terminId}`,
+    })),
+    ...feedbackRows.map((r) => ({
+      art: 'feedback' as const,
+      zeitpunkt: r.gegebenAm,
+      titel: r.werkName,
+      sekundaer: `Feedback zu „${r.pruefrundeTitel}"`,
+      ref: `/werke`,
+    })),
+  ]
+    .sort((a, b) => b.zeitpunkt.getTime() - a.zeitpunkt.getTime())
+    .slice(0, AKTIVITAET_LIMIT);
+
+  return {
+    eintraege: merged,
+    schauabendeTotal: schauabendeRows.length,
+    feedbacksTotal: feedbackRows.length,
+  };
+}
+
 export async function generateMetadata({
   params,
 }: PageParams): Promise<Metadata> {
@@ -231,12 +310,14 @@ export default async function WerkpassPage({ params }: PageParams) {
   if (!nutzerRow) notFound();
   if (!istOeffentlichDarstellbar(nutzerRow)) notFound();
 
-  const [stadtName, saldo, werkeRes, foerderAktiv] = await Promise.all([
-    ladeStadtName(nutzerRow.stadtId),
-    ladeTestSaldo(nutzerRow.id),
-    ladeWerke(nutzerRow.id),
-    ladeFoerderAktiv(nutzerRow.id),
-  ]);
+  const [stadtName, saldo, werkeRes, foerderAktiv, aktivitaetRes] =
+    await Promise.all([
+      ladeStadtName(nutzerRow.stadtId),
+      ladeTestSaldo(nutzerRow.id),
+      ladeWerke(nutzerRow.id),
+      ladeFoerderAktiv(nutzerRow.id),
+      ladeAktivitaet(nutzerRow.id),
+    ]);
 
   const viewNutzer: WerkpassNutzer = {
     id: nutzerRow.id,
@@ -260,6 +341,11 @@ export default async function WerkpassPage({ params }: PageParams) {
       testSaldo={saldo}
       werke={werkeRes.vorschau}
       werkeGesamt={werkeRes.gesamt}
+      aktivitaet={aktivitaetRes.eintraege}
+      aktivitaetTotals={{
+        schauabende: aktivitaetRes.schauabendeTotal,
+        feedbacks: aktivitaetRes.feedbacksTotal,
+      }}
     />
   );
 }

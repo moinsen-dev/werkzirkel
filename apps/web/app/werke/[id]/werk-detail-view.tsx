@@ -33,11 +33,26 @@ export interface WerkDetailHistorieEintrag {
   geaendertVonAnzeigename: string | null;
 }
 
+/** Anonymisierter Hilfreich-Feedback-Eintrag (PRD §8.4). */
+export interface WerkDetailHilfreichFeedback {
+  /** Sequentielles, anonymes Label: "Tester:in 1", "Tester:in 2" usw. */
+  testerLabel: string;
+  gesamteindruck: string | null;
+  ersterEindruck: string | null;
+  verstaendlichkeit: string | null;
+  nutzen: string | null;
+  bedienbarkeit: string | null;
+  verbesserungen: string | null;
+  hilfreichMarkiertAm: Date | null;
+}
+
 export interface WerkDetailViewProps {
   werk: Werk;
   inhaber: WerkDetailInhaber;
   stadtName: string;
   historie: WerkDetailHistorieEintrag[];
+  /** Anonymisierte Hilfreich-Markierungen (PRD §8.4). Default: leer. */
+  hilfreichFeedbacks?: WerkDetailHilfreichFeedback[];
   /** Session-Status fuer die Inhaber:innen-/Anmeldung-Aktionen. */
   istInhaber?: boolean;
   istEingeloggt?: boolean;
@@ -92,6 +107,7 @@ export default function WerkDetailView({
   inhaber,
   stadtName,
   historie,
+  hilfreichFeedbacks = [],
   istInhaber = false,
   istEingeloggt = false,
 }: WerkDetailViewProps) {
@@ -387,6 +403,82 @@ export default function WerkDetailView({
                         : 'von unbekannt'}
                     </p>
                   </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      ) : null}
+
+      {hilfreichFeedbacks.length > 0 ? (
+        <section
+          className="section compact"
+          aria-labelledby="hilfreich-feedback-titel"
+        >
+          <div className="wrap">
+            <h2
+              id="hilfreich-feedback-titel"
+              style={{ fontSize: 32, margin: '0 0 8px' }}
+            >
+              Was Tester:innen sagten
+            </h2>
+            <p
+              style={{
+                margin: '0 0 16px',
+                color: 'var(--muted)',
+              }}
+            >
+              {hilfreichFeedbacks.length === 1
+                ? '1 Tester:in '
+                : `${hilfreichFeedbacks.length} Tester:innen `}
+              gaben Feedback, das {inhaber.anzeigename} als hilfreich
+              markiert hat. Namen bleiben anonym.
+            </p>
+            <ul
+              style={{
+                margin: 0,
+                padding: 0,
+                listStyle: 'none',
+                display: 'grid',
+                gap: 12,
+              }}
+            >
+              {hilfreichFeedbacks.map((f, i) => (
+                <li
+                  key={`${f.testerLabel}-${i}`}
+                  style={{
+                    padding: 14,
+                    borderRadius: 12,
+                    background: 'var(--surface-alt, #f6f6f1)',
+                    display: 'grid',
+                    gap: 6,
+                  }}
+                >
+                  <p
+                    style={{
+                      margin: 0,
+                      fontWeight: 600,
+                      fontSize: 14,
+                    }}
+                  >
+                    {f.testerLabel} sagte:
+                  </p>
+                  {f.gesamteindruck ? (
+                    <p style={{ margin: 0, fontSize: 15 }}>
+                      „{f.gesamteindruck}"
+                    </p>
+                  ) : null}
+                  {f.verbesserungen ? (
+                    <p
+                      style={{
+                        margin: 0,
+                        fontSize: 14,
+                        color: 'var(--muted)',
+                      }}
+                    >
+                      Verbesserung: „{f.verbesserungen}"
+                    </p>
+                  ) : null}
                 </li>
               ))}
             </ul>

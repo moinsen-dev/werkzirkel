@@ -55,6 +55,19 @@ export const terminAnlegenSchema = z
       .int({ message: 'Max-Teilnehmer muss eine ganze Zahl sein.' })
       .min(2, { message: 'Max-Teilnehmer muss mindestens 2 sein.' })
       .max(100, { message: 'Max-Teilnehmer darf hoechstens 100 sein.' }),
+    // PRD §F-403: bei einem Schauabend zeigt der Kurator vorab, welche
+    // Werke vorgestellt werden. Optional — Bedarfsschau-Termine setzen
+    // bedarf_ids/foerderprofil_ids per separater Route. Werke kommen
+    // gleich beim Anlegen mit, weil Schauabend-Anmeldung daran hängt.
+    werk_ids: z
+      .array(
+        z
+          .string({ errorMap: () => ({ message: 'Werk-ID ist ungueltig.' }) })
+          .min(1, { message: 'Werk-ID darf nicht leer sein.' })
+          .max(40, { message: 'Werk-ID ist zu lang.' }),
+      )
+      .max(20, { message: 'Maximal 20 Werke pro Schauabend.' })
+      .optional(),
   })
   .strict()
   .refine((d) => Boolean(d.ort_text?.trim()) || Boolean(d.online_link?.trim()), {

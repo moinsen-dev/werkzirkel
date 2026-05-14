@@ -12,9 +12,10 @@ import Link from 'next/link';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
+import { and, desc, eq, inArray } from 'drizzle-orm';
 import { de } from '@/i18n/de';
 import { db } from '@/lib/db';
-import { auditLog, termin } from '@/lib/db/schema';
+import { auditLog, termin, terminWerkBezug, werk } from '@/lib/db/schema';
 import { terminTyp } from '@/lib/db/schema/enums';
 import { getSessionFromRequest } from '@/lib/auth/session';
 import { istKuratorVon } from '@/lib/auth/permissions';
@@ -60,6 +61,8 @@ export async function terminAnlegenAction(formData: FormData): Promise<void> {
 
   const maxStr = String(formData.get('max_teilnehmer') ?? '').trim();
   const datumStr = String(formData.get('datum_uhrzeit') ?? '').trim();
+  // Mehrfach-Werte aus dem Multi-Select für Werk-Bezüge.
+  const werkIds = formData.getAll('werk_ids').map((v) => String(v));
 
   const candidate = {
     stadt_id: stadtId,
@@ -70,6 +73,7 @@ export async function terminAnlegenAction(formData: FormData): Promise<void> {
     online_link: String(formData.get('online_link') ?? '').trim() || null,
     datum_uhrzeit: datumStr,
     max_teilnehmer: maxStr ? Number(maxStr) : NaN,
+    werk_ids: werkIds.length > 0 ? werkIds : undefined,
   };
 
   const parsed = terminAnlegenSchema.safeParse(candidate);
@@ -102,13 +106,46 @@ export async function terminAnlegenAction(formData: FormData): Promise<void> {
     redirect('/kurator/termine/neu?fehler=unbekannt');
   }
 
+  // Werk-Bezüge persistieren (PRD §F-403). Nur Werke akzeptieren, die in
+  // derselben Stadt sind UND sichtbar — keine pausierten oder fremden Stadt-
+  // Werke aus dem Schauabend bewerben lassen.
+  const inputWerkIds = input.werk_ids ?? [];
+  if (inputWerkIds.length > 0) {
+    const validRows = await db
+      .select({ id: werk.id })
+      .from(werk)
+      .where(
+        and(
+          inArray(werk.id, inputWerkIds),
+          eq(werk.stadtId, input.stadt_id),
+          eq(werk.status, 'aktiv'),
+          inArray(werk.sichtbarkeit, ['oeffentlich', 'nur_zirkel']),
+        ),
+      );
+    const validIds = new Set(validRows.map((r) => r.id));
+    const akzeptierteIds = inputWerkIds.filter((id) => validIds.has(id));
+    if (akzeptierteIds.length > 0) {
+      await db.insert(terminWerkBezug).values(
+        akzeptierteIds.map((werkId, idx) => ({
+          terminId: row.id,
+          werkId,
+          reihenfolge: 100 + idx,
+        })),
+      );
+    }
+  }
+
   try {
     await db.insert(auditLog).values({
       nutzerId: sess.nutzerId,
       aktion: 'termin.angelegt',
       referenzTyp: 'termin',
       referenzId: row.id,
-      metadaten: { stadt_id: input.stadt_id, typ: input.typ },
+      metadaten: {
+        stadt_id: input.stadt_id,
+        typ: input.typ,
+        werk_anzahl: inputWerkIds.length,
+      },
     });
   } catch {
     /* ignore */
@@ -168,6 +205,22 @@ export default async function TerminNeuPage({ searchParams }: PageProps) {
   }
 
   const istKurator = await istKuratorVon(sess.nutzerId, sess.nutzer.stadtId);
+
+  // Werke der Stadt für den Multi-Select-Bezug. Nur sichtbare aktive Werke.
+  const werkeDerStadt = istKurator
+    ? await db
+        .select({ id: werk.id, name: werk.name })
+        .from(werk)
+        .where(
+          and(
+            eq(werk.stadtId, sess.nutzer.stadtId),
+            eq(werk.status, 'aktiv'),
+            inArray(werk.sichtbarkeit, ['oeffentlich', 'nur_zirkel']),
+          ),
+        )
+        .orderBy(desc(werk.aktualisiertAm))
+        .limit(50)
+    : [];
 
   const defaultDatum = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
   const minDatum = new Date(Date.now() + 2 * 60 * 60 * 1000);
@@ -311,6 +364,60 @@ export default async function TerminNeuPage({ searchParams }: PageProps) {
                   style={inputStyle}
                 />
               </label>
+
+              {werkeDerStadt.length > 0 ? (
+                <fieldset
+                  style={{
+                    border: 'var(--hairline)',
+                    borderRadius: 12,
+                    padding: 14,
+                  }}
+                >
+                  <legend style={{ fontWeight: 600, padding: '0 6px' }}>
+                    Werke verknüpfen (für Schauabende)
+                  </legend>
+                  <p
+                    style={{
+                      margin: '0 0 10px',
+                      color: 'var(--muted)',
+                      fontSize: 13,
+                    }}
+                  >
+                    Welche Werke werden bei diesem Termin gezeigt? Mehrfach-
+                    auswahl. Optional — Bedarfsschau-Termine setzen ihre
+                    Bezüge auf der Bearbeiten-Seite.
+                  </p>
+                  <div
+                    style={{
+                      display: 'grid',
+                      gridTemplateColumns:
+                        'repeat(auto-fit, minmax(220px, 1fr))',
+                      gap: 8,
+                      maxHeight: 240,
+                      overflowY: 'auto',
+                    }}
+                  >
+                    {werkeDerStadt.map((w) => (
+                      <label
+                        key={w.id}
+                        style={{
+                          display: 'inline-flex',
+                          gap: 8,
+                          alignItems: 'center',
+                          fontSize: 14,
+                        }}
+                      >
+                        <input
+                          type="checkbox"
+                          name="werk_ids"
+                          value={w.id}
+                        />
+                        <span>{w.name}</span>
+                      </label>
+                    ))}
+                  </div>
+                </fieldset>
+              ) : null}
 
               <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
                 <button type="submit" className="button primary">

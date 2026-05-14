@@ -57,11 +57,25 @@ export interface WerkpassTestSaldo {
   naechsteVerpflichtungFrist: Date | null;
 }
 
+export interface WerkpassAktivitaetEintrag {
+  art: 'schauabend' | 'feedback';
+  zeitpunkt: Date;
+  titel: string;
+  sekundaer: string;
+  /** Public link target (e.g. werkpass-area /werke). Keine privaten Pfade. */
+  ref: string;
+}
+
 export interface WerkpassViewProps {
   nutzer: WerkpassNutzer;
   testSaldo: WerkpassTestSaldo;
   werke: WerkpassWerk[];
   werkeGesamt: number;
+  aktivitaet?: WerkpassAktivitaetEintrag[];
+  aktivitaetTotals?: {
+    schauabende: number;
+    feedbacks: number;
+  };
 }
 
 function avatarInitialen(name: string): string {
@@ -151,6 +165,8 @@ export default function WerkpassView({
   testSaldo,
   werke,
   werkeGesamt,
+  aktivitaet = [],
+  aktivitaetTotals = { schauabende: 0, feedbacks: 0 },
 }: WerkpassViewProps) {
   const sichtbareWerke = werke.slice(0, VORSCHAU_LIMIT);
   const mehrAlsVorschau = werkeGesamt > VORSCHAU_LIMIT;
@@ -548,6 +564,100 @@ export default function WerkpassView({
               </Link>
             </div>
           ) : null}
+        </div>
+      </section>
+
+      <section
+        className="section compact"
+        aria-labelledby="aktivitaet-titel"
+      >
+        <div className="wrap">
+          <h2 id="aktivitaet-titel" style={{ fontSize: 24, margin: '0 0 8px' }}>
+            Aktivität
+          </h2>
+          <p style={{ margin: '0 0 16px', color: 'var(--muted)' }}>
+            Wo {nutzer.anzeigename} im Werkzirkel mitgemacht hat —
+            Schauabend-Teilnahmen und gegebene Feedbacks. Inhalte der
+            Feedbacks bleiben privat.
+          </p>
+          {aktivitaet.length === 0 ? (
+            <p
+              style={{
+                margin: 0,
+                padding: 16,
+                borderRadius: 10,
+                background: 'var(--surface-alt, #f6f6f1)',
+                color: 'var(--muted)',
+                fontSize: 14,
+              }}
+            >
+              Noch keine öffentliche Aktivität.
+            </p>
+          ) : (
+            <>
+              <p style={{ margin: '0 0 12px', fontSize: 14 }}>
+                <strong>{aktivitaetTotals.schauabende}</strong> Schauabend-
+                Teilnahme{aktivitaetTotals.schauabende === 1 ? '' : 'n'} ·{' '}
+                <strong>{aktivitaetTotals.feedbacks}</strong> gegebene
+                Feedback{aktivitaetTotals.feedbacks === 1 ? '' : 's'}
+              </p>
+              <ul
+                style={{
+                  margin: 0,
+                  padding: 0,
+                  listStyle: 'none',
+                  display: 'grid',
+                  gap: 10,
+                }}
+              >
+                {aktivitaet.map((e, i) => (
+                  <li
+                    key={`${e.art}-${e.zeitpunkt.toISOString()}-${i}`}
+                    style={{
+                      padding: '10px 12px',
+                      borderRadius: 10,
+                      background: 'var(--surface-alt, #f6f6f1)',
+                      display: 'grid',
+                      gap: 2,
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: 'flex',
+                        gap: 8,
+                        alignItems: 'baseline',
+                        flexWrap: 'wrap',
+                      }}
+                    >
+                      <span
+                        className="status-pill"
+                        style={{ fontSize: 11 }}
+                      >
+                        {e.art === 'schauabend'
+                          ? 'Schauabend'
+                          : 'Feedback'}
+                      </span>
+                      <strong>{e.titel}</strong>
+                    </div>
+                    <p
+                      style={{
+                        margin: 0,
+                        fontSize: 13,
+                        color: 'var(--muted)',
+                      }}
+                    >
+                      {e.sekundaer} ·{' '}
+                      {e.zeitpunkt.toLocaleDateString('de-DE', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                      })}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
         </div>
       </section>
 

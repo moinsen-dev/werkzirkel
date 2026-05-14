@@ -14,7 +14,7 @@
 
 import { and, asc, eq, gt, gte, inArray, lte, or } from 'drizzle-orm';
 import { db } from '@/lib/db';
-import { auditLog, termin } from '@/lib/db/schema';
+import { auditLog, termin, terminWerkBezug, werk } from '@/lib/db/schema';
 import { getSessionFromRequest } from '@/lib/auth/session';
 import { rejectIfBadOrigin } from '@/lib/auth/csrf';
 import { istKuratorVon } from '@/lib/auth/permissions';
@@ -94,13 +94,46 @@ export async function POST(req: Request): Promise<Response> {
     return Response.json({ fehler: 'unbekannt' }, { status: 500 });
   }
 
+  // Werk-Bezuege fuer Schauabend-Termine. Nur Werke akzeptieren, die in der
+  // gleichen Stadt sind UND public sichtbar — sonst kann ein Kurator ein
+  // pausiertes/fremdes Werk im Schauabend bewerben.
+  const werkIds = input.werk_ids ?? [];
+  if (werkIds.length > 0) {
+    const validRows = await db
+      .select({ id: werk.id })
+      .from(werk)
+      .where(
+        and(
+          inArray(werk.id, werkIds),
+          eq(werk.stadtId, input.stadt_id),
+          eq(werk.status, 'aktiv'),
+          inArray(werk.sichtbarkeit, ['oeffentlich', 'nur_zirkel']),
+        ),
+      );
+    const validIds = new Set(validRows.map((r) => r.id));
+    const akzeptierteIds = werkIds.filter((id) => validIds.has(id));
+    if (akzeptierteIds.length > 0) {
+      await db.insert(terminWerkBezug).values(
+        akzeptierteIds.map((werkId, idx) => ({
+          terminId: row.id,
+          werkId,
+          reihenfolge: 100 + idx,
+        })),
+      );
+    }
+  }
+
   try {
     await db.insert(auditLog).values({
       nutzerId: sess.nutzerId,
       aktion: 'termin.angelegt',
       referenzTyp: 'termin',
       referenzId: row.id,
-      metadaten: { stadt_id: input.stadt_id, typ: input.typ },
+      metadaten: {
+        stadt_id: input.stadt_id,
+        typ: input.typ,
+        werk_anzahl: werkIds.length,
+      },
     });
   } catch {
     // Audit-Failure darf den Erfolg nicht blockieren.

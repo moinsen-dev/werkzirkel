@@ -23,19 +23,22 @@
  */
 
 import type { Metadata } from 'next';
-import { desc, eq } from 'drizzle-orm';
+import { and, asc, desc, eq } from 'drizzle-orm';
 import { headers } from 'next/headers';
 import { notFound } from 'next/navigation';
 
 import { db } from '@/lib/db';
 import {
+  feedback,
   nutzer,
+  pruefrunde,
   stadt,
   werk,
   werkHistorie,
 } from '@/lib/db/schema';
 import { getSessionFromRequest } from '@/lib/auth/session';
 import WerkDetailView, {
+  type WerkDetailHilfreichFeedback,
   type WerkDetailHistorieEintrag,
   type WerkDetailInhaber,
 } from './werk-detail-view';
@@ -114,6 +117,42 @@ async function ladeHistorie(werkId: string): Promise<WerkDetailHistorieEintrag[]
   }));
 }
 
+/**
+ * Lädt anonymisierte Hilfreich-Feedback-Summary für ein Werk (PRD §8.4).
+ * Tester-Identität wird komplett gestrippt — sequentielle Labels statt
+ * Namen. Reihenfolge: hilfreich_markiert_am ASC für stabile Labels.
+ */
+async function ladeHilfreichFeedbacks(
+  werkId: string,
+): Promise<WerkDetailHilfreichFeedback[]> {
+  const rows = await db
+    .select({
+      gesamteindruck: feedback.gesamteindruck,
+      ersterEindruck: feedback.ersterEindruck,
+      verstaendlichkeit: feedback.verstaendlichkeit,
+      nutzen: feedback.nutzen,
+      bedienbarkeit: feedback.bedienbarkeit,
+      verbesserungen: feedback.verbesserungen,
+      hilfreichMarkiertAm: feedback.hilfreichMarkiertAm,
+    })
+    .from(feedback)
+    .innerJoin(pruefrunde, eq(pruefrunde.id, feedback.pruefrundeId))
+    .where(
+      and(eq(pruefrunde.werkId, werkId), eq(feedback.hilfreichMarkiert, true)),
+    )
+    .orderBy(asc(feedback.hilfreichMarkiertAm));
+  return rows.map((r, index) => ({
+    testerLabel: `Tester:in ${index + 1}`,
+    gesamteindruck: r.gesamteindruck,
+    ersterEindruck: r.ersterEindruck,
+    verstaendlichkeit: r.verstaendlichkeit,
+    nutzen: r.nutzen,
+    bedienbarkeit: r.bedienbarkeit,
+    verbesserungen: r.verbesserungen,
+    hilfreichMarkiertAm: r.hilfreichMarkiertAm,
+  }));
+}
+
 export async function generateMetadata({ params }: PageParams): Promise<Metadata> {
   const { id } = await params;
   const row = await ladeWerk(id);
@@ -163,9 +202,10 @@ export default async function WerkPage({ params }: PageParams) {
     notFound();
   }
 
-  const [stadtName, historie] = await Promise.all([
+  const [stadtName, historie, hilfreichFeedbacks] = await Promise.all([
     ladeStadtName(raw.inhaberStadtId),
     ladeHistorie(raw.werk.id),
+    ladeHilfreichFeedbacks(raw.werk.id),
   ]);
 
   const inhaber: WerkDetailInhaber = {
@@ -185,6 +225,7 @@ export default async function WerkPage({ params }: PageParams) {
       inhaber={inhaber}
       stadtName={stadtName}
       historie={historie}
+      hilfreichFeedbacks={hilfreichFeedbacks}
       istInhaber={istInhaber}
       istEingeloggt={!!sess}
     />

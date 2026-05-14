@@ -16,6 +16,7 @@ import { redirect } from 'next/navigation';
 import { headers } from 'next/headers';
 import { and, eq, isNull } from 'drizzle-orm';
 
+import { AvatarImage } from '@/components/ui/avatar-image';
 import { de } from '@/i18n/de';
 import { db } from '@/lib/db';
 import {
@@ -793,10 +794,11 @@ function ProfilTab(props: {
         style={{ display: 'flex', gap: 12, alignItems: 'center' }}
       >
         {me.avatarUrl ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <AvatarImage
             src={me.avatarUrl}
             alt="Aktueller Avatar"
+            width={64}
+            height={64}
             style={{ width: 64, height: 64, borderRadius: '50%', objectFit: 'cover' }}
           />
         ) : (

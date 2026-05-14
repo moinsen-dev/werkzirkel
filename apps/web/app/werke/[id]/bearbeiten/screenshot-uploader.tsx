@@ -15,6 +15,8 @@
 
 import { useState, useRef } from 'react';
 
+import { AvatarImage } from '@/components/ui/avatar-image';
+
 interface Props {
   werkId: string;
   initialScreenshots: string[];
@@ -135,10 +137,11 @@ export default function ScreenshotUploader({
                 background: 'var(--surface)',
               }}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <AvatarImage
                 src={url}
                 alt={`Screenshot ${i + 1}`}
+                width={1200}
+                height={800}
                 style={{ width: '100%', height: 'auto', display: 'block' }}
               />
               <button

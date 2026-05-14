@@ -5,24 +5,27 @@
 	"goal": {
 		"id": "goal-root",
 		"title": "Werkzirkel v1.0 — Plattform bauen",
-		"status": "draft"
+		"status": "in-progress"
 	},
-	"generated_at": "2026-05-14T09:51:28.437Z",
+	"generated_at": "2026-05-14T11:20:31.980Z",
 	"stats": {
-		"node_count": 67,
-		"edge_count": 218,
+		"node_count": 75,
+		"edge_count": 234,
 		"agent_count": 0,
 		"decision_count": 5,
 		"by_type": {
-			"task": 45,
+			"task": 51,
 			"subproject": 7,
 			"workpackage": 5,
+			"open-question": 2,
 			"decision": 9,
 			"goal": 1
 		},
 		"by_status": {
-			"done": 60,
-			"draft": 7
+			"done": 67,
+			"blocked": 2,
+			"draft": 5,
+			"in-progress": 1
 		},
 		"readiness": {
 			"passed": 0,
@@ -61,6 +64,15 @@
 			"readiness": "unknown"
 		},
 		{
+			"id": "task-mobile-bottom-tabs",
+			"type": "task",
+			"title": "Mobile-Polish: Bottom-Tab-Bar im App-Bereich, Touch-Targets ≥44px",
+			"summary": "Im /uebersicht-Bereich bei <768px: Bottom-Tab-Bar (Übersicht, Werke, Prüfrunden, Bedarfe, Termine, Mehr). Touch-Targets validiert. PRD §30.",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
 			"id": "wp-auth",
 			"type": "workpackage",
 			"title": "Auth & Konto: Magic-Link, Session, DSGVO-Self-Service",
@@ -84,6 +96,15 @@
 			"title": "Zirkel-Stadt-Seite /zirkel/[stadt] mit Werken, Mitglieder, naechsten Terminen",
 			"summary": "Oeffentliche Stadt-Hub-Seite. Hamburg ist initial aktiv. Zeigt Beschreibung, Werke aus der Region (gefiltert wie /werke aber stadt-fixiert), Mitglieder-Strip mit Avataren, kommende Termine (stub falls noch keine API). Berlin/Muenchen zeigen 'in Vorbereitung'-State.",
 			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "external-anwaltliche-pruefung",
+			"type": "open-question",
+			"title": "Anwaltliche Prüfung der Rechtstexte",
+			"summary": "PRD §40 + §45 Annahme v0.3-3: Rechtstexte (Impressum, Datenschutz, AGB, Werkstatt-Regeln) durch Anwält:in für Plattform-/Medienrecht in Hamburg prüfen lassen. Budget ~1.500-3.000 €. Kein KI-Bau-Task.",
+			"status": "blocked",
 			"owner": null,
 			"readiness": "unknown"
 		},
@@ -151,6 +172,15 @@
 			"readiness": "unknown"
 		},
 		{
+			"id": "task-performance-budget-monitoring",
+			"type": "task",
+			"title": "Performance: LCP <2.5s, CLS <0.1, JS-Bundle <200kb, p95 API <300ms — CI-Check",
+			"summary": "Lighthouse-CI mit Performance-Budgets in PRD §32. Bundle-Size-Check. Image-Optimization. Server-Component-Konsolidierung wo möglich.",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
 			"id": "cross-cutting-pick",
 			"type": "decision",
 			"title": "Magic-Link-Auth, Sentry-Logging, deutsche E-Mail-Templates, DSGVO-Self-Service",
@@ -165,6 +195,15 @@
 			"title": "Architecture",
 			"summary": "Foundation pillar: architecture. Run `po decide architecture-decision-pick \"<title>\" --foundation-scope architecture --affects architecture-decision` to satisfy.",
 			"status": "draft",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "task-seo-jsonld-sitemap",
+			"type": "task",
+			"title": "SEO: JSON-LD, sitemap.xml, robots.txt, OpenGraph",
+			"summary": "JSON-LD Schema.org (Organization, Event, Person, CreativeWork), dynamische sitemap.xml, robots.txt, OpenGraph-Meta, Stadt-Digest-Newsletter mit Cron Mittwoch 09:00.",
+			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
 		},
@@ -497,7 +536,7 @@
 			"type": "goal",
 			"title": "Werkzirkel v1.0 — Plattform bauen",
 			"summary": "Deutschsprachige lokale Hybrid-Plattform für unabhängige digitale Macher:innen, Bedarfsträger:innen und Förder:innen. Hamburg-First. Werkstatt-Kultur statt Marktplatz: keine Vermittlung, keine Provision, keine DMs an Nachfrageseite. Foundation steht; jetzt baut project-office die 16 Sprints autonom (Next.js 15 + Drizzle + Better-Auth + Stripe + Resend, Hetzner-Docker).",
-			"status": "draft",
+			"status": "in-progress",
 			"owner": null,
 			"readiness": "unknown"
 		},
@@ -592,10 +631,28 @@
 			"readiness": "unknown"
 		},
 		{
+			"id": "task-a11y-bitv-wcag",
+			"type": "task",
+			"title": "Accessibility-Audit: BITV/WCAG 2.1 AA, axe-core in CI, Lighthouse ≥95",
+			"summary": "Alle public-Routen auf BITV/WCAG 2.1 AA bringen. axe-core in CI integriert. Lighthouse-Score Accessibility ≥95. Fokus-Outlines, Skip-Links, ARIA-Live-Regions, alt-Texte.",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
 			"id": "task-termin-cron-erinnerungen",
 			"type": "task",
 			"title": "Cron: Termin-Erinnerungen 7d/1d versenden",
 			"summary": "Stuendlicher Cron /api/v1/cron/termin-erinnerung-versenden mit X-Cron-Secret. Versendet T-402 (7 Tage vor Termin) und T-403 (1 Tag vor Termin) idempotent via audit_log-Dedup an alle angemeldeten Nutzer:innen (nicht Warteliste).",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "task-pre-launch-qa",
+			"type": "task",
+			"title": "Pre-Launch-QA: E2E Playwright, k6 Lasttest, OWASP ZAP Scan",
+			"summary": "Playwright-E2E für Happy-Paths. k6 Lasttest 200 RPS/5min. OWASP ZAP-Scan gegen Staging.",
 			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
@@ -623,7 +680,25 @@
 			"type": "subproject",
 			"title": "Polish, Mobile, Accessibility, SEO und Public Launch Hamburg",
 			"summary": "Sprint 12-16 aus PRD §42. Mobile-Layout-Review mit Bottom-Tab-Bar, A11y-Audit BITV/WCAG AA, Performance-Opt, SEO mit JSON-LD und sitemap, Stadt-Digest-Newsletter, Pre-Launch-QA (E2E, Lasttest, Pentest, Anwalt), Soft-Launch und Public Launch.",
-			"status": "draft",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "external-pentest",
+			"type": "open-question",
+			"title": "Externer Pentest beauftragen",
+			"summary": "PRD §38 Pre-Launch + §42 Sprint 14: Pentest durch externen Anbieter buchen. Budget ~1.500-3.000 €. Anbieter-Auswahl, Pentest-Run, Findings-Liste durcharbeiten. Kein KI-Bau-Task.",
+			"status": "blocked",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "task-rechtstexte-impressum-agb",
+			"type": "task",
+			"title": "Rechtstexte: Impressum, Datenschutz, AGB, Werkstatt-Regeln (statisch + anwaltlich-pruefbar)",
+			"summary": "Vier Pflicht-Pages mit ersten Entwürfen. Anwaltliche Prüfung ist externe Aufgabe (kein Bau-Task), aber die Inhalte stehen als Markdown-Dateien bereit, die der Anwalt durchgehen kann.",
+			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
 		},
@@ -705,6 +780,12 @@
 			"confidence": 1
 		},
 		{
+			"from": "task-mobile-bottom-tabs",
+			"to": "polish-und-launch",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
 			"from": "wp-auth",
 			"to": "plattform-kern",
 			"type": "composed_of",
@@ -774,6 +855,12 @@
 			"from": "task-zirkel-stadt-seite",
 			"to": "task-werke-overview",
 			"type": "depends_on",
+			"confidence": 1
+		},
+		{
+			"from": "external-anwaltliche-pruefung",
+			"to": "polish-und-launch",
+			"type": "composed_of",
 			"confidence": 1
 		},
 		{
@@ -921,6 +1008,12 @@
 			"confidence": 1
 		},
 		{
+			"from": "task-performance-budget-monitoring",
+			"to": "polish-und-launch",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
 			"from": "cross-cutting-pick",
 			"to": "cross-cutting-decision",
 			"type": "decision_affects",
@@ -936,6 +1029,12 @@
 			"from": "architecture-decision",
 			"to": "architecture-pick",
 			"type": "decided_by",
+			"confidence": 1
+		},
+		{
+			"from": "task-seo-jsonld-sitemap",
+			"to": "polish-und-launch",
+			"type": "composed_of",
 			"confidence": 1
 		},
 		{
@@ -1881,6 +1980,12 @@
 			"confidence": 1
 		},
 		{
+			"from": "task-a11y-bitv-wcag",
+			"to": "polish-und-launch",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
 			"from": "task-termin-cron-erinnerungen",
 			"to": "wp-termine",
 			"type": "composed_of",
@@ -1896,6 +2001,12 @@
 			"from": "task-termin-cron-erinnerungen",
 			"to": "task-email-templates-termine",
 			"type": "depends_on",
+			"confidence": 1
+		},
+		{
+			"from": "task-pre-launch-qa",
+			"to": "polish-und-launch",
+			"type": "composed_of",
 			"confidence": 1
 		},
 		{
@@ -1925,6 +2036,66 @@
 		{
 			"from": "polish-und-launch",
 			"to": "goal-root",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "polish-und-launch",
+			"to": "task-a11y-bitv-wcag",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "polish-und-launch",
+			"to": "task-seo-jsonld-sitemap",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "polish-und-launch",
+			"to": "task-mobile-bottom-tabs",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "polish-und-launch",
+			"to": "task-performance-budget-monitoring",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "polish-und-launch",
+			"to": "task-pre-launch-qa",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "polish-und-launch",
+			"to": "task-rechtstexte-impressum-agb",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "polish-und-launch",
+			"to": "external-pentest",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "polish-und-launch",
+			"to": "external-anwaltliche-pruefung",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "external-pentest",
+			"to": "polish-und-launch",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-rechtstexte-impressum-agb",
+			"to": "polish-und-launch",
 			"type": "composed_of",
 			"confidence": 1
 		},

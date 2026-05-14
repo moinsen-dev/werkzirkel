@@ -32,6 +32,10 @@ export default defineConfig({
     environment: 'happy-dom',
     globals: true,
     include: ['tests/**/*.test.{ts,tsx}'],
+    // Playwright-E2E (tests/e2e/*.spec.ts) laeuft ueber `playwright test`,
+    // nicht ueber Vitest — explizit ausschliessen, falls jemand spaeter
+    // `.test.ts` darunter ablegt.
+    exclude: ['tests/e2e/**', 'node_modules/**', '.next/**'],
     env,
     // Integration-Tests stossen Route-Handler direkt an und brauchen das echte
     // Node-Web-API (insb. `Request` mit `Origin`-Header). Happy-DOM uebersteuert

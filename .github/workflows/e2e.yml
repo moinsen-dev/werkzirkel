@@ -1,0 +1,126 @@
+name: E2E (Playwright)
+
+# Playwright-E2E gegen Public-Surfaces (PRD §38 Pre-Launch-QA + §42 Sprint 14).
+#
+# Strategie:
+# - Postgres-Service starten, db-migrate, dev-Server auf Port 3210 starten.
+# - Playwright-Browser installieren (chromium reicht — wir testen nur Web).
+# - 3 Happy-Paths (Macher, Bedarfstraeger, Foerderer) laufen.
+# - Bei Fehler: Traces + Screenshots als Artifact.
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+
+concurrency:
+  group: e2e-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  e2e:
+    name: Playwright E2E Happy-Paths
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: werkzirkel
+          POSTGRES_PASSWORD: werkzirkel_ci
+          POSTGRES_DB: werkzirkel
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U werkzirkel"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      DATABASE_URL: postgresql://werkzirkel:werkzirkel_ci@localhost:5432/werkzirkel
+      BETTER_AUTH_SECRET: ci-secret-thirtytwo-bytes-minimum-pad
+      BETTER_AUTH_URL: http://localhost:3210
+      APP_URL: http://localhost:3210
+      PLAYWRIGHT_BASE_URL: http://localhost:3210
+      NODE_ENV: production
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.1.1
+          run_install: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: DB-Migration
+        run: pnpm db:migrate
+        working-directory: apps/web
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('apps/web/package.json') }}
+
+      - name: Install Playwright browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: pnpm --filter @werkzirkel/web exec playwright install --with-deps chromium
+
+      - name: Install Playwright system deps (cache-hit fallback)
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: pnpm --filter @werkzirkel/web exec playwright install-deps chromium
+
+      - name: Production Build
+        run: pnpm build
+
+      - name: Start Next-Server (background)
+        run: |
+          pnpm --filter @werkzirkel/web start &
+          echo "NEXT_PID=$!" >> $GITHUB_ENV
+          for i in $(seq 1 60); do
+            if curl -sf http://localhost:3210/ >/dev/null; then
+              echo "Next-Server up after ${i}s"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "Next-Server did not come up in 60s" >&2
+          exit 1
+
+      - name: Run Playwright E2E
+        run: pnpm --filter @werkzirkel/web exec playwright test
+        env:
+          PLAYWRIGHT_BASE_URL: http://localhost:3210
+
+      - name: Upload Playwright trace + report (on failure)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            apps/web/playwright-report/
+            apps/web/test-results/
+          retention-days: 7
+
+      - name: Stop Next-Server
+        if: always()
+        run: |
+          if [ -n "${NEXT_PID:-}" ]; then
+            kill "$NEXT_PID" || true
+          fi

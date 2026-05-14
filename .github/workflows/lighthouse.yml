@@ -1,0 +1,110 @@
+name: Lighthouse + Bundle-Size
+
+# Accessibility- und Performance-Gate fuer Public-Routen.
+#
+# Strategie:
+# - Postgres-Service starten, App-Migration anwerfen, Next-Server starten.
+# - Build-Output capturen → Bundle-Size-Check (Initial-Load-JS <200 kB, PRD §32).
+# - Lighthouse-CI gegen die statisch erreichbaren Public-Routen
+#   (Macher-Landing, Bedarf, Foerdern, Anmelden) laufen lassen.
+# - Accessibility-Score < 95 → Build failt → PR blockiert (PRD §29).
+# - Performance-Budgets (LCP <2.5s, CLS <0.1, total-byte-weight <1MB, PRD §32)
+#   sind ebenfalls Hard-Block.
+#
+# SEO/Best-Practices laufen mit, sind aber zunaechst auf "warn" gesetzt.
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+concurrency:
+  group: lighthouse-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  accessibility:
+    name: Lighthouse + Bundle-Size Gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: werkzirkel
+          POSTGRES_PASSWORD: werkzirkel_ci
+          POSTGRES_DB: werkzirkel
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U werkzirkel"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      DATABASE_URL: postgresql://werkzirkel:werkzirkel_ci@localhost:5432/werkzirkel
+      BETTER_AUTH_SECRET: ci-secret-thirtytwo-bytes-minimum-pad
+      BETTER_AUTH_URL: http://localhost:3210
+      APP_URL: http://localhost:3210
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.1.1
+          run_install: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: DB-Migration
+        run: pnpm db:migrate
+        working-directory: apps/web
+
+      - name: Production Build (Output capturen fuer Bundle-Size-Check)
+        run: |
+          set -o pipefail
+          pnpm build 2>&1 | tee /tmp/next-build.log
+
+      - name: Bundle-Size-Check (Initial-Load-JS <200 kB, PRD §32)
+        run: pnpm --filter @werkzirkel/web exec tsx scripts/bundle-size.ts /tmp/next-build.log
+
+      - name: Start Next-Server (background)
+        run: |
+          pnpm --filter @werkzirkel/web start &
+          echo "NEXT_PID=$!" >> $GITHUB_ENV
+          # Warte bis Server antwortet (max 60s).
+          for i in $(seq 1 60); do
+            if curl -sf http://localhost:3210/ >/dev/null; then
+              echo "Next-Server up after ${i}s"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "Next-Server did not come up in 60s" >&2
+          exit 1
+
+      - name: Install Lighthouse CI
+        run: npm install -g @lhci/cli@0.14.x
+
+      - name: Run Lighthouse CI
+        run: lhci autorun --config=./.lighthouserc.json
+
+      - name: Stop Next-Server
+        if: always()
+        run: |
+          if [ -n "${NEXT_PID:-}" ]; then
+            kill "$NEXT_PID" || true
+          fi

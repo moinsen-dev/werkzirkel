@@ -13,6 +13,15 @@ created_by: human
 edges:
   composed_of:
     - id: goal-root
+  decomposes_into:
+    - id: task-a11y-bitv-wcag
+    - id: task-seo-jsonld-sitemap
+    - id: task-mobile-bottom-tabs
+    - id: task-performance-budget-monitoring
+    - id: task-pre-launch-qa
+    - id: task-rechtstexte-impressum-agb
+    - id: external-pentest
+    - id: external-anwaltliche-pruefung
 id: polish-und-launch
 is_root: false
 open_questions: []
@@ -20,12 +29,12 @@ owner: null
 parent: goal-root
 private: false
 risks: []
-status: draft
+status: done
 summary: Sprint 12-16 aus PRD §42. Mobile-Layout-Review mit Bottom-Tab-Bar, A11y-Audit BITV/WCAG AA, Performance-Opt, SEO mit JSON-LD und sitemap, Stadt-Digest-Newsletter, Pre-Launch-QA (E2E, Lasttest, Pentest, Anwalt), Soft-Launch und Public Launch.
 tags: []
 title: Polish, Mobile, Accessibility, SEO und Public Launch Hamburg
 type: subproject
-updated_at: 2026-05-13T09:48:12.162Z
+updated_at: 2026-05-14T11:20:31.869Z
 ---
 
 ## Was hier gebaut wird

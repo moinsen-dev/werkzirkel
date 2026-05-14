@@ -12,6 +12,7 @@
 
 import Link from 'next/link';
 
+import { AvatarImage } from '@/components/ui/avatar-image';
 import { de } from '@/i18n/de';
 import MeldenButton from '@/components/ui/melden-button';
 import type { Werk } from '@/lib/db/schema';
@@ -185,10 +186,11 @@ export default function WerkDetailView({
                     background: 'var(--surface)',
                   }}
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <AvatarImage
                     src={url}
                     alt={`Screenshot ${i + 1} von ${werk.name}`}
+                    width={1200}
+                    height={800}
                     style={{
                       width: '100%',
                       height: 'auto',
@@ -268,8 +270,7 @@ export default function WerkDetailView({
                   }}
                 >
                   {inhaber.avatarUrl ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
+                    <AvatarImage
                       src={inhaber.avatarUrl}
                       alt=""
                       width={56}

@@ -13,6 +13,7 @@
 
 import Link from 'next/link';
 
+import { AvatarImage } from '@/components/ui/avatar-image';
 import { de } from '@/i18n/de';
 import type {
   Hilfebedarf,
@@ -212,8 +213,7 @@ function AktivVariant({
                     }}
                   >
                     {m.avatarUrl ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
+                      <AvatarImage
                         src={m.avatarUrl}
                         alt=""
                         width={64}
@@ -314,10 +314,11 @@ function AktivVariant({
                         }}
                         aria-hidden="true"
                       >
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
+                        <AvatarImage
                           src={w.screenshots[0]}
                           alt=""
+                          width={400}
+                          height={300}
                           style={{
                             width: '100%',
                             height: '100%',
@@ -625,9 +626,63 @@ function VorbereitungVariant({ stadtRow }: ZirkelStadtViewProps) {
   );
 }
 
+/**
+ * JSON-LD Place + organizer-Organization (PRD §31).
+ *
+ * Suchmaschinen verstehen `Place` als geografischen Eintrag — wir mappen
+ * den Zirkel auf eine City, weil das semantisch zu "Werkzirkel Hamburg"
+ * passt (kein Geo-Punkt, sondern ein lokal verankerter Kreis).
+ */
+export function buildZirkelJsonLd(props: {
+  stadtRow: ZirkelStadtRow;
+  appUrl: string;
+}): Record<string, unknown> {
+  const { stadtRow, appUrl } = props;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Place',
+    name: `Werkzirkel ${stadtRow.name}`,
+    description:
+      stadtRow.beschreibung ??
+      `Werkzirkel ${stadtRow.name} — Macher:innen, Bedarfstraeger:innen und Foerder:innen aus der Region.`,
+    address: { '@type': 'PostalAddress', addressLocality: stadtRow.name },
+    containedInPlace: { '@type': 'City', name: stadtRow.name },
+    isAccessibleForFree: true,
+    publicAccess: stadtRow.status === 'aktiv',
+    url: appUrl,
+    additionalProperty: {
+      '@type': 'Organization',
+      name: 'Werkzirkel',
+    },
+  };
+}
+
 export default function ZirkelStadtView(props: ZirkelStadtViewProps) {
+  const jsonLd = buildZirkelJsonLd({
+    stadtRow: props.stadtRow,
+    appUrl:
+      typeof process !== 'undefined' && process.env.APP_URL
+        ? process.env.APP_URL.replace(/\/+$/, '')
+        : 'https://werkzirkel.de',
+  });
   if (props.stadtRow.status === 'aktiv') {
-    return <AktivVariant {...props} />;
+    return (
+      <>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <AktivVariant {...props} />
+      </>
+    );
   }
-  return <VorbereitungVariant {...props} />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <VorbereitungVariant {...props} />
+    </>
+  );
 }

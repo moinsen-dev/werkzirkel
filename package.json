@@ -23,6 +23,7 @@
     "typecheck": "pnpm -r typecheck",
     "test": "pnpm -r test",
     "test:unit": "pnpm -r test:unit",
+    "bundle-size": "pnpm --filter @werkzirkel/web bundle-size",
     "db:generate": "pnpm --filter @werkzirkel/web db:generate",
     "db:migrate": "pnpm --filter @werkzirkel/web db:migrate",
     "db:seed": "pnpm --filter @werkzirkel/web db:seed",

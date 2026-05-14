@@ -14,6 +14,7 @@
 
 import Link from 'next/link';
 
+import { AvatarImage } from '@/components/ui/avatar-image';
 import { de } from '@/i18n/de';
 import {
   hilfebedarf as hilfebedarfEnum,
@@ -374,10 +375,11 @@ export default function WerkeListView({
                           }}
                           aria-hidden="true"
                         >
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img
+                          <AvatarImage
                             src={w.screenshots[0]}
                             alt=""
+                            width={400}
+                            height={300}
                             style={{
                               width: '100%',
                               height: '100%',
@@ -461,8 +463,7 @@ export default function WerkeListView({
                           }}
                         >
                           {w.inhaberAvatarUrl ? (
-                            // eslint-disable-next-line @next/next/no-img-element
-                            <img
+                            <AvatarImage
                               src={w.inhaberAvatarUrl}
                               alt=""
                               width={24}

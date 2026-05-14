@@ -1,0 +1,81 @@
+name: Security-Scan (OWASP ZAP)
+
+# OWASP-ZAP-Baseline-Scan (PRD §38 Pre-Launch + §42 Sprint 14).
+#
+# Strategie:
+# - Woechentlicher Schedule (Sonntag 02:00 UTC) + Manual-Trigger.
+# - Scant die Staging-URL (Default: https://staging.werkzirkel.de — ueber
+#   `staging_url`-Input ueberschreibbar).
+# - Baseline-Scan (passive Rules + spider) — kein aktiver Angriff, daher
+#   safe gegen Produktiv-Staging.
+# - Findings landen als Markdown-Issue im Repo + als Workflow-Artifact.
+#
+# Hinweis: Aktiver Penetrationstest (PRD §38 — externer Pentest) ist ein
+# separater bezahlter Termin mit externem Anbieter (siehe project-office
+# open-question `external-pentest`). Dieser ZAP-Scan liefert die woechentliche
+# automatische Hygiene-Pruefung dazwischen.
+
+on:
+  schedule:
+    # Sonntag 02:00 UTC = Sonntag 03:00 (Winter) / 04:00 (Sommer) Hamburg.
+    - cron: '0 2 * * 0'
+  workflow_dispatch:
+    inputs:
+      staging_url:
+        description: 'Ziel-URL fuer den ZAP-Baseline-Scan'
+        required: false
+        default: 'https://staging.werkzirkel.de'
+      fail_on_warn:
+        description: 'Bei WARN-Findings den Build failen?'
+        required: false
+        default: 'false'
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  zap-baseline:
+    name: OWASP ZAP Baseline Scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Determine target URL
+        id: target
+        run: |
+          URL="${{ github.event.inputs.staging_url }}"
+          if [ -z "$URL" ]; then
+            URL="https://staging.werkzirkel.de"
+          fi
+          echo "url=$URL" >> $GITHUB_OUTPUT
+          echo "Scanning target: $URL"
+
+      - name: ZAP Baseline Scan
+        uses: zaproxy/action-baseline@v0.13.0
+        with:
+          target: ${{ steps.target.outputs.url }}
+          # Rule-Suppressions in .zap/rules.tsv (low-noise Rules deaktiviert).
+          rules_file_name: '.zap/rules.tsv'
+          # Issue-Erstellung uebernimmt die Action selbst — Severity-Filter
+          # ueber 'fail_action'-Flag.
+          fail_action: ${{ github.event.inputs.fail_on_warn == 'true' }}
+          # Erlaubt 5 Minuten Spidering.
+          cmd_options: '-T 5 -m 5'
+          # Token, damit das automatische Issue erstellt werden kann.
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue_title: 'OWASP ZAP Baseline — woechentliche Sicherheits-Audit-Findings'
+
+      - name: Upload ZAP Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: zap-baseline-report
+          path: |
+            report_html.html
+            report_md.md
+            report_json.json
+          retention-days: 30

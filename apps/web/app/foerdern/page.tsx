@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
+import SiteFooter from '@/components/ui/site-footer';
+
 export const metadata: Metadata = {
   title: 'Werke fördern',
   description:
@@ -354,25 +356,7 @@ export default function FoerdernLandingpage() {
         </div>
       </section>
 
-      <footer className="site-footer">
-        <div className="wrap footer-inner">
-          <span>Werkzirkel — Gemeinsam digitale Produkte bauen.</span>
-          <div className="footer-links" aria-label="Fußnavigation">
-            <Link href="/">Macher:innen</Link>
-            <Link href="/bedarf">Bedarf</Link>
-            <Link href="/foerdern">Fördern</Link>
-            <a className="muted-link" href="#" aria-disabled="true" title="folgt zum Plattform-Start">
-              Regeln
-            </a>
-            <a className="muted-link" href="#" aria-disabled="true" title="folgt zum Plattform-Start">
-              Impressum
-            </a>
-            <a className="muted-link" href="#" aria-disabled="true" title="folgt zum Plattform-Start">
-              Datenschutz
-            </a>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

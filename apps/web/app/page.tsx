@@ -1,15 +1,43 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
+import SiteFooter from '@/components/ui/site-footer';
+import { env } from '@/lib/env';
+
 export const metadata: Metadata = {
   title: 'Werkzirkel — Gemeinsam digitale Produkte bauen',
   description:
     'Werkzirkel verbindet unabhängige digitale Macher:innen in Hamburg — mit Bedarfsträger:innen und Förder:innen aus derselben Stadt. Werkstatt-Kultur, kein Marktplatz.',
 };
 
+const APP_URL = env.APP_URL.replace(/\/+$/, '');
+
+/**
+ * JSON-LD Organization-Schema (PRD §31).
+ *
+ * Quelle: https://schema.org/Organization. Wir liefern es nur fuer die
+ * Startseite — Suchmaschinen lesen das einmal pro Site und nehmen
+ * Logo/Sprache/Knowledge-Graph-Daten daraus.
+ */
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Werkzirkel',
+  url: APP_URL,
+  logo: `${APP_URL}/og-default.png`,
+  description:
+    'Werkstatt-Kultur fuer unabhaengige digitale Macher:innen in Hamburg. Macher:innen, Bedarfstraeger:innen und Foerder:innen aus derselben Stadt — kein Marktplatz, keine Vermittlung, keine Provision.',
+  areaServed: { '@type': 'City', name: 'Hamburg' },
+  inLanguage: 'de',
+} as const;
+
 export default function MacherLandingpage() {
   return (
     <div className="page-shell">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+      />
       <nav className="site-nav" aria-label="Hauptnavigation">
         <div className="wrap nav-inner">
           <Link href="/" className="brand" aria-label="Werkzirkel Start">
@@ -524,25 +552,7 @@ export default function MacherLandingpage() {
         </div>
       </section>
 
-      <footer className="site-footer">
-        <div className="wrap footer-inner">
-          <span>Werkzirkel — Gemeinsam digitale Produkte bauen.</span>
-          <div className="footer-links" aria-label="Fußnavigation">
-            <Link href="/">Macher:innen</Link>
-            <Link href="/bedarf">Bedarf</Link>
-            <Link href="/foerdern">Fördern</Link>
-            <a className="muted-link" href="#" aria-disabled="true" title="folgt zum Plattform-Start">
-              Regeln
-            </a>
-            <a className="muted-link" href="#" aria-disabled="true" title="folgt zum Plattform-Start">
-              Impressum
-            </a>
-            <a className="muted-link" href="#" aria-disabled="true" title="folgt zum Plattform-Start">
-              Datenschutz
-            </a>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

@@ -14,6 +14,7 @@
 
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { AvatarImage } from '@/components/ui/avatar-image';
 import { cookies, headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { eq } from 'drizzle-orm';
@@ -124,8 +125,7 @@ function AvatarBlock({
 }) {
   if (avatarUrl) {
     return (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img
+      <AvatarImage
         src={avatarUrl}
         alt=""
         width={56}
@@ -162,8 +162,7 @@ function AvatarBlock({
 function NavAvatar({ avatarUrl, name }: AvatarInitialenProps & { avatarUrl: string | null }) {
   if (avatarUrl) {
     return (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img
+      <AvatarImage
         src={avatarUrl}
         alt=""
         width={28}
@@ -173,6 +172,7 @@ function NavAvatar({ avatarUrl, name }: AvatarInitialenProps & { avatarUrl: stri
           objectFit: 'cover',
           border: 'var(--hairline)',
         }}
+        priority
       />
     );
   }

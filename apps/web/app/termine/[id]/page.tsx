@@ -701,8 +701,49 @@ export default async function TerminDetailPage({
   const absagenBound = terminAbsagenAction.bind(null, id);
   const durchgefuehrtBound = terminDurchgefuehrtAction.bind(null, id);
 
+  // JSON-LD Event-Schema (PRD §31)
+  const eventJsonLd: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'Event',
+    name: row.titel,
+    description: row.beschreibung.slice(0, 500),
+    startDate: row.datumUhrzeit.toISOString(),
+    eventStatus:
+      row.status === 'abgesagt'
+        ? 'https://schema.org/EventCancelled'
+        : 'https://schema.org/EventScheduled',
+    eventAttendanceMode: row.onlineLink
+      ? row.ortText
+        ? 'https://schema.org/MixedEventAttendanceMode'
+        : 'https://schema.org/OnlineEventAttendanceMode'
+      : 'https://schema.org/OfflineEventAttendanceMode',
+    organizer: {
+      '@type': 'Organization',
+      name: 'Werkzirkel',
+      url: APP_URL,
+    },
+    location: row.ortText
+      ? {
+          '@type': 'Place',
+          name: row.ortText,
+          address: row.ortText,
+        }
+      : row.onlineLink
+        ? {
+            '@type': 'VirtualLocation',
+            url: row.onlineLink,
+          }
+        : undefined,
+    url: `${APP_URL}/termine/${id}`,
+    maximumAttendeeCapacity: row.maxTeilnehmer,
+  };
+
   return (
     <div className="page-shell">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(eventJsonLd) }}
+      />
       <nav className="site-nav" aria-label="Hauptnavigation">
         <div className="wrap nav-inner">
           <Link href="/" className="brand" aria-label="Werkzirkel Start">

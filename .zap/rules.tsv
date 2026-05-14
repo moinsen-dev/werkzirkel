@@ -1,0 +1,22 @@
+# ZAP-Baseline-Rules — Werkzirkel-Tuning.
+#
+# Format (tab-separated):
+#   <Rule-ID>	<Threshold>	<Notes>
+# Threshold: IGNORE | WARN | FAIL
+#
+# Konvention: nur Rules deaktivieren, die nachweislich keine Werkzirkel-
+# Schwachstelle abbilden. Jeder Eintrag braucht eine Begruendung im Kommentar
+# darueber.
+
+# Cookie ohne SameSite — wir setzen wz_session als HttpOnly+Secure+SameSite=Lax
+# in Better-Auth. ZAP-Baseline meldet manchmal trotzdem, weil Cookies aus
+# CDN-Antworten ohne SameSite kommen koennen. Wir setzen WARN.
+10054	WARN	Cookie Without SameSite Attribute
+
+# X-Content-Type-Options — wird durch next.config.ts security-Header gesetzt.
+# Fix-Verifikation laeuft separat. Hier WARN, kein FAIL.
+10021	WARN	X-Content-Type-Options Header Missing
+
+# Information Disclosure - Suspicious Comments. Trifft auf Next.js-Hydration-
+# Marker und JSON-LD-Bloecke an, die explizit gewollt sind. IGNORE.
+10027	IGNORE	Information Disclosure - Suspicious Comments

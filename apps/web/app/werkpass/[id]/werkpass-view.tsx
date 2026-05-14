@@ -16,6 +16,7 @@
 
 import Link from 'next/link';
 
+import { AvatarImage } from '@/components/ui/avatar-image';
 import { de } from '@/i18n/de';
 import MeldenButton from '@/components/ui/melden-button';
 import type {
@@ -104,6 +105,47 @@ function domainAusUrl(url: string): string {
 
 const VORSCHAU_LIMIT = 6;
 
+/**
+ * JSON-LD Person-Schema fuer den Werkpass (PRD §31).
+ * Bewusst minimal — wir leaken keine privaten Daten (keine email, kein
+ * klarname). Nur Anzeigename, Stadt, Werke-Anzahl und (sofern vorhanden)
+ * oeffentliche Links.
+ */
+export function buildWerkpassJsonLd(props: {
+  nutzer: WerkpassNutzer;
+  werkeGesamt: number;
+}): Record<string, unknown> {
+  const { nutzer, werkeGesamt } = props;
+  const sameAs = [
+    nutzer.website,
+    nutzer.github,
+    nutzer.linkedin,
+    nutzer.mastodon,
+  ].filter((u): u is string => !!u);
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: nutzer.anzeigename,
+    description:
+      nutzer.kurzbeschreibung ??
+      `Macher:in im Werkzirkel${nutzer.stadtName ? ` ${nutzer.stadtName}` : ''}`,
+    knowsAbout: nutzer.faehigkeiten,
+    homeLocation: nutzer.stadtName
+      ? { '@type': 'Place', name: nutzer.stadtName }
+      : undefined,
+    ...(sameAs.length > 0 ? { sameAs } : {}),
+    ...(werkeGesamt > 0
+      ? {
+          owns: {
+            '@type': 'QuantitativeValue',
+            value: werkeGesamt,
+            unitText: 'Werke',
+          },
+        }
+      : {}),
+  };
+}
+
 export default function WerkpassView({
   nutzer,
   testSaldo,
@@ -122,9 +164,14 @@ export default function WerkpassView({
     !!nutzer.kurzbeschreibung ||
     nutzer.faehigkeiten.length > 0 ||
     nutzer.interessen.length > 0;
+  const jsonLd = buildWerkpassJsonLd({ nutzer, werkeGesamt });
 
   return (
     <div className="page-shell">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <nav className="site-nav" aria-label="Hauptnavigation">
         <div className="wrap nav-inner">
           <Link href="/" className="brand" aria-label="Werkzirkel Start">
@@ -160,8 +207,7 @@ export default function WerkpassView({
         >
           <div>
             {nutzer.avatarUrl ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
+              <AvatarImage
                 src={nutzer.avatarUrl}
                 alt=""
                 width={256}
@@ -174,6 +220,7 @@ export default function WerkpassView({
                   border: 'var(--hairline)',
                   display: 'block',
                 }}
+                priority
               />
             ) : (
               <span
@@ -419,10 +466,11 @@ export default function WerkpassView({
                         }}
                         aria-hidden="true"
                       >
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
+                        <AvatarImage
                           src={w.screenshots[0]}
                           alt=""
+                          width={400}
+                          height={300}
                           style={{
                             width: '100%',
                             height: '100%',

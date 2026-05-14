@@ -10,10 +10,17 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   images: {
     formats: ['image/avif', 'image/webp'],
+    // Avatare und Screenshots koennen als data: URLs aus Tests/Seeds kommen
+    // (R2-Upload nicht konfiguriert) — `dangerouslyAllowSVG` brauchen wir nicht.
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'media.werkzirkel.de',
+      },
+      // R2-Public-URL: Subdomain-Variante (z.B. *.r2.cloudflarestorage.com).
+      {
+        protocol: 'https',
+        hostname: '**.r2.cloudflarestorage.com',
       },
     ],
   },

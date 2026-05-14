@@ -162,6 +162,11 @@ import {
   betreffFor as t202BetreffFor,
   type WerkangebotStatusGeaendertProps,
 } from './templates/t-202-werkangebot-status-geaendert';
+import {
+  StadtDigestWoechentlich,
+  t801BetreffFor,
+  type StadtDigestWoechentlichProps,
+} from './templates/t-801-stadt-digest-woechentlich';
 
 /**
  * Diskriminierte Union aller bekannten Templates.
@@ -194,7 +199,8 @@ export type MailTemplate =
   | { template: 'T-302'; props: BedarfVeroeffentlichtProps }
   | { template: 'T-303'; props: BedarfAbgelehntProps }
   | { template: 'T-201'; props: WerkangebotEingegangenProps }
-  | { template: 'T-202'; props: WerkangebotStatusGeaendertProps };
+  | { template: 'T-202'; props: WerkangebotStatusGeaendertProps }
+  | { template: 'T-801'; props: StadtDigestWoechentlichProps };
 
 /**
  * Datei-Anhang. Folgt dem Resend-Format, ist hier aber lokal getypt damit
@@ -367,6 +373,11 @@ function buildEmail(
         element: React.createElement(WerkangebotStatusGeaendert, opts.props),
         // Betreff dynamisch vom status abhaengig.
         betreff: t202BetreffFor(opts.props.neuerStatus),
+      };
+    case 'T-801':
+      return {
+        element: React.createElement(StadtDigestWoechentlich, opts.props),
+        betreff: t801BetreffFor(opts.props.stadtName),
       };
   }
 }

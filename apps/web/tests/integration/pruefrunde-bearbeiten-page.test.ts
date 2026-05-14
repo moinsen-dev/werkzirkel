@@ -169,7 +169,10 @@ describe('/pruefrunden/[id]/bearbeiten page', () => {
     const html = await render(prId, { sid });
     expect(html).toContain('Test-Pruefrunde-Bearbeiten');
     expect(html).toContain('Änderungen speichern');
-    expect(html).toContain('Prüfrunde veröffentlichen');
+    // Saldo=0 (frischer User) → Reziprozitäts-Wahl-Block erscheint statt
+    // direkter Veröffentlichen-Knopf (PRD §8.4).
+    expect(html).toContain('Reziprozitäts-Gate');
+    expect(html).toContain('Veröffentlichen mit 14-Tage-Verpflichtung');
     expect(html).toContain('Entwurf löschen');
   });
 

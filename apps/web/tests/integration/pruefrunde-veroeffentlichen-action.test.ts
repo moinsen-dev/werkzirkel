@@ -55,9 +55,10 @@ vi.mock('next/cache', () => ({
   revalidatePath: () => {},
 }));
 
-const { pruefrundeVeroeffentlichenAction } = await import(
-  '@/app/pruefrunden/[id]/bearbeiten/page'
-);
+const {
+  pruefrundeVeroeffentlichenAction,
+  pruefrundeMitVerpflichtungVeroeffentlichenAction,
+} = await import('@/app/pruefrunden/[id]/bearbeiten/page');
 
 async function reset(): Promise<void> {
   await truncateAll();
@@ -121,10 +122,17 @@ async function entwurfAnlegen(werkId: string): Promise<string> {
   return id;
 }
 
-async function callAction(prId: string): Promise<string> {
+async function callAction(
+  prId: string,
+  mitVerpflichtung = false,
+): Promise<string> {
   lastRedirect = null;
   try {
-    await pruefrundeVeroeffentlichenAction(prId);
+    if (mitVerpflichtung) {
+      await pruefrundeMitVerpflichtungVeroeffentlichenAction(prId);
+    } else {
+      await pruefrundeVeroeffentlichenAction(prId);
+    }
   } catch (err) {
     if (
       err instanceof Error &&
@@ -143,7 +151,9 @@ describe('pruefrundeVeroeffentlichenAction', () => {
   beforeEach(reset);
   afterAll(reset);
 
-  it('Pfad A: kein Saldo, keine offene Verpflichtung → veroeffentlicht + neue Verpflichtung', async () => {
+  it('Pfad A: kein Saldo, ohne Opt-In → redirected mit fehler=saldo_zu_niedrig, keine Verpflichtung', async () => {
+    // PRD §8.4: Default-Action blockt bei Saldo<2 und führt den User auf
+    // den Bearbeiten-Screen zurück, wo der Wahl-Block angezeigt wird.
     const userId = await nutzerAnlegen();
     const sid = await sessionAnlegen(userId);
     const werkId = await werkAnlegen(userId);
@@ -152,6 +162,34 @@ describe('pruefrundeVeroeffentlichenAction', () => {
     mockHeaders.set('cookie', `wz_session=${encodeURIComponent(sid)}`);
 
     const target = await callAction(prId);
+    expect(target).toContain(`/pruefrunden/${prId}/bearbeiten`);
+    expect(target).toContain('fehler=saldo_zu_niedrig');
+
+    // DB: Status BLEIBT entwurf
+    const rows = await db
+      .select()
+      .from(pruefrunde)
+      .where(eq(pruefrunde.id, prId))
+      .limit(1);
+    expect(rows[0]?.status).toBe('entwurf');
+
+    // DB: KEINE Verpflichtung angelegt
+    const v = await db
+      .select()
+      .from(pruefrundenVerpflichtung)
+      .where(eq(pruefrundenVerpflichtung.nutzerId, userId));
+    expect(v.length).toBe(0);
+  });
+
+  it('Pfad A2: kein Saldo + expliziter Verpflichtungs-Opt-In → veroeffentlicht + neue Verpflichtung', async () => {
+    const userId = await nutzerAnlegen();
+    const sid = await sessionAnlegen(userId);
+    const werkId = await werkAnlegen(userId);
+    const prId = await entwurfAnlegen(werkId);
+
+    mockHeaders.set('cookie', `wz_session=${encodeURIComponent(sid)}`);
+
+    const target = await callAction(prId, true);
     expect(target).toContain(`/pruefrunden/${prId}/bearbeiten`);
     expect(target).toContain('veroeffentlicht=neue_verpflichtung');
     expect(target).toContain('frist=');

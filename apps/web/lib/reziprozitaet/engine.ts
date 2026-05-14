@@ -27,11 +27,17 @@
  * Outer-Transaktion). Default ist der globale `db`-Export.
  */
 
-import { and, asc, eq, lt, sql } from 'drizzle-orm';
+import { and, asc, desc, eq, lt, ne, notInArray, sql } from 'drizzle-orm';
 import { createId } from '@paralleldrive/cuid2';
 
 import { db as defaultDb } from '@/lib/db';
-import { pruefrundenVerpflichtung, testSaldo } from '@/lib/db/schema';
+import {
+  feedback,
+  pruefrunde,
+  pruefrundenVerpflichtung,
+  testSaldo,
+  werk,
+} from '@/lib/db/schema';
 
 import { ensureSaldoRow, recomputeSaldoVerpflichtungen } from './saldo';
 
@@ -52,7 +58,22 @@ type DbOrTx = typeof defaultDb | Parameters<Parameters<typeof defaultDb.transact
 export type SaldoCheckResult =
   | { ok: true; modus: 'saldo_erfuellt'; tests_gegeben: number }
   | { ok: true; modus: 'neue_verpflichtung'; frist: Date; verpflichtungs_id: string }
-  | { ok: false; grund: 'frist_abgelaufen'; offene_anzahl: number };
+  | { ok: false; grund: 'frist_abgelaufen'; offene_anzahl: number }
+  | { ok: false; grund: 'saldo_zu_niedrig'; tests_gegeben: number };
+
+export interface KannPruefrundeStartenOptions {
+  /**
+   * Explizit eingeholtes Einverständnis der Nutzer:in, eine 14-Tage-
+   * Verpflichtung einzugehen (PRD §8.4 Reziprozitäts-Regel). Default `false`:
+   * ohne Einverständnis blockiert die Engine bei `tests_gegeben < 2` mit
+   * `grund='saldo_zu_niedrig'`, statt automatisch eine Verpflichtung anzulegen.
+   *
+   * Die UI ist dafür verantwortlich, der Nutzer:in vor dem Aufruf die
+   * Auswahl zwischen "zuerst Feedback geben" und "Verpflichtung eingehen"
+   * sichtbar zu machen und nur bei expliziter Wahl `true` zu senden.
+   */
+  verpflichtung_akzeptiert?: boolean;
+}
 
 /**
  * Berechnet Verpflichtungs-Frist: `pruefrunde_frist + 14 Tage`.
@@ -86,7 +107,9 @@ export async function kannPruefrundeStarten(
   pruefrunde_frist: Date,
   pruefrunde_id: string,
   dbInstance: DbOrTx = defaultDb,
+  options: KannPruefrundeStartenOptions = {},
 ): Promise<SaldoCheckResult> {
+  const verpflichtungAkzeptiert = options.verpflichtung_akzeptiert === true;
   // 1) Saldo-Row sicherstellen (idempotent, kein Race-Problem).
   await ensureSaldoRow(nutzer_id, dbInstance);
 
@@ -128,7 +151,19 @@ export async function kannPruefrundeStarten(
       };
     }
 
-    // 4) Neue Verpflichtung erzeugen.
+    // 4) Saldo<2 ohne explizites Einverständnis → harter Block. PRD §8.4
+    //    verlangt, dass der User vor der Wahl steht: "zuerst 2 Tests geben"
+    //    ODER "Verpflichtung eingehen". Die alte Default-Wahl (automatische
+    //    Verpflichtung) ist Dark-Pattern-Risiko und entfernt die Wahl.
+    if (!verpflichtungAkzeptiert) {
+      return {
+        ok: false as const,
+        grund: 'saldo_zu_niedrig' as const,
+        tests_gegeben,
+      };
+    }
+
+    // 5) Neue Verpflichtung erzeugen (nur wenn explizit akzeptiert).
     const verpflichtungs_id = createId();
     const frist = berechneVerpflichtungsFrist(pruefrunde_frist);
 
@@ -265,6 +300,59 @@ export async function markiereAbgelaufeneVerpflichtungen(
   // Eindeutige Nutzer-IDs (mehrere abgelaufene Verpflichtungen pro Nutzer
   // moeglich, wenn jemand mehrere Pruefrunden im Stapel veroeffentlicht hat).
   return Array.from(new Set(rows.map((r) => r.nutzerId)));
+}
+
+/**
+ * Lookup: aktuell offene Pruefrunden ANDERER Werke, bei denen `nutzer_id`
+ * noch kein Feedback gegeben hat. Default-Limit 2, weil die Reziprozitäts-
+ * Regel nur 2 Tests verlangt — die Wahl-UI soll genau diese 2 anbieten.
+ *
+ * Pure read — keine Mutation. Ergebnis ist eine flache Liste mit den
+ * minimal benoetigten Render-Feldern (id, titel, werk.name, frist).
+ */
+export interface OffenePruefrundeAndererItem {
+  id: string;
+  titel: string;
+  werkName: string;
+  frist: Date;
+}
+
+export async function findeOffenePruefrundenAnderer(
+  nutzer_id: string,
+  limit = 2,
+  dbInstance: DbOrTx = defaultDb,
+): Promise<OffenePruefrundeAndererItem[]> {
+  // Pruefrunden, bei denen `nutzer_id` schon Feedback gegeben hat —
+  // diese ausschliessen, damit wir nur Restposten anzeigen.
+  const eigeneFeedbacks = await dbInstance
+    .select({ pruefrundeId: feedback.pruefrundeId })
+    .from(feedback)
+    .where(eq(feedback.testerId, nutzer_id));
+  const ausgeschlossene = eigeneFeedbacks.map((r) => r.pruefrundeId);
+
+  const baseWhere = [
+    eq(pruefrunde.status, 'oeffentlich'),
+    // Eigene Werke ausschliessen — Reziprozitaet gilt nur cross-werk.
+    ne(werk.nutzerId, nutzer_id),
+  ];
+  if (ausgeschlossene.length > 0) {
+    baseWhere.push(notInArray(pruefrunde.id, ausgeschlossene));
+  }
+
+  const rows = await dbInstance
+    .select({
+      id: pruefrunde.id,
+      titel: pruefrunde.titel,
+      werkName: werk.name,
+      frist: pruefrunde.frist,
+    })
+    .from(pruefrunde)
+    .innerJoin(werk, eq(werk.id, pruefrunde.werkId))
+    .where(and(...baseWhere))
+    .orderBy(desc(pruefrunde.erstelltAm))
+    .limit(limit);
+
+  return rows;
 }
 
 // Re-export fuer einfacheren Konsum von aussen.

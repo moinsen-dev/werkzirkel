@@ -503,7 +503,30 @@ describe('POST /api/v1/pruefrunden/:id/veroeffentlichen (Reziprozitaet)', () => 
     return { userId, sid, pruefrundeId: prId, pruefrundeFrist };
   }
 
-  it('ohne Saldo, ohne abgelaufene Verpflichtung → 200 mit neue_verpflichtung', async () => {
+  it('ohne Saldo, ohne abgelaufene Verpflichtung, ohne Opt-In → 422 saldo_zu_niedrig + offene_pruefrunden_anderer', async () => {
+    // PRD §8.4 Reziprozitäts-Gate: ohne explizites verpflichtung_akzeptiert
+    // muss die API blockieren und die Wahl-Hilfe (2 offene Prüfrunden
+    // anderer) mitgeben.
+    const { sid, pruefrundeId } = await setup();
+
+    const res = await veroeffentlichenPost(
+      buildRequest({
+        method: 'POST',
+        path: `/api/v1/pruefrunden/${pruefrundeId}/veroeffentlichen`,
+        sessionId: sid,
+      }),
+      { params: Promise.resolve({ id: pruefrundeId }) },
+    );
+    expect(res.status).toBe(422);
+    const data = (await res.json()) as {
+      error: { code: string; tests_gegeben?: number };
+      offene_pruefrunden_anderer: unknown[];
+    };
+    expect(data.error.code).toBe('saldo_zu_niedrig');
+    expect(data.offene_pruefrunden_anderer).toBeDefined();
+  });
+
+  it('ohne Saldo + verpflichtung_akzeptiert=true → 200 mit neue_verpflichtung', async () => {
     const { userId, sid, pruefrundeId, pruefrundeFrist } = await setup();
 
     const res = await veroeffentlichenPost(
@@ -511,6 +534,7 @@ describe('POST /api/v1/pruefrunden/:id/veroeffentlichen (Reziprozitaet)', () => 
         method: 'POST',
         path: `/api/v1/pruefrunden/${pruefrundeId}/veroeffentlichen`,
         sessionId: sid,
+        body: { verpflichtung_akzeptiert: true },
       }),
       { params: Promise.resolve({ id: pruefrundeId }) },
     );

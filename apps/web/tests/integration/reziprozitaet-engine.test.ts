@@ -118,7 +118,7 @@ describe('Reziprozitaets-Engine', () => {
   });
 
   describe('kannPruefrundeStarten', () => {
-    it('legt test_saldo-Row lazy an und erzeugt neue Verpflichtung bei 0-Saldo', async () => {
+    it('mit verpflichtung_akzeptiert=true bei 0-Saldo: legt test_saldo lazy an und erzeugt neue Verpflichtung', async () => {
       const { testerId, pruefrundeId, pruefrundeFrist } =
         await setupNutzerUndPruefrunde();
 
@@ -126,6 +126,8 @@ describe('Reziprozitaets-Engine', () => {
         testerId,
         pruefrundeFrist,
         pruefrundeId,
+        undefined,
+        { verpflichtung_akzeptiert: true },
       );
 
       expect(result.ok).toBe(true);
@@ -207,7 +209,33 @@ describe('Reziprozitaets-Engine', () => {
       expect(result.offene_anzahl).toBe(1);
     });
 
-    it('drei offene Verpflichtungen → naechste_verpflichtung_frist = MIN(fristen)', async () => {
+    it('default ohne verpflichtung_akzeptiert bei 0-Saldo → blockiert mit saldo_zu_niedrig', async () => {
+      // PRD §8.4: das Reziprozitäts-Gate muss eine bewusste Wahl erzwingen
+      // (zuerst Feedback geben ODER explizit Verpflichtung eingehen).
+      // Ohne expliziten Opt-In darf die Engine keine Verpflichtung anlegen.
+      const { testerId, pruefrundeId, pruefrundeFrist } =
+        await setupNutzerUndPruefrunde();
+
+      const result = await kannPruefrundeStarten(
+        testerId,
+        pruefrundeFrist,
+        pruefrundeId,
+      );
+      expect(result.ok).toBe(false);
+      if (result.ok) return;
+      expect(result.grund).toBe('saldo_zu_niedrig');
+      if (result.grund !== 'saldo_zu_niedrig') return;
+      expect(result.tests_gegeben).toBe(0);
+
+      // Keine Verpflichtung wurde angelegt
+      const rows = await db
+        .select()
+        .from(pruefrundenVerpflichtung)
+        .where(eq(pruefrundenVerpflichtung.nutzerId, testerId));
+      expect(rows.length).toBe(0);
+    });
+
+    it('drei offene Verpflichtungen + Opt-In → naechste_verpflichtung_frist = MIN(fristen)', async () => {
       const { testerId, pruefrundeId, pruefrundeFrist } =
         await setupNutzerUndPruefrunde();
 
@@ -233,11 +261,14 @@ describe('Reziprozitaets-Engine', () => {
         });
 
       // Jetzt eine weitere Pruefrunde starten — kein Saldo, keine
-      // abgelaufene Frist, also wird eine NEUE Verpflichtung angelegt.
+      // abgelaufene Frist, also wird mit Opt-In eine NEUE Verpflichtung
+      // angelegt.
       const result = await kannPruefrundeStarten(
         testerId,
         pruefrundeFrist,
         pruefrundeId,
+        undefined,
+        { verpflichtung_akzeptiert: true },
       );
       expect(result.ok).toBe(true);
       if (!result.ok || result.modus !== 'neue_verpflichtung') return;

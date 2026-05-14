@@ -27,7 +27,11 @@ import {
 } from '@/lib/db/schema/enums';
 import { getSessionFromRequest } from '@/lib/auth/session';
 import { pruefrundePatchSchema } from '@/lib/validators/pruefrunde';
-import { kannPruefrundeStarten } from '@/lib/reziprozitaet/engine';
+import {
+  findeOffenePruefrundenAnderer,
+  getSaldoForUser,
+  kannPruefrundeStarten,
+} from '@/lib/reziprozitaet/engine';
 
 const tb = de.pruefrunden.bearbeiten;
 const tnav = de.uebersicht;
@@ -183,11 +187,10 @@ export async function pruefrundeAktualisierenAction(
   redirect(`/pruefrunden/${pruefrundeId}/bearbeiten?gespeichert=1`);
 }
 
-export async function pruefrundeVeroeffentlichenAction(
+async function veroeffentlichenIntern(
   pruefrundeId: string,
+  verpflichtungAkzeptiert: boolean,
 ): Promise<void> {
-  'use server';
-
   const req = await buildRequestFromHeaders(
     `/pruefrunden/${pruefrundeId}/bearbeiten`,
   );
@@ -207,12 +210,14 @@ export async function pruefrundeVeroeffentlichenAction(
     sess.nutzerId,
     current.pruefrunde.frist,
     pruefrundeId,
+    undefined,
+    { verpflichtung_akzeptiert: verpflichtungAkzeptiert },
   );
 
   if (check.ok === false) {
-    redirect(
-      `/pruefrunden/${pruefrundeId}/bearbeiten?fehler=reziprozitaet`,
-    );
+    const fehler =
+      check.grund === 'frist_abgelaufen' ? 'reziprozitaet' : 'saldo_zu_niedrig';
+    redirect(`/pruefrunden/${pruefrundeId}/bearbeiten?fehler=${fehler}`);
   }
 
   await db
@@ -246,6 +251,27 @@ export async function pruefrundeVeroeffentlichenAction(
   redirect(
     `/pruefrunden/${pruefrundeId}/bearbeiten?veroeffentlicht=${check.modus}${fristParam}`,
   );
+}
+
+export async function pruefrundeVeroeffentlichenAction(
+  pruefrundeId: string,
+): Promise<void> {
+  'use server';
+  // Ohne expliziten Opt-In: Engine blockt bei Saldo<2 mit
+  // `saldo_zu_niedrig` → der Bearbeiten-Screen zeigt dann den
+  // Auswahl-Block mit den 2 offenen Pruefrunden anderer + dem
+  // "Verpflichtung eingehen"-Pfad.
+  await veroeffentlichenIntern(pruefrundeId, false);
+}
+
+export async function pruefrundeMitVerpflichtungVeroeffentlichenAction(
+  pruefrundeId: string,
+): Promise<void> {
+  'use server';
+  // Explizit gewählter 14-Tage-Verpflichtungs-Pfad. Wird nur aus dem
+  // Auswahl-Block heraus aufgerufen, der nach einem `saldo_zu_niedrig`
+  // angezeigt wird.
+  await veroeffentlichenIntern(pruefrundeId, true);
 }
 
 export async function pruefrundeLoeschenAction(
@@ -310,7 +336,19 @@ export default async function PruefrundeBearbeitenPage({
 
   const aktualisierenBound = pruefrundeAktualisierenAction.bind(null, id);
   const veroeffentlichenBound = pruefrundeVeroeffentlichenAction.bind(null, id);
+  const veroeffentlichenMitVerpflichtungBound =
+    pruefrundeMitVerpflichtungVeroeffentlichenAction.bind(null, id);
   const loeschenBound = pruefrundeLoeschenAction.bind(null, id);
+
+  // Reziprozitäts-Hint vorab: zeige Auswahl-Block, wenn Saldo<2.
+  const saldo = istEntwurf
+    ? await getSaldoForUser(sess.nutzerId)
+    : null;
+  const benoetigtVerpflichtungsWahl =
+    istEntwurf && saldo !== null && saldo.tests_gegeben < 2;
+  const offenePruefrundenAnderer = benoetigtVerpflichtungsWahl
+    ? await findeOffenePruefrundenAnderer(sess.nutzerId, 2)
+    : [];
 
   const minFrist = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000);
   const maxFrist = new Date(Date.now() + 59 * 24 * 60 * 60 * 1000);
@@ -376,6 +414,10 @@ export default async function PruefrundeBearbeitenPage({
             <FehlerBanner text={tb.fehler_reziprozitaet}>
               <Link href="/pruefrunden">{tb.pruefrunden_finden}</Link>
             </FehlerBanner>
+          ) : null}
+
+          {sp.fehler === 'saldo_zu_niedrig' ? (
+            <FehlerBanner text="Reziprozitäts-Gate greift: du hast noch keine zwei Tests gegeben. Wähle unten zwischen Feedback geben oder 14-Tage-Verpflichtung." />
           ) : null}
 
           {sp.fehler === 'validierung' ? (
@@ -593,23 +635,127 @@ export default async function PruefrundeBearbeitenPage({
                 }}
               />
 
-              <form
-                action={veroeffentlichenBound}
-                style={{ marginBottom: 16 }}
-              >
-                <button type="submit" className="button primary">
-                  {tb.button_veroeffentlichen}
-                </button>
-                <p
+              {benoetigtVerpflichtungsWahl ? (
+                <section
+                  aria-labelledby="reziprozitaet-wahl-titel"
                   style={{
-                    margin: '8px 0 0',
-                    color: 'var(--muted)',
-                    fontSize: 13,
+                    marginBottom: 24,
+                    padding: 16,
+                    borderRadius: 12,
+                    border: '1px solid var(--border, #d6d3d1)',
+                    background: 'var(--surface-alt, #f6f6f1)',
                   }}
                 >
-                  Beim Veröffentlichen prüfen wir dein Test-Saldo (Reziprozität).
-                </p>
-              </form>
+                  <h2
+                    id="reziprozitaet-wahl-titel"
+                    style={{ fontSize: 18, margin: '0 0 8px' }}
+                  >
+                    Reziprozitäts-Gate
+                  </h2>
+                  <p style={{ margin: '0 0 12px', fontSize: 14 }}>
+                    Du hast bisher{' '}
+                    <strong>{saldo?.tests_gegeben ?? 0} Test
+                    {saldo?.tests_gegeben === 1 ? '' : 's'}</strong> gegeben.
+                    Werkzirkel verlangt mindestens 2, bevor eine Prüfrunde
+                    veröffentlicht werden darf — sonst klafft das soziale
+                    Konto. Du kannst auf zwei Wegen weiterkommen:
+                  </p>
+
+                  {offenePruefrundenAnderer.length > 0 ? (
+                    <div style={{ margin: '12px 0 16px' }}>
+                      <p
+                        style={{
+                          margin: '0 0 8px',
+                          fontWeight: 600,
+                          fontSize: 14,
+                        }}
+                      >
+                        Weg 1: gib jetzt Feedback zu zwei offenen Prüfrunden
+                        anderer Werke
+                      </p>
+                      <ul
+                        style={{
+                          margin: 0,
+                          paddingLeft: 18,
+                          fontSize: 14,
+                          display: 'grid',
+                          gap: 6,
+                        }}
+                      >
+                        {offenePruefrundenAnderer.map((pf) => (
+                          <li key={pf.id}>
+                            <Link href={`/pruefrunden/${pf.id}`}>
+                              {pf.titel}
+                            </Link>{' '}
+                            <span style={{ color: 'var(--muted)' }}>
+                              · {pf.werkName}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : (
+                    <p
+                      style={{
+                        margin: '0 0 16px',
+                        fontSize: 13,
+                        color: 'var(--muted)',
+                      }}
+                    >
+                      Aktuell sind keine offenen Prüfrunden anderer Werke
+                      verfügbar — der Verpflichtungs-Weg unten bleibt offen.
+                    </p>
+                  )}
+
+                  <hr
+                    style={{
+                      border: 0,
+                      borderTop: 'var(--hairline)',
+                      margin: '12px 0',
+                    }}
+                  />
+
+                  <p
+                    style={{
+                      margin: '0 0 8px',
+                      fontWeight: 600,
+                      fontSize: 14,
+                    }}
+                  >
+                    Weg 2: Verpflichtung eingehen
+                  </p>
+                  <p style={{ margin: '0 0 12px', fontSize: 14 }}>
+                    Veröffentliche jetzt — verpflichte dich aber im selben
+                    Zug, innerhalb der nächsten 14 Tage Feedback zu zwei
+                    Prüfrunden anderer Werke zu geben. Bis dahin gilt das
+                    als offene Reziprozitäts-Schuld in deinem Werkpass.
+                  </p>
+                  <form action={veroeffentlichenMitVerpflichtungBound}>
+                    <button type="submit" className="button primary">
+                      Veröffentlichen mit 14-Tage-Verpflichtung
+                    </button>
+                  </form>
+                </section>
+              ) : (
+                <form
+                  action={veroeffentlichenBound}
+                  style={{ marginBottom: 16 }}
+                >
+                  <button type="submit" className="button primary">
+                    {tb.button_veroeffentlichen}
+                  </button>
+                  <p
+                    style={{
+                      margin: '8px 0 0',
+                      color: 'var(--muted)',
+                      fontSize: 13,
+                    }}
+                  >
+                    Beim Veröffentlichen prüfen wir dein Test-Saldo
+                    (Reziprozität).
+                  </p>
+                </form>
+              )}
 
               <form action={loeschenBound}>
                 <button

@@ -15,26 +15,30 @@ keine Spec.
 
 ---
 
-## Wo wir stehen
+## 🎉 Werkzirkel v1.0 ist code-complete
 
 ```
-Werkzirkel v1.0 (draft)
-├── foundation              ✓ done — Foundation-Gate PASS
-├── plattform-kern          ✓ done (4/4 Workpackages + 1 Glue-Sprint)
-│   ├── wp-auth             ✓ done (7 Tasks)
-│   ├── wp-werkpass-werke   ✓ done (7 Tasks)
-│   ├── wp-pruefrunden      ✓ done (7 Tasks — Reziprozitäts-Engine!)
-│   ├── wp-termine          ✓ done (7 Tasks)
-│   └── wp-glue-pages       ✓ done (4 Tasks Mini-Sprint)
-├── bedarfsseite            ← NEXT
-├── geld-und-mitgliedschaft   draft
-├── moderation-admin-hilfegesuche   draft
-└── polish-und-launch       draft
+Werkzirkel v1.0 (in-progress)
+├── foundation                      ✓ done — Foundation-Gate PASS
+├── plattform-kern                  ✓ done (5 Workpackages)
+│   ├── wp-auth                     ✓ done (7 Tasks)
+│   ├── wp-werkpass-werke           ✓ done (7 Tasks)
+│   ├── wp-pruefrunden              ✓ done (7 Tasks — Reziprozitäts-Engine)
+│   ├── wp-termine                  ✓ done (7 Tasks)
+│   └── wp-glue-pages               ✓ done (4 Tasks)
+├── bedarfsseite                    ✓ done (7 Tasks)
+├── geld-und-mitgliedschaft         ✓ done (3 Tasks)
+├── moderation-admin-hilfegesuche   ✓ done (3 Tasks)
+└── polish-und-launch               ✓ done (6 Tasks + 2 externe Open-Questions)
 ```
 
-**39 Tasks autonom gebaut.** Test-Suite: **610 Tests / 79 Files alle grün**. Production-Build sauber.
+**56 Tasks autonom gebaut.** Test-Suite: **956 Tests / 107 Files alle grün**. Production-Build sauber.
 
-Letzter Commit: `feat(termine): wp-termine komplett — Termin-CRUD, Anmeldung, iCal, Anwesenheit, Cron, UI`
+Zwei externe Aufgaben offen (User-Verantwortung, kein Code-Task):
+- `external-pentest` — externer Pentest beauftragen (~1.5-3k€)
+- `external-anwaltliche-pruefung` — Rechtstexte anwaltlich prüfen lassen (~1.5-3k€)
+
+Beide blockieren den Public-Launch, nicht den Bau.
 
 ## Was die App jetzt kann
 

@@ -23,12 +23,12 @@ owner: null
 parent: goal-root
 private: false
 risks: []
-status: draft
+status: done
 summary: Macher:innen-Seite der Plattform. Auth, Werkpass, Werk-CRUD mit Screenshots und Werkstand-Historie, Prüfrunden mit Reziprozitäts-Engine, Termin-System mit Anmeldung und iCal-Export. Deckt PRD-Sprints 2-4 und schließt die Auth-Lücken aus Sprint 1.
 tags: []
 title: "Plattform-Kern: Konto, Werke, Prüfrunden, Termine"
 type: subproject
-updated_at: 2026-05-13T09:48:12.161Z
+updated_at: 2026-05-14T05:26:42.396Z
 ---
 
 ## Was hier gebaut wird

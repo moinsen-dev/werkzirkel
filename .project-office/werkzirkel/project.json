@@ -7,22 +7,22 @@
 		"title": "Werkzirkel v1.0 — Plattform bauen",
 		"status": "draft"
 	},
-	"generated_at": "2026-05-13T15:55:34.760Z",
+	"generated_at": "2026-05-14T05:26:42.396Z",
 	"stats": {
-		"node_count": 47,
-		"edge_count": 138,
+		"node_count": 54,
+		"edge_count": 168,
 		"agent_count": 0,
 		"decision_count": 5,
 		"by_type": {
-			"task": 25,
+			"task": 32,
 			"subproject": 7,
 			"workpackage": 5,
 			"decision": 9,
 			"goal": 1
 		},
 		"by_status": {
-			"done": 35,
-			"draft": 12
+			"done": 44,
+			"draft": 10
 		},
 		"readiness": {
 			"passed": 0,
@@ -56,7 +56,7 @@
 			"type": "subproject",
 			"title": "Plattform-Kern: Konto, Werke, Prüfrunden, Termine",
 			"summary": "Macher:innen-Seite der Plattform. Auth, Werkpass, Werk-CRUD mit Screenshots und Werkstand-Historie, Prüfrunden mit Reziprozitäts-Engine, Termin-System mit Anmeldung und iCal-Export. Deckt PRD-Sprints 2-4 und schließt die Auth-Lücken aus Sprint 1.",
-			"status": "draft",
+			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
 		},
@@ -101,6 +101,15 @@
 			"type": "task",
 			"title": "E-Mail-Templates T-001 bis T-005 (Auth + Konto-Loeschung) auf Deutsch",
 			"summary": "Fuenf React-Email-Templates fuer Auth-Lifecycle: T-001 Magic-Link Login, T-002 Magic-Link Registrierung, T-003 Konto-Loeschung-Bestaetigung, T-004 Loeschung-Erinnerung (2 Tage), T-005 Konto-Geloescht (mit JSON-Anhang). Resend-Versand-Helper in lib/email/.",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "task-ical-export",
+			"type": "task",
+			"title": "iCalendar-Export: GET /api/v1/termine/:id/ical",
+			"summary": "RFC-5545-konformer .ics-Endpoint pro Termin. Europe/Berlin als VTIMEZONE. Wird in T-401 Bestaetigungs-Mail und auf der Termin-Detail-Seite als Download-Link verlinkt.",
 			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
@@ -164,7 +173,16 @@
 			"type": "workpackage",
 			"title": "Termine: Schauabend, Pruefabend, Baurunde, Werkgespraech, Kennenlernrunde, Bedarfsschau",
 			"summary": "Termin-CRUD durch Kurator:innen mit sechs Termin-Typen, Slot-Anmeldung mit Warteliste, iCal-Export pro Termin, Erinnerungs-Cron stuendlich (7d/1d vor Termin), Anwesenheits-Dokumentation nach dem Termin durch Kurator:in.",
-			"status": "draft",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "task-termin-crud-api",
+			"type": "task",
+			"title": "Termin-CRUD-API: POST/GET/PATCH/DELETE durch Kurator:innen, 6 Termin-Typen",
+			"summary": "Server-API fuer Termine gemaess PRD §15.8 + §8.8. Erstellen/Bearbeiten/Loeschen nur durch Kurator:innen der jeweiligen Stadt. Status-Maschine geplant → veroeffentlicht → abgesagt | durchgefuehrt. 6 Termin-Typen (Schauabend, Pruefabend, Baurunde, Werkgespraech, Kennenlernrunde, Bedarfsschau).",
+			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
 		},
@@ -358,6 +376,24 @@
 			"readiness": "unknown"
 		},
 		{
+			"id": "task-termin-anmeldung-api",
+			"type": "task",
+			"title": "Termin-Anmeldung: Slot-System mit automatischer Warteliste",
+			"summary": "POST /api/v1/termine/:id/anmeldung mit Slot- und Warteliste-Logik. DELETE storniert + rueckt naechste:n Wartelisten-Person automatisch vor. T-401 wird bei Anmeldung und beim Hochruecken versendet.",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "task-termin-anwesenheit-api",
+			"type": "task",
+			"title": "Anwesenheits-Dokumentation: Kurator:in markiert nach dem Termin",
+			"summary": "POST /api/v1/termine/:id/anwesenheit mit Body { anmeldung_ids: [...] } setzt diese auf status='anwesend', den Rest auf 'nicht_anwesend'. PATCH /api/v1/termin-anmeldungen/:id/status fuer Einzel-Aenderungen. Plus notizen_nach_termin auf dem Termin-Objekt.",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
 			"id": "wp-pruefrunden",
 			"type": "workpackage",
 			"title": "Pruefrunden mit Reziprozitaets-Engine",
@@ -430,6 +466,15 @@
 			"readiness": "unknown"
 		},
 		{
+			"id": "task-email-templates-termine",
+			"type": "task",
+			"title": "E-Mail-Templates T-401 bis T-404 fuer Termin-Lifecycle",
+			"summary": "Vier React-Email-Templates: T-401 Anmeldung bestaetigt, T-402 Erinnerung 7 Tage vor Termin, T-403 Erinnerung 1 Tag vor Termin, T-404 Termin abgesagt. Deutsch, Plain-Text-Fallback, eingebunden in sendMail-Helper.",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
 			"id": "task-test-saldo-integration",
 			"type": "task",
 			"title": "Test-Saldo-Integration: echte Daten auf /uebersicht, /werkpass/[id], Hilfegesuche-Stub",
@@ -448,11 +493,29 @@
 			"readiness": "unknown"
 		},
 		{
+			"id": "task-termin-cron-erinnerungen",
+			"type": "task",
+			"title": "Cron: Termin-Erinnerungen 7d/1d versenden",
+			"summary": "Stuendlicher Cron /api/v1/cron/termin-erinnerung-versenden mit X-Cron-Secret. Versendet T-402 (7 Tage vor Termin) und T-403 (1 Tag vor Termin) idempotent via audit_log-Dedup an alle angemeldeten Nutzer:innen (nicht Warteliste).",
+			"status": "done",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
 			"id": "polish-und-launch",
 			"type": "subproject",
 			"title": "Polish, Mobile, Accessibility, SEO und Public Launch Hamburg",
 			"summary": "Sprint 12-16 aus PRD §42. Mobile-Layout-Review mit Bottom-Tab-Bar, A11y-Audit BITV/WCAG AA, Performance-Opt, SEO mit JSON-LD und sitemap, Stadt-Digest-Newsletter, Pre-Launch-QA (E2E, Lasttest, Pentest, Anwalt), Soft-Launch und Public Launch.",
 			"status": "draft",
+			"owner": null,
+			"readiness": "unknown"
+		},
+		{
+			"id": "task-termin-pages",
+			"type": "task",
+			"title": "Termin-UI: Liste, Detail, Kurator-Anlegen, Anwesenheits-Form, eigene Uebersicht, Zirkel-Stadt-Update",
+			"summary": "Sieben Pages: /termine Liste, /termine/[id] Detail mit Anmelde-Button und iCal-Download, /kurator/termine/neu, /kurator/termine/[id]/bearbeiten, /kurator/termine/[id]/anwesenheit, /uebersicht/termine eigene Anmeldungen. Plus /zirkel/[stadt] mit echten Termin-Daten verdrahten.",
+			"status": "done",
 			"owner": null,
 			"readiness": "unknown"
 		}
@@ -621,6 +684,24 @@
 			"confidence": 1
 		},
 		{
+			"from": "task-ical-export",
+			"to": "task-termin-pages",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-ical-export",
+			"to": "wp-termine",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-ical-export",
+			"to": "task-termin-crud-api",
+			"type": "depends_on",
+			"confidence": 1
+		},
+		{
 			"from": "tech-stack-decision",
 			"to": "foundation",
 			"type": "composed_of",
@@ -683,6 +764,66 @@
 		{
 			"from": "wp-termine",
 			"to": "plattform-kern",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "wp-termine",
+			"to": "task-email-templates-termine",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "wp-termine",
+			"to": "task-termin-crud-api",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "wp-termine",
+			"to": "task-termin-anmeldung-api",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "wp-termine",
+			"to": "task-ical-export",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "wp-termine",
+			"to": "task-termin-anwesenheit-api",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "wp-termine",
+			"to": "task-termin-cron-erinnerungen",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "wp-termine",
+			"to": "task-termin-pages",
+			"type": "decomposes_into",
+			"confidence": 1
+		},
+		{
+			"from": "task-termin-crud-api",
+			"to": "task-termin-anmeldung-api",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-termin-crud-api",
+			"to": "task-ical-export",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-termin-crud-api",
+			"to": "wp-termine",
 			"type": "composed_of",
 			"confidence": 1
 		},
@@ -1071,6 +1212,54 @@
 			"confidence": 1
 		},
 		{
+			"from": "task-termin-anmeldung-api",
+			"to": "task-termin-anwesenheit-api",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-termin-anmeldung-api",
+			"to": "task-termin-cron-erinnerungen",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-termin-anmeldung-api",
+			"to": "wp-termine",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-termin-anmeldung-api",
+			"to": "task-termin-crud-api",
+			"type": "depends_on",
+			"confidence": 1
+		},
+		{
+			"from": "task-termin-anmeldung-api",
+			"to": "task-email-templates-termine",
+			"type": "depends_on",
+			"confidence": 1
+		},
+		{
+			"from": "task-termin-anwesenheit-api",
+			"to": "task-termin-pages",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-termin-anwesenheit-api",
+			"to": "wp-termine",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-termin-anwesenheit-api",
+			"to": "task-termin-anmeldung-api",
+			"type": "depends_on",
+			"confidence": 1
+		},
+		{
 			"from": "wp-pruefrunden",
 			"to": "plattform-kern",
 			"type": "composed_of",
@@ -1251,6 +1440,24 @@
 			"confidence": 1
 		},
 		{
+			"from": "task-email-templates-termine",
+			"to": "task-termin-anmeldung-api",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-email-templates-termine",
+			"to": "task-termin-cron-erinnerungen",
+			"type": "blocks",
+			"confidence": 1
+		},
+		{
+			"from": "task-email-templates-termine",
+			"to": "wp-termine",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
 			"from": "task-test-saldo-integration",
 			"to": "wp-pruefrunden",
 			"type": "composed_of",
@@ -1281,9 +1488,45 @@
 			"confidence": 1
 		},
 		{
+			"from": "task-termin-cron-erinnerungen",
+			"to": "wp-termine",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-termin-cron-erinnerungen",
+			"to": "task-termin-anmeldung-api",
+			"type": "depends_on",
+			"confidence": 1
+		},
+		{
+			"from": "task-termin-cron-erinnerungen",
+			"to": "task-email-templates-termine",
+			"type": "depends_on",
+			"confidence": 1
+		},
+		{
 			"from": "polish-und-launch",
 			"to": "goal-root",
 			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-termin-pages",
+			"to": "wp-termine",
+			"type": "composed_of",
+			"confidence": 1
+		},
+		{
+			"from": "task-termin-pages",
+			"to": "task-termin-anwesenheit-api",
+			"type": "depends_on",
+			"confidence": 1
+		},
+		{
+			"from": "task-termin-pages",
+			"to": "task-ical-export",
+			"type": "depends_on",
 			"confidence": 1
 		}
 	],

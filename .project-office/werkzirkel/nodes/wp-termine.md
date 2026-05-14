@@ -11,6 +11,14 @@ created_by: human
 edges:
   composed_of:
     - id: plattform-kern
+  decomposes_into:
+    - id: task-email-templates-termine
+    - id: task-termin-crud-api
+    - id: task-termin-anmeldung-api
+    - id: task-ical-export
+    - id: task-termin-anwesenheit-api
+    - id: task-termin-cron-erinnerungen
+    - id: task-termin-pages
 id: wp-termine
 is_root: false
 open_questions: []
@@ -18,12 +26,12 @@ owner: null
 parent: plattform-kern
 private: false
 risks: []
-status: draft
+status: done
 summary: Termin-CRUD durch Kurator:innen mit sechs Termin-Typen, Slot-Anmeldung mit Warteliste, iCal-Export pro Termin, Erinnerungs-Cron stuendlich (7d/1d vor Termin), Anwesenheits-Dokumentation nach dem Termin durch Kurator:in.
 tags: []
 title: "Termine: Schauabend, Pruefabend, Baurunde, Werkgespraech, Kennenlernrunde, Bedarfsschau"
 type: workpackage
-updated_at: 2026-05-13T09:49:33.795Z
+updated_at: 2026-05-14T05:26:42.282Z
 ---
 
 ## Approach

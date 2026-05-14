@@ -247,13 +247,6 @@ export default async function UebersichtPage() {
 
   const rollen = (me.rollen ?? []).map((r) => ROLLE_LABEL[r] ?? r);
 
-  const navWarnungFehler = (
-    <span style={{ color: 'var(--muted)', fontSize: 12 }}>
-      {' '}
-      {t.in_vorbereitung}
-    </span>
-  );
-
   return (
     <div className="page-shell">
       <nav className="site-nav" aria-label="Hauptnavigation">
@@ -277,10 +270,9 @@ export default async function UebersichtPage() {
             <Link href="/uebersicht/pruefrunden">
               {t.nav_pruefrunden}
             </Link>
-            <a aria-disabled="true" style={{ color: 'var(--muted)' }}>
+            <Link href="/uebersicht/termine">
               {t.nav_termine}
-              {navWarnungFehler}
-            </a>
+            </Link>
           </div>
           <div
             style={{ display: 'flex', gap: 12, alignItems: 'center' }}
@@ -503,13 +495,26 @@ export default async function UebersichtPage() {
                 Eigene Prüfrunden und Tester:innen-Anmeldungen auf einen Blick.
               </p>
             </Link>
-            <div className="mock-card" aria-disabled="true">
+            <Link
+              href={`/termine?stadt=${encodeURIComponent(me.stadtId)}`}
+              className="mock-card"
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
               <p className="mock-label">
-                {t.termine_in(stadtName || 'Hamburg')} {t.in_vorbereitung}
+                {t.termine_in(stadtName || 'Hamburg')}
               </p>
               <strong>{t.termine_in(stadtName || 'Hamburg')}</strong>
-              <p>{t.in_vorbereitung_text}</p>
-            </div>
+              <p>Schauabende, Prüfabende, Baurunden — alle Termine in deiner Stadt.</p>
+            </Link>
+            <Link
+              href="/uebersicht/termine"
+              className="mock-card"
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              <p className="mock-label">Meine Anmeldungen</p>
+              <strong>Meine Anmeldungen</strong>
+              <p>Termine, zu denen du angemeldet bist oder warst.</p>
+            </Link>
           </div>
         </div>
       </section>

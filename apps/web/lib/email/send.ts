@@ -76,6 +76,26 @@ import {
   T104_BETREFF,
   type ReziprozitaetFrist1dProps,
 } from './templates/t-104-reziprozitaet-frist-1d';
+import {
+  TerminAnmeldungBestaetigt,
+  T401_BETREFF,
+  type TerminAnmeldungBestaetigtProps,
+} from './templates/t-401-termin-anmeldung-bestaetigt';
+import {
+  TerminErinnerung7d,
+  T402_BETREFF,
+  type TerminErinnerung7dProps,
+} from './templates/t-402-termin-erinnerung-7d';
+import {
+  TerminErinnerung1d,
+  T403_BETREFF,
+  type TerminErinnerung1dProps,
+} from './templates/t-403-termin-erinnerung-1d';
+import {
+  TerminAbgesagt,
+  T404_BETREFF,
+  type TerminAbgesagtProps,
+} from './templates/t-404-termin-abgesagt';
 
 /**
  * Diskriminierte Union aller bekannten Templates.
@@ -91,7 +111,11 @@ export type MailTemplate =
   | { template: 'T-101'; props: PruefrundeNeueAnmeldungProps }
   | { template: 'T-102'; props: PruefrundeNeuesFeedbackProps }
   | { template: 'T-103'; props: ReziprozitaetFrist3dProps }
-  | { template: 'T-104'; props: ReziprozitaetFrist1dProps };
+  | { template: 'T-104'; props: ReziprozitaetFrist1dProps }
+  | { template: 'T-401'; props: TerminAnmeldungBestaetigtProps }
+  | { template: 'T-402'; props: TerminErinnerung7dProps }
+  | { template: 'T-403'; props: TerminErinnerung1dProps }
+  | { template: 'T-404'; props: TerminAbgesagtProps };
 
 /**
  * Datei-Anhang. Folgt dem Resend-Format, ist hier aber lokal getypt damit
@@ -178,6 +202,26 @@ function buildEmail(
       return {
         element: React.createElement(ReziprozitaetFrist1d, opts.props),
         betreff: T104_BETREFF,
+      };
+    case 'T-401':
+      return {
+        element: React.createElement(TerminAnmeldungBestaetigt, opts.props),
+        betreff: T401_BETREFF,
+      };
+    case 'T-402':
+      return {
+        element: React.createElement(TerminErinnerung7d, opts.props),
+        betreff: T402_BETREFF,
+      };
+    case 'T-403':
+      return {
+        element: React.createElement(TerminErinnerung1d, opts.props),
+        betreff: T403_BETREFF,
+      };
+    case 'T-404':
+      return {
+        element: React.createElement(TerminAbgesagt, opts.props),
+        betreff: T404_BETREFF,
       };
   }
 }

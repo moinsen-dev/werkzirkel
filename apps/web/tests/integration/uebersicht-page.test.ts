@@ -181,14 +181,17 @@ describe('/uebersicht page', () => {
     expect(html).toMatch(/href="\/einstellungen\?tab=profil"/);
   });
 
-  it('rendert Schnellzugriff-Karten mit "(in Vorbereitung)"', async () => {
+  it('rendert Schnellzugriff-Karten mit echten Links (Werke, Pruefrunden, Termine)', async () => {
     const userId = await createUser(TEST_EMAIL);
     const sid = await createSessionFor(userId);
     const html = await renderWithSession(sid);
     expect(html).toContain('Schnellzugriff');
     expect(html).toContain('Meine Werke');
     expect(html).toContain('Meine Prüfrunden');
-    expect(html).toContain('(in Vorbereitung)');
+    // Stubs wurden in wp-werkpass-werke, wp-pruefrunden und wp-termine
+    // aufgeloest — die Links zeigen jetzt auf echte Routen.
+    expect(html).toMatch(/href="\/uebersicht\/werke"/);
+    expect(html).toMatch(/href="\/uebersicht\/pruefrunden"/);
   });
 
   // Session-DB-Lookup wird vom Helper validiert

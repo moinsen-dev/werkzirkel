@@ -2,7 +2,7 @@
  * /uebersicht/foerderprofil — Eigenes Foerderprofil (Server Component,
  * Auth + Foerder:innen-Rolle).
  *
- * Wenn Profil existiert: Detail mit Status + Letzte-Bedarfsschau-Datum.
+ * Wenn Profil existiert: Detail mit Status + Letzte-Briefing Night-Datum.
  * Sonst: Hinweis + Link zu /foerderprofile/neu.
  */
 
@@ -20,7 +20,7 @@ import { hasRolle } from '@/lib/auth/permissions';
 import type { FoerderprofilStatus } from '@/lib/db/schema/enums';
 
 export const metadata: Metadata = {
-  title: 'Mein Förderprofil — Werkzirkel',
+  title: 'Mein Sponsor-Profil — Werkzirkel',
   robots: { index: false, follow: false },
 };
 
@@ -133,7 +133,7 @@ export default async function UebersichtFoerderprofilPage({
                 color: '#15431a',
               }}
             >
-              Förderprofil eingereicht. Eine Kurator:in meldet sich für die
+              Sponsor-Profil eingereicht. Eine City-Lead meldet sich für die
               persönliche Verifikation.
             </div>
           ) : null}

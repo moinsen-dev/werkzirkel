@@ -1,8 +1,8 @@
 /**
- * /kurator/foerderprofile — Kurator:innen-Postfach für Förderprofil-
+ * /kurator/foerderprofile — City-Leads-Postfach für Sponsor-Profil-
  * Verifikationen (PRD §8.7, §11A.S7).
  *
- * Listet alle Förderprofile der eigenen Stadt mit
+ * Listet alle Sponsor-Profile der eigenen Stadt mit
  * `verifikation_status = 'in_verifikation'`. Pro Eintrag: zwei Forms, die
  * die existierenden API-Routen
  *   POST /api/v1/kurator/foerderprofile/:id/verifizieren
@@ -10,7 +10,7 @@
  * direkt anstoßen. Kein neues Backend nötig — diese UI füllt die Lücke,
  * dass es bisher nur API-Endpunkte ohne sichtbares Postfach gab.
  *
- * Berechtigung: nur Kurator:innen der Stadt (PRD §15.7). Admins sehen
+ * Berechtigung: nur City-Leads der Stadt (PRD §15.7). Admins sehen
  * alle Städte.
  */
 
@@ -78,7 +78,7 @@ interface PageProps {
 }
 
 export const metadata: Metadata = {
-  title: 'Kurator:innen-Postfach: Förderprofile',
+  title: 'City-Leads-Postfach: Sponsor-Profile',
   robots: { index: false, follow: false },
 };
 
@@ -130,9 +130,9 @@ export default async function KuratorFoerderprofilePage({
       <div className="page-shell">
         <section className="section">
           <div className="wrap" style={{ maxWidth: 760 }}>
-            <h1>Nur für Kurator:innen</h1>
+            <h1>Nur für City-Leads</h1>
             <p>
-              Diese Seite ist nur für Kurator:innen einer Stadt oder Admins
+              Diese Seite ist nur für City-Leads einer Stadt oder Admins
               zugänglich.
             </p>
             <Link href="/uebersicht">← Zurück zur Übersicht</Link>
@@ -142,7 +142,7 @@ export default async function KuratorFoerderprofilePage({
     );
   }
 
-  // Admins sehen alle, Kurator:innen nur ihre Stadt.
+  // Admins sehen alle, City-Leads nur ihre Stadt.
   const stadtFilter = istAdmin
     ? undefined
     : eq(nutzer.stadtId, sess.nutzer.stadtId);
@@ -181,7 +181,7 @@ export default async function KuratorFoerderprofilePage({
           <div className="nav-links" aria-label="Bereiche">
             <Link href="/kurator/bedarfe-in-pruefung">Bedarfe</Link>
             <Link href="/kurator/foerderprofile" aria-current="page">
-              Förderprofile
+              Sponsor-Profile
             </Link>
             <Link href="/kurator/meldungen">Meldungen</Link>
             <Link href="/kurator/termine">Termine</Link>
@@ -192,11 +192,11 @@ export default async function KuratorFoerderprofilePage({
       <header className="hero" id="top">
         <div className="wrap hero-grid single">
           <div>
-            <p className="eyebrow">Kurator:innen-Postfach</p>
-            <h1>Förderprofile zur Verifikation</h1>
+            <p className="eyebrow">City-Leads-Postfach</p>
+            <h1>Sponsor-Profile zur Verifikation</h1>
             <p className="hero-copy">
               {rows.length} {rows.length === 1 ? 'Profil' : 'Profile'} warten
-              auf deine Prüfung. Klarname + Organisation + Förderrahmen
+              auf deine Prüfung. Klarname + Organisation + Sponsor-Budget
               sichten, dann verifizieren oder ablehnen.
             </p>
           </div>
@@ -218,7 +218,7 @@ export default async function KuratorFoerderprofilePage({
                 color: '#15431a',
               }}
             >
-              Förderprofil verifiziert — es ist jetzt öffentlich sichtbar.
+              Sponsor-Profil verifiziert — es ist jetzt öffentlich sichtbar.
             </div>
           ) : null}
           {sp.erfolg === 'abgelehnt' ? (
@@ -234,7 +234,7 @@ export default async function KuratorFoerderprofilePage({
                 color: '#78350f',
               }}
             >
-              Förderprofil abgelehnt — die Förder:in wurde benachrichtigt.
+              Sponsor-Profil abgelehnt — die Sponsor:in wurde benachrichtigt.
             </div>
           ) : null}
           {sp.fehler ? (
@@ -262,7 +262,7 @@ export default async function KuratorFoerderprofilePage({
                 borderRadius: 10,
               }}
             >
-              Aktuell keine Förderprofile zur Prüfung.
+              Aktuell keine Sponsor-Profile zur Prüfung.
             </p>
           ) : (
             <ul
@@ -304,7 +304,7 @@ export default async function KuratorFoerderprofilePage({
                     </span>
                   </div>
                   <p style={{ margin: '0 0 6px', fontSize: 14 }}>
-                    Förderart: <strong>{r.foerderart}</strong> · Gegenleistung:{' '}
+                    Sponsor-Art: <strong>{r.foerderart}</strong> · Gegenleistung:{' '}
                     <strong>
                       <GegenleistungLabel typ={r.gegenleistungTyp} />
                     </strong>

@@ -2,10 +2,10 @@
  * POST /api/v1/hilfegesuche/:id/antwort
  *
  * Eingeloggte Person hinterlaesst eine Antwort als Kommentar an einem
- * Hilfegesuch. Antworten sind das einzige Kommentar-Feature in v1.0
+ * Quick-Help. Antworten sind das einzige Kommentar-Feature in v1.0
  * (PRD §8.15).
  *
- * Beim ersten Antwort-Eintrag wird der Hilfegesuch-Status von 'offen' auf
+ * Beim ersten Antwort-Eintrag wird der Quick-Help-Status von 'offen' auf
  * 'beantwortet' gesetzt — das ist UX-Bonus, kein harter Gate. Abgelaufene
  * Hilfegesuche koennen keine neuen Antworten mehr aufnehmen (422).
  */
@@ -74,7 +74,7 @@ export async function POST(
       {
         error: {
           code: 'hilfegesuch_abgelaufen',
-          message: 'Dieses Hilfegesuch ist abgelaufen. Antworten sind nicht mehr moeglich.',
+          message: 'Dieses Quick-Help ist abgelaufen. Antworten sind nicht mehr moeglich.',
         },
       },
       { status: 422 },

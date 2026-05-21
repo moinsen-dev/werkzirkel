@@ -48,7 +48,7 @@ export default function StreitschlichtungPage() {
           <h2>Direkter Kontakt</h2>
           <p>
             Bei Unstimmigkeiten oder Beschwerden bitten wir um direkten Kontakt — wir versuchen,
-            jedes Problem in der Werkstatt-Kultur einvernehmlich zu lösen:{' '}
+            jedes Problem in der Build-Kultur einvernehmlich zu lösen:{' '}
             <a href="mailto:developer@moinsen.dev">developer@moinsen.dev</a>.
           </p>
 

@@ -1,8 +1,8 @@
 /**
  * POST /api/v1/kurator/werkstattbeitraege/:id/verifizieren
  *
- * Kurator:in der Stadt der Bedarfstraeger:in setzt eine Sachleistung
- * (Werkstattbeitrag-Pfad C) von 'erfasst' auf 'verifiziert'. Setzt
+ * City-Lead der Stadt der Bedarfstraeger:in setzt eine Sachleistung
+ * (Membership-Beitrag-Pfad C) von 'erfasst' auf 'verifiziert'. Setzt
  * `gueltig_bis = now() + 6 Monate`. Versendet T-602 an die Inhaber:in.
  *
  * Kein Webhook-Pfad — Geldbeitrag (Pfad B) wird via Stripe-Webhook
@@ -65,7 +65,7 @@ export async function POST(req: Request, ctx: RouteContext): Promise<Response> {
         error: {
           code: 'kein_zugriff',
           message:
-            'Nur Kurator:innen der jeweiligen Stadt koennen Werkstattbeitraege verifizieren.',
+            'Nur City-Leads der jeweiligen Stadt koennen Werkstattbeitraege verifizieren.',
         },
       },
       { status: 403 },

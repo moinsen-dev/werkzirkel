@@ -3,19 +3,27 @@
  *
  * Wachstumsdokument — wird mit jedem Feature ergänzt.
  * Vorbereitet für späteres `i18next`/`next-intl`, aber v1.0 nutzt direkt diese Konstanten.
+ *
+ * Vokabular-Refactor 2026-05-21:
+ * Werkstatt-Metaphorik → Tech/Startup-Sprache (Werk → Build, Prüfrunde →
+ * Feedback-Loop, Schauabend → Demo Night, Macher:in → Builder:in,
+ * Bedarfsträger:in → Auftraggeber:in, Förder:in → Sponsor:in, Kurator:in →
+ * City-Lead, Werkstattbeitrag → Membership-Beitrag, Werkangebot → Match-
+ * Angebot, Hilfegesuch → Quick-Help). Routen und DB-Bezeichner bleiben.
+ * "Werkzirkel" bleibt als Markenname.
  */
 
 export const de = {
   app: {
     name: 'Werkzirkel',
-    untertitel: 'Gemeinsam digitale Produkte bauen.',
+    untertitel: 'Build in Public — mit echten Testern.',
     leitsatz: 'Erst zeigen. Dann testen. Dann verbessern. Dann sichtbar machen.',
   },
   rolle: {
-    macher: 'Macher:in',
-    bedarfstraeger: 'Bedarfsträger:in',
-    foerderer: 'Förder:in',
-    kurator: 'Kurator:in',
+    macher: 'Builder:in',
+    bedarfstraeger: 'Auftraggeber:in',
+    foerderer: 'Sponsor:in',
+    kurator: 'City-Lead',
     admin: 'Admin',
   },
   stadt: {
@@ -26,9 +34,9 @@ export const de = {
   werkstand: {
     idee: 'Idee',
     prototyp: 'Prototyp',
-    testversion: 'Testversion',
-    oeffentlich: 'Öffentlich',
-    wachsend: 'Wachsend',
+    testversion: 'Beta',
+    oeffentlich: 'Live',
+    wachsend: 'Stabil',
     pausiert: 'Pausiert',
   },
   werk_sichtbarkeit: {
@@ -37,33 +45,33 @@ export const de = {
     pausiert: 'Pausiert (für andere unsichtbar)',
   },
   werk_form: {
-    titel_neu: 'Neues Werk anlegen',
-    titel_bearbeiten: 'Werk bearbeiten',
+    titel_neu: 'Neuen Build anlegen',
+    titel_bearbeiten: 'Build bearbeiten',
     untertitel_neu:
-      'Beschreibe dein Werk in wenigen Feldern. Du kannst alles später bearbeiten und Screenshots nach dem Speichern hochladen.',
+      'Beschreibe deinen Build in wenigen Feldern. Du kannst alles später bearbeiten und Screenshots nach dem Speichern hochladen.',
     untertitel_bearbeiten:
-      'Aktualisiere die Angaben zu deinem Werk. Werkstand-Wechsel landen im öffentlichen Verlauf.',
-    label_name: 'Werkname',
+      'Aktualisiere die Angaben zu deinem Build. Werkstand-Wechsel landen im öffentlichen Verlauf.',
+    label_name: 'Build-Name',
     label_kurzbeschreibung: 'Kurzbeschreibung (max. 280 Zeichen)',
-    label_problem: 'Welches Problem löst dein Werk?',
-    label_zielgruppe: 'Für wen ist das Werk?',
-    label_werkstand: 'Werkstand',
-    label_hilfebedarf: 'Wobei möchtest du Hilfe? (Mehrfach möglich)',
+    label_problem: 'Welches Problem löst dein Build?',
+    label_zielgruppe: 'Für wen ist der Build?',
+    label_werkstand: 'Build-Stand',
+    label_hilfebedarf: 'Wobei brauchst du Feedback? (Mehrfach möglich)',
     label_link: 'Link zur Live-Version oder Demo (optional)',
     label_sichtbarkeit: 'Sichtbarkeit',
     label_screenshots: 'Screenshots (bis zu 3)',
-    button_anlegen: 'Werk anlegen',
+    button_anlegen: 'Build anlegen',
     button_speichern: 'Änderungen speichern',
-    button_loeschen: 'Werk endgültig löschen',
+    button_loeschen: 'Build endgültig löschen',
     button_loeschen_bestaetigen:
-      'Werk wirklich löschen? Dieser Schritt kann nicht rückgängig gemacht werden.',
-    erfolg_gespeichert: 'Werk gespeichert.',
+      'Build wirklich löschen? Dieser Schritt kann nicht rückgängig gemacht werden.',
+    erfolg_gespeichert: 'Build gespeichert.',
     erfolg_frisch_angelegt:
-      'Werk angelegt. Lade jetzt bis zu drei Screenshots hoch, damit andere dein Werk schneller verstehen.',
+      'Build angelegt. Lade jetzt bis zu drei Screenshots hoch, damit andere deinen Build schneller verstehen.',
     fehler_keine_rolle:
-      'Du brauchst eine Macher:innen-Rolle, um Werke anzulegen. Sprich mit der Kurator:in oder ergänze die Rolle in deinen Einstellungen.',
+      'Du brauchst eine Builder:innen-Rolle, um Builds anzulegen. Sprich mit dem City-Lead oder ergänze die Rolle in deinen Einstellungen.',
     fehler_limit:
-      'Du hast bereits 5 Werke. Eine Fördermitgliedschaft hebt das Limit auf.',
+      'Du hast bereits 5 Builds. Eine Pro-Membership hebt das Limit auf.',
     fehler_validierung:
       'Bitte prüfe die markierten Felder.',
     screenshots_max_erreicht:
@@ -74,30 +82,30 @@ export const de = {
     screenshots_laeuft: 'Wird hochgeladen…',
   },
   werke_uebersicht: {
-    titel: 'Meine Werke',
+    titel: 'Meine Builds',
     untertitel:
-      'Hier findest du alle deine Werke — auch pausierte und nur intern sichtbare.',
-    leer_titel: 'Du hast noch kein Werk angelegt.',
+      'Hier findest du alle deine Builds — auch pausierte und nur intern sichtbare.',
+    leer_titel: 'Du hast noch keinen Build angelegt.',
     leer_text:
-      'Lege dein erstes Werk an, damit andere Macher:innen es bei Prüfrunden sehen und du Feedback einholen kannst.',
-    neues_werk: 'Neues Werk anlegen',
+      'Leg deinen ersten Build an, damit andere Builder:innen ihn bei Feedback-Loops sehen und du echtes Tester-Feedback einholen kannst.',
+    neues_werk: 'Neuen Build anlegen',
     limit_erreicht_hinweis:
-      'Du hast das Limit von 5 Werken erreicht. Eine Fördermitgliedschaft hebt das Limit auf.',
+      'Du hast das Limit von 5 Builds erreicht. Eine Pro-Membership hebt das Limit auf.',
     bearbeiten: 'Bearbeiten',
     badge_pausiert: 'Pausiert',
     badge_ausgeblendet: 'Ausgeblendet',
-    badge_nur_zirkel: 'Nur Zirkel',
-    werkstand_label: 'Werkstand',
+    badge_nur_zirkel: 'Nur Werkzirkel',
+    werkstand_label: 'Build-Stand',
   },
   hilfegesuche: {
-    nav: 'Hilfegesuche',
-    liste_titel: 'Hilfegesuche',
+    nav: 'Quick-Help',
+    liste_titel: 'Quick-Help-Anfragen',
     liste_untertitel:
-      'Kleine, kurzfristige Hilfegesuche aus dem Zirkel. Max. 14 Tage sichtbar — also: schnell antworten lohnt sich.',
-    neues_anlegen: 'Neues Hilfegesuch',
-    leer_titel: 'Aktuell keine offenen Hilfegesuche.',
+      'Kleine, kurzfristige Help-Requests aus dem Werkzirkel. Max. 14 Tage sichtbar — also: schnell antworten lohnt sich.',
+    neues_anlegen: 'Neue Quick-Help',
+    leer_titel: 'Aktuell keine offenen Quick-Help-Anfragen.',
     leer_text:
-      'Du hast selbst was, wobei du gerade Hilfe gebrauchen kannst? Leg ein Hilfegesuch an — es wird bis zu 14 Tage angezeigt.',
+      'Du hängst gerade an etwas? Stell eine Quick-Help — bleibt bis zu 14 Tage sichtbar.',
     filter_status_label: 'Status',
     filter_status_offen: 'Offen',
     filter_status_beantwortet: 'Beantwortet',
@@ -113,50 +121,50 @@ export const de = {
     detail_antwort_label:
       'Was hilft? Ein Hinweis, eine Frage, ein Tipp — alles willkommen.',
     detail_antwort_button: 'Antwort posten',
-    detail_loeschen_button: 'Hilfegesuch löschen',
+    detail_loeschen_button: 'Quick-Help löschen',
     detail_antwort_loeschen: 'Antwort löschen',
-    neu_titel: 'Neues Hilfegesuch',
+    neu_titel: 'Neue Quick-Help',
     neu_untertitel:
       'Kurz beschreiben, wobei du gerade Hilfe brauchst. Wird 14 Tage angezeigt, danach automatisch beendet.',
     neu_label_titel: 'Titel',
     neu_label_beschreibung: 'Beschreibung',
     neu_label_tags: 'Tags (Komma-getrennt, max 10)',
     neu_label_gueltig_bis: 'Gültig bis (max. 14 Tage)',
-    neu_button: 'Hilfegesuch anlegen',
+    neu_button: 'Quick-Help anlegen',
     fehler_validierung: 'Bitte prüfe die markierten Felder.',
     fehler_abgelaufen:
-      'Dieses Hilfegesuch ist abgelaufen. Antworten sind nicht mehr möglich.',
+      'Diese Quick-Help ist abgelaufen. Antworten sind nicht mehr möglich.',
     uebersicht_titel: 'Meine Hilfegesuche',
     uebersicht_untertitel:
       'Alle Hilfegesuche, die du selbst angelegt hast — offen, beantwortet oder abgelaufen.',
-    uebersicht_leer: 'Du hast noch kein Hilfegesuch angelegt.',
+    uebersicht_leer: 'Du hast noch keine Quick-Help angelegt.',
     badge_antworten: 'Antworten',
   },
   termin_typ: {
-    pruefabend: 'Prüfabend',
-    schauabend: 'Schauabend',
-    bedarfsschau: 'Bedarfsschau',
-    baurunde: 'Baurunde',
-    werkgespraech: 'Werkgespräch',
+    pruefabend: 'Feedback-Loop-Abend',
+    schauabend: 'Demo Night',
+    bedarfsschau: 'Briefing Night',
+    baurunde: 'Build-Runde',
+    werkgespraech: 'Build-Gespräch',
     kennenlernrunde: 'Kennenlernrunde',
   },
   hilfebedarf: {
-    nutzerfeedback: 'Nutzerfeedback',
+    nutzerfeedback: 'Nutzer-Feedback',
     ux_test: 'UX-Test',
-    technisches_feedback: 'Technisches Feedback',
-    marketing: 'Marketing',
+    technisches_feedback: 'Technisches Review',
+    marketing: 'Go-To-Market',
     positionierung: 'Positionierung',
     erste_kundinnen: 'Erste Kund:innen',
-    mitstreiterinnen: 'Mitstreiter:innen',
+    mitstreiterinnen: 'Co-Builder:innen',
     rechtliches_steuern_austausch: 'Rechtliches/Steuern (Austausch)',
   },
   fehler: {
     unbekannt: 'Etwas ist schiefgelaufen.',
     nicht_gefunden: 'Nicht gefunden.',
     nicht_berechtigt: 'Dafür reicht deine Rolle nicht.',
-    werkstattbeitrag_fehlt: 'Bevor du einen Bedarf veröffentlichst, brauchst du einen Werkstattbeitrag.',
+    werkstattbeitrag_fehlt: 'Bevor du einen Bedarf veröffentlichst, brauchst du einen Membership-Beitrag.',
     reziprozitaet_offen:
-      'Du hast eine offene Reziprozitäts-Verpflichtung. Bitte zuerst Feedback zu zwei Werken geben.',
+      'Du hast eine offene Feedback-Schuld. Bitte zuerst Feedback zu zwei anderen Builds geben.',
   },
   teilnahmeart: {
     online: 'Nur online',
@@ -164,14 +172,14 @@ export const de = {
     beides: 'Online + vor Ort',
   },
   benachrichtigung: {
-    pruefrunde_anmeldungen: 'Anmeldungen zu meinen Prüfrunden',
-    pruefrunde_feedback: 'Neues Feedback zu meinen Werken',
-    pruefrunde_frist: 'Fristen für Feedback, die ich gegeben habe',
+    pruefrunde_anmeldungen: 'Anmeldungen zu meinen Feedback-Loops',
+    pruefrunde_feedback: 'Neues Feedback zu meinen Builds',
+    pruefrunde_frist: 'Fristen für Feedback, das ich gegeben habe',
     werkangebote: 'Werkangebote auf meine Bedarfe',
     bedarf_passend: 'Neue Bedarfe, die zu mir passen',
     termin_erinnerungen: 'Erinnerungen zu Terminen, zu denen ich angemeldet bin',
     stadt_digest: 'Wochen-Digest meiner Stadt (kann jederzeit abbestellt werden)',
-    kurator_mitteilungen: 'Persönliche Mitteilungen meiner Kurator:innen',
+    kurator_mitteilungen: 'Persönliche Mitteilungen meines City-Leads',
   },
   einstellungen: {
     titel: 'Einstellungen',
@@ -189,10 +197,10 @@ export const de = {
     konto_reaktivieren: 'Konto reaktivieren',
     konto_reaktiviert: 'Konto ist wieder aktiv.',
     konto_pausieren_erklaerung:
-      'Eine Pause bedeutet: keine neuen Anmeldungen, keine neuen Werkangebote, keine neuen Bedarfe. Bisherige Werke und Beiträge bleiben sichtbar. Reaktivieren kannst du jederzeit.',
+      'Eine Pause bedeutet: keine neuen Anmeldungen, keine neuen Werkangebote, keine neuen Bedarfe. Bisherige Builds und Beiträge bleiben sichtbar. Reaktivieren kannst du jederzeit.',
     konto_loeschen_ueberschrift: 'Konto endgültig löschen',
     konto_loeschen_erklaerung:
-      'Wir senden dir einen Bestätigungs-Link per E-Mail. Nach Klick auf den Link beginnt eine 7-Tage-Karenzfrist. In dieser Zeit kannst du die Löschung widerrufen. Nach Ablauf werden Werke, Bedarfe, Werkangebote und alle persönlichen Daten endgültig entfernt — Feedbacks bleiben anonymisiert erhalten.',
+      'Wir senden dir einen Bestätigungs-Link per E-Mail. Nach Klick auf den Link beginnt eine 7-Tage-Karenzfrist. In dieser Zeit kannst du die Löschung widerrufen. Nach Ablauf werden Builds, Bedarfe, Werkangebote und alle persönlichen Daten endgültig entfernt — Feedbacks bleiben anonymisiert erhalten.',
     konto_loeschen_anfordern: 'Konto löschen anfordern',
     konto_loeschen_bestaetigung_versendet:
       'Bestätigungs-Link versendet. Bitte prüfe dein E-Mail-Postfach.',
@@ -211,37 +219,37 @@ export const de = {
       'Vielleicht haben wir sie noch nicht gebaut, oder der Link ist veraltet. Hier sind ein paar Orte, die du stattdessen besuchen kannst.',
     link_start: 'Zum Werkzirkel',
     link_bedarf: 'Bedarf einbringen',
-    link_foerdern: 'Werke fördern',
+    link_foerdern: 'Builds sponsorn',
   },
   uebersicht: {
     eyebrow_template: (stadtName: string) => `Werkzirkel ${stadtName}`,
     nav_uebersicht: 'Übersicht',
-    nav_werke: 'Werke',
-    nav_pruefrunden: 'Prüfrunden',
+    nav_werke: 'Builds',
+    nav_pruefrunden: 'Feedback-Loops',
     nav_termine: 'Termine',
     hallo: (anzeigename: string) => `Hallo, ${anzeigename}.`,
     subline:
-      'Schön, dass du da bist. Hier siehst du dein Werkpass-Status, dein Test-Saldo und deine nächsten Schritte.',
-    werkpass_titel: 'Werkpass',
-    werkpass_bearbeiten: 'Werkpass bearbeiten',
-    test_saldo_titel: 'Test-Saldo',
+      'Schön, dass du da bist. Hier siehst du dein Builder-Profil, dein Feedback-Saldo und deine nächsten Schritte.',
+    werkpass_titel: 'Builder-Profil',
+    werkpass_bearbeiten: 'Builder-Profil bearbeiten',
+    test_saldo_titel: 'Feedback-Saldo',
     gegeben: 'Gegeben',
     erhalten: 'Erhalten',
     offen: 'Offen',
     offene_verpflichtung: (n: number, frist: string) =>
-      `Du hast ${n} offene Verpflichtung${n === 1 ? '' : 'en'} bis ${frist}. Bitte zuerst Feedback zu zwei Werken geben.`,
+      `Du hast ${n} offene Feedback-Schuld${n === 1 ? '' : 'en'} bis ${frist}. Bitte zuerst Feedback zu zwei Builds geben.`,
     saldo_leer_erklaerung:
-      'Du hast noch keine Prüfrunden gegeben oder erhalten. Wenn du ein Werk testen lässt, gibst du zuerst zwei Tests an anderen Werken.',
-    frist_banner_titel: 'Reziprozitäts-Frist endet bald',
+      'Du hast noch keine Feedback-Loops gegeben oder erhalten. Wenn du einen Build testen lässt, gibst du zuerst zwei Tests an anderen Builds.',
+    frist_banner_titel: 'Feedback-Schuld läuft bald ab',
     frist_banner_text: (n: number, frist: string) =>
-      `Du hast ${n} offene Verpflichtung${n === 1 ? '' : 'en'}. Frist: ${frist}.`,
-    frist_banner_link: 'Jetzt eine Prüfrunde testen',
+      `Du hast ${n} offene Feedback-Schuld${n === 1 ? '' : 'en'}. Frist: ${frist}.`,
+    frist_banner_link: 'Jetzt einen Build testen',
     schnellzugriff_titel: 'Schnellzugriff',
-    meine_werke: 'Meine Werke',
-    meine_pruefrunden: 'Meine Prüfrunden',
+    meine_werke: 'Meine Builds',
+    meine_pruefrunden: 'Meine Feedback-Loops',
     termine_in: (stadtName: string) => `Termine in ${stadtName}`,
     in_vorbereitung: '(in Vorbereitung)',
-    in_vorbereitung_text: 'Folgt mit dem nächsten Bau-Sprint.',
+    in_vorbereitung_text: 'Folgt mit dem nächsten Sprint.',
     abmelden: 'Abmelden',
   },
   pruefrunden: {
@@ -262,14 +270,14 @@ export const de = {
       abgeschlossen: 'Abgeschlossen',
     },
     liste: {
-      eyebrow: (stadtName: string) => `Werkzirkel ${stadtName} · Prüfrunden`,
-      titel: (stadtName: string) => `Prüfrunden im Werkzirkel ${stadtName}`,
+      eyebrow: (stadtName: string) => `Werkzirkel ${stadtName} · Feedback-Loops`,
+      titel: (stadtName: string) => `Feedback-Loops im Werkzirkel ${stadtName}`,
       counter: (n: number) =>
-        n === 1 ? '1 Prüfrunde sucht Tester:innen.' : `${n} Prüfrunden suchen Tester:innen.`,
+        n === 1 ? '1 Feedback-Loop sucht Tester:innen.' : `${n} Feedback-Loops suchen Tester:innen.`,
       leer_titel: (stadtName: string) =>
-        `Noch keine offenen Prüfrunden in ${stadtName}.`,
+        `Noch keine offenen Feedback-Loops in ${stadtName}.`,
       leer_text:
-        'Schau bald wieder vorbei oder leg eine eigene Prüfrunde für dein Werk an.',
+        'Schau bald wieder vorbei oder leg einen eigenen Feedback-Loop für deinen Build an.',
       filter_titel: 'Filter',
       filter_stadt: 'Stadt',
       filter_status: 'Status',
@@ -279,9 +287,9 @@ export const de = {
       zum_detail: 'Details ansehen',
     },
     detail: {
-      eyebrow: 'Werkzirkel · Prüfrunde',
-      werk_label: 'Werk',
-      inhaber_label: 'Inhaber:in',
+      eyebrow: 'Werkzirkel · Feedback-Loop',
+      werk_label: 'Build',
+      inhaber_label: 'Builder:in',
       frist_label: 'Frist',
       tester_label: 'Tester:innen',
       sektion_was_getestet: 'Was getestet werden soll',
@@ -297,14 +305,14 @@ export const de = {
         `Du bist angemeldet. Frist: ${frist}.`,
       action_feedback_link: 'Feedback abgeben',
       action_feedback_gegeben:
-        'Du hast Feedback zu dieser Prüfrunde abgegeben. Danke!',
+        'Du hast Feedback zu diesem Feedback-Loop abgegeben. Danke!',
       action_voll: (n: number, m: number) =>
         `Plätze voll (${n}/${m}). Keine weiteren Anmeldungen möglich.`,
       action_eigenes_werk:
-        'Das ist deine eigene Prüfrunde. Du kannst dich nicht selbst als Tester:in anmelden.',
+        'Das ist dein eigener Feedback-Loop. Du kannst dich nicht selbst als Tester:in anmelden.',
       action_nicht_oeffentlich:
-        'Diese Prüfrunde nimmt keine Anmeldungen mehr an.',
-      verwalten_titel: 'Deine Prüfrunde verwalten',
+        'Dieser Feedback-Loop nimmt keine Anmeldungen mehr an.',
+      verwalten_titel: 'Deinen Feedback-Loop verwalten',
       verwalten_tester_titel: 'Angemeldete Tester:innen',
       verwalten_keine_tester: 'Noch keine Tester:innen angemeldet.',
       verwalten_status_angemeldet: 'angemeldet',
@@ -312,21 +320,21 @@ export const de = {
       verwalten_status_zurueckgezogen: 'zurückgezogen',
       verwalten_schliessen: 'Anmeldungen schließen',
       verwalten_schliessen_hinweis:
-        'Schließe die Prüfrunde, wenn du alle Anmeldungen hast — Tester:innen können weiter Feedback abgeben.',
-      verwalten_abschliessen: 'Prüfrunde abschließen',
+        'Schließe den Feedback-Loop, wenn du alle Anmeldungen hast — Tester:innen können weiter Feedback abgeben.',
+      verwalten_abschliessen: 'Feedback-Loop abschließen',
       verwalten_abschliessen_hinweis:
-        'Markiere mindestens ein Feedback als hilfreich, dann kannst du die Prüfrunde endgültig abschließen.',
+        'Markiere mindestens ein Feedback als hilfreich, dann kannst du den Feedback-Loop endgültig abschließen.',
       verwalten_zum_bearbeiten: 'Entwurf bearbeiten',
       verwalten_feedback_link: 'Feedback ansehen',
     },
     neu: {
-      eyebrow: 'Werkzirkel · Neue Prüfrunde',
-      titel: 'Prüfrunde für ein Werk anlegen',
+      eyebrow: 'Werkzirkel · Neuer Feedback-Loop',
+      titel: 'Feedback-Loop für einen Build anlegen',
       untertitel:
-        'Lege fest, was getestet werden soll, wen du suchst und bis wann das Feedback eintreffen muss. Du kannst alles bis zur Veröffentlichung anpassen.',
-      label_werk: 'Werk',
-      label_werk_hilfe: 'Wähle eines deiner Werke aus.',
-      label_titel: 'Titel der Prüfrunde',
+        'Leg fest, was getestet werden soll, wen du suchst und bis wann das Feedback eintreffen muss. Du kannst alles bis zur Veröffentlichung anpassen.',
+      label_werk: 'Build',
+      label_werk_hilfe: 'Wähle einen deiner Builds aus.',
+      label_titel: 'Titel des Feedback-Loops',
       label_testziel: 'Testziel — was willst du herausfinden?',
       label_testaufgabe: 'Testaufgabe (Markdown erlaubt)',
       label_zielgruppe: 'Wen suchst du als Tester:in?',
@@ -335,77 +343,77 @@ export const de = {
       label_feedback_kategorien:
         'Worauf sollen Tester:innen achten? (Mehrfachauswahl)',
       label_frist: 'Frist für Feedback (zwischen morgen und 60 Tagen)',
-      button_anlegen: 'Prüfrunde als Entwurf anlegen',
+      button_anlegen: 'Feedback-Loop als Entwurf anlegen',
       button_abbrechen: 'Abbrechen',
       fehler_keine_rolle:
-        'Du brauchst eine Macher:innen-Rolle, um Prüfrunden anzulegen.',
+        'Du brauchst eine Builder:innen-Rolle, um Feedback-Loops anzulegen.',
       fehler_kein_werk:
-        'Du brauchst zuerst ein eigenes Werk, um eine Prüfrunde anzubieten.',
+        'Du brauchst zuerst einen eigenen Build, um einen Feedback-Loop anzubieten.',
       fehler_validierung: 'Bitte prüfe die markierten Felder.',
       fehler_werk_nicht_eigen:
-        'Du kannst nur für eigene Werke Prüfrunden anlegen.',
+        'Du kannst nur für eigene Builds Feedback-Loops anlegen.',
     },
     bearbeiten: {
-      eyebrow: 'Werkzirkel · Prüfrunde',
-      titel: 'Prüfrunde bearbeiten und veröffentlichen',
+      eyebrow: 'Werkzirkel · Feedback-Loop',
+      titel: 'Feedback-Loop bearbeiten und veröffentlichen',
       untertitel:
-        'Solange die Prüfrunde im Entwurf ist, kannst du alles anpassen. Beim Veröffentlichen prüfen wir dein Test-Saldo.',
-      nicht_editierbar_titel: 'Diese Prüfrunde ist bereits veröffentlicht.',
+        'Solange der Feedback-Loop im Entwurf ist, kannst du alles anpassen. Beim Veröffentlichen prüfen wir dein Feedback-Saldo.',
+      nicht_editierbar_titel: 'Dieser Feedback-Loop ist bereits veröffentlicht.',
       nicht_editierbar_text:
-        'Veröffentlichte Prüfrunden können nicht mehr bearbeitet werden. Lege bei Bedarf eine neue an.',
+        'Veröffentlichte Feedback-Loops können nicht mehr bearbeitet werden. Leg bei Bedarf einen neuen an.',
       button_speichern: 'Änderungen speichern',
-      button_veroeffentlichen: 'Prüfrunde veröffentlichen',
+      button_veroeffentlichen: 'Feedback-Loop veröffentlichen',
       button_loeschen: 'Entwurf löschen',
       erfolg_gespeichert: 'Änderungen gespeichert.',
       erfolg_veroeffentlicht_saldo:
-        'Prüfrunde veröffentlicht. Dein Test-Saldo reicht aus — keine neue Reziprozitäts-Verpflichtung.',
+        'Feedback-Loop veröffentlicht. Dein Feedback-Saldo reicht aus — keine neue Feedback-Schuld.',
       erfolg_veroeffentlicht_verpflichtung: (frist: string) =>
-        `Prüfrunde veröffentlicht. Im Gegenzug verpflichtest du dich, bis ${frist} zwei Werke anderer zu testen. So funktioniert der Werkzirkel-Kreis.`,
+        `Feedback-Loop veröffentlicht. Im Gegenzug verpflichtest du dich, bis ${frist} zwei Builds anderer zu testen. So funktioniert "Gib zwei, nimm eins".`,
       fehler_reziprozitaet:
-        'Du hast eine abgelaufene Reziprozitäts-Verpflichtung. Bitte teste zuerst zwei Werke anderer, bevor du eine neue Prüfrunde veröffentlichst.',
+        'Du hast eine abgelaufene Feedback-Schuld. Bitte teste zuerst zwei Builds anderer, bevor du einen neuen Feedback-Loop veröffentlichst.',
       fehler_validierung: 'Bitte prüfe die markierten Felder.',
-      fehler_kein_zugriff: 'Du kannst nur eigene Prüfrunden bearbeiten.',
-      pruefrunden_finden: 'Prüfrunden zum Testen finden',
+      fehler_kein_zugriff: 'Du kannst nur eigene Feedback-Loops bearbeiten.',
+      pruefrunden_finden: 'Feedback-Loops zum Testen finden',
     },
     feedback_form: {
       eyebrow: 'Werkzirkel · Feedback abgeben',
       titel: (werkName: string) => `Feedback zu „${werkName}"`,
       untertitel:
-        'Beantworte die Fragen so konkret und wertschätzend, wie du es selbst gerne lesen würdest. Nur die Werk-Inhaber:in sieht das Feedback — bis sie es als hilfreich markiert.',
+        'Beantworte die Fragen so konkret und wertschätzend, wie du es selbst gerne lesen würdest. Nur die Builder:in sieht das Feedback — bis sie es als hilfreich markiert.',
       gesamteindruck_label: 'Dein Gesamteindruck (Pflicht)',
       kategorie_label: (label: string) => `${label}`,
       button_abgeben: 'Feedback abgeben',
       button_abbrechen: 'Abbrechen',
       fehler_nicht_angemeldet:
-        'Du bist nicht als Tester:in für diese Prüfrunde angemeldet.',
+        'Du bist nicht als Tester:in für diesen Feedback-Loop angemeldet.',
       fehler_bereits_gegeben:
-        'Du hast für diese Prüfrunde bereits Feedback abgegeben.',
+        'Du hast für diesen Feedback-Loop bereits Feedback abgegeben.',
       fehler_validierung: 'Bitte prüfe die markierten Felder.',
     },
     meine: {
-      eyebrow: 'Werkzirkel · Meine Prüfrunden',
-      titel: 'Meine Prüfrunden',
+      eyebrow: 'Werkzirkel · Meine Feedback-Loops',
+      titel: 'Meine Feedback-Loops',
       untertitel:
-        'Hier siehst du Prüfrunden, die du gestartet hast, und solche, an denen du als Tester:in beteiligt bist.',
-      verpflichtung_banner_titel: 'Offene Reziprozitäts-Verpflichtungen',
+        'Hier siehst du Feedback-Loops, die du gestartet hast, und solche, an denen du als Tester:in beteiligt bist.',
+      verpflichtung_banner_titel: 'Offene Feedback-Schulden',
       verpflichtung_banner_text: (n: number, frist: string) =>
-        `Du hast ${n} offene Verpflichtung${n === 1 ? '' : 'en'} bis ${frist}. Bitte teste zwei Werke anderer, damit du weitere Prüfrunden starten kannst.`,
-      verpflichtung_link: 'Prüfrunden zum Testen finden',
-      sektion_gestartet: 'Eigene Prüfrunden',
+        `Du hast ${n} offene Feedback-Schuld${n === 1 ? '' : 'en'} bis ${frist}. Bitte teste zwei Builds anderer, damit du weitere Feedback-Loops starten kannst.`,
+      verpflichtung_link: 'Feedback-Loops zum Testen finden',
+      sektion_gestartet: 'Eigene Feedback-Loops',
       sektion_gestartet_leer:
-        'Du hast noch keine Prüfrunde angelegt. Lege ein Werk an und biete eine Prüfrunde dazu an.',
+        'Du hast noch keinen Feedback-Loop angelegt. Leg einen Build an und biete einen Feedback-Loop dazu an.',
       sektion_als_tester: 'Als Tester:in angemeldet',
       sektion_als_tester_leer:
-        'Du bist aktuell für keine Prüfrunde als Tester:in angemeldet.',
-      neue_pruefrunde: 'Neue Prüfrunde anlegen',
+        'Du bist aktuell für keinen Feedback-Loop als Tester:in angemeldet.',
+      neue_pruefrunde: 'Neuen Feedback-Loop anlegen',
       erfolg_feedback_abgegeben:
-        'Danke für dein Feedback! Die Werk-Inhaber:in sieht es jetzt.',
+        'Danke für dein Feedback! Die Builder:in sieht es jetzt.',
     },
     werk: {
-      pruefrunde_anbieten: 'Prüfrunde anbieten',
+      pruefrunde_anbieten: 'Feedback-Loop anbieten',
       anonym_anmelden_hinweis:
-        'Melde dich an, um eine Prüfrunde zu diesem Werk anzubieten.',
-      nicht_inhaber_hinweis: 'Nur die Werk-Inhaber:in kann Prüfrunden anbieten.',
+        'Melde dich an, um einen Feedback-Loop zu diesem Build anzubieten.',
+      nicht_inhaber_hinweis: 'Nur die Builder:in kann Feedback-Loops anbieten.',
     },
   },
   termine: {
@@ -460,11 +468,11 @@ export const de = {
       eyebrow: 'Werkzirkel · Neuer Termin',
       titel: 'Termin anlegen',
       untertitel:
-        'Lege Typ, Titel, Beschreibung, Ort und Datum fest. Du kannst alles bis zur Veröffentlichung anpassen.',
+        'Leg Typ, Titel, Beschreibung, Ort und Datum fest. Du kannst alles bis zur Veröffentlichung anpassen.',
       label_typ: 'Termin-Typ',
       label_titel: 'Titel',
       label_beschreibung: 'Beschreibung',
-      label_ort: 'Ort (z.B. Adresse, Werkstatt)',
+      label_ort: 'Ort (z.B. Adresse, Co-Working)',
       label_online_link: 'Online-Link (optional)',
       label_datum: 'Datum und Uhrzeit',
       label_max_teilnehmer: 'Maximale Teilnehmer:innen-Zahl (2–100)',
@@ -473,7 +481,7 @@ export const de = {
       button_anlegen: 'Termin als Entwurf anlegen',
       button_abbrechen: 'Abbrechen',
       fehler_keine_rolle:
-        'Du brauchst eine Kurator:innen-Rolle für diese Stadt, um Termine anzulegen.',
+        'Du brauchst eine City-Lead-Rolle für diese Stadt, um Termine anzulegen.',
       fehler_validierung: 'Bitte prüfe die markierten Felder.',
     },
     bearbeiten: {
@@ -524,37 +532,37 @@ export const de = {
       bereits_storniert: 'Deine Anmeldung ist bereits storniert.',
     },
     bedarfsschau: {
-      sektion_bedarfe_titel: 'Bedarfe in dieser Schau',
+      sektion_bedarfe_titel: 'Bedarfe in dieser Briefing Night',
       sektion_bedarfe_leer:
-        'Für diese Bedarfsschau wurden noch keine Bedarfe ausgewählt.',
-      sektion_foerderprofile_titel: 'Förderprofile in dieser Schau',
+        'Für diese Briefing Night wurden noch keine Bedarfe ausgewählt.',
+      sektion_foerderprofile_titel: 'Sponsor-Profile in dieser Briefing Night',
       sektion_foerderprofile_leer:
-        'Für diese Bedarfsschau wurden noch keine Förderprofile ausgewählt.',
-      bearbeiten_bedarfe_titel: 'Bedarfe für diese Bedarfsschau auswählen',
+        'Für diese Briefing Night wurden noch keine Sponsor-Profile ausgewählt.',
+      bearbeiten_bedarfe_titel: 'Bedarfe für diese Briefing Night auswählen',
       bearbeiten_bedarfe_hinweis:
-        'Wähle die öffentlichen Bedarfe der Stadt aus, die bei dieser Bedarfsschau vorgestellt werden.',
+        'Wähle die öffentlichen Bedarfe der Stadt aus, die bei dieser Briefing Night vorgestellt werden.',
       bearbeiten_foerderprofile_titel:
-        'Förderprofile für diese Bedarfsschau auswählen',
+        'Sponsor-Profile für diese Briefing Night auswählen',
       bearbeiten_foerderprofile_hinweis:
-        'Wähle die verifizierten Förderprofile der Stadt aus, die sich auf dieser Bedarfsschau persönlich vorstellen.',
+        'Wähle die verifizierten Sponsor-Profile der Stadt aus, die sich auf dieser Briefing Night persönlich vorstellen.',
       button_bedarfe_speichern: 'Bedarfe speichern',
-      button_foerderprofile_speichern: 'Förderprofile speichern',
+      button_foerderprofile_speichern: 'Sponsor-Profile speichern',
       keine_bedarfe_verfuegbar:
         'Aktuell gibt es keine öffentlichen Bedarfe in dieser Stadt.',
       keine_foerderprofile_verfuegbar:
-        'Aktuell gibt es keine verifizierten Förderprofile in dieser Stadt.',
-      erfolg_bedarfe_gespeichert: 'Bedarfe der Bedarfsschau gespeichert.',
+        'Aktuell gibt es keine verifizierten Sponsor-Profile in dieser Stadt.',
+      erfolg_bedarfe_gespeichert: 'Bedarfe der Briefing Night gespeichert.',
       erfolg_foerderprofile_gespeichert:
-        'Förderprofile der Bedarfsschau gespeichert.',
+        'Sponsor-Profile der Briefing Night gespeichert.',
     },
   },
   bedarfsseite: {
     nav_bedarfe: 'Bedarfe',
-    nav_foerderprofile: 'Förderprofile',
+    nav_foerderprofile: 'Sponsor-Profile',
     nav_meine_bedarfe: 'Meine Bedarfe',
     nav_meine_werkangebote: 'Meine Werkangebote',
-    nav_mein_foerderprofil: 'Mein Förderprofil',
-    nav_werkstattbeitrag: 'Werkstattbeitrag',
+    nav_mein_foerderprofil: 'Mein Sponsor-Profil',
+    nav_werkstattbeitrag: 'Membership-Beitrag',
     foerderart_label: {
       geld: 'Geld',
       raum: 'Raum',
@@ -586,7 +594,7 @@ export const de = {
       zurueckgezogen: 'Zurückgezogen',
     },
     werkstattbeitrag_art_label: {
-      schauabend_teilnahme: 'Schauabend-Teilnahme',
+      schauabend_teilnahme: 'Demo-Night-Teilnahme',
       geldbeitrag: 'Geldbeitrag',
       sachleistung: 'Sachleistung',
     },
@@ -606,7 +614,7 @@ export const de = {
       eyebrow: 'Werkzirkel · Bedarfe',
       titel: 'Bedarfe im Werkzirkel',
       untertitel:
-        'Hamburger Bedarfsträger:innen suchen Macher:innen. Werkangebote entstehen aus einer konkreten Werk-Erfahrung — Werkzirkel vermittelt nicht, sondern macht sichtbar.',
+        'Hamburger Auftraggeber:innen suchen Builder:innen. Werkangebote entstehen aus einer konkreten Build-Erfahrung — Werkzirkel vermittelt nicht, sondern macht sichtbar.',
       counter: (n: number) =>
         n === 1
           ? '1 öffentlicher Bedarf wartet auf Werkangebote.'
@@ -620,7 +628,7 @@ export const de = {
       zum_detail: 'Bedarf ansehen',
       frist_label: 'Frist',
       geldrahmen_label: 'Geldrahmen',
-      bevorzugter_werkstand_label: 'Bevorzugter Werkstand',
+      bevorzugter_werkstand_label: 'Bevorzugter Build-Stand',
       neuer_bedarf: 'Bedarf einbringen',
     },
     bedarf_detail: {
@@ -631,13 +639,13 @@ export const de = {
       sektion_frist: 'Frist',
       sektion_organisation: 'Organisation',
       action_anonym: 'Anmelden, um auf diesen Bedarf zu reagieren',
-      action_macher_werkangebot: 'Werkangebot abgeben',
+      action_macher_werkangebot: 'Match-Angebot abgeben',
       action_macher_hinweis:
-        'Du antwortest mit einem deiner Werke. Sichtbar wird das Werkangebot nur für die Bedarfsträger:in und dich — kein öffentlicher Pitch-Wettbewerb.',
+        'Du antwortest mit einem deiner Builds. Sichtbar wird das Match-Angebot nur für die Auftraggeber:in und dich — kein öffentlicher Pitch-Wettbewerb.',
       action_kein_macher_hinweis:
-        'Nur Macher:innen können Werkangebote abgeben. Lege erst einen Werkpass an.',
+        'Nur Builder:innen können Werkangebote abgeben. Leg erst ein Builder-Profil an.',
       action_kein_zugriff:
-        'Nur die Bedarfsträger:in und Macher:innen mit eigenem Werkangebot sehen dieses Aktions-Panel.',
+        'Nur die Auftraggeber:in und Builder:innen mit eigenem Match-Angebot sehen dieses Aktions-Panel.',
       verwalten_titel: 'Deine Werkangebote',
       verwalten_keine:
         'Noch keine Werkangebote zu diesem Bedarf eingegangen.',
@@ -647,21 +655,21 @@ export const de = {
       verwalten_nicht_gewaehlt: 'Nicht gewählt markieren',
       verwalten_erfuellt: 'Bedarf als erfüllt markieren',
       verwalten_erfuellt_hinweis:
-        'Markiere den Bedarf als erfüllt, wenn du dich offline mit einer Macher:in geeinigt hast. Ein Erfolgsbeitrag an die Werkstatt-Kasse ist freiwillig.',
+        'Markiere den Bedarf als erfüllt, wenn du dich offline mit einer Builder:in geeinigt hast. Ein Erfolgsbeitrag an den Community-Pool ist freiwillig.',
     },
     bedarf_neu: {
       eyebrow: 'Werkzirkel · Neuer Bedarf',
       titel: 'Bedarf einbringen',
       untertitel:
-        'In drei Schritten: Werkstattbeitrag wählen, Bedarf beschreiben, einreichen. Eine Kurator:in prüft sprachlich und schaltet öffentlich frei.',
-      schritt_1_titel: 'Schritt 1: Werkstattbeitrag',
+        'In drei Schritten: Membership-Beitrag wählen, Bedarf beschreiben, einreichen. Ein City-Lead prüft sprachlich und schaltet öffentlich frei.',
+      schritt_1_titel: 'Schritt 1: Membership-Beitrag',
       schritt_1_hinweis:
-        'Bevor dein Bedarf öffentlich wird, brauchst du einen Werkstattbeitrag. Drei Wege — du wählst, was zu dir passt.',
-      schritt_1_bestehend_titel: 'Du hast bereits einen gültigen Werkstattbeitrag.',
+        'Bevor dein Bedarf öffentlich wird, brauchst du einen Membership-Beitrag. Drei Wege — du wählst, was zu dir passt.',
+      schritt_1_bestehend_titel: 'Du hast bereits einen gültigen Membership-Beitrag.',
       schritt_1_bestehend_weiter: 'Weiter mit diesem Beitrag',
-      schritt_1_pfad_a_titel: 'Schauabend besuchen',
+      schritt_1_pfad_a_titel: 'Demo Night besuchen',
       schritt_1_pfad_a_text:
-        'Komm zum nächsten Hamburger Schauabend. Anwesenheit wird dokumentiert und schaltet deinen Bedarf frei.',
+        'Komm zur nächsten Hamburger Demo Night. Anwesenheit wird dokumentiert und schaltet deinen Bedarf frei.',
       schritt_1_pfad_a_button: 'Termine ansehen',
       schritt_1_pfad_b_titel: 'Geldbeitrag (50 / 100 / 150 €)',
       schritt_1_pfad_b_text:
@@ -669,7 +677,7 @@ export const de = {
       schritt_1_pfad_b_button: 'Geldbeitrag wählen',
       schritt_1_pfad_c_titel: 'Sachleistung anbieten',
       schritt_1_pfad_c_text:
-        'Raum, Mentoring, Material — beschreibe deinen Beitrag, die Kurator:in verifiziert ihn.',
+        'Raum, Mentoring, Material — beschreibe deinen Beitrag, der City-Lead verifiziert ihn.',
       schritt_1_pfad_c_button: 'Sachleistung beschreiben',
       schritt_1_pfad_c_label: 'Sachleistung beschreiben',
       schritt_1_pfad_c_textarea_label:
@@ -686,154 +694,154 @@ export const de = {
       schritt_2_label_geldrahmen_max: 'Geldrahmen max (€, optional)',
       schritt_2_label_frist: 'Frist (mindestens morgen)',
       schritt_2_label_branche: 'Branche (optional)',
-      schritt_2_label_werkstand: 'Bevorzugter Werkstand (optional)',
+      schritt_2_label_werkstand: 'Bevorzugter Build-Stand (optional)',
       schritt_2_button: 'Bedarf anlegen und einreichen',
       schritt_3_titel: 'Schritt 3: Bestätigung',
       schritt_3_text:
-        'Dein Bedarf ist eingereicht und wird von einer Kurator:in geprüft. Du erhältst eine Bestätigung per E-Mail.',
+        'Dein Bedarf ist eingereicht und wird von einem City-Lead geprüft. Du erhältst eine Bestätigung per E-Mail.',
       fehler_keine_rolle:
-        'Du brauchst eine Bedarfsträger:innen-Rolle, um einen Bedarf einzubringen.',
-      fehler_keine_rolle_link: 'Bedarfsträger:innen-Rolle hinzufügen',
+        'Du brauchst eine Auftraggeber:innen-Rolle, um einen Bedarf einzubringen.',
+      fehler_keine_rolle_link: 'Auftraggeber:innen-Rolle hinzufügen',
       fehler_klarname_fehlt:
         'Bitte ergänze deinen Klarnamen in den Einstellungen, bevor du einen Bedarf einbringst.',
       fehler_validierung: 'Bitte prüfe die markierten Felder.',
       fehler_werkstattbeitrag_fehlt:
-        'Bitte hinterlege zuerst einen gültigen Werkstattbeitrag.',
+        'Bitte hinterlege zuerst einen gültigen Membership-Beitrag.',
       fehler_unbekannt: 'Etwas ist schiefgelaufen.',
     },
     werkangebot_neu: {
-      eyebrow: 'Werkzirkel · Werkangebot',
-      titel: 'Werkangebot abgeben',
+      eyebrow: 'Werkzirkel · Match-Angebot',
+      titel: 'Match-Angebot abgeben',
       untertitel:
-        'Du antwortest mit einem deiner Werke. Beschreibe konkretes Vorgehen, expliziten Ausschluss und einen ersten Liefer-Meilenstein — kein Pitch, kein Preis.',
-      label_werk: 'Werk, mit dem du antwortest',
-      label_werk_hilfe: 'Wähle eines deiner bestehenden Werke aus.',
+        'Du antwortest mit einem deiner Builds. Beschreibe konkretes Vorgehen, expliziten Ausschluss und einen ersten Liefer-Meilenstein — kein Pitch, kein Preis.',
+      label_werk: 'Build, mit dem du antwortest',
+      label_werk_hilfe: 'Wähle einen deiner bestehenden Builds aus.',
       label_konkretes_vorgehen:
         'Konkretes Vorgehen (mindestens 50 Zeichen)',
       label_ausschluss:
         'Was ist ausdrücklich NICHT enthalten? (mindestens 20 Zeichen)',
       label_meilenstein:
         'Erster prüfbarer Liefer-Meilenstein (mindestens 20 Zeichen)',
-      button_abgeben: 'Werkangebot abgeben',
+      button_abgeben: 'Match-Angebot abgeben',
       button_abbrechen: 'Abbrechen',
       fehler_keine_rolle:
-        'Du brauchst eine Macher:innen-Rolle, um Werkangebote abzugeben.',
+        'Du brauchst eine Builder:innen-Rolle, um Werkangebote abzugeben.',
       fehler_kein_werk:
-        'Du brauchst zuerst ein eigenes Werk, um auf Bedarfe zu antworten.',
+        'Du brauchst zuerst einen eigenen Build, um auf Bedarfe zu antworten.',
       fehler_validierung: 'Bitte prüfe die markierten Felder.',
       fehler_bereits_eingereicht:
-        'Du hast mit diesem Werk bereits ein Werkangebot zu diesem Bedarf eingereicht.',
+        'Du hast mit diesem Build bereits ein Match-Angebot zu diesem Bedarf eingereicht.',
       fehler_bedarf_nicht_offen:
         'Zu diesem Bedarf können aktuell keine Werkangebote eingereicht werden.',
     },
     foerderprofile_liste: {
-      eyebrow: 'Werkzirkel · Förderprofile',
-      titel: 'Förderprofile im Werkzirkel',
+      eyebrow: 'Werkzirkel · Sponsor-Profile',
+      titel: 'Sponsor-Profile im Werkzirkel',
       untertitel:
-        'Verifizierte Förder:innen, die persönlich auf einer Bedarfsschau sichtbar werden. Werkzirkel vermittelt keine Beteiligungen — Equity-Gespräche finden offline statt.',
+        'Verifizierte Sponsor:innen, die persönlich auf einer Briefing Night sichtbar werden. Werkzirkel vermittelt keine Beteiligungen — Equity-Gespräche finden offline statt.',
       counter: (n: number) =>
         n === 1
-          ? '1 verifiziertes Förderprofil.'
-          : `${n} verifizierte Förderprofile.`,
+          ? '1 verifiziertes Sponsor-Profil.'
+          : `${n} verifizierte Sponsor-Profile.`,
       filter_titel: 'Filter',
-      filter_foerderart: 'Förderart',
+      filter_foerderart: 'Sponsor-Art',
       filter_gegenleistung: 'Gegenleistung-Typ',
       filter_anwenden: 'Filter anwenden',
-      leer_titel: 'Noch keine verifizierten Förderprofile.',
+      leer_titel: 'Noch keine verifizierten Sponsor-Profile.',
       leer_text:
-        'Schau bald wieder vorbei oder lege ein eigenes Förderprofil an.',
-      zum_detail: 'Förderprofil ansehen',
+        'Schau bald wieder vorbei oder leg ein eigenes Sponsor-Profil an.',
+      zum_detail: 'Sponsor-Profil ansehen',
       equity_badge: 'Equity offline',
-      neues_profil: 'Förderprofil anlegen',
+      neues_profil: 'Sponsor-Profil anlegen',
     },
     foerderprofil_detail: {
-      eyebrow: 'Werkzirkel · Förderprofil',
+      eyebrow: 'Werkzirkel · Sponsor-Profil',
       sektion_organisation: 'Organisation',
-      sektion_foerderart: 'Förderart',
-      sektion_foerderrahmen: 'Förderrahmen',
-      sektion_bevorzugte_werke: 'Bevorzugte Werke',
+      sektion_foerderart: 'Sponsor-Art',
+      sektion_foerderrahmen: 'Sponsor-Budget',
+      sektion_bevorzugte_werke: 'Bevorzugte Builds',
       sektion_gegenleistung: 'Gegenleistung',
       equity_hinweis_titel: 'Hinweis zu Equity-Beteiligungen',
       kontakt_titel: 'Kontakt',
-      kontakt_werkpass_link: 'Werkpass dieser Person ansehen',
+      kontakt_werkpass_link: 'Builder-Profil dieser Person ansehen',
       kontakt_anonym_hinweis:
-        'Anmelden, um Förder:in zu kontaktieren.',
+        'Anmelden, um Sponsor:in zu kontaktieren.',
       kontakt_bedarfsschau_hinweis:
-        'Auf einer Bedarfsschau lernst du diese Person persönlich kennen.',
+        'Auf einer Briefing Night lernst du diese Person persönlich kennen.',
     },
     foerderprofil_neu: {
-      eyebrow: 'Werkzirkel · Neues Förderprofil',
-      titel: 'Förderprofil anlegen',
+      eyebrow: 'Werkzirkel · Neues Sponsor-Profil',
+      titel: 'Sponsor-Profil anlegen',
       untertitel:
-        'Beschreibe deine Förderung und die gewünschte Gegenleistung. Eine Kurator:in prüft und verifiziert dein Profil persönlich.',
+        'Beschreibe deine Förderung und die gewünschte Gegenleistung. Ein City-Lead prüft und verifiziert dein Profil persönlich.',
       label_organisation: 'Organisation',
-      label_foerderart: 'Förderart',
-      label_foerderrahmen_jahr_min: 'Förderrahmen pro Jahr min (€, optional)',
-      label_foerderrahmen_jahr_max: 'Förderrahmen pro Jahr max (€, optional)',
-      label_foerderrahmen_einzel: 'Maximaler Einzelförder-Betrag (€, optional)',
+      label_foerderart: 'Sponsor-Art',
+      label_foerderrahmen_jahr_min: 'Sponsor-Budget pro Jahr min (€, optional)',
+      label_foerderrahmen_jahr_max: 'Sponsor-Budget pro Jahr max (€, optional)',
+      label_foerderrahmen_einzel: 'Maximaler Einzel-Betrag (€, optional)',
       label_bevorzugte_werke:
-        'Bevorzugte Werke / Themen (optional, Freitext)',
+        'Bevorzugte Builds / Themen (optional, Freitext)',
       label_gegenleistung_typ: 'Art der Gegenleistung',
       label_gegenleistung_text: 'Beschreibung der Gegenleistung (optional)',
       equity_hinweis:
         'Achtung: Werkzirkel vermittelt keine Beteiligungen. Equity-Gespräche finden ausschließlich offline statt.',
-      button_anlegen: 'Förderprofil anlegen und einreichen',
+      button_anlegen: 'Sponsor-Profil anlegen und einreichen',
       button_abbrechen: 'Abbrechen',
       fehler_keine_rolle:
-        'Du brauchst eine Förder:innen-Rolle, um ein Profil anzulegen.',
+        'Du brauchst eine Sponsor:innen-Rolle, um ein Profil anzulegen.',
       fehler_bereits_vorhanden:
-        'Du hast bereits ein Förderprofil. Bearbeite es über deine Übersicht.',
+        'Du hast bereits ein Sponsor-Profil. Bearbeite es über deine Übersicht.',
       fehler_validierung: 'Bitte prüfe die markierten Felder.',
     },
     uebersicht_bedarfe: {
       eyebrow: 'Werkzirkel · Meine Bedarfe',
       titel: 'Meine Bedarfe',
       untertitel:
-        'Eigene Bedarfe, gruppiert nach Status. Hier siehst du auch deinen Werkstattbeitrag-Stand.',
+        'Eigene Bedarfe, gruppiert nach Status. Hier siehst du auch deinen Membership-Beitrag-Stand.',
       neu_button: 'Neuen Bedarf einbringen',
       leer_titel: 'Du hast noch keinen Bedarf eingebracht.',
       leer_text:
-        'Lege deinen ersten Bedarf an — drei Schritte, dann prüft eine Kurator:in.',
+        'Leg deinen ersten Bedarf an — drei Schritte, dann prüft ein City-Lead.',
       sektion_aktiv: 'Aktive Bedarfe',
       sektion_in_pruefung: 'In Prüfung',
       sektion_entwuerfe: 'Entwürfe',
       sektion_abgeschlossen: 'Erfüllte und eingestellte Bedarfe',
-      werkstattbeitrag_titel: 'Mein Werkstattbeitrag',
+      werkstattbeitrag_titel: 'Mein Membership-Beitrag',
       werkstattbeitrag_aktiv: (anzahl: number, bis: string) =>
         `Aktiv: ${anzahl} ${anzahl === 1 ? 'Beitrag' : 'Beiträge'} (gültig bis ${bis}).`,
       werkstattbeitrag_keiner:
-        'Aktuell kein gültiger Werkstattbeitrag. Bei deinem nächsten Bedarf wirst du gefragt.',
+        'Aktuell kein gültiger Membership-Beitrag. Bei deinem nächsten Bedarf wirst du gefragt.',
     },
     uebersicht_werkangebote: {
       eyebrow: 'Werkzirkel · Meine Werkangebote',
       titel: 'Meine Werkangebote',
       untertitel:
-        'Werkangebote, die du als Macher:in zu Bedarfen eingereicht hast.',
-      leer_titel: 'Du hast noch kein Werkangebot eingereicht.',
+        'Werkangebote, die du als Builder:in zu Bedarfen eingereicht hast.',
+      leer_titel: 'Du hast noch kein Match-Angebot eingereicht.',
       leer_text:
-        'Schau dir die öffentlichen Bedarfe an und antworte mit einem deiner Werke.',
+        'Schau dir die öffentlichen Bedarfe an und antworte mit einem deiner Builds.',
       bedarfe_durchsuchen: 'Bedarfe durchsuchen',
     },
     uebersicht_foerderprofil: {
-      eyebrow: 'Werkzirkel · Mein Förderprofil',
-      titel: 'Mein Förderprofil',
+      eyebrow: 'Werkzirkel · Mein Sponsor-Profil',
+      titel: 'Mein Sponsor-Profil',
       untertitel:
-        'Verifikations-Status, letzte Bedarfsschau-Teilnahme und Förderrahmen.',
-      leer_titel: 'Du hast noch kein Förderprofil angelegt.',
+        'Verifikations-Status, letzte Briefing-Night-Teilnahme und Sponsor-Budget.',
+      leer_titel: 'Du hast noch kein Sponsor-Profil angelegt.',
       leer_text:
-        'Lege ein Förderprofil an, damit Kurator:innen dich auf eine Bedarfsschau einladen können.',
-      bearbeiten: 'Förderprofil bearbeiten',
+        'Leg ein Sponsor-Profil an, damit City-Leads dich auf eine Briefing Night einladen können.',
+      bearbeiten: 'Sponsor-Profil bearbeiten',
       letzte_bedarfsschau: (datum: string) =>
-        `Letzte Bedarfsschau-Teilnahme: ${datum}`,
+        `Letzte Briefing-Night-Teilnahme: ${datum}`,
       keine_bedarfsschau:
-        'Bisher keine Bedarfsschau-Teilnahme dokumentiert.',
+        'Bisher keine Briefing-Night-Teilnahme dokumentiert.',
     },
     uebersicht_werkstattbeitrag: {
-      eyebrow: 'Werkzirkel · Werkstattbeitrag',
-      titel: 'Mein Werkstattbeitrag',
+      eyebrow: 'Werkzirkel · Membership-Beitrag',
+      titel: 'Mein Membership-Beitrag',
       untertitel:
-        'Schauabend-Teilnahmen, Geldbeiträge und Sachleistungen — Status und Gültigkeit auf einen Blick.',
-      leer_titel: 'Noch kein Werkstattbeitrag erfasst.',
+        'Demo-Night-Teilnahmen, Geldbeiträge und Sachleistungen — Status und Gültigkeit auf einen Blick.',
+      leer_titel: 'Noch kein Membership-Beitrag erfasst.',
       leer_text:
         'Bei deinem ersten Bedarf wirst du gefragt, welchen der drei Pfade du wählst.',
       banner_erfolg: 'Geldbeitrag erfolgreich verbucht. Danke!',
@@ -843,15 +851,15 @@ export const de = {
   },
   anmelden: {
     eyebrow: 'Hamburger Werkzirkel',
-    titel: 'Anmelden oder Werkpass anlegen',
+    titel: 'Anmelden oder Builder-Profil anlegen',
     untertitel:
       'Wir schicken dir einen Magic-Link per E-Mail. Klick rein, und du bist drin. Kein Passwort, keine Cookies-Banner-Wand.',
     email_label: 'E-Mail-Adresse',
     email_placeholder: 'deine-mail@beispiel.de',
     button_login: 'Anmelden',
-    button_registrieren: 'Werkpass anlegen',
+    button_registrieren: 'Builder-Profil anlegen',
     button_bedarf: 'Bedarf einbringen',
-    button_foerderer: 'Förder:in werden',
+    button_foerderer: 'Sponsor:in werden',
     erfolg:
       'Wir haben dir eine E-Mail geschickt. Schau in deinem Postfach (auch im Spam-Ordner). Der Link ist 15 Minuten gültig.',
     fehler_token_ungueltig:

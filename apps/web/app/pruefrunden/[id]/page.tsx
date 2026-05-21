@@ -393,7 +393,7 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
     return { title: 'Nicht gefunden', robots: { index: false, follow: false } };
   }
   return {
-    title: `${row.pruefrunde.titel} — Prüfrunde`,
+    title: `${row.pruefrunde.titel} — Feedback-Loop`,
     description: row.pruefrunde.testziel.slice(0, 200),
   };
 }
@@ -455,7 +455,7 @@ export default async function PruefrundeDetailPage({
             <span>Werkzirkel</span>
           </Link>
           <div className="nav-links" aria-label="Bereiche">
-            <Link href="/">Macher:innen</Link>
+            <Link href="/">Builder:innen</Link>
             <Link href="/werke">Werke</Link>
             <Link href="/pruefrunden" aria-current="page">
               {tn.nav_pruefrunden}
@@ -512,11 +512,11 @@ export default async function PruefrundeDetailPage({
         <div className="wrap product-split">
           <div>
             {sp.erfolg === 'angemeldet' ? (
-              <ErfolgBanner text="Du bist als Tester:in angemeldet. Du erhältst weitere Infos im Verlauf der Prüfrunde." />
+              <ErfolgBanner text="Du bist als Tester:in angemeldet. Du erhältst weitere Infos im Verlauf der Feedback-Loop." />
             ) : sp.erfolg === 'geschlossen' ? (
-              <ErfolgBanner text="Prüfrunde geschlossen. Tester:innen können noch Feedback abgeben." />
+              <ErfolgBanner text="Feedback-Loop geschlossen. Tester:innen können noch Feedback abgeben." />
             ) : sp.erfolg === 'abgeschlossen' ? (
-              <ErfolgBanner text="Prüfrunde abgeschlossen. Vielen Dank an alle Beteiligten." />
+              <ErfolgBanner text="Feedback-Loop abgeschlossen. Vielen Dank an alle Beteiligten." />
             ) : null}
             <FehlerBanner code={sp.fehler} />
 
@@ -683,17 +683,17 @@ function FehlerBanner({ code }: { code?: string }) {
   if (!code) return null;
   const text =
     code === 'keine_rolle'
-      ? 'Du brauchst eine Macher:innen-Rolle, um dich als Tester:in anzumelden.'
+      ? 'Du brauchst eine Builder:innen-Rolle, um dich als Tester:in anzumelden.'
       : code === 'falscher_status'
-        ? 'Diese Prüfrunde nimmt keine Anmeldungen mehr an.'
+        ? 'Diese Feedback-Loop nimmt keine Anmeldungen mehr an.'
         : code === 'eigenes_werk'
-          ? 'Du kannst dich nicht für die Prüfrunde deines eigenen Werks anmelden.'
+          ? 'Du kannst dich nicht für die Feedback-Loop deines eigenen Werks anmelden.'
           : code === 'voll'
-            ? 'Die Prüfrunde ist voll. Keine weiteren Anmeldungen möglich.'
+            ? 'Die Feedback-Loop ist voll. Keine weiteren Anmeldungen möglich.'
             : code === 'bereits_angemeldet'
-              ? 'Du bist bereits für diese Prüfrunde angemeldet.'
+              ? 'Du bist bereits für diese Feedback-Loop angemeldet.'
               : code === 'kein_hilfreiches_feedback'
-                ? 'Markiere mindestens ein Feedback als hilfreich, bevor du die Prüfrunde abschließt.'
+                ? 'Markiere mindestens ein Feedback als hilfreich, bevor du die Feedback-Loop abschließt.'
                 : de.fehler.unbekannt;
   return (
     <div

@@ -68,6 +68,7 @@ const TEMPLATES: Array<{
       props: {
         confirmUrl: 'https://werkzirkel.de/api/v1/me/confirm-deletion?token=demo',
         appUrl: APP_URL,
+        voraussichtlichesLoeschdatum: '28.05.2026',
       },
     },
     betreff: 'Bitte bestätige die Löschung deines Werkzirkel-Kontos',

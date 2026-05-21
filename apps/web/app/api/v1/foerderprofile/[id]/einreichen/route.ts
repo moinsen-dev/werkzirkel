@@ -2,7 +2,7 @@
  * POST /api/v1/foerderprofile/:id/einreichen
  *
  * Foerderprofil von 'entwurf' → 'in_verifikation' transferieren. Versendet
- * T-501 an die Foerder:in als Bestaetigung; Kurator:innen-Notification
+ * T-501 an die Foerder:in als Bestaetigung; City-Leads-Notification
  * laeuft per separater Notifications-Pipeline (hier nicht im Scope).
  *
  * PRD-Referenz: §F-702 (Verifikations-Workflow §19).

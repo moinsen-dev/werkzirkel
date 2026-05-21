@@ -1,10 +1,10 @@
 /**
- * /bedarfe/[id]/werkangebot-neu — Werkangebot-Form (Macher:in).
+ * /bedarfe/[id]/werkangebot-neu — Match-Angebot-Form (Builder:in).
  *
  * Quelle: PRD §F-621, §11A Schutz S2 (Werkangebote nicht oeffentlich).
  *
- * - Auth + Macher:innen-Rolle.
- * - Form: Werk-Dropdown (eigene Werke), konkretes_vorgehen, ausschluss,
+ * - Auth + Builder:innen-Rolle.
+ * - Form: Werk-Dropdown (eigene Builds), konkretes_vorgehen, ausschluss,
  *   erster_liefer_meilenstein.
  * - Server-Action POST → INSERT werkangebot (mit ON CONFLICT) → redirect zu
  *   /uebersicht/werkangebote.
@@ -37,7 +37,7 @@ const tnav = de.uebersicht;
 const APP_URL = env.APP_URL.replace(/\/+$/, '');
 
 export const metadata: Metadata = {
-  title: 'Werkangebot abgeben — Werkzirkel',
+  title: 'Match-Angebot abgeben — Werkzirkel',
   robots: { index: false, follow: false },
 };
 
@@ -115,7 +115,7 @@ export async function werkangebotAbgebenAction(
     );
   }
 
-  // Werk-Inhaberschaft pruefen.
+  // Builderschaft pruefen.
   const werkRows = await db
     .select()
     .from(werk)
@@ -200,7 +200,7 @@ export async function werkangebotAbgebenAction(
   redirect('/uebersicht/werkangebote?erfolg=eingereicht');
 }
 
-export default async function WerkangebotNeuPage({
+export default async function WerkangebotWerkangebotNeuPage({
   params,
   searchParams,
 }: PageProps) {
@@ -277,7 +277,7 @@ export default async function WerkangebotNeuPage({
             <Hinweis>
               <strong>{tn.fehler_kein_werk}</strong>
               <p style={{ margin: '8px 0 0' }}>
-                <Link href="/werke/neu">Neues Werk anlegen</Link>
+                <Link href="/werke/neu">Neuen Build anlegen</Link>
               </p>
             </Hinweis>
           ) : (

@@ -1,6 +1,6 @@
 /**
  * /uebersicht/werkangebote — Eigene Werkangebote (Server Component,
- * Auth + Macher:innen-Rolle).
+ * Auth + Builder:innen-Rolle).
  *
  * Liste eigener werkangebote mit Bedarf-Mini + Status.
  */
@@ -19,7 +19,7 @@ import { hasRolle } from '@/lib/auth/permissions';
 import type { WerkangebotStatus } from '@/lib/db/schema/enums';
 
 export const metadata: Metadata = {
-  title: 'Meine Werkangebote — Werkzirkel',
+  title: 'Meine Match-Angebote — Werkzirkel',
   robots: { index: false, follow: false },
 };
 
@@ -128,7 +128,7 @@ export default async function UebersichtWerkangebotePage({
                 color: '#15431a',
               }}
             >
-              Werkangebot eingereicht. Die Bedarfsträger:in wird informiert.
+              Match-Angebot eingereicht. Die Auftraggeber:in wird informiert.
             </div>
           ) : null}
 

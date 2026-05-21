@@ -51,7 +51,7 @@ export async function POST(req: Request): Promise<Response> {
         error: {
           code: 'rolle_fehlt',
           message:
-            'Nur Macher:innen koennen Pruefrunden anlegen. Aktiviere die Macher:in-Rolle in deinem Werkpass.',
+            'Nur Builder:innen koennen Pruefrunden anlegen. Aktiviere die Builder:in-Rolle in deinem Builder-Profil.',
         },
       },
       { status: 403 },
@@ -97,7 +97,7 @@ export async function POST(req: Request): Promise<Response> {
       {
         error: {
           code: 'kein_zugriff',
-          message: 'Du kannst nur fuer eigene Werke Pruefrunden anlegen.',
+          message: 'Du kannst nur fuer eigene Builds Pruefrunden anlegen.',
         },
       },
       { status: 403 },

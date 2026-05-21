@@ -1,7 +1,7 @@
 /**
  * POST /api/v1/admin/staedte/:id/kurator
  *
- * Ernennt eine Nutzer:in zur Kurator:in einer Stadt.
+ * Ernennt eine Nutzer:in zur City-Lead einer Stadt.
  *
  * Atomar in EINER Transaktion:
  *   1. stadt.kuratorId = nutzer_id
@@ -42,7 +42,7 @@ export async function POST(req: Request, ctx: RouteContext): Promise<Response> {
       {
         error: {
           code: 'kein_zugriff',
-          message: 'Nur Admins koennen Kurator:innen ernennen.',
+          message: 'Nur Admins koennen City-Leads ernennen.',
         },
       },
       { status: 403 },

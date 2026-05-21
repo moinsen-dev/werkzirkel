@@ -3,7 +3,7 @@
  *
  * Statusuebergang `veroeffentlicht` → `durchgefuehrt` (PRD §14.6).
  *
- * - Auth + Permission (Kurator:in der Stadt oder Admin).
+ * - Auth + Permission (City-Lead der Stadt oder Admin).
  * - Status muss 'veroeffentlicht' sein.
  * - `datum_uhrzeit` muss in der Vergangenheit liegen.
  * - Audit-Log.
@@ -47,7 +47,7 @@ export async function POST(req: Request, ctx: RouteContext): Promise<Response> {
         error: {
           code: 'kein_zugriff',
           message:
-            'Nur Kurator:innen der jeweiligen Stadt koennen Termine als durchgefuehrt markieren.',
+            'Nur City-Leads der jeweiligen Stadt koennen Termine als durchgefuehrt markieren.',
         },
       },
       { status: 403 },

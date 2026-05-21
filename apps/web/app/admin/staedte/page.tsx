@@ -4,7 +4,7 @@
  * - Liste aller Staedte.
  * - Form: neue Stadt anlegen.
  * - Inline-Form: Status aendern (aktivieren/deaktivieren).
- * - Inline-Form: Kurator:in ernennen (E-Mail-Suche).
+ * - Inline-Form: City-Lead ernennen (E-Mail-Suche).
  *
  * Server-Actions spiegeln die /api/v1/admin/staedte/*-Endpoints.
  * Permission via /admin/layout.tsx.
@@ -208,7 +208,7 @@ export default async function AdminStaedtePage({ searchParams }: PageProps) {
 
   const rows = await db.select().from(stadt).orderBy(stadt.sortierung, stadt.id);
 
-  // Kurator:innen-Info zu jeder Stadt nachladen
+  // City-Leads-Info zu jeder Stadt nachladen
   const kuratorIds = rows
     .map((r) => r.kuratorId)
     .filter((v): v is string => v !== null);
@@ -232,7 +232,7 @@ export default async function AdminStaedtePage({ searchParams }: PageProps) {
             <p className="eyebrow">Werkzirkel · Admin · Staedte</p>
             <h1>Staedte-Verwaltung</h1>
             <p className="hero-copy">
-              Neue Regionen anlegen, Status setzen, Kurator:innen ernennen.
+              Neue Regionen anlegen, Status setzen, City-Leads ernennen.
             </p>
           </div>
         </div>
@@ -278,7 +278,7 @@ export default async function AdminStaedtePage({ searchParams }: PageProps) {
                 <th style={thStyle}>Kuerzel</th>
                 <th style={thStyle}>Name</th>
                 <th style={thStyle}>Status</th>
-                <th style={thStyle}>Kurator:in</th>
+                <th style={thStyle}>City-Lead</th>
                 <th style={thStyle}>Aktion</th>
               </tr>
             </thead>

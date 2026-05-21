@@ -1,9 +1,9 @@
 /**
  * POST + GET /api/v1/hilfegesuche
  *
- * - POST: Eingeloggte Person legt ein Hilfegesuch an. Stadt wird automatisch
+ * - POST: Eingeloggte Person legt ein Quick-Help an. Stadt wird automatisch
  *   aus `nutzer.stadtId` uebernommen. Gueltigkeit max 14 Tage ab Anlage.
- *   Mini-Forum-Feature (PRD §8.15) — daher KEINE Werkstattbeitrag-Gate,
+ *   Mini-Forum-Feature (PRD §8.15) — daher KEINE Membership-Beitrag-Gate,
  *   keine Kurator-Pruefung, keine Sprach-Pruefung. Nur Auth + Validator.
  * - GET: Liste mit Filter stadt_id/tag/status. Default-Status `offen`.
  *   Sortiert nach `erstellt_am DESC`. Keine Cursor-Pagination — Hilfegesuche

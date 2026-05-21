@@ -26,7 +26,7 @@ import {
 } from '@/lib/db/schema/enums';
 
 export const metadata: Metadata = {
-  title: 'Förderprofile — Werkzirkel',
+  title: 'Sponsor-Profile — Werkzirkel',
   robots: { index: false, follow: false },
 };
 
@@ -334,7 +334,7 @@ export default async function FoerderprofileListePage({
                             fontSize: 14,
                           }}
                         >
-                          Förderrahmen pro Jahr:{' '}
+                          Sponsor-Budget pro Jahr:{' '}
                           {formatEuro(f.foerderrahmenJahrMinEuroCent)}
                           {f.foerderrahmenJahrMinEuroCent !== null &&
                           f.foerderrahmenJahrMaxEuroCent !== null

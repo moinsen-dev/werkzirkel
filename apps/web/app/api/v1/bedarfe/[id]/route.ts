@@ -56,7 +56,7 @@ export async function GET(req: Request, ctx: RouteContext): Promise<Response> {
 
   const response: Record<string, unknown> = { bedarf: serializeBedarf(row) };
 
-  // Owner-Sicht: Werkangebote-Liste mitschicken.
+  // Owner-Sicht: Werkangebote mitschicken.
   if (isOwner) {
     const angebote = await db
       .select({

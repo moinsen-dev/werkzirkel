@@ -1,7 +1,7 @@
 /**
  * PATCH /api/v1/kurator/meldungen/:id
  *
- * Kurator:in setzt Status einer Meldung + optionaler Folge-Aktion.
+ * City-Lead setzt Status einer Meldung + optionaler Folge-Aktion.
  *
  * Aktionen (PRD §F-502, §F-504):
  *  - 'keine'                 → nur Status + Notiz aktualisieren.
@@ -178,7 +178,7 @@ async function ermittleInhaber(
     }
     case 'feedback':
       // feedback hat keinen direkten "Inhaber" fuer Sperrung — wir lassen das
-      // Nicht-Unterstuetzt-Verhalten der Kurator:in mit klarer Notiz.
+      // Nicht-Unterstuetzt-Verhalten der City-Lead mit klarer Notiz.
       return null;
     default:
       return null;
@@ -200,7 +200,7 @@ export async function PATCH(req: Request, ctx: RouteContext): Promise<Response> 
         error: {
           code: 'kein_zugriff',
           message:
-            'Nur Kurator:innen und Admins koennen Meldungen bearbeiten.',
+            'Nur City-Leads und Admins koennen Meldungen bearbeiten.',
         },
       },
       { status: 403 },

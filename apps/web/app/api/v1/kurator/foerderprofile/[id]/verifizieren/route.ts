@@ -1,7 +1,7 @@
 /**
  * POST /api/v1/kurator/foerderprofile/:id/verifizieren
  *
- * Kurator:in der Stadt der Foerder:in setzt das Profil von 'in_verifikation'
+ * City-Lead der Stadt der Foerder:in setzt das Profil von 'in_verifikation'
  * auf 'verifiziert'. Versendet T-502 an die Inhaber:in.
  *
  * PRD-Referenz: §F-702, §19.
@@ -55,7 +55,7 @@ export async function POST(req: Request, ctx: RouteContext): Promise<Response> {
         error: {
           code: 'kein_zugriff',
           message:
-            'Nur Kurator:innen der jeweiligen Stadt koennen Foerderprofile verifizieren.',
+            'Nur City-Leads der jeweiligen Stadt koennen Foerderprofile verifizieren.',
         },
       },
       { status: 403 },

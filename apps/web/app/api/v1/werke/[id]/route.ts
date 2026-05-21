@@ -94,7 +94,7 @@ export async function PATCH(req: Request, ctx: RouteContext): Promise<Response> 
       {
         error: {
           code: 'kein_zugriff',
-          message: 'Du kannst nur deine eigenen Werke bearbeiten.',
+          message: 'Du kannst nur deine eigenen Builds bearbeiten.',
         },
       },
       { status: 403 },
@@ -196,7 +196,7 @@ export async function DELETE(req: Request, ctx: RouteContext): Promise<Response>
       {
         error: {
           code: 'kein_zugriff',
-          message: 'Du kannst nur deine eigenen Werke loeschen.',
+          message: 'Du kannst nur deine eigenen Builds loeschen.',
         },
       },
       { status: 403 },

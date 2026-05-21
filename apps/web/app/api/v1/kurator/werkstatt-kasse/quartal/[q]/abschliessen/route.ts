@@ -1,7 +1,7 @@
 /**
  * POST /api/v1/kurator/werkstatt-kasse/quartal/:q/abschliessen
  *
- * Kurator:in schließt ein Quartal ab. Erzeugt einen Snapshot-Audit-Eintrag
+ * City-Lead schließt ein Quartal ab. Erzeugt einen Snapshot-Audit-Eintrag
  * mit allen Eingang-/Ausgang-Summen für die eigene Stadt + Quartal. Die
  * eigentlichen Kasse-Einträge werden NICHT verändert — der Abschluss ist
  * ein Buchhaltungs-Marker, keine Mutation. Wiederholtes Aufrufen schreibt
@@ -41,7 +41,7 @@ export async function POST(req: Request, ctx: RouteContext): Promise<Response> {
         error: {
           code: 'kein_zugriff',
           message:
-            'Nur Kurator:innen ihrer Stadt können Quartale abschließen.',
+            'Nur City-Leads ihrer Stadt können Quartale abschließen.',
         },
       },
       { status: 403 },

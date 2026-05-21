@@ -45,7 +45,7 @@ interface PageProps extends PageParams {
 }
 
 export const metadata: Metadata = {
-  title: 'Hilfegesuch — Werkzirkel',
+  title: 'Quick-Help — Werkzirkel',
   robots: { index: false, follow: false },
 };
 

@@ -1,10 +1,10 @@
 /**
  * POST + GET /api/v1/bedarfe/:id/werkangebote
  *
- * POST: Macher:in legt ein Werkangebot zu einem oeffentlichen Bedarf an.
- *   - Auth + Macher:innen-Rolle.
+ * POST: Builder:in legt ein Match-Angebot zu einem oeffentlichen Bedarf an.
+ *   - Auth + Builder:innen-Rolle.
  *   - Bedarf muss status IN ('oeffentlich', 'in_gespraechen') sein.
- *   - werk_id muss der Macher:in gehoeren.
+ *   - werk_id muss der Builder:in gehoeren.
  *   - UNIQUE(bedarf_id, werk_id) Constraint catcht Mehrfach-Werkangebote —
  *     ON CONFLICT DO NOTHING → 422 mit code='bereits_eingereicht'.
  *   - sendMail T-201 an Bedarfstraeger:in.
@@ -12,7 +12,7 @@
  * GET: Werkangebote zu einem Bedarf — Privacy-Layer PRD §11A Schutz S2:
  *   - Anonym → 401.
  *   - Bedarfstraeger:in (Bedarf-Inhaber:in) → alle Werkangebote.
- *   - Beteiligte Macher:in (eigenes Werk hat Werkangebot) → NUR eigenes.
+ *   - Beteiligte Builder:in (eigenes Werk hat Match-Angebot) → NUR eigenes.
  *   - Alle anderen → 403.
  *   KEIN Counter-Endpoint fuer Aussenstehende.
  *
@@ -58,7 +58,7 @@ export async function POST(req: Request, ctx: RouteContext): Promise<Response> {
         error: {
           code: 'kein_macher',
           message:
-            'Nur Macher:innen koennen Werkangebote einreichen. Lege erst einen Werkpass an.',
+            'Nur Builder:innen koennen Werkangebote einreichen. Lege erst einen Builder-Profil an.',
         },
       },
       { status: 403 },
@@ -129,7 +129,7 @@ export async function POST(req: Request, ctx: RouteContext): Promise<Response> {
         error: {
           code: 'kein_eigenes_werk',
           message:
-            'Du kannst nur mit eigenen Werken auf Bedarfe antworten.',
+            'Du kannst nur mit eigenen Builds auf Bedarfe antworten.',
         },
       },
       { status: 403 },
@@ -170,7 +170,7 @@ export async function POST(req: Request, ctx: RouteContext): Promise<Response> {
         error: {
           code: 'bereits_eingereicht',
           message:
-            'Du hast mit diesem Werk bereits ein Werkangebot zu diesem Bedarf eingereicht.',
+            'Du hast mit diesem Werk bereits ein Match-Angebot zu diesem Bedarf eingereicht.',
         },
       },
       { status: 422 },
@@ -250,7 +250,7 @@ export async function GET(req: Request, ctx: RouteContext): Promise<Response> {
 
   const isBedarfOwner = bedarfRow.nutzerId === sess.nutzerId;
 
-  // Beteiligte Macher:in? = hat selbst ein Werkangebot zu diesem Bedarf.
+  // Beteiligte Builder:in? = hat selbst ein Match-Angebot zu diesem Bedarf.
   let eigeneWerkangebote: Array<typeof werkangebot.$inferSelect> = [];
   if (!isBedarfOwner) {
     eigeneWerkangebote = await db
@@ -269,7 +269,7 @@ export async function GET(req: Request, ctx: RouteContext): Promise<Response> {
           error: {
             code: 'kein_zugriff',
             message:
-              'Werkangebote sind nur fuer die Bedarfstraeger:in und beteiligte Macher:innen sichtbar.',
+              'Werkangebote sind nur fuer die Bedarfstraeger:in und beteiligte Builder:innen sichtbar.',
           },
         },
         { status: 403 },

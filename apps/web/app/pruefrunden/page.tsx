@@ -29,9 +29,9 @@ import {
 import { type PruefrundeStatus } from '@/lib/db/schema/enums';
 
 export const metadata: Metadata = {
-  title: 'Prüfrunden — Werkzirkel',
+  title: 'Feedback-Loops — Werkzirkel',
   description:
-    'Offene Prüfrunden im Werkzirkel. Werde Tester:in und gib strukturiertes Feedback zu Werken anderer Macher:innen.',
+    'Offene Feedback-Loops im Werkzirkel. Werde Tester:in und gib strukturiertes Feedback zu Werken anderer Builder:innen.',
 };
 
 const PAGE_SIZE = 20;
@@ -285,13 +285,13 @@ export default async function PruefrundenListePage({ searchParams }: PageProps) 
             <span>Werkzirkel</span>
           </Link>
           <div className="nav-links" aria-label="Bereiche">
-            <Link href="/">Macher:innen</Link>
+            <Link href="/">Builder:innen</Link>
             <Link href="/werke">Werke</Link>
             <Link href="/pruefrunden" aria-current="page">
               {tn.nav_pruefrunden}
             </Link>
             <Link href="/bedarf">Bedarf einbringen</Link>
-            <Link href="/foerdern">Werke fördern</Link>
+            <Link href="/foerdern">Builds sponsorn</Link>
           </div>
           <Link className="nav-cta" href="/anmelden">
             Anmelden
@@ -494,7 +494,7 @@ export default async function PruefrundenListePage({ searchParams }: PageProps) 
                   className="button"
                   href={buildHref(stadtId, status, nextCursor)}
                 >
-                  Weitere Prüfrunden laden
+                  Weitere Feedback-Loops laden
                 </Link>
               </div>
             ) : null}

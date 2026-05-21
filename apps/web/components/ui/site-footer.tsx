@@ -22,7 +22,7 @@ export default function SiteFooter() {
       <div className="wrap footer-inner">
         <span>Werkzirkel — Gemeinsam digitale Produkte bauen.</span>
         <div className="footer-links" aria-label="Fußnavigation">
-          <Link href="/">Macher:innen</Link>
+          <Link href="/">Builder:innen</Link>
           <Link href="/bedarf">Bedarf</Link>
           <Link href="/foerdern">Fördern</Link>
           <Link href="/regeln">Regeln</Link>

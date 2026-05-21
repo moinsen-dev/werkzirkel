@@ -4,9 +4,9 @@ import Link from 'next/link';
 import SiteFooter from '@/components/ui/site-footer';
 
 export const metadata: Metadata = {
-  title: 'Werke fördern',
+  title: 'Builds sponsorn',
   description:
-    'Du willst lokale digitale Werke fördern — als Stiftung, Angel, Wirtschaftsförderung oder Pat:in eines Coworking-Spaces? Werkzirkel macht dich im Hamburger Kreis sichtbar. Klarname, verifiziert, ohne Pitch-Theater.',
+    'Du willst lokale digitale Builds fördern — als Stiftung, Angel, Wirtschaftsförderung oder Pat:in eines Coworking-Spaces? Werkzirkel macht dich im Hamburger Kreis sichtbar. Klarname, verifiziert, ohne Pitch-Theater.',
 };
 
 export default function FoerdernLandingpage() {
@@ -24,16 +24,16 @@ export default function FoerdernLandingpage() {
             <span>Werkzirkel</span>
           </Link>
           <div className="nav-links" aria-label="Bereiche">
-            <Link href="/">Macher:innen</Link>
+            <Link href="/">Builder:innen</Link>
             <Link href="/bedarf">Bedarf einbringen</Link>
             <Link href="/foerdern" aria-current="page">
-              Werke fördern
+              Builds sponsorn
             </Link>
             <a href="#ablauf">Ablauf</a>
             <a href="#auflagen">Auflagen</a>
           </div>
           <a className="nav-cta" href="#zugang">
-            Förderprofil vormerken
+            Sponsor-Profil vormerken
           </a>
         </div>
       </nav>
@@ -41,17 +41,17 @@ export default function FoerdernLandingpage() {
       <header className="hero" id="top">
         <div className="wrap hero-grid single">
           <div>
-            <p className="eyebrow">Förder:innen · Hamburg</p>
-            <h1>Lokale Werke fördern — ohne Pitch-Theater.</h1>
+            <p className="eyebrow">Sponsor:innen · Hamburg</p>
+            <h1>Lokale Builds sponsorn — ohne Pitch-Theater.</h1>
             <p className="hero-copy">
               Du willst Geld, Raum, Mentoring oder Vertriebszugang an unabhängige Hamburger
-              Macher:innen geben? Werkzirkel macht dich im Kreis sichtbar — mit verifiziertem
-              Förderprofil, transparentem Förderrahmen und persönlicher Vorstellung auf der
-              Bedarfsschau. Keine Bewerbungs-Berge, keine Equity-Vermittlung über die Plattform.
+              Builder:innen geben? Werkzirkel macht dich im Kreis sichtbar — mit verifiziertem
+              Sponsor-Profil, transparentem Sponsor-Budget und persönlicher Vorstellung auf der
+              Briefing Night. Keine Bewerbungs-Berge, keine Equity-Vermittlung über die Plattform.
             </p>
             <div className="hero-actions">
               <a className="button primary" href="#zugang">
-                Förderprofil vormerken
+                Sponsor-Profil vormerken
               </a>
               <a className="button secondary" href="#ablauf">
                 So funktioniert das
@@ -67,13 +67,13 @@ export default function FoerdernLandingpage() {
             <Link className="role-card" href="/">
               <div>
                 <p className="meta">Du baust</p>
-                <h3>Werkpass anlegen</h3>
+                <h3>Builder-Profil anlegen</h3>
                 <p>
                   Eigene digitale Produkte zeigen, testen lassen, weiterentwickeln. Auf
-                  Schauabenden vorstellen.
+                  Demo Nightsn vorstellen.
                 </p>
               </div>
-              <span className="arrow">Zur Macher:innen-Seite →</span>
+              <span className="arrow">Zur Builder:innen-Seite →</span>
             </Link>
             <Link className="role-card" href="/bedarf">
               <div>
@@ -89,10 +89,10 @@ export default function FoerdernLandingpage() {
             <article className="role-card" aria-current="page">
               <div>
                 <p className="meta">Du förderst</p>
-                <h3>Werke fördern</h3>
+                <h3>Builds sponsorn</h3>
                 <p>
-                  Förderprofil anlegen, von der Kurator:in verifizieren lassen, in einer
-                  Bedarfsschau persönlich sichtbar werden.
+                  Sponsor-Profil anlegen, von der City-Lead verifizieren lassen, in einer
+                  Briefing Night persönlich sichtbar werden.
                 </p>
               </div>
               <span className="arrow">Du bist hier →</span>
@@ -106,8 +106,8 @@ export default function FoerdernLandingpage() {
           <div className="section-head">
             <h2>Wer hier richtig ist.</h2>
             <p>
-              Werkzirkel ist eine Sichtbarkeitsbühne für lokale Förder:innen mit Klarnamen und
-              transparentem Förderrahmen. Anonyme Mittel, undurchsichtige Strohleute oder
+              Werkzirkel ist eine Sichtbarkeitsbühne für lokale Sponsor:innen mit Klarnamen und
+              transparentem Sponsor-Budget. Anonyme Mittel, undurchsichtige Strohleute oder
               Equity-Vermittlung über die Plattform sind ausgeschlossen.
             </p>
           </div>
@@ -137,7 +137,7 @@ export default function FoerdernLandingpage() {
                 <li>VC-Pitch-Funnel mit Equity-Forderungen über die Plattform</li>
                 <li>Crowdfunding- oder Crowdinvesting-Aggregatoren</li>
                 <li>Krypto-/Token-Förderung</li>
-                <li>nicht-lokale Förder:innen ohne DACH-Bezug</li>
+                <li>nicht-lokale Sponsor:innen ohne DACH-Bezug</li>
               </ul>
             </article>
           </div>
@@ -159,10 +159,10 @@ export default function FoerdernLandingpage() {
                 <li>
                   <span className="step-number">01</span>
                   <div>
-                    <strong>Förderprofil anlegen</strong>
+                    <strong>Sponsor-Profil anlegen</strong>
                     <p>
-                      Klarname, Organisation, Förderart (Geld, Raum, Mentoring, Sachmittel,
-                      Vertriebszugang), Förderrahmen pro Jahr und je Einzelförderung, bevorzugte
+                      Klarname, Organisation, Sponsor-Art (Geld, Raum, Mentoring, Sachmittel,
+                      Vertriebszugang), Sponsor-Budget pro Jahr und je Einzelförderung, bevorzugte
                       Werke, Gegenleistung. Initial nicht öffentlich.
                     </p>
                   </div>
@@ -170,22 +170,22 @@ export default function FoerdernLandingpage() {
                 <li>
                   <span className="step-number">02</span>
                   <div>
-                    <strong>Kurator:innen-Verifikation</strong>
+                    <strong>City-Leads-Verifikation</strong>
                     <p>
-                      Die Hamburger Kurator:in prüft Klarname, Organisation und Mittelplausibilität
+                      Die Hamburger City-Lead prüft Klarname, Organisation und Mittelplausibilität
                       (Handels-, Vereins- oder Stiftungsregister, bei Privatpersonen
                       Personalausweis), führt ein Vorstellungsgespräch und stimmt deinen ersten
-                      Bedarfsschau-Termin ab.
+                      Briefing Night-Termin ab.
                     </p>
                   </div>
                 </li>
                 <li>
                   <span className="step-number">03</span>
                   <div>
-                    <strong>Persönlich auf der Bedarfsschau</strong>
+                    <strong>Persönlich auf der Briefing Night</strong>
                     <p>
-                      Du stellst dich und deinen Förderrahmen in 7–10 Minuten persönlich vor. Danach
-                      ist dein Profil im Kreis öffentlich. Macher:innen sehen, wofür Mittel
+                      Du stellst dich und deinen Sponsor-Budget in 7–10 Minuten persönlich vor. Danach
+                      ist dein Profil im Kreis öffentlich. Builder:innen sehen, wofür Mittel
                       verfügbar sind, ohne Pitches schreiben zu müssen — du sprichst aktiv an, wen
                       du fördern willst.
                     </p>
@@ -193,8 +193,8 @@ export default function FoerdernLandingpage() {
                 </li>
               </ul>
               <div className="callout">
-                <strong>Aktivitätspflicht.</strong> Verifizierte Förderprofile bleiben öffentlich,
-                solange du mindestens einmal pro Quartal persönlich an einer Bedarfsschau
+                <strong>Aktivitätspflicht.</strong> Verifizierte Sponsor-Profile bleiben öffentlich,
+                solange du mindestens einmal pro Quartal persönlich an einer Briefing Night
                 teilnimmst. Versäumst du das vier Quartale lang, pausiert dein Profil automatisch
                 — und kann mit der nächsten Teilnahme reaktiviert werden.
               </div>
@@ -207,7 +207,7 @@ export default function FoerdernLandingpage() {
                   <span></span>
                   <span></span>
                 </div>
-                <span>Förderprofil · Werkzirkel Hamburg</span>
+                <span>Sponsor-Profil · Werkzirkel Hamburg</span>
               </div>
               <div className="work-body">
                 <span className="status-pill warm">Status: verifiziert</span>
@@ -218,7 +218,7 @@ export default function FoerdernLandingpage() {
                 </p>
                 <div className="work-meta">
                   <div className="meta-box">
-                    <span>Förderart</span>
+                    <span>Sponsor-Art</span>
                     <strong>Geld &amp; Mentoring</strong>
                   </div>
                   <div className="meta-box">
@@ -230,7 +230,7 @@ export default function FoerdernLandingpage() {
                     <strong>Sichtbarkeit, kein Equity</strong>
                   </div>
                   <div className="meta-box">
-                    <span>Letzte Bedarfsschau</span>
+                    <span>Letzte Briefing Night</span>
                     <strong>April 2026</strong>
                   </div>
                 </div>
@@ -243,11 +243,11 @@ export default function FoerdernLandingpage() {
       <section className="section compact" id="auflagen" aria-label="Auflagen">
         <div className="wrap">
           <div className="section-head">
-            <h2>Auflagen für Förder:innen.</h2>
+            <h2>Auflagen für Sponsor:innen.</h2>
             <p>
               Damit Förderkapital im Kreis Vertrauen statt Schieflage erzeugt, hat die
-              Förder:innen-Rolle eigene Pflichten. Diese sind nicht verhandelbar — sie sind der
-              Grund, warum Macher:innen Förderprofile ernst nehmen.
+              Sponsor:innen-Rolle eigene Pflichten. Diese sind nicht verhandelbar — sie sind der
+              Grund, warum Builder:innen Sponsor-Profile ernst nehmen.
             </p>
           </div>
           <div className="protect-band">
@@ -263,10 +263,10 @@ export default function FoerdernLandingpage() {
               </li>
               <li>
                 <div>
-                  <strong>Transparenter Förderrahmen.</strong>
+                  <strong>Transparenter Sponsor-Budget.</strong>
                   <p>
                     Förderhöhe pro Jahr und je Einzelförderung sind im Profil sichtbar — als
-                    Bandbreite, nicht cent-genau. Macher:innen sollen abschätzen können, ob es
+                    Bandbreite, nicht cent-genau. Builder:innen sollen abschätzen können, ob es
                     passt.
                   </p>
                 </div>
@@ -275,7 +275,7 @@ export default function FoerdernLandingpage() {
                 <div>
                   <strong>Persönliche Anwesenheit.</strong>
                   <p>
-                    Mindestens einmal pro Quartal eine Bedarfsschau persönlich besuchen — sonst
+                    Mindestens einmal pro Quartal eine Briefing Night persönlich besuchen — sonst
                     pausiert das Profil automatisch. Sichtbarkeit gibt es nicht ohne Anwesenheit.
                   </p>
                 </div>
@@ -284,7 +284,7 @@ export default function FoerdernLandingpage() {
                 <div>
                   <strong>Keine Equity-Vermittlung.</strong>
                   <p>
-                    Förderprofile dürfen &bdquo;Equity&ldquo; als Gegenleistung markieren — aber Werkzirkel
+                    Sponsor-Profile dürfen &bdquo;Equity&ldquo; als Gegenleistung markieren — aber Werkzirkel
                     vermittelt keine Beteiligungen. Verhandlungen laufen ausschließlich offline und
                     sind nicht Gegenstand der Plattform.
                   </p>
@@ -292,20 +292,20 @@ export default function FoerdernLandingpage() {
               </li>
               <li>
                 <div>
-                  <strong>Kein Cold-Sales auf Macher:innen.</strong>
+                  <strong>Kein Cold-Sales auf Builder:innen.</strong>
                   <p>
-                    Ansprache erfolgt über die öffentlichen Werkpässe — direkt, kollegial, nicht als
-                    Vertriebs-Outreach. Beschwerden über kalten Outreach gehen an die Kurator:in.
+                    Ansprache erfolgt über die öffentlichen Builder-Profile — direkt, kollegial, nicht als
+                    Vertriebs-Outreach. Beschwerden über kalten Outreach gehen an die City-Lead.
                   </p>
                 </div>
               </li>
               <li>
                 <div>
-                  <strong>Beitrag zur Werkstatt-Kultur.</strong>
+                  <strong>Beitrag zur Build-Kultur.</strong>
                   <p>
                     Förder-Mitgliedschaft (240 €/Jahr Privat &amp; Stiftung, 1.200 €/Jahr
                     Organisation) ist üblich — Beitrag zum Kreis, nicht Eintrittsticket. Härtefälle
-                    klärt die Kurator:in.
+                    klärt die City-Lead.
                   </p>
                 </div>
               </li>
@@ -318,11 +318,11 @@ export default function FoerdernLandingpage() {
         <div className="wrap cta-box">
           <div>
             <p className="eyebrow">Hamburger Förderkreis</p>
-            <h2>Förderprofil vormerken.</h2>
+            <h2>Sponsor-Profil vormerken.</h2>
             <p>
-              Skizziere uns Organisation und Förderrahmen in wenigen Sätzen. Die Hamburger
-              Kurator:in meldet sich persönlich für ein Vorgespräch und stimmt einen ersten
-              Bedarfsschau-Termin mit dir ab — bevor dein Profil öffentlich wird.
+              Skizziere uns Organisation und Sponsor-Budget in wenigen Sätzen. Die Hamburger
+              City-Lead meldet sich persönlich für ein Vorgespräch und stimmt einen ersten
+              Briefing Night-Termin mit dir ab — bevor dein Profil öffentlich wird.
             </p>
           </div>
           <form className="waitlist" action="#" method="post">
@@ -337,19 +337,19 @@ export default function FoerdernLandingpage() {
               aria-label="E-Mail-Adresse"
               required
             />
-            <label htmlFor="foerder-skizze">Organisation und Förderrahmen</label>
+            <label htmlFor="foerder-skizze">Organisation und Sponsor-Budget</label>
             <textarea
               id="foerder-skizze"
               name="skizze"
-              placeholder="Wer fördert? Welche Förderart? Welche Größenordnung?"
-              aria-label="Organisation und Förderrahmen"
+              placeholder="Wer fördert? Welche Sponsor-Art? Welche Größenordnung?"
+              aria-label="Organisation und Sponsor-Budget"
               required
             ></textarea>
             <button className="button primary" type="submit">
               Profil vormerken
             </button>
             <p className="small-note">
-              Eingaben werden vertraulich behandelt und nur intern an die Hamburger Kurator:in
+              Eingaben werden vertraulich behandelt und nur intern an die Hamburger City-Lead
               weitergegeben.
             </p>
           </form>

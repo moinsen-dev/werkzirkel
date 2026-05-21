@@ -1,7 +1,7 @@
 /**
  * POST /api/v1/kurator/foerderprofile/:id/ablehnen
  *
- * Kurator:in lehnt das Foerderprofil ab. Erwartet `{ grund: string }`,
+ * City-Lead lehnt das Foerderprofil ab. Erwartet `{ grund: string }`,
  * setzt Status 'abgelehnt' und versendet T-503 an die Inhaber:in.
  *
  * PRD-Referenz: §F-702, §19.
@@ -53,7 +53,7 @@ export async function POST(req: Request, ctx: RouteContext): Promise<Response> {
         error: {
           code: 'kein_zugriff',
           message:
-            'Nur Kurator:innen der jeweiligen Stadt koennen Foerderprofile ablehnen.',
+            'Nur City-Leads der jeweiligen Stadt koennen Foerderprofile ablehnen.',
         },
       },
       { status: 403 },

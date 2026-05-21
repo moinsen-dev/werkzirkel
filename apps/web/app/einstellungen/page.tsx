@@ -306,10 +306,17 @@ async function kontoLoeschenAnfordernAction(): Promise<void> {
   });
 
   const confirmUrl = `${env.APP_URL}/api/v1/me/delete-confirm?token=${encodeURIComponent(clearToken)}`;
+  const voraussichtlichesLoeschdatum = new Date(
+    Date.now() + 7 * 24 * 60 * 60 * 1000,
+  ).toLocaleDateString('de-DE', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  });
   await sendMail({
     to: email,
     template: 'T-003',
-    props: { confirmUrl, appUrl: env.APP_URL },
+    props: { confirmUrl, appUrl: env.APP_URL, voraussichtlichesLoeschdatum },
     nutzerId: sess.nutzerId,
   });
 
@@ -1015,8 +1022,8 @@ function FoerdermitgliedschaftTab(props: {
         <p>
           Mit einer Foerdermitgliedschaft tragt ihr die Werkstatt nachhaltig
           mit. Werkzirkel nimmt keine Provision auf Vermittlungen — der
-          Beitrag fliesst transparent in die Werkstatt-Kasse. Mitglieder mit
-          aktivem Status koennen mehr als fuenf Werke anlegen.
+          Beitrag fliesst transparent in die Community-Pool. Mitglieder mit
+          aktivem Status koennen mehr als fuenf Builds anlegen.
         </p>
       </div>
 

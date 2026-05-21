@@ -298,7 +298,7 @@ async function handler(req: Request): Promise<Response> {
   for (const s of staedte) {
     const inhalte = await ladeInhalteFuerStadt(s.id);
     // Wenn die Stadt diese Woche absolut nichts zu bieten hat (kein Werk,
-    // kein Termin, kein Hilfegesuch) ueberspringen wir den ganzen Lauf —
+    // kein Termin, kein Quick-Help) ueberspringen wir den ganzen Lauf —
     // ein leerer Digest waere Spam.
     if (
       inhalte.werke.length === 0 &&

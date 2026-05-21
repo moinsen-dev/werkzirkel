@@ -1,7 +1,7 @@
 /**
  * /admin/werkstatt-kasse — Admin-Übersicht aller Städte mit Freigabe-Buttons.
  *
- * Listet alle Werkstatt-Kasse-Einträge, gruppiert pro Stadt. Unfreigegebene
+ * Listet alle Community-Pool-Einträge, gruppiert pro Stadt. Unfreigegebene
  * Einträge bekommen einen "Freigeben"-Button (Server Action, ruft die gleiche
  * Logik wie POST /api/v1/admin/werkstatt-kasse/:id/freigeben).
  *
@@ -23,7 +23,7 @@ import { hasRolle } from '@/lib/auth/permissions';
 import { kategorieLabel, euroFormat } from '@/lib/kasse/labels';
 
 export const metadata: Metadata = {
-  title: 'Werkstatt-Kasse — Admin',
+  title: 'Community-Pool — Admin',
   robots: { index: false, follow: false },
 };
 
@@ -122,7 +122,7 @@ export default async function AdminKassePage({ searchParams }: PageProps) {
           </Link>
           <div className="nav-links">
             <Link href="/admin/werkstatt-kasse" aria-current="page">
-              Werkstatt-Kasse (Admin)
+              Community-Pool (Admin)
             </Link>
           </div>
         </div>
@@ -131,8 +131,8 @@ export default async function AdminKassePage({ searchParams }: PageProps) {
       <header className="hero" id="top">
         <div className="wrap hero-grid single">
           <div>
-            <p className="eyebrow">Werkzirkel · Admin · Werkstatt-Kasse</p>
-            <h1>Freigaben — Werkstatt-Kasse</h1>
+            <p className="eyebrow">Werkzirkel · Admin · Community-Pool</p>
+            <h1>Freigaben — Community-Pool</h1>
             <p className="hero-copy">
               Manuelle Kurator-Einträge erscheinen hier zur Freigabe. Stripe-
               Webhook-Einträge sind automatisch freigegeben und brauchen

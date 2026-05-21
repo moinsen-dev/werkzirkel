@@ -86,7 +86,7 @@ const TABS: ReadonlyArray<TabDef> = [
   },
   {
     href: '/uebersicht/werke',
-    label: 'Werke',
+    label: 'Builds',
     match: (p) => p.startsWith('/uebersicht/werke') || p.startsWith('/werke'),
     icon: (
       <svg
@@ -165,9 +165,9 @@ interface MehrLink {
 const MEHR_LINKS: ReadonlyArray<MehrLink> = [
   { href: '/uebersicht/bedarfe', label: 'Bedarfe' },
   { href: '/uebersicht/foerderprofil', label: 'Foerderprofil' },
-  { href: '/uebersicht/hilfegesuche', label: 'Hilfegesuche' },
-  { href: '/uebersicht/werkangebote', label: 'Werkangebote' },
-  { href: '/uebersicht/werkstattbeitrag', label: 'Werkstattbeitrag' },
+  { href: '/uebersicht/hilfegesuche', label: 'Quick-Helps' },
+  { href: '/uebersicht/werkangebote', label: 'Match-Angebote' },
+  { href: '/uebersicht/werkstattbeitrag', label: 'Membership-Beitrag' },
   { href: '/einstellungen', label: 'Einstellungen' },
 ];
 

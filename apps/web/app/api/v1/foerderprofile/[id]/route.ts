@@ -2,7 +2,7 @@
  * GET + PATCH /api/v1/foerderprofile/:id
  *
  * - GET: 'verifiziert'-Profile sind fuer eingeloggte Personen lesbar.
- *   Andere Status sind nur fuer Owner und Kurator:in der Stadt sichtbar.
+ *   Andere Status sind nur fuer Owner und City-Lead der Stadt sichtbar.
  *   Bei `gegenleistung_typ='equity_offline'` wird ein expliziter
  *   `equity_hinweistext` ausgeliefert (PRD §11A Kulturverlust 5).
  * - PATCH: Owner-only. Status muss IN ('entwurf', 'verifiziert') sein.
@@ -58,7 +58,7 @@ export async function GET(req: Request, ctx: RouteContext): Promise<Response> {
     return Response.json({ foerderprofil: serializeFoerderprofil(row) });
   }
 
-  // Nicht-verifizierte Profile nur fuer Owner und Kurator:in der Stadt.
+  // Nicht-verifizierte Profile nur fuer Owner und City-Lead der Stadt.
   const sess = await getSessionFromRequest(req);
   if (!sess) {
     return Response.json({ fehler: 'nicht_gefunden' }, { status: 404 });
@@ -67,7 +67,7 @@ export async function GET(req: Request, ctx: RouteContext): Promise<Response> {
     return Response.json({ foerderprofil: serializeFoerderprofil(row) });
   }
 
-  // Kurator:in der Stadt der Owner-Person?
+  // City-Lead der Stadt der Owner-Person?
   const stadtId = await ownerStadtId(row.nutzerId);
   if (stadtId && (await istKuratorVon(sess.nutzerId, stadtId))) {
     return Response.json({ foerderprofil: serializeFoerderprofil(row) });

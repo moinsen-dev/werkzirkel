@@ -1,16 +1,16 @@
 /**
  * PATCH /api/v1/werkangebote/:id
  *
- * Status-Uebergaenge eines Werkangebots:
+ * Status-Uebergaenge eines Match-Angebots:
  *  - Bedarfstraeger:in (Bedarf-Inhaber:in) darf setzen:
  *      eingereicht → in_gespraechen
  *      eingereicht | in_gespraechen → beauftragt
  *      eingereicht | in_gespraechen → nicht_gewaehlt
- *  - Macher:in (Werkangebot-Inhaber:in) darf setzen:
+ *  - Builder:in (Match-Angebot-Inhaber:in) darf setzen:
  *      eingereicht | in_gespraechen → zurueckgezogen
  *
- * Beim Bedarfstraeger:innen-Wechsel wird T-202 an die Macher:in versendet.
- * Beim Macher:innen-Rueckzug informieren wir aktuell *nicht* per Mail
+ * Beim Bedarfstraeger:innen-Wechsel wird T-202 an die Builder:in versendet.
+ * Beim Builder:innen-Rueckzug informieren wir aktuell *nicht* per Mail
  * (kein Mail-Spam an die Bedarfstraeger:in noetig — sie sieht den Status
  * in der Uebersicht).
  *
@@ -86,7 +86,7 @@ export async function PATCH(req: Request, ctx: RouteContext): Promise<Response> 
   }
   const { status: target } = parsed.data;
 
-  // Werkangebot + Bedarf zusammen laden — wir brauchen den Bedarf-Owner
+  // Match-Angebot + Bedarf zusammen laden — wir brauchen den Bedarf-Owner
   // fuer die Bedarfstraeger:innen-Pruefung und den Bedarf-Titel fuer die Mail.
   const rows = await db
     .select({
@@ -111,7 +111,7 @@ export async function PATCH(req: Request, ctx: RouteContext): Promise<Response> 
       {
         error: {
           code: 'kein_zugriff',
-          message: 'Du darfst dieses Werkangebot nicht aendern.',
+          message: 'Du darfst dieses Match-Angebot nicht aendern.',
         },
       },
       { status: 403 },
@@ -137,7 +137,7 @@ export async function PATCH(req: Request, ctx: RouteContext): Promise<Response> 
         error: {
           code: 'unerlaubter_uebergang',
           message:
-            'Als Macher:in kannst du dein Werkangebot nur "zurueckgezogen" setzen.',
+            'Als Builder:in kannst du dein Match-Angebot nur "zurueckgezogen" setzen.',
         },
       },
       { status: 422 },
@@ -171,7 +171,7 @@ export async function PATCH(req: Request, ctx: RouteContext): Promise<Response> 
   const updatedRow = updated[0]!;
 
   // T-202 nur, wenn die Bedarfstraeger:in den Status gesetzt hat. Beim
-  // Macher:innen-Rueckzug informieren wir die Bedarfstraeger:in nicht
+  // Builder:innen-Rueckzug informieren wir die Bedarfstraeger:in nicht
   // gesondert per Mail (sie sieht den Status in der Uebersicht).
   if (
     istBedarfsOwner &&

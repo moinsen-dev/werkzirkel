@@ -7,7 +7,7 @@ import { getSessionIdFromRequest } from '@/lib/auth/session';
 
 const DEFAULT_TITLE = 'Werkzirkel — Gemeinsam digitale Produkte bauen';
 const DEFAULT_DESCRIPTION =
-  'Werkzirkel verbindet unabhängige digitale Macher:innen in Hamburg — mit Bedarfsträger:innen und Förder:innen aus derselben Stadt. Werkstatt-Kultur, kein Marktplatz.';
+  'Werkzirkel verbindet unabhängige digitale Builder:innen in Hamburg — mit Auftraggeber:innen und Sponsor:innen aus derselben Stadt. Build-Kultur, kein Marktplatz.';
 const DEFAULT_OG_IMAGE = '/og-default.png';
 
 export const metadata: Metadata = {
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
         url: DEFAULT_OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: 'Werkzirkel — Werkstatt-Kultur fuer digitale Macher:innen',
+        alt: 'Werkzirkel — Build-Kultur fuer digitale Builder:innen',
       },
     ],
   },

@@ -3,7 +3,7 @@
  *
  * Statusuebergang `veroeffentlicht` → `abgesagt` (PRD §14.6).
  *
- * - Auth + Permission (Kurator:in der Stadt oder Admin).
+ * - Auth + Permission (City-Lead der Stadt oder Admin).
  * - Status muss 'veroeffentlicht' sein.
  * - Sendet T-404 an alle Angemeldeten + Wartelisten-Personen.
  *   Auch wenn die Anmeldungs-Liste leer ist, ist das ein valider Pfad
@@ -32,9 +32,9 @@ interface RouteContext {
 
 const TERMIN_TYP_LABEL: Record<string, string> = {
   pruefabend: 'Pruefabend',
-  schauabend: 'Schauabend',
-  bedarfsschau: 'Bedarfsschau',
-  baurunde: 'Baurunde',
+  schauabend: 'Demo Night',
+  bedarfsschau: 'Briefing Night',
+  baurunde: 'Build-Runde',
   werkgespraech: 'Werkgespraech',
   kennenlernrunde: 'Kennenlernrunde',
 };
@@ -73,7 +73,7 @@ export async function POST(req: Request, ctx: RouteContext): Promise<Response> {
         error: {
           code: 'kein_zugriff',
           message:
-            'Nur Kurator:innen der jeweiligen Stadt koennen Termine absagen.',
+            'Nur City-Leads der jeweiligen Stadt koennen Termine absagen.',
         },
       },
       { status: 403 },

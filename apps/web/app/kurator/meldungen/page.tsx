@@ -71,13 +71,13 @@ const KATEGORIE_LABELS: Record<string, string> = {
 };
 
 const REFERENZ_LABELS: Record<MeldungReferenzTyp, string> = {
-  werk: 'Werk',
+  werk: 'Build',
   bedarf: 'Bedarf',
-  werkangebot: 'Werkangebot',
+  werkangebot: 'Match-Angebot',
   foerderprofil: 'Foerderprofil',
   nutzer: 'Nutzer:in',
   feedback: 'Feedback',
-  hilfegesuch_antwort: 'Hilfegesuch-Antwort',
+  hilfegesuch_antwort: 'Quick-Help-Antwort',
 };
 
 const STATUS_LABELS: Record<MeldungStatus, string> = {
@@ -342,7 +342,7 @@ export default async function KuratorMeldungenPage({ searchParams }: PageProps) 
               className="callout"
               style={{ padding: 16, borderRadius: 12 }}
             >
-              <strong>Nur Kurator:innen und Admins koennen das Postfach lesen.</strong>
+              <strong>Nur City-Leads und Admins koennen das Postfach lesen.</strong>
             </div>
           ) : (
             <>

@@ -110,13 +110,13 @@ export async function POST(req: Request, ctx: RouteContext): Promise<Response> {
             offene_anzahl: check.offene_anzahl,
           },
           deutsche_message:
-            'Du hast eine abgelaufene Reziprozitaets-Verpflichtung. Bitte gib zuerst Feedback zu offenen Pruefrunden anderer Werke, bevor du eine neue veroeffentlichst.',
+            'Du hast eine abgelaufene Reziprozitaets-Verpflichtung. Bitte gib zuerst Feedback zu offenen Pruefrunden anderer Builds, bevor du eine neue veroeffentlichst.',
         },
         { status: 422 },
       );
     }
     // saldo_zu_niedrig: User hat keine Verpflichtung akzeptiert + zu wenig
-    // Tests gegeben. Wir liefern die offenen Prüfrunden anderer als
+    // Tests gegeben. Wir liefern die offenen Feedback-Loops anderer als
     // Wahl-Hilfe direkt mit, damit das UI sie ohne Round-Trip rendern kann.
     const offeneAndere = await findeOffenePruefrundenAnderer(sess.nutzerId, 2);
     return Response.json(
@@ -132,7 +132,7 @@ export async function POST(req: Request, ctx: RouteContext): Promise<Response> {
           frist: p.frist,
         })),
         deutsche_message:
-          'Du hast noch keine zwei Tests gegeben. Wähle: gib zuerst Feedback zu zwei Prüfrunden anderer Werke, oder bestätige explizit die 14-Tage-Verpflichtung beim Veröffentlichen.',
+          'Du hast noch keine zwei Tests gegeben. Wähle: gib zuerst Feedback zu zwei Feedback-Loops anderer Builds, oder bestätige explizit die 14-Tage-Verpflichtung beim Veröffentlichen.',
       },
       { status: 422 },
     );

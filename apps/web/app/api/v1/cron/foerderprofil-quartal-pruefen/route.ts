@@ -2,7 +2,7 @@
  * POST/GET /api/v1/cron/foerderprofil-quartal-pruefen
  *
  * Taeglicher Cron. Sucht alle verifizierten Foerderprofile, deren letzte
- * Bedarfsschau-Teilnahme mehr als 12 Monate (4 Quartale) zurueckliegt,
+ * Briefing Night-Teilnahme mehr als 12 Monate (4 Quartale) zurueckliegt,
  * pausiert sie automatisch und versendet T-504.
  *
  * PRD-Referenz: §11A Schutz Kulturverlust 4, §F-704, §19.

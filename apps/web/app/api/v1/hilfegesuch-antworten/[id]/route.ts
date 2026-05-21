@@ -1,7 +1,7 @@
 /**
  * DELETE /api/v1/hilfegesuch-antworten/:id
  *
- * Loescht eine eigene Antwort an einem Hilfegesuch. Nur Autor:in darf
+ * Loescht eine eigene Antwort an einem Quick-Help. Nur Autor:in darf
  * loeschen; sonst 403. 404 wenn unbekannt.
  */
 

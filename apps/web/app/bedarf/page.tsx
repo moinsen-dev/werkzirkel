@@ -6,7 +6,7 @@ import SiteFooter from '@/components/ui/site-footer';
 export const metadata: Metadata = {
   title: 'Bedarf einbringen',
   description:
-    'Du hast ein konkretes digitales Problem in Hamburg? Bring deinen Bedarf in den Werkzirkel — Werkstattbeitrag statt Ausschreibung, kein Pitch-Wettbewerb, kein Marktplatz.',
+    'Du hast ein konkretes digitales Problem in Hamburg? Bring deinen Bedarf in den Werkzirkel — Membership-Beitrag statt Ausschreibung, kein Pitch-Wettbewerb, kein Marktplatz.',
 };
 
 export default function BedarfLandingpage() {
@@ -24,11 +24,11 @@ export default function BedarfLandingpage() {
             <span>Werkzirkel</span>
           </Link>
           <div className="nav-links" aria-label="Bereiche">
-            <Link href="/">Macher:innen</Link>
+            <Link href="/">Builder:innen</Link>
             <Link href="/bedarf" aria-current="page">
               Bedarf einbringen
             </Link>
-            <Link href="/foerdern">Werke fördern</Link>
+            <Link href="/foerdern">Builds sponsorn</Link>
             <a href="#ablauf">Ablauf</a>
             <a href="#schutz">Schutz</a>
           </div>
@@ -41,12 +41,12 @@ export default function BedarfLandingpage() {
       <header className="hero" id="top">
         <div className="wrap hero-grid single">
           <div>
-            <p className="eyebrow">Bedarfsträger:innen · Hamburg</p>
-            <h1>Dein digitales Problem trifft lokale Macher:innen.</h1>
+            <p className="eyebrow">Auftraggeber:innen · Hamburg</p>
+            <h1>Dein digitales Problem trifft lokale Builder:innen.</h1>
             <p className="hero-copy">
               Werkzirkel ist kein Freelancer-Marktplatz und keine Ausschreibungsplattform. Es ist
               eine Werkstatt mit kuratierter Sichtbarkeit. Du bringst dein Problem persönlich in
-              den Kreis — Hamburger Macher:innen antworten mit Werkangeboten, verhandelt wird
+              den Kreis — Hamburger Builder:innen antworten mit Werkangeboten, verhandelt wird
               offline.
             </p>
             <div className="hero-actions">
@@ -67,13 +67,13 @@ export default function BedarfLandingpage() {
             <Link className="role-card" href="/">
               <div>
                 <p className="meta">Du baust</p>
-                <h3>Werkpass anlegen</h3>
+                <h3>Builder-Profil anlegen</h3>
                 <p>
                   Eigene digitale Produkte zeigen, testen lassen, weiterentwickeln. Auf
-                  Schauabenden vorstellen.
+                  Demo Nightsn vorstellen.
                 </p>
               </div>
-              <span className="arrow">Zur Macher:innen-Seite →</span>
+              <span className="arrow">Zur Builder:innen-Seite →</span>
             </Link>
             <article className="role-card" aria-current="page">
               <div>
@@ -81,7 +81,7 @@ export default function BedarfLandingpage() {
                 <h3>Bedarf einbringen</h3>
                 <p>
                   Ein konkretes digitales Problem aus deiner Organisation in den Hamburger Kreis
-                  stellen — mit Werkstattbeitrag, ohne Pitch-Wettbewerb.
+                  stellen — mit Membership-Beitrag, ohne Pitch-Wettbewerb.
                 </p>
               </div>
               <span className="arrow">Du bist hier →</span>
@@ -89,9 +89,9 @@ export default function BedarfLandingpage() {
             <Link className="role-card" href="/foerdern">
               <div>
                 <p className="meta">Du förderst</p>
-                <h3>Werke fördern</h3>
+                <h3>Builds sponsorn</h3>
                 <p>
-                  Förderprofil anlegen, verifizieren lassen, in einer Bedarfsschau persönlich
+                  Sponsor-Profil anlegen, verifizieren lassen, in einer Briefing Night persönlich
                   sichtbar werden.
                 </p>
               </div>
@@ -106,9 +106,9 @@ export default function BedarfLandingpage() {
           <div className="section-head">
             <h2>Für wen das gedacht ist.</h2>
             <p>
-              Werkzirkel funktioniert für Hamburger Bedarfsträger:innen mit echtem, abgrenzbarem
+              Werkzirkel funktioniert für Hamburger Auftraggeber:innen mit echtem, abgrenzbarem
               digitalen Bedarf — typischerweise zwischen 500 € und 30.000 €. Lokal verankert, nicht
-              anonym, bereit für Werkstatt-Kultur statt Ausschreibungsformular.
+              anonym, bereit für Build-Kultur statt Ausschreibungsformular.
             </p>
           </div>
           <div className="example-grid">
@@ -132,7 +132,7 @@ export default function BedarfLandingpage() {
                 <li>Stellenanzeigen für Festanstellung</li>
                 <li>anonymes Auftreten oder Strohleute</li>
                 <li>reine Lead-Generierung ohne ehrliche Vergabeabsicht</li>
-                <li>Sales-Funnel auf Macher:innen ausgerichtet</li>
+                <li>Sales-Funnel auf Builder:innen ausgerichtet</li>
               </ul>
             </article>
           </div>
@@ -155,10 +155,10 @@ export default function BedarfLandingpage() {
                 <li>
                   <span className="step-number">01</span>
                   <div>
-                    <strong>Werkstattbeitrag wählen</strong>
+                    <strong>Membership-Beitrag wählen</strong>
                     <p>
-                      Bevor dein Bedarf öffentlich wird, leistest du einen Werkstattbeitrag — als
-                      Anwesenheit auf einem Schauabend, als Geldbeitrag oder als dokumentierte
+                      Bevor dein Bedarf öffentlich wird, leistest du einen Membership-Beitrag — als
+                      Anwesenheit auf einem Demo Night, als Geldbeitrag oder als dokumentierte
                       Sachleistung. Das schützt den Kreis vor Drive-by-Ausschreibungen.
                     </p>
                   </div>
@@ -169,8 +169,8 @@ export default function BedarfLandingpage() {
                     <strong>Bedarf strukturiert einbringen</strong>
                     <p>
                       Du beschreibst Problem, Nutzen, Größenordnung und Frist. Geldrahmen optional.
-                      Die Kurator:in prüft sprachlich und auf Werkstatt-Passung, danach geht der
-                      Bedarf öffentlich an die Hamburger Macher:innen.
+                      Die City-Lead prüft sprachlich und auf Werkstatt-Passung, danach geht der
+                      Bedarf öffentlich an die Hamburger Builder:innen.
                     </p>
                   </div>
                 </li>
@@ -179,7 +179,7 @@ export default function BedarfLandingpage() {
                   <div>
                     <strong>Werkangebote sichten, offline besprechen</strong>
                     <p>
-                      Macher:innen antworten mit strukturierten Werkangeboten — bezogen auf ein
+                      Builder:innen antworten mit strukturierten Werkangeboten — bezogen auf ein
                       konkretes bestehendes Werk, nicht mit Bewerbungsmappen. Du sprichst mit ein
                       bis drei direkt, schließt offline, markierst den Bedarf als erfüllt.
                     </p>
@@ -188,8 +188,8 @@ export default function BedarfLandingpage() {
               </ul>
               <div className="callout">
                 <strong>Spende statt Provision.</strong> Wird ein Bedarf erfüllt, ist ein
-                freiwilliger Erfolgsbeitrag von etwa 5 % an die Werkstatt-Kasse Hamburg üblich.
-                Werkzirkel stellt keine Rechnung und nimmt nichts vom Honorar der Macher:innen.
+                freiwilliger Erfolgsbeitrag von etwa 5 % an die Community-Pool Hamburg üblich.
+                Werkzirkel stellt keine Rechnung und nimmt nichts vom Honorar der Builder:innen.
                 Die Kasse ist quartalsweise öffentlich.
               </div>
             </div>
@@ -220,8 +220,8 @@ export default function BedarfLandingpage() {
                     <strong>Werkangebote bis 30.06.</strong>
                   </div>
                   <div className="meta-box">
-                    <span>Werkstattbeitrag</span>
-                    <strong>Anwesend Schauabend Mai</strong>
+                    <span>Membership-Beitrag</span>
+                    <strong>Anwesend Demo Night Mai</strong>
                   </div>
                   <div className="meta-box">
                     <span>Kreis</span>
@@ -234,12 +234,12 @@ export default function BedarfLandingpage() {
         </div>
       </section>
 
-      <section className="section compact" aria-label="Werkstattbeitrag-Pfade">
+      <section className="section compact" aria-label="Membership-Beitrag-Pfade">
         <div className="wrap">
           <div className="section-head">
             <h2>Drei Wege, den Beitrag zu leisten.</h2>
             <p>
-              Der Werkstattbeitrag ist die Eintrittskarte in den Kreis — und der Schutz davor, dass
+              Der Membership-Beitrag ist die Eintrittskarte in den Kreis — und der Schutz davor, dass
               Werkzirkel zur Ausschreibungs-Plattform mutiert. Du wählst, was zu dir passt. Eine
               Sache reicht.
             </p>
@@ -250,8 +250,8 @@ export default function BedarfLandingpage() {
                 <span className="badge">Pfad A</span>
                 <h3>Persönlich da sein</h3>
                 <p>
-                  Du kommst zu einem Hamburger Schauabend, lernst die Macher:innen kennen, lässt
-                  dich von der Kurator:in vorstellen. Anwesenheit wird dokumentiert, Bedarf danach
+                  Du kommst zu einem Hamburger Demo Night, lernst die Builder:innen kennen, lässt
+                  dich von der City-Lead vorstellen. Anwesenheit wird dokumentiert, Bedarf danach
                   freigeschaltet.
                 </p>
               </div>
@@ -262,7 +262,7 @@ export default function BedarfLandingpage() {
                 <span className="badge">Pfad B</span>
                 <h3>Geldbeitrag</h3>
                 <p>
-                  Wenn dir kein Termin passt: ein einmaliger Beitrag an die Werkstatt-Kasse Hamburg.
+                  Wenn dir kein Termin passt: ein einmaliger Beitrag an die Community-Pool Hamburg.
                   Selbsteinschätzung in drei Stufen — keine Rechnung, transparente Verwendung.
                 </p>
               </div>
@@ -273,8 +273,8 @@ export default function BedarfLandingpage() {
                 <span className="badge">Pfad C</span>
                 <h3>Sachleistung</h3>
                 <p>
-                  Raum-Spende für einen Schauabend, Mentor:innen-Stunde, Testnutzer-Recruiting,
-                  Material — die Kurator:in trägt deine Leistung ein und gibt frei.
+                  Raum-Spende für einen Demo Night, Mentor:innen-Stunde, Testnutzer-Recruiting,
+                  Material — die City-Lead trägt deine Leistung ein und gibt frei.
                 </p>
               </div>
               <span className="amount">nach Absprache</span>
@@ -283,7 +283,7 @@ export default function BedarfLandingpage() {
           <div className="callout">
             <strong>Gültigkeit.</strong> Ein Beitrag deckt vier Bedarfe oder sechs Monate — je
             nachdem was zuerst eintritt. Härtefälle für Vereine ohne Mittel klärt die Hamburger
-            Kurator:in im Einzelgespräch.
+            City-Lead im Einzelgespräch.
           </div>
         </div>
       </section>
@@ -304,7 +304,7 @@ export default function BedarfLandingpage() {
                 <div>
                   <strong>Keine Drive-by-Ausschreibung.</strong>
                   <p>
-                    Werkstattbeitrag ist Pflicht. Wer Sammel-Angebote einholen will, findet hier
+                    Membership-Beitrag ist Pflicht. Wer Sammel-Angebote einholen will, findet hier
                     nicht statt.
                   </p>
                 </div>
@@ -313,8 +313,8 @@ export default function BedarfLandingpage() {
                 <div>
                   <strong>Kein Cold-Sales auf dich.</strong>
                   <p>
-                    Macher:innen können dich nicht direkt anschreiben. Kontakt entsteht nur über
-                    das strukturierte Werkangebot oder bei Bedarfsschau und Schauabend persönlich.
+                    Builder:innen können dich nicht direkt anschreiben. Kontakt entsteht nur über
+                    das strukturierte Match-Angebot oder bei Briefing Night und Demo Night persönlich.
                   </p>
                 </div>
               </li>
@@ -332,7 +332,7 @@ export default function BedarfLandingpage() {
                   <strong>Keine Plattform-Vermittlung.</strong>
                   <p>
                     Verträge, Zahlungen und Beteiligungen laufen ausschließlich offline zwischen
-                    dir und der Macher:in. Werkzirkel kennt keinen Vertrag und keinen Cent zwischen
+                    dir und der Builder:in. Werkzirkel kennt keinen Vertrag und keinen Cent zwischen
                     euch.
                   </p>
                 </div>
@@ -341,8 +341,8 @@ export default function BedarfLandingpage() {
                 <div>
                   <strong>Keine Provision.</strong>
                   <p>
-                    Der optionale Erfolgsbeitrag ist eine Spende an die Werkstatt-Kasse, keine
-                    Vermittlungsgebühr. Macher:innen bekommen ihr Honorar in voller Höhe —
+                    Der optionale Erfolgsbeitrag ist eine Spende an die Community-Pool, keine
+                    Vermittlungsgebühr. Builder:innen bekommen ihr Honorar in voller Höhe —
                     verhandelt mit dir.
                   </p>
                 </div>
@@ -358,9 +358,9 @@ export default function BedarfLandingpage() {
             <p className="eyebrow">Hamburger Bedarf</p>
             <h2>Bedarf vormerken.</h2>
             <p>
-              Skizziere uns dein digitales Problem in zwei Sätzen. Die Hamburger Kurator:in meldet
-              sich persönlich, bespricht den passenden Werkstattbeitrag-Pfad und lädt dich zur
-              nächsten Bedarfsschau oder zu einem Schauabend ein.
+              Skizziere uns dein digitales Problem in zwei Sätzen. Die Hamburger City-Lead meldet
+              sich persönlich, bespricht den passenden Membership-Beitrag-Pfad und lädt dich zur
+              nächsten Briefing Night oder zu einem Demo Night ein.
             </p>
           </div>
           <form className="waitlist" action="#" method="post">
@@ -387,7 +387,7 @@ export default function BedarfLandingpage() {
               Bedarf einreichen
             </button>
             <p className="small-note">
-              Eingaben werden vertraulich behandelt und nur intern an die Hamburger Kurator:in
+              Eingaben werden vertraulich behandelt und nur intern an die Hamburger City-Lead
               weitergegeben.
             </p>
           </form>

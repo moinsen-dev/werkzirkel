@@ -1,7 +1,7 @@
 /**
  * GET /api/v1/werke/:id/historie
  *
- * Oeffentliche Werkstand-Historie eines Werks. Liefert alle werk_historie-
+ * Oeffentliche Build-Stand-Historie eines Werks. Liefert alle werk_historie-
  * Eintraege absteigend chronologisch sortiert, plus minimale Inhaber-Daten
  * der jeweils Aendernden (anzeigename, avatar — KEIN klarname/email).
  *

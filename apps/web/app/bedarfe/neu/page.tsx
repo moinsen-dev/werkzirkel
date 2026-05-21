@@ -1,12 +1,12 @@
 /**
  * /bedarfe/neu — 3-Schritt-Bedarf-Anlegen-Flow (Server Component + Server Actions).
  *
- * Quelle: PRD §F-602, §11A Schutz S1, §18 (Werkstattbeitrag-Pfade).
+ * Quelle: PRD §F-602, §11A Schutz S1, §18 (Membership-Beitrag-Pfade).
  *
  * Schritte (via Query-Param `schritt`):
- *  - Schritt 1 (Default): Werkstattbeitrag-Auswahl. Wenn gueltiger Beitrag
+ *  - Schritt 1 (Default): Membership-Beitrag-Auswahl. Wenn gueltiger Beitrag
  *    existiert: direkt 'Weiter' nach Schritt 2. Sonst drei Optionen
- *    (Schauabend-Termine, Geldbeitrag via Stripe, Sachleistung-Form).
+ *    (Demo Night-Termine, Geldbeitrag via Stripe, Sachleistung-Form).
  *  - Schritt 2: Bedarf-Form mit Validator-Feldern.
  *  - Schritt 3: Bestaetigung nach erfolgreichem Einreichen.
  *
@@ -147,7 +147,7 @@ export async function bedarfAnlegenAction(formData: FormData): Promise<void> {
     redirect('/bedarfe/neu?fehler=klarname_fehlt');
   }
 
-  // Werkstattbeitrag-Gate vor INSERT.
+  // Membership-Beitrag-Gate vor INSERT.
   const beitrag = await ladeGueltigenBeitrag(sess.nutzerId);
   if (!beitrag) {
     redirect('/bedarfe/neu?fehler=werkstattbeitrag_fehlt');
@@ -485,12 +485,12 @@ function SachleistungEingereicht() {
     <div>
       <h2 style={{ fontSize: 24, margin: 0 }}>Sachleistung erfasst</h2>
       <p style={{ color: 'var(--muted)' }}>
-        Deine Sachleistung wurde erfasst. Eine Kurator:in prüft und verifiziert
+        Deine Sachleistung wurde erfasst. Eine City-Lead prüft und verifiziert
         sie — du erhältst eine E-Mail. Nach Verifikation kannst du deinen
         Bedarf einbringen.
       </p>
       <Link className="button primary" href="/uebersicht/werkstattbeitrag">
-        Zur Werkstattbeitrag-Übersicht
+        Zur Membership-Beitrag-Übersicht
       </Link>
     </div>
   );

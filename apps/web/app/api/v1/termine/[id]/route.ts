@@ -2,11 +2,11 @@
  * GET + PATCH + DELETE /api/v1/termine/:id
  *
  * - GET: Detail. Public fuer 'veroeffentlicht'/'durchgefuehrt'/'abgesagt'.
- *   'geplant' nur fuer Kurator:in der Stadt (oder Admin). Liefert Termin +
+ *   'geplant' nur fuer City-Lead der Stadt (oder Admin). Liefert Termin +
  *   Counter der aktiven Anmeldungen (PRD §15.8).
- * - PATCH: Kurator:in-only, nur in Status 'geplant' oder 'veroeffentlicht'
+ * - PATCH: City-Lead-only, nur in Status 'geplant' oder 'veroeffentlicht'
  *   (PRD §14.6).
- * - DELETE: Kurator:in-only, nur in Status 'geplant' loeschbar. CASCADE
+ * - DELETE: City-Lead-only, nur in Status 'geplant' loeschbar. CASCADE
  *   raeumt termin_anmeldung + Bezuege mit weg.
  */
 
@@ -89,7 +89,7 @@ export async function GET(req: Request, ctx: RouteContext): Promise<Response> {
     zaehleWarteliste(row.id),
   ]);
 
-  // Bei Bedarfsschau-Terminen liefern wir die verknuepften Bedarfe und
+  // Bei Briefing Night-Terminen liefern wir die verknuepften Bedarfe und
   // Foerderprofile mit, damit Frontends in einem Roundtrip rendern koennen
   // (PRD §8.8, §13.19, §13.20).
   let bedarfe:
@@ -138,7 +138,7 @@ export async function PATCH(req: Request, ctx: RouteContext): Promise<Response> 
         error: {
           code: 'kein_zugriff',
           message:
-            'Nur Kurator:innen der jeweiligen Stadt koennen Termine bearbeiten.',
+            'Nur City-Leads der jeweiligen Stadt koennen Termine bearbeiten.',
         },
       },
       { status: 403 },
@@ -252,7 +252,7 @@ export async function DELETE(req: Request, ctx: RouteContext): Promise<Response>
         error: {
           code: 'kein_zugriff',
           message:
-            'Nur Kurator:innen der jeweiligen Stadt koennen Termine loeschen.',
+            'Nur City-Leads der jeweiligen Stadt koennen Termine loeschen.',
         },
       },
       { status: 403 },

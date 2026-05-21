@@ -2,7 +2,7 @@
  * /admin/konfiguration — Stub fuer globale Plattform-Konfiguration.
  *
  * Geplant fuer spaetere Sprints:
- *   - Werkstattbeitrag-Skala (Stufen + Pflicht-Mindestbeitrag).
+ *   - Membership-Beitrag-Skala (Stufen + Pflicht-Mindestbeitrag).
  *   - Foerdermitgliedschaft-Preise (monatlich/jaehrlich/privat/organisation).
  *   - Verbotene Woerter (Spam-Filter).
  *
@@ -44,7 +44,7 @@ export default function AdminKonfigurationPage() {
             Aktuell sind sie als Code- oder Env-Variablen gepflegt.
           </p>
 
-          <h2>Werkstattbeitrag-Skala</h2>
+          <h2>Membership-Beitrag-Skala</h2>
           <p>
             Stufen, Pflicht-Mindestbeitrag und Wahlbeitrag werden in
             <code> lib/werkstattbeitrag/skala.ts </code> definiert.

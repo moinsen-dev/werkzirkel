@@ -34,7 +34,7 @@ const tm = de.pruefrunden.meine;
 const tnav = de.uebersicht;
 
 export const metadata: Metadata = {
-  title: 'Meine Prüfrunden',
+  title: 'Meine Feedback-Loops',
   robots: { index: false, follow: false },
 };
 

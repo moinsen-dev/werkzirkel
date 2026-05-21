@@ -1,5 +1,5 @@
 /**
- * /werke/[id] — Oeffentliche Werk-Detailseite (Server Component).
+ * /werke/[id] — Oeffentliche Build-Detailseite (Server Component).
  *
  * Quelle: PRD §F-101 bis §F-106 (Werk-CRUD, Sichtbarkeit) + §8.3 (Pflichtfelder).
  *
@@ -14,7 +14,7 @@
  * - Foerdermitgliedschaft-Status wird aus den Datums-Feldern abgeleitet, damit
  *   wir keine Stripe-Felder leaken.
  *
- * Werkstand-Verlauf:
+ * Build-Stand-Verlauf:
  * - Letzte 10 werk_historie-Eintraege absteigend chronologisch (PRD §13.6).
  * - Inhaber:in der Aenderung nur via anzeigename, NIE klarname/email.
  *

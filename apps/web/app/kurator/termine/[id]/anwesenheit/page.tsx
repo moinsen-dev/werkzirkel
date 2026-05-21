@@ -3,7 +3,7 @@
  *
  * Quelle: PRD §8.8, §F-401..§F-405.
  *
- * Auth + Kurator:in der Stadt (sonst 404). Liste aller Anmeldungen mit
+ * Auth + City-Lead der Stadt (sonst 404). Liste aller Anmeldungen mit
  * Checkbox "anwesend". Default checked wenn Status bereits 'anwesend'.
  * Stornierte Anmeldungen werden NICHT angezeigt (PRD: storniert bleibt
  * storniert).
@@ -150,7 +150,7 @@ export async function anwesenheitSpeichernAction(
     };
   });
 
-  // Werkstattbeitrag-Hook ausserhalb der Transaktion.
+  // Membership-Beitrag-Hook ausserhalb der Transaktion.
   for (const fa of result.freshlyAnwesend) {
     try {
       await maybeCreateSchauabendBeitrag({

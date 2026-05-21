@@ -1,14 +1,14 @@
 /**
  * /api/v1/kurator/werkstatt-kasse
  *
- *  POST — Kurator:in legt einen neuen Kasse-Eintrag an (manueller Ausgang
+ *  POST — City-Lead legt einen neuen Kasse-Eintrag an (manueller Ausgang
  *  oder manueller Eingang neben den automatischen Stripe-Webhook-Eingängen).
  *  Eintrag startet UNFREIGEGEBEN (freigegebenAm = null); Admin muss freigeben.
  *
  *  GET — Kurator-Übersicht: alle Einträge der eigenen Stadt (auch
  *  unfreigegebene), nach Datum absteigend. Mit optionalem ?quartal=YYYY-Qn.
  *
- * PRD-Referenz: §8.11 (Werkstatt-Kasse pro Stadt + Quartalsbericht).
+ * PRD-Referenz: §8.11 (Community-Pool pro Stadt + Quartalsbericht).
  */
 
 import { and, desc, eq } from 'drizzle-orm';
@@ -38,7 +38,7 @@ export async function POST(req: Request): Promise<Response> {
         error: {
           code: 'kein_zugriff',
           message:
-            'Nur Kurator:innen können Werkstatt-Kasse-Einträge anlegen.',
+            'Nur City-Leads können Community-Pool-Einträge anlegen.',
         },
       },
       { status: 403 },
@@ -127,7 +127,7 @@ export async function GET(req: Request): Promise<Response> {
         error: {
           code: 'kein_zugriff',
           message:
-            'Nur Kurator:innen können die Kassen-Übersicht ihrer Stadt einsehen.',
+            'Nur City-Leads können die Kassen-Übersicht ihrer Stadt einsehen.',
         },
       },
       { status: 403 },

@@ -1,7 +1,7 @@
 /**
  * /agb — Allgemeine Geschaeftsbedingungen.
  *
- * Quelle: PRD §40 + §11A Werkstatt-Kultur-Schutz. Kern-Aussagen:
+ * Quelle: PRD §40 + §11A Build-Kultur-Schutz. Kern-Aussagen:
  *  - KEINE Provision
  *  - KEINE Vermittlung
  *  - KEINE Equity-Vermittlung ueber die Plattform
@@ -20,7 +20,7 @@ import SiteNav from '@/components/ui/site-nav';
 export const metadata: Metadata = {
   title: 'AGB',
   description:
-    'Allgemeine Geschäftsbedingungen der Werkzirkel-Plattform: Werkstatt-Kultur statt Marktplatz, keine Provision, keine Vermittlung, keine Equity über die Plattform.',
+    'Allgemeine Geschäftsbedingungen der Werkzirkel-Plattform: Build-Kultur statt Marktplatz, keine Provision, keine Vermittlung, keine Equity über die Plattform.',
 };
 
 export default function AgbPage() {
@@ -53,17 +53,17 @@ export default function AgbPage() {
           <ul>
             <li>
               <strong>nimmt keine Provision</strong> auf Aufträge, Werkangebote,
-              Werkstattbeiträge oder daraus entstehende Geschäftsbeziehungen,
+              Membership-Beiträge oder daraus entstehende Geschäftsbeziehungen,
             </li>
             <li>
-              <strong>vermittelt nicht</strong> im rechtlichen Sinne zwischen Bedarfsträger:innen
-              und Macher:innen — Werkzirkel stellt nur die Bühne (Schauabende, Werkpässe,
-              Bedarfsschauen) bereit; Vertragsschlüsse erfolgen offline und außerhalb der
+              <strong>vermittelt nicht</strong> im rechtlichen Sinne zwischen Auftraggeber:innen
+              und Builder:innen — Werkzirkel stellt nur die Bühne (Demo Nights, Builder-Profile,
+              Briefing Nights) bereit; Vertragsschlüsse erfolgen offline und außerhalb der
               Plattform,
             </li>
             <li>
               <strong>vermittelt keine Beteiligungen, Equity, Anteile oder
-              Investorenverhältnisse</strong> über die Plattform. Förderprofile sind sichtbar
+              Investorenverhältnisse</strong> über die Plattform. Sponsor-Profile sind sichtbar
               gemacht; jede Form von Investment/Beteiligung wird ausschließlich offline und in
               eigener Verantwortung der Beteiligten verhandelt.
             </li>
@@ -79,7 +79,7 @@ export default function AgbPage() {
 
           <h2>§ 4 Pflichten der Nutzer:innen</h2>
           <ul>
-            <li>Wahrheitsgemäße Angaben in Werkpass, Werken, Bedarfen und Förderprofilen.</li>
+            <li>Wahrheitsgemäße Angaben in Builder-Profil, Werken, Bedarfen und Sponsor-Profilen.</li>
             <li>
               Einhaltung der <a href="/regeln">Werkstatt-Regeln</a> (insbesondere: kein Cold-
               Outreach, keine unaufgeforderten DMs an die Nachfrage-Seite, keine
@@ -104,15 +104,15 @@ export default function AgbPage() {
           <h2>§ 6 Förder-Mitgliedschaft</h2>
           <p>
             Die Förder-Mitgliedschaft ist ein freiwilliges, monatlich kündbares Abonnement zur
-            Unterstützung der Plattform und zur Verifizierung als Förder:in (Anwesenheit bei
-            mindestens einer Bedarfsschau pro Quartal). Abrechnung über Stripe; Widerrufsrecht
+            Unterstützung der Plattform und zur Verifizierung als Sponsor:in (Anwesenheit bei
+            mindestens einer Briefing Night pro Quartal). Abrechnung über Stripe; Widerrufsrecht
             für Verbraucher:innen gemäß § 8 dieser AGB.
           </p>
 
           <h2>§ 7 Haftungsausschluss für Inhalte Dritter</h2>
           <p>
             Werkzirkel haftet nicht für die Inhalte, die Nutzer:innen einstellen (Werke,
-            Werkpässe, Bedarfe, Förderprofile, Hilfegesuche, Feedback). Wir prüfen Inhalte nicht
+            Builder-Profile, Bedarfe, Sponsor-Profile, Hilfegesuche, Feedback). Wir prüfen Inhalte nicht
             anlasslos. Werden uns rechtswidrige Inhalte bekannt, entfernen wir diese unverzüglich
             (Notice-and-Action gemäß DSA). Meldungen über den Melden-Button oder per E-Mail an
             den Impressum-Kontakt.
@@ -132,7 +132,7 @@ export default function AgbPage() {
             Der Nutzungsvertrag ist jederzeit kündbar — Konto-Löschung über{' '}
             <a href="/einstellungen">Einstellungen</a>. Die Plattform behält sich vor, Konten bei
             schweren Regelverstößen (z.B. systematischem Cold-Outreach, mehrfacher Bedarfs-
-            Verfälschung, beleidigendem Verhalten gegenüber Kurator:innen) mit Frist von 14 Tagen
+            Verfälschung, beleidigendem Verhalten gegenüber City-Leads) mit Frist von 14 Tagen
             zu kündigen; in besonders schweren Fällen (Strafrecht, akute Gefährdung) auch
             fristlos.
           </p>

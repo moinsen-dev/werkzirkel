@@ -1,8 +1,8 @@
 /**
  * POST /api/v1/termine/:id/foerderprofile
  *
- * Kurator setzt die Liste der Foerderprofile, die sich auf einer Bedarfsschau
- * persoenlich vorstellen (PRD §8.8 Bedarfsschau-Format, §13.20
+ * Kurator setzt die Liste der Foerderprofile, die sich auf einer Briefing Night
+ * persoenlich vorstellen (PRD §8.8 Briefing Night-Format, §13.20
  * `termin_foerderprofil_bezug`).
  *
  * - Auth + `istKuratorVon(termin.stadt_id)`.
@@ -54,7 +54,7 @@ export async function POST(req: Request, ctx: RouteContext): Promise<Response> {
         error: {
           code: 'kein_zugriff',
           message:
-            'Nur Kurator:innen der jeweiligen Stadt koennen die Foerderprofile einer Bedarfsschau setzen.',
+            'Nur City-Leads der jeweiligen Stadt koennen die Foerderprofile einer Briefing Night setzen.',
         },
       },
       { status: 403 },

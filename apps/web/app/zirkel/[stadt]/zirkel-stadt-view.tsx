@@ -8,7 +8,7 @@
  *
  * Hard rules:
  *  - Nur Public-Felder. Kein klarname/email im HTML.
- *  - Werkpass-/Werk-Links bauen wir hier; die Daten-Auswahl macht die Page.
+ *  - Builder-Profil-/Werk-Links bauen wir hier; die Daten-Auswahl macht die Page.
  */
 
 import Link from 'next/link';
@@ -108,10 +108,10 @@ function HeroNav() {
           <span>Werkzirkel</span>
         </Link>
         <div className="nav-links" aria-label="Bereiche">
-          <Link href="/">Macher:innen</Link>
+          <Link href="/">Builder:innen</Link>
           <Link href="/werke">Werke</Link>
           <Link href="/bedarf">Bedarf einbringen</Link>
-          <Link href="/foerdern">Werke fördern</Link>
+          <Link href="/foerdern">Builds sponsorn</Link>
         </div>
         <Link className="nav-cta" href="/anmelden">
           Anmelden
@@ -127,7 +127,7 @@ function Footer() {
       <div className="wrap footer-inner">
         <span>Werkzirkel — Gemeinsam digitale Produkte bauen.</span>
         <div className="footer-links" aria-label="Fußnavigation">
-          <Link href="/">Macher:innen</Link>
+          <Link href="/">Builder:innen</Link>
           <Link href="/werke">Werke</Link>
           <Link href="/bedarf">Bedarf</Link>
           <Link href="/foerdern">Fördern</Link>
@@ -148,7 +148,7 @@ function AktivVariant({
 }: ZirkelStadtViewProps) {
   const subline =
     stadtRow.beschreibung ??
-    `Der ${stadtRow.name}er Werkzirkel — wo Macher:innen ihre digitalen Werke zeigen, testen und voranbringen.`;
+    `Der ${stadtRow.name}er Werkzirkel — wo Builder:innen ihre digitalen Werke zeigen, testen und voranbringen.`;
 
   return (
     <div className="page-shell">
@@ -162,7 +162,7 @@ function AktivVariant({
             <p className="hero-copy">{subline}</p>
             <div className="hero-actions" style={{ marginTop: 18 }}>
               <Link href="/anmelden" className="button primary">
-                Werkpass anlegen
+                Builder-Profil anlegen
               </Link>
               <Link
                 href={`/werke?stadt=${stadtRow.id}`}
@@ -176,10 +176,10 @@ function AktivVariant({
       </header>
 
       {/* ────── Mitglieder ────── */}
-      <section className="section" aria-label="Aktive Macher:innen">
+      <section className="section" aria-label="Aktive Builder:innen">
         <div className="wrap">
           <div className="section-head" style={{ marginBottom: 18 }}>
-            <h2 style={{ fontSize: 28, margin: 0 }}>Aktive Macher:innen</h2>
+            <h2 style={{ fontSize: 28, margin: 0 }}>Aktive Builder:innen</h2>
           </div>
           {mitglieder.length === 0 ? (
             <p style={{ color: 'var(--muted)' }}>
@@ -201,7 +201,7 @@ function AktivVariant({
                 <li key={m.id}>
                   <Link
                     href={`/werkpass/${m.id}`}
-                    aria-label={`Werkpass von ${m.anzeigename}`}
+                    aria-label={`Builder-Profil von ${m.anzeigename}`}
                     style={{
                       display: 'inline-flex',
                       flexDirection: 'column',
@@ -287,11 +287,11 @@ function AktivVariant({
           </div>
           {werke.length === 0 ? (
             <p style={{ color: 'var(--muted)' }}>
-              Noch keine öffentlichen Werke aus {stadtRow.name}.
+              Noch keine öffentlichen Builds aus {stadtRow.name}.
             </p>
           ) : (
             <ul
-              aria-label="Werke-Liste"
+              aria-label="Builds-Liste"
               style={{
                 listStyle: 'none',
                 padding: 0,
@@ -344,7 +344,7 @@ function AktivVariant({
                         className="status-pill warm"
                         style={{ alignSelf: 'flex-start' }}
                       >
-                        Werkstand: {werkstandLabel(w.werkstand)}
+                        Build-Stand: {werkstandLabel(w.werkstand)}
                       </span>
                       <p
                         style={{
@@ -397,8 +397,8 @@ function AktivVariant({
           </div>
           {termine.length === 0 ? (
             <p style={{ color: 'var(--muted)', maxWidth: 640 }}>
-              Der nächste Schauabend steht noch nicht. Schreib der
-              Kurator:in unter{' '}
+              Der nächste Demo Night steht noch nicht. Schreib der
+              City-Lead unter{' '}
               <a href={`mailto:${stadtMail}`} style={{ color: 'var(--fg)' }}>
                 {stadtMail}
               </a>
@@ -474,7 +474,7 @@ function AktivVariant({
                 Du baust ein Werk
               </p>
               <p style={{ marginTop: 8, color: 'var(--muted)', fontSize: 14 }}>
-                Lege deinen Werkpass an und zeige dein Werk dem Kreis.
+                Lege deinen Builder-Profil an und zeige dein Build dem Kreis.
               </p>
             </Link>
             <Link
@@ -491,7 +491,7 @@ function AktivVariant({
                 Du brauchst Hilfe
               </p>
               <p style={{ marginTop: 8, color: 'var(--muted)', fontSize: 14 }}>
-                Beschreibe deinen Bedarf und finde lokale Macher:innen.
+                Beschreibe deinen Bedarf und finde lokale Builder:innen.
               </p>
             </Link>
             <Link
@@ -528,7 +528,7 @@ function VorbereitungVariant({ stadtRow }: ZirkelStadtViewProps) {
   const eyebrow = istInaktiv ? 'Ruhend' : 'In Vorbereitung';
   const subline = istInaktiv
     ? `Der ${stadtRow.name}er Kreis ruht aktuell. Wir halten die Stadt warm.`
-    : `${stadtRow.name} startet, sobald der Hamburger Kreis trägt — drei Schauabende, fünfzehn Werke, ehrliche Reziprozitätsbilanz. Bis dahin halten wir die Stadt warm.`;
+    : `${stadtRow.name} startet, sobald der Hamburger Kreis trägt — drei Demo Nights, fünfzehn Werke, ehrliche Gegenseitigkeitsbilanz. Bis dahin halten wir die Stadt warm.`;
 
   return (
     <div className="page-shell">
@@ -576,7 +576,7 @@ function VorbereitungVariant({ stadtRow }: ZirkelStadtViewProps) {
               }}
             >
               <p className="eyebrow" style={{ margin: 0 }}>
-                Komm zum Hamburger Schauabend
+                Komm zum Hamburger Demo Night
               </p>
               <p style={{ marginTop: 8, color: 'var(--muted)', fontSize: 14 }}>
                 Der Hamburger Kreis ist offen für Gäste aus anderen Städten.
@@ -596,7 +596,7 @@ function VorbereitungVariant({ stadtRow }: ZirkelStadtViewProps) {
                 Stell deinen Bedarf in Hamburg vor
               </p>
               <p style={{ marginTop: 8, color: 'var(--muted)', fontSize: 14 }}>
-                Bedarfsträger:innen sind im Hamburger Kreis willkommen — auch
+                Auftraggeber:innen sind im Hamburger Kreis willkommen — auch
                 wenn du nicht dort wohnst.
               </p>
             </Link>
@@ -611,7 +611,7 @@ function VorbereitungVariant({ stadtRow }: ZirkelStadtViewProps) {
               }}
             >
               <p className="eyebrow" style={{ margin: 0 }}>
-                Werde Förder:in von Hamburger Werken
+                Werde Sponsor:in von Hamburger Werken
               </p>
               <p style={{ marginTop: 8, color: 'var(--muted)', fontSize: 14 }}>
                 Förderung beginnt mit Sichtbarkeit — und die ist Hamburg-First.
@@ -644,7 +644,7 @@ export function buildZirkelJsonLd(props: {
     name: `Werkzirkel ${stadtRow.name}`,
     description:
       stadtRow.beschreibung ??
-      `Werkzirkel ${stadtRow.name} — Macher:innen, Bedarfstraeger:innen und Foerder:innen aus der Region.`,
+      `Werkzirkel ${stadtRow.name} — Builder:innen, Bedarfstraeger:innen und Foerder:innen aus der Region.`,
     address: { '@type': 'PostalAddress', addressLocality: stadtRow.name },
     containedInPlace: { '@type': 'City', name: stadtRow.name },
     isAccessibleForFree: true,

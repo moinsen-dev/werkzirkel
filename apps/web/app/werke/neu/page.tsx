@@ -1,7 +1,7 @@
 /**
- * /werke/neu — Neues Werk anlegen (Server Component + Server Action).
+ * /werke/neu — Neuen Build anlegen (Server Component + Server Action).
  *
- * PRD §F-101 Anlegen: max 5 Werke pro Macher:in (kostenlos), Pflichtfelder
+ * PRD §F-101 Anlegen: max 5 Werke pro Builder:in (kostenlos), Pflichtfelder
  * gemaess §8.3. Auth + Rolle 'macher' Pflicht.
  *
  * Logik:
@@ -33,7 +33,7 @@ import { werkAnlegenSchema } from '@/lib/validators/werk';
 import { pruefeWerkAnlegenLimit } from '@/lib/werk/limit';
 
 export const metadata: Metadata = {
-  title: 'Neues Werk anlegen',
+  title: 'Neuen Build anlegen',
   robots: { index: false, follow: false },
 };
 

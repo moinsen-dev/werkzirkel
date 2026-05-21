@@ -4,7 +4,7 @@
  * Quelle: PRD §F-201, §8.4 (Pflichtfelder), §13.7.
  *
  * - Auth Pflicht, Rolle 'macher'.
- * - Optional Query-Param `?werk=<id>` aus dem Werk-Detail-CTA.
+ * - Optional Query-Param `?werk=<id>` aus dem Build-Detail-CTA.
  * - Form-Felder gemaess pruefrundeAnlegenSchema; Status='entwurf'.
  * - Bei Erfolg: redirect zu /pruefrunden/[id]/bearbeiten.
  */
@@ -28,7 +28,7 @@ const tn = de.pruefrunden.neu;
 const tnav = de.uebersicht;
 
 export const metadata: Metadata = {
-  title: 'Neue Prüfrunde anlegen',
+  title: 'Neue Feedback-Loop anlegen',
   robots: { index: false, follow: false },
 };
 
@@ -262,7 +262,7 @@ export default async function PruefrundeNeuPage({ searchParams }: PageProps) {
             >
               <strong>{tn.fehler_kein_werk}</strong>
               <p style={{ margin: '8px 0 0' }}>
-                <Link href="/werke/neu">Neues Werk anlegen</Link>
+                <Link href="/werke/neu">Neuen Build anlegen</Link>
               </p>
             </div>
           ) : (

@@ -1,11 +1,11 @@
 /**
  * POST + GET /api/v1/termine
  *
- * - POST: legt einen neuen Termin in Status 'geplant' an. Auth + Kurator:in-
+ * - POST: legt einen neuen Termin in Status 'geplant' an. Auth + City-Lead-
  *   Rolle fuer die jeweilige Stadt (oder Admin) Pflicht (PRD §F-401, §15.8).
  * - GET: Liste mit Filtern + Cursor-Pagination gemaess PRD §15.8.
  *   Default-Status-Filter sind 'veroeffentlicht' + 'durchgefuehrt' — 'geplant'
- *   und 'abgesagt' sind nicht-public; Kurator:innen einer Stadt sehen aber
+ *   und 'abgesagt' sind nicht-public; City-Leads einer Stadt sehen aber
  *   auch 'geplant'/'abgesagt' ihrer eigenen Stadt (Admin alle).
  *
  *   Sortierung: `datum_uhrzeit ASC`. Cursor ist die `termin.id` der letzten
@@ -58,7 +58,7 @@ export async function POST(req: Request): Promise<Response> {
   }
   const input = parsed.data;
 
-  // Permission-Check: Kurator:in der Stadt oder Admin.
+  // Permission-Check: City-Lead der Stadt oder Admin.
   const erlaubt = await istKuratorVon(sess.nutzerId, input.stadt_id);
   if (!erlaubt) {
     return Response.json(
@@ -66,7 +66,7 @@ export async function POST(req: Request): Promise<Response> {
         error: {
           code: 'kein_zugriff',
           message:
-            'Nur Kurator:innen der jeweiligen Stadt koennen Termine anlegen.',
+            'Nur City-Leads der jeweiligen Stadt koennen Termine anlegen.',
         },
       },
       { status: 403 },
@@ -94,9 +94,9 @@ export async function POST(req: Request): Promise<Response> {
     return Response.json({ fehler: 'unbekannt' }, { status: 500 });
   }
 
-  // Werk-Bezuege fuer Schauabend-Termine. Nur Werke akzeptieren, die in der
+  // Werk-Bezuege fuer Demo Night-Termine. Nur Werke akzeptieren, die in der
   // gleichen Stadt sind UND public sichtbar — sonst kann ein Kurator ein
-  // pausiertes/fremdes Werk im Schauabend bewerben.
+  // pausiertes/fremdes Werk im Demo Night bewerben.
   const werkIds = input.werk_ids ?? [];
   if (werkIds.length > 0) {
     const validRows = await db
@@ -172,7 +172,7 @@ export async function GET(req: Request): Promise<Response> {
   }
   const q = parsed.data;
 
-  // Optionaler Session-Lookup — Kurator:in der Stadt sieht zusaetzlich
+  // Optionaler Session-Lookup — City-Lead der Stadt sieht zusaetzlich
   // 'geplant'/'abgesagt' der eigenen Stadt, Admin alles.
   const sess = await getSessionFromRequest(req);
 
@@ -192,7 +192,7 @@ export async function GET(req: Request): Promise<Response> {
       ? (requestedStatus as TerminStatus[])
       : (terminStatus as unknown as TerminStatus[]);
   } else if (istKuratorEigenerStadt) {
-    // Kurator:innen sehen alle Status der eigenen Stadt.
+    // City-Leads sehen alle Status der eigenen Stadt.
     effectiveStatus = requestedStatus
       ? (requestedStatus as TerminStatus[])
       : (terminStatus as unknown as TerminStatus[]);

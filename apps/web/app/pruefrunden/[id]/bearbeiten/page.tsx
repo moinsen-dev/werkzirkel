@@ -38,7 +38,7 @@ const tnav = de.uebersicht;
 const tn = de.pruefrunden.neu;
 
 export const metadata: Metadata = {
-  title: 'Prüfrunde bearbeiten',
+  title: 'Feedback-Loop bearbeiten',
   robots: { index: false, follow: false },
 };
 
@@ -340,7 +340,7 @@ export default async function PruefrundeBearbeitenPage({
     pruefrundeMitVerpflichtungVeroeffentlichenAction.bind(null, id);
   const loeschenBound = pruefrundeLoeschenAction.bind(null, id);
 
-  // Reziprozitäts-Hint vorab: zeige Auswahl-Block, wenn Saldo<2.
+  // Gegenseitigkeits-Hint vorab: zeige Auswahl-Block, wenn Saldo<2.
   const saldo = istEntwurf
     ? await getSaldoForUser(sess.nutzerId)
     : null;
@@ -392,7 +392,7 @@ export default async function PruefrundeBearbeitenPage({
             <ErfolgBanner
               text={
                 sp.frisch === '1'
-                  ? 'Prüfrunde angelegt. Du kannst sie jetzt feinschleifen und veröffentlichen.'
+                  ? 'Feedback-Loop angelegt. Du kannst sie jetzt feinschleifen und veröffentlichen.'
                   : tb.erfolg_gespeichert
               }
             />
@@ -417,7 +417,7 @@ export default async function PruefrundeBearbeitenPage({
           ) : null}
 
           {sp.fehler === 'saldo_zu_niedrig' ? (
-            <FehlerBanner text="Reziprozitäts-Gate greift: du hast noch keine zwei Tests gegeben. Wähle unten zwischen Feedback geben oder 14-Tage-Verpflichtung." />
+            <FehlerBanner text="Gegenseitigkeits-Gate greift: du hast noch keine zwei Tests gegeben. Wähle unten zwischen Feedback geben oder 14-Tage-Verpflichtung." />
           ) : null}
 
           {sp.fehler === 'validierung' ? (
@@ -650,13 +650,13 @@ export default async function PruefrundeBearbeitenPage({
                     id="reziprozitaet-wahl-titel"
                     style={{ fontSize: 18, margin: '0 0 8px' }}
                   >
-                    Reziprozitäts-Gate
+                    Gegenseitigkeits-Gate
                   </h2>
                   <p style={{ margin: '0 0 12px', fontSize: 14 }}>
                     Du hast bisher{' '}
                     <strong>{saldo?.tests_gegeben ?? 0} Test
                     {saldo?.tests_gegeben === 1 ? '' : 's'}</strong> gegeben.
-                    Werkzirkel verlangt mindestens 2, bevor eine Prüfrunde
+                    Werkzirkel verlangt mindestens 2, bevor eine Feedback-Loop
                     veröffentlicht werden darf — sonst klafft das soziale
                     Konto. Du kannst auf zwei Wegen weiterkommen:
                   </p>
@@ -670,8 +670,8 @@ export default async function PruefrundeBearbeitenPage({
                           fontSize: 14,
                         }}
                       >
-                        Weg 1: gib jetzt Feedback zu zwei offenen Prüfrunden
-                        anderer Werke
+                        Weg 1: gib jetzt Feedback zu zwei offenen Feedback-Loops
+                        anderer Builds
                       </p>
                       <ul
                         style={{
@@ -702,7 +702,7 @@ export default async function PruefrundeBearbeitenPage({
                         color: 'var(--muted)',
                       }}
                     >
-                      Aktuell sind keine offenen Prüfrunden anderer Werke
+                      Aktuell sind keine offenen Feedback-Loops anderer Builds
                       verfügbar — der Verpflichtungs-Weg unten bleibt offen.
                     </p>
                   )}
@@ -727,8 +727,8 @@ export default async function PruefrundeBearbeitenPage({
                   <p style={{ margin: '0 0 12px', fontSize: 14 }}>
                     Veröffentliche jetzt — verpflichte dich aber im selben
                     Zug, innerhalb der nächsten 14 Tage Feedback zu zwei
-                    Prüfrunden anderer Werke zu geben. Bis dahin gilt das
-                    als offene Reziprozitäts-Schuld in deinem Werkpass.
+                    Feedback-Loops anderer Builds zu geben. Bis dahin gilt das
+                    als offene Gegenseitigkeits-Schuld in deinem Builder-Profil.
                   </p>
                   <form action={veroeffentlichenMitVerpflichtungBound}>
                     <button type="submit" className="button primary">
@@ -752,7 +752,7 @@ export default async function PruefrundeBearbeitenPage({
                     }}
                   >
                     Beim Veröffentlichen prüfen wir dein Test-Saldo
-                    (Reziprozität).
+                    (Gegenseitigkeit).
                   </p>
                 </form>
               )}

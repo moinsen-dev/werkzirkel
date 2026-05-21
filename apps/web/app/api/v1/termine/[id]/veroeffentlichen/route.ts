@@ -3,7 +3,7 @@
  *
  * Statusuebergang `geplant` → `veroeffentlicht` (PRD §14.6).
  *
- * - Auth + Permission (Kurator:in der Stadt oder Admin).
+ * - Auth + Permission (City-Lead der Stadt oder Admin).
  * - Status muss 'geplant' sein.
  * - Audit-Log.
  */
@@ -43,7 +43,7 @@ export async function POST(req: Request, ctx: RouteContext): Promise<Response> {
         error: {
           code: 'kein_zugriff',
           message:
-            'Nur Kurator:innen der jeweiligen Stadt koennen Termine veroeffentlichen.',
+            'Nur City-Leads der jeweiligen Stadt koennen Termine veroeffentlichen.',
         },
       },
       { status: 403 },

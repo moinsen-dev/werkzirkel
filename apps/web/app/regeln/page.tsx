@@ -14,7 +14,7 @@ import SiteNav from '@/components/ui/site-nav';
 export const metadata: Metadata = {
   title: 'Werkstatt-Regeln',
   description:
-    'Die Werkzirkel-Regeln: kein Cold-Outreach, kein Pitch-Wettbewerb, keine Verkaufsprovisionen. Werkstatt-Kultur statt Marktplatz.',
+    'Die Werkzirkel-Regeln: kein Cold-Outreach, kein Pitch-Wettbewerb, keine Verkaufsprovisionen. Build-Kultur statt Marktplatz.',
 };
 
 export default function RegelnPage() {
@@ -26,7 +26,7 @@ export default function RegelnPage() {
           <p className="legal-eyebrow">Kultur</p>
           <h1>Werkstatt-Regeln</h1>
           <p className="legal-meta">
-            Verbindliche Verhaltensregeln. Sie schützen die Werkstatt-Kultur und werden bei
+            Verbindliche Verhaltensregeln. Sie schützen die Build-Kultur und werden bei
             Verstößen auch kuratorisch durchgesetzt.
           </p>
 
@@ -40,10 +40,10 @@ export default function RegelnPage() {
           <h2>2. Kein Cold-Outreach an die Nachfrage-Seite</h2>
           <p>
             Direkte Privatnachrichten („Hey, ich hätte da was für dich“) an
-            Bedarfsträger:innen oder Förder:innen sind nicht vorgesehen und werden bei
+            Auftraggeber:innen oder Sponsor:innen sind nicht vorgesehen und werden bei
             Wiederholung mit Kontosperre geahndet. Kontakt entsteht über{' '}
             <strong>Werkangebote</strong> (Antwort auf einen offenen Bedarf),{' '}
-            <strong>Schauabende</strong> und <strong>Bedarfsschauen</strong> — kuratiert und
+            <strong>Demo Nights</strong> und <strong>Briefing Nights</strong> — kuratiert und
             sichtbar für alle.
           </p>
 
@@ -54,14 +54,14 @@ export default function RegelnPage() {
               Lösung oder ein Lasten-Stunden-Heft.
             </li>
             <li>
-              Wer mehrere reine Stellenanzeigen einreicht, wird vom Kurator:innen-Team auf den
-              Bedarfsschau-Modus umgeschult oder verliert den Schreibzugriff.
+              Wer mehrere reine Stellenanzeigen einreicht, wird vom City-Leads-Team auf den
+              Briefing Night-Modus umgeschult oder verliert den Schreibzugriff.
             </li>
           </ul>
 
-          <h2>4. Werkstattbeitrag statt Vorab-Honorar</h2>
+          <h2>4. Membership-Beitrag statt Vorab-Honorar</h2>
           <p>
-            Bedarfsträger:innen erbringen einen Werkstattbeitrag — Sachleistung (Räume,
+            Auftraggeber:innen erbringen einen Membership-Beitrag — Sachleistung (Räume,
             Catering, Werkzeug) oder Spende — bevor ihr Bedarf öffentlich wird. Damit
             unterscheidet sich Werkzirkel klar von Ausschreibungsplattformen und filtert
             ernsthafte Anfragen.
@@ -69,14 +69,14 @@ export default function RegelnPage() {
 
           <h2>5. Förder-Mitgliedschaft erfordert Anwesenheit</h2>
           <p>
-            Wer als Förder:in verifiziert sein will, ist mindestens einmal pro Quartal auf einer
-            Bedarfsschau anwesend. „Stille Spende ohne Gesicht“ ist möglich, gibt aber keinen
+            Wer als Sponsor:in verifiziert sein will, ist mindestens einmal pro Quartal auf einer
+            Briefing Night anwesend. „Stille Spende ohne Gesicht“ ist möglich, gibt aber keinen
             verifizierten Förder-Status.
           </p>
 
           <h2>6. Keine Equity-Vermittlung über die Plattform</h2>
           <p>
-            Werkzirkel zeigt Förderprofile, aber jede Form von Beteiligung, Equity oder
+            Werkzirkel zeigt Sponsor-Profile, aber jede Form von Beteiligung, Equity oder
             Investment wird ausschließlich offline und in Eigenverantwortung der Beteiligten
             verhandelt. Plattform-vermittelte Equity-Deals sind kategorisch ausgeschlossen.
           </p>
@@ -87,15 +87,15 @@ export default function RegelnPage() {
             <li>Drei Reports rechtfertigen eine Konto-Prüfung, bei Wiederholung Sperre.</li>
             <li>
               Feedback gibt es öffentlich (mit Namen) oder pseudonym — beides ist okay; die
-              Macher:in entscheidet, was sie übernimmt.
+              Builder:in entscheidet, was sie übernimmt.
             </li>
           </ul>
 
           <h2>8. Kein Cross-Posting in andere Städte ohne Bezug</h2>
           <p>
             Hamburg-First. Werke und Bedarfe gehören in die Stadt, in der die Person tatsächlich
-            arbeitet. Eine Berliner Person, die Hamburger Bedarfsschauen für Akquise nutzt,
-            verstößt gegen den Lokalbezug — Kurator:innen können das Profil verschieben oder
+            arbeitet. Eine Berliner Person, die Hamburger Briefing Nights für Akquise nutzt,
+            verstößt gegen den Lokalbezug — City-Leads können das Profil verschieben oder
             pausieren.
           </p>
 
@@ -107,13 +107,13 @@ export default function RegelnPage() {
             zu Konto-Sperre.
           </p>
 
-          <h2>10. Kurator:innen-Entscheidungen sind verbindlich</h2>
+          <h2>10. City-Leads-Entscheidungen sind verbindlich</h2>
           <p>
-            Kurator:innen verteilen Schau-Slots, geben Bedarfe frei und können Profile pausieren.
+            City-Leads verteilen Schau-Slots, geben Bedarfe frei und können Profile pausieren.
             Ihre Entscheidungen können per E-Mail an{' '}
             <a href="mailto:developer@moinsen.dev">developer@moinsen.dev</a> widersprochen
             werden; das Veto-Recht liegt bei der Plattform-Leitung. Im Zweifel gilt: Wer die
-            Werkstatt-Kultur ernst meint, akzeptiert Kurator:innen-Entscheidungen, auch wenn
+            Build-Kultur ernst meint, akzeptiert City-Leads-Entscheidungen, auch wenn
             sie einmal gegen das eigene Werk gehen.
           </p>
 

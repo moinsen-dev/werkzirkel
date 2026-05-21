@@ -1,7 +1,7 @@
 /**
  * /uebersicht/hilfegesuche — Eigene Hilfegesuche (Server Component, eingeloggt).
  *
- * Listet ALLE eigenen Hilfegesuche (alle Status). Plus 'Neues Hilfegesuch'-Button.
+ * Listet ALLE eigenen Hilfegesuche (alle Status). Plus 'Neues Quick-Help'-Button.
  */
 
 import type { Metadata } from 'next';
@@ -16,7 +16,7 @@ import { hilfegesuch } from '@/lib/db/schema';
 import { getSessionFromRequest } from '@/lib/auth/session';
 
 export const metadata: Metadata = {
-  title: 'Meine Hilfegesuche',
+  title: 'Meine Quick-Helps',
   robots: { index: false, follow: false },
 };
 

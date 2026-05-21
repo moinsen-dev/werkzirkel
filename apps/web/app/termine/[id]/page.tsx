@@ -1,12 +1,12 @@
 /**
  * /termine/[id] — Oeffentliche Termin-Detailseite mit Server-Actions
- * fuer Anmeldung, Storno und Kurator:innen-Statusuebergaenge.
+ * fuer Anmeldung, Storno und City-Leads-Statusuebergaenge.
  *
  * Quelle: PRD §F-401..§F-405, §15.8.
  *
  * Zugriffs-Logik:
  *  - Termin nicht vorhanden → notFound().
- *  - status='geplant' und nicht Kurator:in → notFound().
+ *  - status='geplant' und nicht City-Lead → notFound().
  *  - Sonst public lesbar.
  *
  * Action-Box-Varianten siehe Plan.
@@ -86,9 +86,9 @@ function formatDatumZeit(d: Date): string {
 
 const TERMIN_TYP_LABEL_MAIL: Record<string, string> = {
   pruefabend: 'Pruefabend',
-  schauabend: 'Schauabend',
-  bedarfsschau: 'Bedarfsschau',
-  baurunde: 'Baurunde',
+  schauabend: 'Demo Night',
+  bedarfsschau: 'Briefing Night',
+  baurunde: 'Build-Runde',
   werkgespraech: 'Werkgespraech',
   kennenlernrunde: 'Kennenlernrunde',
 };
@@ -691,7 +691,7 @@ export default async function TerminDetailPage({
     zaehleWarteliste(id),
   ]);
 
-  // Bei Bedarfsschau: verknuepfte Bedarfe und Foerderprofile fuer die UI laden.
+  // Bei Briefing Night: verknuepfte Bedarfe und Foerderprofile fuer die UI laden.
   type BedarfBezugUI = Awaited<ReturnType<typeof ladeBedarfBezuege>>[number];
   type FoerderprofilBezugUI = Awaited<
     ReturnType<typeof ladeFoerderprofilBezuege>
@@ -785,7 +785,7 @@ export default async function TerminDetailPage({
             <span>Werkzirkel</span>
           </Link>
           <div className="nav-links" aria-label="Bereiche">
-            <Link href="/">Macher:innen</Link>
+            <Link href="/">Builder:innen</Link>
             <Link href="/werke">Werke</Link>
             <Link href="/pruefrunden">{tnav.nav_pruefrunden}</Link>
             <Link href="/termine" aria-current="page">
@@ -1004,7 +1004,7 @@ export default async function TerminDetailPage({
                                   color: 'var(--fg)',
                                 }}
                               >
-                                Förderprofil ansehen →
+                                Sponsor-Profil ansehen →
                               </Link>
                             </div>
                           ) : null}

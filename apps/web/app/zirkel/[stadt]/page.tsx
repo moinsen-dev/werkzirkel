@@ -193,7 +193,7 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
     title: `Werkzirkel ${row.name}`,
     description:
       row.beschreibung ??
-      `Werkzirkel ${row.name} — Macher:innen aus der Region zeigen Werke, testen gegenseitig und kommen voran.`,
+      `Werkzirkel ${row.name} — Builder:innen aus der Region zeigen Werke, testen gegenseitig und kommen voran.`,
   };
 }
 

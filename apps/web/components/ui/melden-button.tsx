@@ -204,13 +204,13 @@ export default function MeldenButton({
               style={{ margin: '8px 0 16px', color: 'var(--muted, #555)' }}
             >
               Hilf uns, die Werkstatt sauber zu halten. Deine Meldung geht an die
-              Kurator:in. Anonyme Meldungen sind moeglich.
+              City-Lead. Anonyme Meldungen sind moeglich.
             </p>
 
             {status === 'ok' ? (
               <div>
                 <p style={{ margin: '12px 0' }}>
-                  Danke fuer deine Meldung. Die Kurator:in pruest sie zeitnah
+                  Danke fuer deine Meldung. Die City-Lead pruest sie zeitnah
                   (SLA 48 Stunden).
                 </p>
                 <div

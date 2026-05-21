@@ -1,7 +1,7 @@
 /**
  * POST /api/v1/me/avatar
  *
- * Avatar-Upload. Quelle: PRD §F-002 + §8.2 (Werkpass), §28 (UI).
+ * Avatar-Upload. Quelle: PRD §F-002 + §8.2 (Builder-Profil), §28 (UI).
  *
  * - Auth erforderlich (sonst 401).
  * - Multipart-FormData mit Feld `file`.

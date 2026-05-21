@@ -8,7 +8,7 @@
  * - 404 wenn Werk nicht existiert ODER session.user.id !== werk.nutzer_id.
  * - Form mit vorgefuellten Werten.
  * - Server Actions:
- *   - werkAktualisierenAction: PATCH-Logik direkt via Drizzle. Werkstand-
+ *   - werkAktualisierenAction: PATCH-Logik direkt via Drizzle. Build-Stand-
  *     Wechsel atomar mit werk_historie-Insert.
  *   - werkLoeschenAction: DELETE + redirect zu /uebersicht/werke.
  *
@@ -35,7 +35,7 @@ import { werkPatchSchema } from '@/lib/validators/werk';
 import ScreenshotUploader from './screenshot-uploader';
 
 export const metadata: Metadata = {
-  title: 'Werk bearbeiten',
+  title: 'Build bearbeiten',
   robots: { index: false, follow: false },
 };
 
@@ -494,9 +494,9 @@ export default async function WerkBearbeitenPage({
             onSubmit={undefined}
             style={{ display: 'grid', gap: 12 }}
           >
-            <h2 style={{ margin: 0, fontSize: 22 }}>Werk löschen</h2>
+            <h2 style={{ margin: 0, fontSize: 22 }}>Build löschen</h2>
             <p style={{ margin: 0, color: 'var(--muted)' }}>
-              Das Werk wird endgültig entfernt, inklusive Werkstand-Verlauf und
+              Das Werk wird endgültig entfernt, inklusive Build-Stand-Verlauf und
               Screenshots. Dieser Schritt kann nicht rückgängig gemacht werden.
             </p>
             <button

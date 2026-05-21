@@ -2,11 +2,11 @@
  * GET /api/v1/kurator/bedarfe-in-pruefung
  *
  * Kurator-View aller Bedarfe in Status 'in_pruefung' fuer die Stadt der
- * Kurator:in. Liefert pro Bedarf den letzten Sprach-Check-Treffer aus dem
- * audit_log (sofern vorhanden), damit die Kurator:in problematische
+ * City-Lead. Liefert pro Bedarf den letzten Sprach-Check-Treffer aus dem
+ * audit_log (sofern vorhanden), damit die City-Lead problematische
  * Begriffe direkt sieht.
  *
- * Permission: User muss Kurator:in fuer die jeweilige Bedarf-Stadt sein.
+ * Permission: User muss City-Lead fuer die jeweilige Bedarf-Stadt sein.
  * Wir liefern nur Bedarfe der Staedte, die der User curiert.
  *
  * PRD-Referenz: §F-603, §11A Schutz S4.

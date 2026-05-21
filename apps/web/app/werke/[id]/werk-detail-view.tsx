@@ -1,5 +1,5 @@
 /**
- * Pure, sessionless Server-Component-Renderer fuer die Werk-Detail-Seite.
+ * Pure, sessionless Server-Component-Renderer fuer die Build-Detail-Seite.
  *
  * Bewusst getrennt vom Page-Modul, damit Unit-Tests die Komponente mit
  * Mock-Daten rendern koennen, ohne `next/headers`, `notFound()` oder die
@@ -133,9 +133,9 @@ export default function WerkDetailView({
             <span>Werkzirkel</span>
           </Link>
           <div className="nav-links" aria-label="Bereiche">
-            <Link href="/">Macher:innen</Link>
+            <Link href="/">Builder:innen</Link>
             <Link href="/bedarf">Bedarf einbringen</Link>
-            <Link href="/foerdern">Werke fördern</Link>
+            <Link href="/foerdern">Builds sponsorn</Link>
           </div>
           <Link className="nav-cta" href="/anmelden">
             Anmelden
@@ -148,8 +148,8 @@ export default function WerkDetailView({
           <div>
             <p className="eyebrow">
               {stadtName
-                ? `Werk im Werkzirkel ${stadtName}`
-                : 'Werk im Werkzirkel'}
+                ? `Build im Werkzirkel ${stadtName}`
+                : 'Build im Werkzirkel'}
             </p>
             <h1>{werk.name}</h1>
             <div
@@ -161,7 +161,7 @@ export default function WerkDetailView({
               }}
             >
               <span className="status-pill warm">
-                Werkstand: {werkstandLabel(werk.werkstand)}
+                Build-Stand: {werkstandLabel(werk.werkstand)}
               </span>
               {werk.link ? (
                 <a
@@ -381,10 +381,10 @@ export default function WerkDetailView({
       </section>
 
       {historie.length > 0 ? (
-        <section className="section compact" aria-label="Werkstand-Verlauf">
+        <section className="section compact" aria-label="Build-Stand-Verlauf">
           <div className="wrap">
             <div className="section-head">
-              <h2 style={{ fontSize: 32 }}>Werkstand-Verlauf</h2>
+              <h2 style={{ fontSize: 32 }}>Build-Stand-Verlauf</h2>
             </div>
             <ul className="explain-list">
               {historie.map((h, i) => (
@@ -393,8 +393,8 @@ export default function WerkDetailView({
                   <div>
                     <strong>
                       {h.werkstandAlt === null
-                        ? `Werk angelegt mit Werkstand ${werkstandLabel(h.werkstandNeu)}`
-                        : `Werkstand geändert von ${werkstandLabel(h.werkstandAlt)} auf ${werkstandLabel(h.werkstandNeu)}`}
+                        ? `Werk angelegt mit Build-Stand ${werkstandLabel(h.werkstandNeu)}`
+                        : `Build-Stand geändert von ${werkstandLabel(h.werkstandAlt)} auf ${werkstandLabel(h.werkstandNeu)}`}
                     </strong>
                     <p>
                       {formatDatum(h.geaendertAm)} ·{' '}
@@ -499,7 +499,7 @@ export default function WerkDetailView({
         <div className="wrap footer-inner">
           <span>Werkzirkel — Gemeinsam digitale Produkte bauen.</span>
           <div className="footer-links" aria-label="Fußnavigation">
-            <Link href="/">Macher:innen</Link>
+            <Link href="/">Builder:innen</Link>
             <Link href="/bedarf">Bedarf</Link>
             <Link href="/foerdern">Fördern</Link>
           </div>

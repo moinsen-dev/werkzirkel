@@ -6,7 +6,7 @@
  *
  * Permission: User muss Rolle 'kurator' oder 'admin' haben.
  *   (Stadt-Scope wird hier bewusst nicht erzwungen — Meldungen sind global
- *   relevant; jede Kurator:in sieht alle, gemaess PRD §27.)
+ *   relevant; jede City-Lead sieht alle, gemaess PRD §27.)
  *
  * PRD-Referenz: §27 (Moderations-Workflow), §F-503.
  */
@@ -31,7 +31,7 @@ export async function GET(req: Request): Promise<Response> {
         error: {
           code: 'kein_zugriff',
           message:
-            'Nur Kurator:innen und Admins koennen das Melde-Postfach lesen.',
+            'Nur City-Leads und Admins koennen das Melde-Postfach lesen.',
         },
       },
       { status: 403 },

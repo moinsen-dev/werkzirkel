@@ -1,5 +1,5 @@
 /**
- * Pure, sessionless Server-Component-Renderer fuer die Werkpass-Seite.
+ * Pure, sessionless Server-Component-Renderer fuer die Builder-Profil-Seite.
  *
  * Bewusst getrennt vom Page-Modul, damit Unit-Tests die Komponente mit
  * Mock-Daten rendern koennen, ohne `next/headers`, `notFound()` oder die
@@ -7,7 +7,7 @@
  *
  * NIE in dieser Komponente: email, klarname, stripe_customer_id,
  * stripe_subscription_id, benachrichtigungs_einstellungen, IP-Adressen,
- * audit-Felder, rollen-Details (nur die Macher:in-Eigenschaft als Badge —
+ * audit-Felder, rollen-Details (nur die Builder:in-Eigenschaft als Badge —
  * und die wird ueber die Server-Page als boolean reingereicht).
  *
  * Alle Inhaber:innen-Felder kommen ueber `WerkpassNutzer` rein — die
@@ -120,7 +120,7 @@ function domainAusUrl(url: string): string {
 const VORSCHAU_LIMIT = 6;
 
 /**
- * JSON-LD Person-Schema fuer den Werkpass (PRD §31).
+ * JSON-LD Person-Schema fuer den Builder-Profil (PRD §31).
  * Bewusst minimal — wir leaken keine privaten Daten (keine email, kein
  * klarname). Nur Anzeigename, Stadt, Werke-Anzahl und (sofern vorhanden)
  * oeffentliche Links.
@@ -142,7 +142,7 @@ export function buildWerkpassJsonLd(props: {
     name: nutzer.anzeigename,
     description:
       nutzer.kurzbeschreibung ??
-      `Macher:in im Werkzirkel${nutzer.stadtName ? ` ${nutzer.stadtName}` : ''}`,
+      `Builder:in im Werkzirkel${nutzer.stadtName ? ` ${nutzer.stadtName}` : ''}`,
     knowsAbout: nutzer.faehigkeiten,
     homeLocation: nutzer.stadtName
       ? { '@type': 'Place', name: nutzer.stadtName }
@@ -153,7 +153,7 @@ export function buildWerkpassJsonLd(props: {
           owns: {
             '@type': 'QuantitativeValue',
             value: werkeGesamt,
-            unitText: 'Werke',
+            unitText: 'Builds',
           },
         }
       : {}),
@@ -200,10 +200,10 @@ export default function WerkpassView({
             <span>Werkzirkel</span>
           </Link>
           <div className="nav-links" aria-label="Bereiche">
-            <Link href="/">Macher:innen</Link>
+            <Link href="/">Builder:innen</Link>
             <Link href="/werke">Werke</Link>
             <Link href="/bedarf">Bedarf einbringen</Link>
-            <Link href="/foerdern">Werke fördern</Link>
+            <Link href="/foerdern">Builds sponsorn</Link>
           </div>
           <Link className="nav-cta" href="/anmelden">
             Anmelden
@@ -259,7 +259,7 @@ export default function WerkpassView({
             )}
           </div>
           <div>
-            <p className="eyebrow">Werkpass im Werkzirkel</p>
+            <p className="eyebrow">Builder-Profil im Werkzirkel</p>
             <h1>{nutzer.anzeigename}</h1>
             <div
               style={{
@@ -295,7 +295,7 @@ export default function WerkpassView({
                   fontSize: 13,
                 }}
               >
-                Hat eine offene Reziprozitäts-Verpflichtung
+                Hat eine offene Feedback-Schuld
                 {testSaldo.naechsteVerpflichtungFrist
                   ? ` bis ${formatDatum(testSaldo.naechsteVerpflichtungFrist)}`
                   : ''}
@@ -443,7 +443,7 @@ export default function WerkpassView({
         </section>
       ) : null}
 
-      <section className="section" aria-label="Werke">
+      <section className="section" aria-label="Builds">
         <div className="wrap">
           <div className="section-head" style={{ marginBottom: 18 }}>
             <h2 style={{ fontSize: 32, margin: 0 }}>
@@ -452,11 +452,11 @@ export default function WerkpassView({
           </div>
           {sichtbareWerke.length === 0 ? (
             <p style={{ color: 'var(--muted)' }}>
-              Noch keine öffentlichen Werke.
+              Noch keine öffentlichen Builds.
             </p>
           ) : (
             <ul
-              aria-label="Werke-Liste"
+              aria-label="Builds-Liste"
               style={{
                 listStyle: 'none',
                 padding: 0,
@@ -512,7 +512,7 @@ export default function WerkpassView({
                         className="status-pill warm"
                         style={{ alignSelf: 'flex-start' }}
                       >
-                        Werkstand: {werkstandLabel(w.werkstand)}
+                        Build-Stand: {werkstandLabel(w.werkstand)}
                       </span>
                       <p
                         style={{
@@ -577,7 +577,7 @@ export default function WerkpassView({
           </h2>
           <p style={{ margin: '0 0 16px', color: 'var(--muted)' }}>
             Wo {nutzer.anzeigename} im Werkzirkel mitgemacht hat —
-            Schauabend-Teilnahmen und gegebene Feedbacks. Inhalte der
+            Demo Night-Teilnahmen und gegebene Feedbacks. Inhalte der
             Feedbacks bleiben privat.
           </p>
           {aktivitaet.length === 0 ? (
@@ -596,7 +596,7 @@ export default function WerkpassView({
           ) : (
             <>
               <p style={{ margin: '0 0 12px', fontSize: 14 }}>
-                <strong>{aktivitaetTotals.schauabende}</strong> Schauabend-
+                <strong>{aktivitaetTotals.schauabende}</strong> Demo Night-
                 Teilnahme{aktivitaetTotals.schauabende === 1 ? '' : 'n'} ·{' '}
                 <strong>{aktivitaetTotals.feedbacks}</strong> gegebene
                 Feedback{aktivitaetTotals.feedbacks === 1 ? '' : 's'}
@@ -634,7 +634,7 @@ export default function WerkpassView({
                         style={{ fontSize: 11 }}
                       >
                         {e.art === 'schauabend'
-                          ? 'Schauabend'
+                          ? 'Demo Night'
                           : 'Feedback'}
                       </span>
                       <strong>{e.titel}</strong>
@@ -676,8 +676,8 @@ export default function WerkpassView({
               maxWidth: 720,
             }}
           >
-            Im Werkzirkel ist Reziprozität verbindlich: Wer eine Prüfrunde
-            startet, hat zuvor zwei Werke anderer getestet — oder verpflichtet
+            Im Werkzirkel ist Gegenseitigkeit verbindlich: Wer eine Feedback-Loop
+            startet, hat zuvor zwei Builds anderer getestet — oder verpflichtet
             sich, es innerhalb von 14 Tagen zu tun. Das Test-Saldo macht das
             öffentlich sichtbar.
           </p>
@@ -697,7 +697,7 @@ export default function WerkpassView({
         <div className="wrap footer-inner">
           <span>Werkzirkel — Gemeinsam digitale Produkte bauen.</span>
           <div className="footer-links" aria-label="Fußnavigation">
-            <Link href="/">Macher:innen</Link>
+            <Link href="/">Builder:innen</Link>
             <Link href="/werke">Werke</Link>
             <Link href="/bedarf">Bedarf</Link>
             <Link href="/foerdern">Fördern</Link>

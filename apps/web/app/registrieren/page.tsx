@@ -157,12 +157,12 @@ export default async function RegistrierenPage(props: {
   const titel =
     rolle === 'bedarf'
       ? 'Bedarf einbringen — Registrierung abschließen'
-      : 'Förder:in werden — Registrierung abschließen';
+      : 'Sponsor:in werden — Registrierung abschließen';
 
   const erklaerung =
     rolle === 'bedarf'
-      ? 'Bedarfsträger:innen treten im Werkzirkel mit Klarnamen auf. Pseudonyme sind für diese Rolle nicht erlaubt. Bitte ergänze deinen Klarnamen und die Organisation, die du vertrittst.'
-      : 'Förder:innen treten im Werkzirkel mit Klarnamen auf. Pseudonyme sind für diese Rolle nicht erlaubt. Bitte ergänze deinen Klarnamen und die Organisation, die du vertrittst.';
+      ? 'Auftraggeber:innen treten im Werkzirkel mit Klarnamen auf. Pseudonyme sind für diese Rolle nicht erlaubt. Bitte ergänze deinen Klarnamen und die Organisation, die du vertrittst.'
+      : 'Sponsor:innen treten im Werkzirkel mit Klarnamen auf. Pseudonyme sind für diese Rolle nicht erlaubt. Bitte ergänze deinen Klarnamen und die Organisation, die du vertrittst.';
 
   return (
     <main className="wrap" style={{ paddingTop: 32, paddingBottom: 64 }}>

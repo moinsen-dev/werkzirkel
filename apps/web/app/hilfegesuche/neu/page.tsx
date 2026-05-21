@@ -1,5 +1,5 @@
 /**
- * /hilfegesuche/neu — Neues Hilfegesuch anlegen (Server Component + Server Action).
+ * /hilfegesuche/neu — Neues Quick-Help anlegen (Server Component + Server Action).
  *
  * Auth-Pflicht — ohne Session redirect zu /anmelden. Validator schlaegt zu
  * lange Gueltigkeit (> now + 14 Tage) ab.
@@ -17,7 +17,7 @@ import { getSessionFromRequest } from '@/lib/auth/session';
 import { hilfegesuchAnlegenSchema } from '@/lib/validators/hilfegesuch';
 
 export const metadata: Metadata = {
-  title: 'Neues Hilfegesuch',
+  title: 'Neues Quick-Help',
   robots: { index: false, follow: false },
 };
 
@@ -116,7 +116,7 @@ export async function hilfegesuchAnlegen(formData: FormData): Promise<void> {
   redirect(`/hilfegesuche/${row.id}`);
 }
 
-export default async function HilfegesuchNeuPage({ searchParams }: PageProps) {
+export default async function HilfegesuchHilfegesuchNeuPage({ searchParams }: PageProps) {
   const req = await buildRequestFromHeaders();
   const sess = await getSessionFromRequest(req);
   if (!sess) {
@@ -149,7 +149,7 @@ export default async function HilfegesuchNeuPage({ searchParams }: PageProps) {
       <header className="hero" id="top">
         <div className="wrap hero-grid single">
           <div>
-            <p className="eyebrow">Werkzirkel · Hilfegesuch</p>
+            <p className="eyebrow">Werkzirkel · Quick-Help</p>
             <h1>{th.neu_titel}</h1>
             <p className="hero-copy">{th.neu_untertitel}</p>
           </div>

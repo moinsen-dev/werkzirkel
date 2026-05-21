@@ -1,7 +1,7 @@
 /**
  * /uebersicht/werkstattbeitrag — Eigene Werkstattbeitraege (Server Component).
  *
- * Liste alle drei Pfade: Schauabend-Teilnahme, Geldbeitrag (mit Stripe-
+ * Liste alle drei Pfade: Demo Night-Teilnahme, Geldbeitrag (mit Stripe-
  * Status), Sachleistung (mit Verifikations-Status).
  *
  * Stripe-Erfolg-Banner wenn ?status=ok kommt vom Checkout-Redirect.
@@ -23,7 +23,7 @@ import type {
 } from '@/lib/db/schema/enums';
 
 export const metadata: Metadata = {
-  title: 'Mein Werkstattbeitrag — Werkzirkel',
+  title: 'Mein Membership-Beitrag — Werkzirkel',
   robots: { index: false, follow: false },
 };
 

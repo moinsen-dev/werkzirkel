@@ -206,6 +206,7 @@ describe('Reziprozitaets-Engine', () => {
       expect(result.ok).toBe(false);
       if (result.ok) return;
       expect(result.grund).toBe('frist_abgelaufen');
+      if (result.grund !== 'frist_abgelaufen') return;
       expect(result.offene_anzahl).toBe(1);
     });
 

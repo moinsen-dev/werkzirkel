@@ -44,9 +44,9 @@ const APP_URL = env.APP_URL.replace(/\/+$/, '');
 
 const TERMIN_TYP_LABEL: Record<string, string> = {
   pruefabend: 'Pruefabend',
-  schauabend: 'Schauabend',
-  bedarfsschau: 'Bedarfsschau',
-  baurunde: 'Baurunde',
+  schauabend: 'Demo Night',
+  bedarfsschau: 'Briefing Night',
+  baurunde: 'Build-Runde',
   werkgespraech: 'Werkgespraech',
   kennenlernrunde: 'Kennenlernrunde',
 };

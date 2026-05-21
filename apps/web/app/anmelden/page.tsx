@@ -27,7 +27,7 @@ import { magicLinkAnfordern } from './actions';
 export const metadata: Metadata = {
   title: 'Anmelden',
   description:
-    'Per Magic-Link beim Werkzirkel anmelden oder einen Werkpass anlegen. Kein Passwort, keine Cookies-Banner-Wand.',
+    'Per Magic-Link beim Werkzirkel anmelden oder einen Builder-Profil anlegen. Kein Passwort, keine Cookies-Banner-Wand.',
 };
 
 const t = de.anmelden;
@@ -74,9 +74,9 @@ export default async function AnmeldenPage({ searchParams }: Params) {
             <span>Werkzirkel</span>
           </Link>
           <div className="nav-links" aria-label="Bereiche">
-            <Link href="/">Macher:innen</Link>
+            <Link href="/">Builder:innen</Link>
             <Link href="/bedarf">Bedarf einbringen</Link>
-            <Link href="/foerdern">Werke fördern</Link>
+            <Link href="/foerdern">Builds sponsorn</Link>
           </div>
         </div>
       </nav>
@@ -180,7 +180,7 @@ export default async function AnmeldenPage({ searchParams }: Params) {
         <div className="wrap footer-inner">
           <span>Werkzirkel — Gemeinsam digitale Produkte bauen.</span>
           <div className="footer-links" aria-label="Fußnavigation">
-            <Link href="/">Macher:innen</Link>
+            <Link href="/">Builder:innen</Link>
             <Link href="/bedarf">Bedarf</Link>
             <Link href="/foerdern">Fördern</Link>
           </div>

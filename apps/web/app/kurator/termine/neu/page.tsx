@@ -3,7 +3,7 @@
  *
  * Quelle: PRD §F-401, §8.8.
  *
- * Auth + Kurator:in. Form-Felder gemaess `terminAnlegenSchema`; Status='geplant'.
+ * Auth + City-Lead. Form-Felder gemaess `terminAnlegenSchema`; Status='geplant'.
  * Erfolgs-Redirect zu /kurator/termine/[id]/bearbeiten?frisch=1.
  */
 
@@ -108,7 +108,7 @@ export async function terminAnlegenAction(formData: FormData): Promise<void> {
 
   // Werk-Bezüge persistieren (PRD §F-403). Nur Werke akzeptieren, die in
   // derselben Stadt sind UND sichtbar — keine pausierten oder fremden Stadt-
-  // Werke aus dem Schauabend bewerben lassen.
+  // Werke aus dem Demo Night bewerben lassen.
   const inputWerkIds = input.werk_ids ?? [];
   if (inputWerkIds.length > 0) {
     const validRows = await db
@@ -376,7 +376,7 @@ export default async function TerminNeuPage({ searchParams }: PageProps) {
                   }}
                 >
                   <legend style={{ fontWeight: 600, padding: '0 6px' }}>
-                    Werke verknüpfen (für Schauabende)
+                    Werke verknüpfen (für Demo Nights)
                   </legend>
                   <p
                     style={{
@@ -386,7 +386,7 @@ export default async function TerminNeuPage({ searchParams }: PageProps) {
                     }}
                   >
                     Welche Werke werden bei diesem Termin gezeigt? Mehrfach-
-                    auswahl. Optional — Bedarfsschau-Termine setzen ihre
+                    auswahl. Optional — Briefing Night-Termine setzen ihre
                     Bezüge auf der Bearbeiten-Seite.
                   </p>
                   <div

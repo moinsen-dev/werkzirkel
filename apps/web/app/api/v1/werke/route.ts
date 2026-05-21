@@ -40,7 +40,7 @@ export async function POST(req: Request): Promise<Response> {
         error: {
           code: 'rolle_fehlt',
           message:
-            'Nur Macher:innen koennen Werke anlegen. Aktiviere die Macher:in-Rolle in deinem Werkpass.',
+            'Nur Builder:innen koennen Builds anlegen. Aktiviere die Builder:in-Rolle in deinem Builder-Profil.',
         },
       },
       { status: 403 },
@@ -97,9 +97,9 @@ export async function POST(req: Request): Promise<Response> {
     return Response.json({ fehler: 'unbekannt' }, { status: 500 });
   }
 
-  // Initialer Werkstand-Historie-Eintrag: werkstand_alt=null markiert die
+  // Initialer Build-Stand-Historie-Eintrag: werkstand_alt=null markiert die
   // Anlage. Spätere Werkstand-Wechsel knüpfen daran an, sodass der Verlauf
-  // auf der Werkseite mindestens N+1 Einträge bei N Änderungen zeigt.
+  // auf der Build-Seite mindestens N+1 Einträge bei N Änderungen zeigt.
   try {
     await db.insert(werkHistorie).values({
       werkId: row.id,

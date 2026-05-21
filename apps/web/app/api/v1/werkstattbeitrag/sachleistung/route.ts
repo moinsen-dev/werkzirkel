@@ -1,9 +1,9 @@
 /**
  * POST /api/v1/werkstattbeitrag/sachleistung
  *
- * Werkstattbeitrag-Pfad C: Bedarfstraeger:in meldet eine Sachleistung
+ * Membership-Beitrag-Pfad C: Bedarfstraeger:in meldet eine Sachleistung
  * (Raum, Getraenke, Doku, ...). Beitrag wird mit Status 'erfasst' angelegt
- * und muss von einer Kurator:in via /api/v1/kurator/werkstattbeitraege/:id/
+ * und muss von einer City-Lead via /api/v1/kurator/werkstattbeitraege/:id/
  * verifizieren auf 'verifiziert' gehoben werden.
  *
  * - Auth + Bedarfstraeger:innen-Rolle.
@@ -35,7 +35,7 @@ export async function POST(req: Request): Promise<Response> {
         error: {
           code: 'keine_bedarfstraeger_rolle',
           message:
-            'Nur Bedarfstraeger:innen koennen einen Werkstattbeitrag melden. Bitte erst die Rolle in den Einstellungen hinzufuegen.',
+            'Nur Bedarfstraeger:innen koennen einen Membership-Beitrag melden. Bitte erst die Rolle in den Einstellungen hinzufuegen.',
         },
       },
       { status: 403 },

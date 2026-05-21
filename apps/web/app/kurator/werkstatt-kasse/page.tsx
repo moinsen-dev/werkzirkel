@@ -1,14 +1,14 @@
 /**
- * /kurator/werkstatt-kasse — Kurator-Übersicht der Werkstatt-Kasse eigener Stadt.
+ * /kurator/werkstatt-kasse — Kurator-Übersicht der Community-Pool eigener Stadt.
  *
  * Liefert alle Einträge (auch unfreigegebene), nach Datum absteigend. Enthält
  * ein einfaches Formular zum Anlegen neuer manueller Einträge (Server Action),
  * das die POST /api/v1/kurator/werkstatt-kasse-Endpoint-Logik direkt
- * spiegelt — sodass Kurator:innen ohne JS / über HTML-Form arbeiten können.
+ * spiegelt — sodass City-Leads ohne JS / über HTML-Form arbeiten können.
  *
- * Permission-Gate: Nur Kurator:innen der eigenen Stadt (siehe `istKuratorVon`).
+ * Permission-Gate: Nur City-Leads der eigenen Stadt (siehe `istKuratorVon`).
  *
- * PRD-Referenz: §8.11 (Werkstatt-Kasse pro Stadt, Kurator-Eingabe).
+ * PRD-Referenz: §8.11 (Community-Pool pro Stadt, Kurator-Eingabe).
  */
 
 import type { Metadata } from 'next';
@@ -30,7 +30,7 @@ import { aktuellesQuartal, quartalOf } from '@/lib/kasse/quartal';
 import { kategorieLabel, euroFormat } from '@/lib/kasse/labels';
 
 export const metadata: Metadata = {
-  title: 'Werkstatt-Kasse — Kurator-Übersicht',
+  title: 'Community-Pool — Kurator-Übersicht',
   robots: { index: false, follow: false },
 };
 
@@ -170,7 +170,7 @@ export default async function KuratorKassePage({ searchParams }: PageProps) {
           <div className="nav-links" aria-label="Bereiche">
             <Link href="/uebersicht">Übersicht</Link>
             <Link href="/kurator/werkstatt-kasse" aria-current="page">
-              Werkstatt-Kasse
+              Community-Pool
             </Link>
           </div>
         </div>
@@ -179,10 +179,10 @@ export default async function KuratorKassePage({ searchParams }: PageProps) {
       <header className="hero" id="top">
         <div className="wrap hero-grid single">
           <div>
-            <p className="eyebrow">Werkzirkel · Kurator-Werkstatt-Kasse</p>
-            <h1>Werkstatt-Kasse — {stadtId.toUpperCase()}</h1>
+            <p className="eyebrow">Werkzirkel · Kurator-Community-Pool</p>
+            <h1>Community-Pool — {stadtId.toUpperCase()}</h1>
             <p className="hero-copy">
-              Hier erfasst du Eingänge und Ausgänge der Werkstatt-Kasse. Stripe-
+              Hier erfasst du Eingänge und Ausgänge der Community-Pool. Stripe-
               Zahlungen werden automatisch eingetragen; manuelle Einträge (z.B.
               Raum-Miete) müssen vom Admin freigegeben werden, bevor sie öffentlich
               sichtbar sind.
@@ -199,7 +199,7 @@ export default async function KuratorKassePage({ searchParams }: PageProps) {
               className="callout"
               style={{ padding: 16, borderRadius: 12 }}
             >
-              <strong>Nur Kurator:innen ihrer Stadt können diese Seite nutzen.</strong>
+              <strong>Nur City-Leads ihrer Stadt können diese Seite nutzen.</strong>
             </div>
           ) : (
             <>

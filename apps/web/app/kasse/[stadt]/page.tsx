@@ -1,5 +1,5 @@
 /**
- * /kasse/[stadt] — öffentliche Werkstatt-Kasse-Übersicht (Server Component).
+ * /kasse/[stadt] — öffentliche Community-Pool-Übersicht (Server Component).
  *
  * Zeigt pro Stadt + Quartal:
  *  - Eingangs-Tabelle (Datum / Kategorie / Beschreibung / Betrag)
@@ -65,8 +65,8 @@ export async function generateMetadata({
     .limit(1);
   const name = rows[0]?.name ?? stadtId;
   return {
-    title: `Werkstatt-Kasse ${name}`,
-    description: `Öffentliche Quartalsübersicht der Werkstatt-Kasse für ${name} — Eingänge, Ausgänge, Saldo.`,
+    title: `Community-Pool ${name}`,
+    description: `Öffentliche Quartalsübersicht der Community-Pool für ${name} — Eingänge, Ausgänge, Saldo.`,
   };
 }
 
@@ -125,7 +125,7 @@ export default async function KassePage({ params, searchParams }: PageParams) {
           <div className="nav-links" aria-label="Bereiche">
             <Link href={`/zirkel/${rawSlug}`}>Zirkel {stadtRow.name}</Link>
             <Link href={`/kasse/${rawSlug}`} aria-current="page">
-              Werkstatt-Kasse
+              Community-Pool
             </Link>
           </div>
         </div>
@@ -134,13 +134,13 @@ export default async function KassePage({ params, searchParams }: PageParams) {
       <header className="hero" id="top">
         <div className="wrap hero-grid single">
           <div>
-            <p className="eyebrow">Werkzirkel · Werkstatt-Kasse</p>
+            <p className="eyebrow">Werkzirkel · Community-Pool</p>
             <h1>
-              Werkstatt-Kasse {stadtRow.name} — {requested}
+              Community-Pool {stadtRow.name} — {requested}
             </h1>
             <p className="hero-copy">
               Quartalsweise öffentliche Übersicht aller Eingänge und Ausgänge der
-              Werkstatt-Kasse. Werkstattbeiträge, Erfolgsbeiträge und
+              Community-Pool. Membership-Beiträge, Erfolgsbeiträge und
               Fördermitgliedsbeiträge fließen automatisch ein; Ausgaben für Raum,
               Getränke, Werkzeug und Kurator-Aufwand werden hier transparent
               dokumentiert.

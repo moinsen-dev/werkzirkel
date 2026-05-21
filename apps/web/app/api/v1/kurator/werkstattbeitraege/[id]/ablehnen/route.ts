@@ -1,7 +1,7 @@
 /**
  * POST /api/v1/kurator/werkstattbeitraege/:id/ablehnen
  *
- * Kurator:in lehnt einen Werkstattbeitrag ab (vor allem Sachleistungen).
+ * City-Lead lehnt einen Membership-Beitrag ab (vor allem Sachleistungen).
  * Erwartet `{ grund: string }`, setzt Status 'abgelehnt'.
  *
  * PRD-Referenz: §10.5, §18.
@@ -56,7 +56,7 @@ export async function POST(req: Request, ctx: RouteContext): Promise<Response> {
         error: {
           code: 'kein_zugriff',
           message:
-            'Nur Kurator:innen der jeweiligen Stadt koennen Werkstattbeitraege ablehnen.',
+            'Nur City-Leads der jeweiligen Stadt koennen Werkstattbeitraege ablehnen.',
         },
       },
       { status: 403 },

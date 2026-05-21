@@ -1,13 +1,13 @@
 /**
- * /werkpass/[id] — Oeffentliche Werkpass-Seite (Server Component).
+ * /werkpass/[id] — Oeffentliche Builder-Profil-Seite (Server Component).
  *
- * Quelle: PRD §8 (Werke statt Werkpaesse — Werkpass zeigt eigene Werke
+ * Quelle: PRD §8 (Werke statt Werkpaesse — Builder-Profil zeigt eigene Builds
  * prominent, Bio bleibt klein), Reziprozitaets-Saldo aus §F-301 ff.
  *
  * Zugriffs-Logik:
  * - Nutzer:in nicht vorhanden → notFound().
  * - status IN ('gesperrt', 'loeschung_anstehend') → notFound().
- * - `'macher'` nicht in `rollen` → notFound() (Werkpass ist Macher:innen-Konzept).
+ * - `'macher'` nicht in `rollen` → notFound() (Builder-Profil ist Builder:innen-Konzept).
  *
  * Hard rules:
  * - NUR public Felder werden geselectet. KEIN email, KEIN klarname,
@@ -112,7 +112,7 @@ async function ladeNutzerPublic(
 /**
  * Sichtbarkeits-Check: 404 wenn Nutzer:in nicht oeffentlich darstellbar ist.
  *
- * Bewusst symmetrisch zu Werk-Detail: gesperrte oder zur Loeschung
+ * Bewusst symmetrisch zu Build-Detail: gesperrte oder zur Loeschung
  * vorgemerkte Konten sind nicht oeffentlich. `pausiert` bleibt sichtbar,
  * weil die Nutzer:in nur Anmeldungen pausiert — bisherige Werke bleiben.
  */
@@ -220,10 +220,10 @@ interface AktivitaetResult {
 }
 
 /**
- * Lädt die jüngsten Schauabend-Teilnahmen (`termin_anmeldung.status='anwesend'`)
+ * Lädt die jüngsten Demo Night-Teilnahmen (`termin_anmeldung.status='anwesend'`)
  * und gegebenen Feedbacks (`feedback.tester_id=<nutzerId>`). Privacy: nur
  * öffentliche Felder (Werk-Name, Termin-Titel, Zeitpunkt) — niemals der
- * Feedback-Inhalt selbst (gehört nur dem Werk-Inhaber).
+ * Feedback-Inhalt selbst (gehört nur dem Builder).
  */
 async function ladeAktivitaet(nutzerId: string): Promise<AktivitaetResult> {
   const schauabendeRows = await db
@@ -258,13 +258,13 @@ async function ladeAktivitaet(nutzerId: string): Promise<AktivitaetResult> {
     .orderBy(desc(feedback.erstelltAm))
     .limit(AKTIVITAET_LIMIT);
 
-  // Schauabende + Feedbacks chronologisch zusammenführen.
+  // Demo Nights + Feedbacks chronologisch zusammenführen.
   const merged: WerkpassAktivitaetEintrag[] = [
     ...schauabendeRows.map((r) => ({
       art: 'schauabend' as const,
       zeitpunkt: r.datum,
       titel: r.titel,
-      sekundaer: 'Schauabend besucht',
+      sekundaer: 'Demo Night besucht',
       ref: `/termine/${r.terminId}`,
     })),
     ...feedbackRows.map((r) => ({
@@ -296,9 +296,9 @@ export async function generateMetadata({
   const stadtName = await ladeStadtName(row.stadtId);
   const beschreibung =
     row.kurzbeschreibung ||
-    `Werkpass von ${row.anzeigename}${stadtName ? ` im ${stadtName}` : ''}`;
+    `Builder-Profil von ${row.anzeigename}${stadtName ? ` im ${stadtName}` : ''}`;
   return {
-    title: `Werkpass: ${row.anzeigename}`,
+    title: `Builder-Profil: ${row.anzeigename}`,
     description: beschreibung,
   };
 }

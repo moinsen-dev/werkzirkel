@@ -5,9 +5,9 @@ import SiteFooter from '@/components/ui/site-footer';
 import { env } from '@/lib/env';
 
 export const metadata: Metadata = {
-  title: 'Werkzirkel — Gemeinsam digitale Produkte bauen',
+  title: 'Werkzirkel — Build in Public, mit echten Testern',
   description:
-    'Werkzirkel verbindet unabhängige digitale Macher:innen in Hamburg — mit Bedarfsträger:innen und Förder:innen aus derselben Stadt. Werkstatt-Kultur, kein Marktplatz.',
+    'Werkzirkel verbindet unabhängige Builder:innen und Founder:innen in Hamburg — mit Auftraggeber:innen und Sponsor:innen aus derselben Stadt. Build in Public, ohne Pitch-Theater.',
 };
 
 const APP_URL = env.APP_URL.replace(/\/+$/, '');
@@ -26,7 +26,7 @@ const organizationJsonLd = {
   url: APP_URL,
   logo: `${APP_URL}/og-default.png`,
   description:
-    'Werkstatt-Kultur fuer unabhaengige digitale Macher:innen in Hamburg. Macher:innen, Bedarfstraeger:innen und Foerder:innen aus derselben Stadt — kein Marktplatz, keine Vermittlung, keine Provision.',
+    'Build-in-Public-Plattform fuer unabhaengige Builder:innen und Founder:innen in Hamburg. Builder, Auftraggeber:innen und Sponsor:innen aus derselben Stadt — kein Marktplatz, keine Vermittlung, keine Provision.',
   areaServed: { '@type': 'City', name: 'Hamburg' },
   inLanguage: 'de',
 } as const;
@@ -51,11 +51,11 @@ export default function MacherLandingpage() {
           </Link>
           <div className="nav-links" aria-label="Bereiche">
             <Link href="/" aria-current="page">
-              Macher:innen
+              Builder:innen
             </Link>
             <Link href="/bedarf">Bedarf einbringen</Link>
-            <Link href="/foerdern">Werke fördern</Link>
-            <a href="#kreise">Kreise</a>
+            <Link href="/foerdern">Builds sponsorn</Link>
+            <a href="#kreise">Städte</a>
             <a href="#regeln">Regeln</a>
           </div>
           <a className="nav-cta" href="#zugang">
@@ -67,23 +67,23 @@ export default function MacherLandingpage() {
       <header className="hero" id="top">
         <div className="wrap hero-grid">
           <div>
-            <p className="eyebrow">Werkstatt-Kultur · Hamburg zuerst</p>
-            <h1>Baue digitale Produkte nicht allein.</h1>
+            <p className="eyebrow">Build in Public · Hamburg zuerst</p>
+            <h1>Bau dein Produkt nicht allein.</h1>
             <p className="hero-copy">
-              Werkzirkel bringt unabhängige digitale Macher:innen in Hamburg zusammen — zum
-              Austauschen, Testen und Vorankommen. Und macht sie sichtbar gegenüber lokalen
-              Bedarfsträger:innen und Förder:innen, die in derselben Stadt sitzen. Werkstatt-Kultur,
-              kein Marktplatz.
+              Werkzirkel bringt unabhängige Builder:innen und Founder:innen in Hamburg zusammen — zum
+              Austauschen, Testen und Vorankommen. Und macht sie sichtbar für lokale
+              Auftraggeber:innen und Sponsor:innen, die in derselben Stadt sitzen. Build in Public,
+              ohne Pitch-Theater.
             </p>
             <div className="hero-actions">
               <a className="button primary" href="#zugang">
-                Werkpass vormerken
+                Builder-Profil vormerken
               </a>
               <a className="button secondary" href="#formate">
                 Formate ansehen
               </a>
             </div>
-            <div className="city-picker" aria-label="Regionale Zirkel">
+            <div className="city-picker" aria-label="Regionale Werkzirkel">
               <button className="city-chip" type="button" aria-pressed="true">
                 Hamburg · aktiv
               </button>
@@ -117,18 +117,18 @@ export default function MacherLandingpage() {
             </div>
             <div className="frame-body">
               <aside className="mock-sidebar" aria-label="Bereiche im Produkt">
-                <p className="sidebar-title">Kreis</p>
+                <p className="sidebar-title">Stadt</p>
                 <div className="side-item active">
                   <span className="side-dot"></span>
                   <span>Übersicht</span>
                 </div>
                 <div className="side-item">
                   <span className="side-dot"></span>
-                  <span>Werke</span>
+                  <span>Builds</span>
                 </div>
                 <div className="side-item">
                   <span className="side-dot"></span>
-                  <span>Prüfrunden</span>
+                  <span>Feedback-Loops</span>
                 </div>
                 <div className="side-item">
                   <span className="side-dot"></span>
@@ -140,23 +140,23 @@ export default function MacherLandingpage() {
                 </div>
                 <div className="side-item">
                   <span className="side-dot"></span>
-                  <span>Hilfegesuche</span>
+                  <span>Quick-Help</span>
                 </div>
               </aside>
               <main className="mock-main">
                 <div className="mock-header">
                   <div>
-                    <h2 className="mock-title">Nächster Arbeitskreis</h2>
+                    <h2 className="mock-title">Nächste Demo Night</h2>
                     <p className="mock-sub">
-                      Für Menschen mit echten digitalen Werken, frühen Versionen und konkreten
-                      Fragen.
+                      Für Builder:innen mit echten digitalen Produkten, frühen Versionen und
+                      konkreten Fragen.
                     </p>
                   </div>
                   <span className="status-pill warm">Hamburg</span>
                 </div>
                 <div className="mock-grid">
                   <article className="mock-card">
-                    <p className="mock-label">Prüfrunde</p>
+                    <p className="mock-label">Feedback-Loop</p>
                     <strong>Bezahlstrecke einer kleinen App testen</strong>
                     <p>
                       Gesucht: drei ehrliche Testpersonen aus Hamburg, die den ersten Kaufweg
@@ -164,29 +164,29 @@ export default function MacherLandingpage() {
                     </p>
                   </article>
                   <article className="mock-card">
-                    <p className="mock-label">Schauabend</p>
-                    <strong>Fünf unfertige Werke, je acht Minuten</strong>
-                    <p>Zeigen, was da ist. Keine Bühne für Selbstdarstellung.</p>
+                    <p className="mock-label">Demo Night</p>
+                    <strong>Fünf Builds, je acht Minuten</strong>
+                    <p>Zeigen, was läuft. Keine Bühne für Selbstdarstellung.</p>
                   </article>
                   <article className="mock-card wide">
-                    <p className="mock-label">Werkstand</p>
+                    <p className="mock-label">Build-Stand</p>
                     <strong>
                       Erst zeigen. Dann testen. Dann verbessern. Dann sichtbar machen.
                     </strong>
                     <div className="task-list">
                       <div className="task">
                         <span className="check">✓</span>
-                        <span>Werkseite angelegt</span>
+                        <span>Build-Seite angelegt</span>
                         <small>erledigt</small>
                       </div>
                       <div className="task">
                         <span className="check">2</span>
-                        <span>Prüffrage formulieren</span>
+                        <span>Testfrage formulieren</span>
                         <small>heute</small>
                       </div>
                       <div className="task">
                         <span className="check">3</span>
-                        <span>Schauabend anfragen</span>
+                        <span>Demo Night anfragen</span>
                         <small>offen</small>
                       </div>
                     </div>
@@ -198,13 +198,13 @@ export default function MacherLandingpage() {
         </div>
       </header>
 
-      <section className="section compact" aria-label="Drei Wege in den Kreis">
+      <section className="section compact" aria-label="Drei Wege in den Werkzirkel">
         <div className="wrap">
           <div className="section-head">
-            <h2>Drei Wege in den Kreis.</h2>
+            <h2>Drei Wege rein.</h2>
             <p>
-              Werkzirkel verbindet drei Seiten — und schützt jede vor der anderen. Macher:innen
-              zeigen Werke. Bedarfsträger:innen zeigen Probleme. Förder:innen zeigen Mittel.
+              Werkzirkel verbindet drei Seiten — und schützt jede vor der anderen. Builder:innen
+              zeigen Builds. Auftraggeber:innen zeigen Probleme. Sponsor:innen zeigen Mittel.
               Vermittlungen passieren offline.
             </p>
           </div>
@@ -212,10 +212,10 @@ export default function MacherLandingpage() {
             <article className="role-card" aria-current="page">
               <div>
                 <p className="meta">Du baust</p>
-                <h3>Werkpass &amp; Werk anlegen</h3>
+                <h3>Builder-Profil &amp; Build anlegen</h3>
                 <p>
-                  Eigene digitale Produkte zeigen, testen lassen, weiterentwickeln. Auf
-                  Schauabenden vorstellen, Prüfrunden geben und nehmen.
+                  Eigene digitale Produkte zeigen, testen lassen, weiterentwickeln. Auf Demo Nights
+                  vorstellen, Feedback-Loops geben und nehmen.
                 </p>
               </div>
               <span className="arrow">Du bist hier →</span>
@@ -225,22 +225,22 @@ export default function MacherLandingpage() {
                 <p className="meta">Du brauchst</p>
                 <h3>Bedarf einbringen</h3>
                 <p>
-                  Ein konkretes digitales Problem aus deiner Organisation in den Hamburger Kreis
-                  stellen — mit Werkstattbeitrag, ohne Pitch-Wettbewerb.
+                  Ein konkretes digitales Problem aus deiner Organisation in den Hamburger Werkzirkel
+                  stellen — mit Membership-Beitrag, ohne Pitch-Wettbewerb.
                 </p>
               </div>
               <span className="arrow">Zur Bedarfsseite →</span>
             </Link>
             <Link className="role-card" href="/foerdern">
               <div>
-                <p className="meta">Du förderst</p>
-                <h3>Werke fördern</h3>
+                <p className="meta">Du sponsorst</p>
+                <h3>Builds sponsorn</h3>
                 <p>
-                  Förderprofil anlegen, von der Kurator:in verifizieren lassen, in einer
-                  Bedarfsschau persönlich sichtbar werden. Klarname, transparenter Rahmen.
+                  Sponsor-Profil anlegen, vom City-Lead verifizieren lassen, auf einer Briefing Night
+                  persönlich sichtbar werden. Klarname, transparenter Rahmen.
                 </p>
               </div>
-              <span className="arrow">Zur Förderseite →</span>
+              <span className="arrow">Zur Sponsor-Seite →</span>
             </Link>
           </div>
         </div>
@@ -252,15 +252,15 @@ export default function MacherLandingpage() {
             <h2>Nicht noch ein soziales Netzwerk.</h2>
             <p>
               Werkzirkel verkauft keinen Kontakt um des Kontakts willen. Die Plattform ist auf
-              Fortschritt gebaut: konkrete Werke, konkrete Fragen, konkrete nächste Schritte.
+              Fortschritt gebaut: konkrete Builds, konkrete Fragen, konkrete nächste Schritte.
             </p>
           </div>
           <div className="principle-grid">
             <article className="principle-card">
               <span className="no">01</span>
-              <h3>Kein endloser Nachrichtenstrom.</h3>
+              <h3>Kein endloser Feed.</h3>
               <p>
-                Statt Rauschen gibt es begrenzte Prüfrunden, sichtbare Werkstände und regionale
+                Statt Rauschen gibt es begrenzte Feedback-Loops, sichtbare Build-Stände und regionale
                 Termine.
               </p>
             </article>
@@ -268,7 +268,7 @@ export default function MacherLandingpage() {
               <span className="no">02</span>
               <h3>Keine Applaus-Jagd.</h3>
               <p>
-                Ein Werk wird nicht nach Applaus sortiert, sondern nach Status, Bedarf und nächstem
+                Ein Build wird nicht nach Applaus sortiert, sondern nach Status, Bedarf und nächstem
                 Schritt.
               </p>
             </article>
@@ -277,23 +277,23 @@ export default function MacherLandingpage() {
               <h3>Keine Gründerbühne.</h3>
               <p>
                 Unfertige Produkte dürfen unfertig sein. Entscheidend ist, dass andere sie ehrlich
-                prüfen können.
+                testen können.
               </p>
             </article>
           </div>
 
           <div className="reziproz-row" style={{ marginTop: '22px' }}>
             <div>
-              <h3>Verbindlichkeit, nicht Verbrauch.</h3>
+              <h3>Gib zwei, nimm eins.</h3>
               <p>
-                Wer eine Prüfrunde startet, hat zuvor zwei Werke anderer getestet — oder
-                verpflichtet sich, das innerhalb von 14 Tagen zu tun. Die Test-Bilanz ist im
-                Werkpass sichtbar.
+                Wer einen eigenen Feedback-Loop startet, hat zuvor zwei Builds anderer getestet —
+                oder verpflichtet sich, das innerhalb von 14 Tagen zu tun. Das Feedback-Saldo ist
+                im Builder-Profil sichtbar.
               </p>
             </div>
             <div className="saldo">
               <span>2 ↔ 1</span>
-              <small>Test-Saldo</small>
+              <small>Feedback-Saldo</small>
             </div>
           </div>
         </div>
@@ -304,17 +304,17 @@ export default function MacherLandingpage() {
           <div className="section-head">
             <h2>Formate, die Arbeit auslösen.</h2>
             <p>
-              Jeder Kreis hat einfache, wiederkehrende Formate. Sie halten den Austausch klein
-              genug für Vertrauen und konkret genug für echte Verbesserung.
+              Jede Stadt hat einfache, wiederkehrende Formate. Sie halten den Austausch klein genug
+              für Vertrauen und konkret genug für echte Verbesserung.
             </p>
           </div>
           <div className="format-grid">
             <article className="format-card">
               <div>
                 <span className="meta">Testen</span>
-                <h3>Prüfrunde</h3>
+                <h3>Feedback-Loop</h3>
                 <p>
-                  Eine Person bringt ein Werk und eine klare Prüffrage mit. Andere testen
+                  Eine Person bringt einen Build und eine klare Testfrage mit. Andere testen
                   strukturiert und geben verwertbare Rückmeldung.
                 </p>
               </div>
@@ -323,10 +323,10 @@ export default function MacherLandingpage() {
             <article className="format-card">
               <div>
                 <span className="meta">Zeigen</span>
-                <h3>Schauabend</h3>
+                <h3>Demo Night</h3>
                 <p>
-                  Lokaler Schauabend ohne Bühnenzwang: kurze Werkstände, offene Baustellen, direkte
-                  Anschlussfragen.
+                  Lokale Demo Night ohne Bühnenzwang: kurze Build-Stände, offene Baustellen,
+                  direkte Anschlussfragen.
                 </p>
               </div>
               <span className="status-pill">Vor Ort</span>
@@ -334,21 +334,21 @@ export default function MacherLandingpage() {
             <article className="format-card">
               <div>
                 <span className="meta">Bauen</span>
-                <h3>Baurunde</h3>
+                <h3>Build-Runde</h3>
                 <p>
                   Gemeinsames Arbeiten digital oder an einem Ort. Ruhig, verbindlich, mit Ziel für
                   die nächsten Stunden.
                 </p>
               </div>
-              <span className="status-pill">Fokuszeit</span>
+              <span className="status-pill">Deep Work</span>
             </article>
             <article className="format-card">
               <div>
                 <span className="meta">Treffen</span>
-                <h3>Bedarfsschau</h3>
+                <h3>Briefing Night</h3>
                 <p>
-                  Pendant zum Schauabend, andere Stoßrichtung: Bedarfsträger:innen und Förder:innen
-                  zeigen Probleme und Mittel — Macher:innen hören zu.
+                  Gegenstück zur Demo Night, andere Stoßrichtung: Auftraggeber:innen und
+                  Sponsor:innen zeigen Probleme und Mittel — Builder:innen hören zu.
                 </p>
               </div>
               <span className="status-pill">Vor Ort</span>
@@ -366,11 +366,11 @@ export default function MacherLandingpage() {
               </div>
             </div>
             <div className="work-body">
-              <span className="status-pill">Werkstand: frühe Version</span>
-              <h3>Ein Werk vor dem ersten echten Marktgespräch</h3>
+              <span className="status-pill">Build-Stand: Beta</span>
+              <h3>Ein Build vor dem ersten echten Marktgespräch</h3>
               <p>
-                Jede Werkseite zeigt knapp, was gebaut wird, für wen es gedacht ist, welcher
-                Fortschritt sichtbar ist und welche Hilfe gerade gebraucht wird.
+                Jede Build-Seite zeigt knapp, was gebaut wird, für wen es gedacht ist, welcher
+                Fortschritt sichtbar ist und welches Feedback gerade gebraucht wird.
               </p>
               <div className="work-meta">
                 <div className="meta-box">
@@ -379,10 +379,10 @@ export default function MacherLandingpage() {
                 </div>
                 <div className="meta-box">
                   <span>Nächster Schritt</span>
-                  <strong>Prüfrunde im eigenen Kreis anlegen</strong>
+                  <strong>Feedback-Loop in der eigenen Stadt anlegen</strong>
                 </div>
                 <div className="meta-box">
-                  <span>Kreis</span>
+                  <span>Stadt</span>
                   <strong>Hamburg</strong>
                 </div>
                 <div className="meta-box">
@@ -393,36 +393,36 @@ export default function MacherLandingpage() {
             </div>
           </div>
           <div>
-            <p className="eyebrow">Werk vor Profil</p>
+            <p className="eyebrow">Build vor Profil</p>
             <h2>Der Kern ist nicht, wer du bist. Sondern was du baust.</h2>
             <ul className="explain-list">
               <li>
                 <span className="step-number">01</span>
                 <div>
-                  <strong>Werk anlegen</strong>
+                  <strong>Build anlegen</strong>
                   <p>
-                    Eine App, ein Werkzeug, ein digitales Vorhaben oder ein Nebenprodukt bekommt
-                    eine klare Seite im Werkpass.
+                    Eine App, ein SaaS, ein Tool, ein Side-Project oder ein Indie-Hack bekommt eine
+                    klare Seite im Builder-Profil.
                   </p>
                 </div>
               </li>
               <li>
                 <span className="step-number">02</span>
                 <div>
-                  <strong>Werkstand sichtbar machen</strong>
+                  <strong>Build-Stand sichtbar machen</strong>
                   <p>
-                    Nicht perfekt wirken, sondern zeigen, ob etwas Idee, Prototyp, frühe Version
-                    oder laufendes Produkt ist.
+                    Nicht perfekt wirken, sondern zeigen, ob etwas Idee, Prototyp, Beta oder Live
+                    ist.
                   </p>
                 </div>
               </li>
               <li>
                 <span className="step-number">03</span>
                 <div>
-                  <strong>Konkrete Hilfe erbitten</strong>
+                  <strong>Konkretes Feedback erbitten</strong>
                   <p>
-                    Wer Rückmeldung will, beschreibt die Frage. Wer Hilfe bekommt, unterstützt auch
-                    andere Werke im Kreis — verbindlich.
+                    Wer Feedback will, beschreibt die Frage. Wer Feedback bekommt, unterstützt auch
+                    andere Builds im Werkzirkel — verbindlich.
                   </p>
                 </div>
               </li>
@@ -436,24 +436,24 @@ export default function MacherLandingpage() {
           <div className="section-head">
             <h2>Hamburg zuerst. Sauber.</h2>
             <p>
-              Wir starten bewusst mit einer Stadt. Erst wenn der Hamburger Kreis trägt — drei
-              Schauabende, fünfzehn Werke, ehrliche Reziprozitätsbilanz — replizieren wir Berlin
-              und München mit eigener Kurator:in vor Ort.
+              Wir starten bewusst mit einer Stadt. Erst wenn der Hamburger Werkzirkel trägt — drei
+              Demo Nights, fünfzehn Builds, ehrliches Feedback-Saldo — replizieren wir Berlin und
+              München mit eigenem City-Lead vor Ort.
             </p>
           </div>
           <div className="city-grid">
             <article className="city-card">
-              <span className="state aktiv">Aktiver Kreis</span>
+              <span className="state aktiv">Aktive Stadt</span>
               <h3>Werkzirkel Hamburg</h3>
               <p>
-                Erster regionaler Kreis. Schauabende, Prüfrunden und die erste Bedarfsschau finden
+                Erster Standort. Demo Nights, Feedback-Loops und die erste Briefing Night finden
                 hier statt.
               </p>
             </article>
             <article className="city-card">
               <span className="state">In Vorbereitung</span>
               <h3>Werkzirkel Berlin</h3>
-              <p>Aktiv, sobald Hamburg trägt — mit eigener Kurator:in, nicht ferngesteuert.</p>
+              <p>Aktiv, sobald Hamburg trägt — mit eigenem City-Lead, nicht ferngesteuert.</p>
             </article>
             <article className="city-card">
               <span className="state">In Vorbereitung</span>
@@ -494,12 +494,12 @@ export default function MacherLandingpage() {
         <div className="wrap audience-grid">
           <article className="audience-card">
             <p className="eyebrow">Dafür gebaut</p>
-            <h3>Für Menschen mit konkretem Produktinteresse.</h3>
+            <h3>Für Builder:innen mit konkretem Produkt-Interesse.</h3>
             <ul>
-              <li>unabhängige Entwickler:innen und App-Macher:innen</li>
-              <li>SaaS-Macher:innen und Solo-Macher:innen</li>
-              <li>Freischaffende mit eigenen digitalen Produkten</li>
-              <li>No-Code-/Low-Code-Macher:innen mit echtem Vorhaben</li>
+              <li>Indie-Hacker:innen und Solo-Founder:innen</li>
+              <li>SaaS-Builder:innen und App-Founder:innen</li>
+              <li>Tech-Mitarbeiter:innen mit Side-Projects</li>
+              <li>No-Code-/Low-Code-Builder:innen mit echtem Vorhaben</li>
               <li>UX-/UI-Designer:innen mit eigenen Ideen</li>
             </ul>
           </article>
@@ -520,12 +520,12 @@ export default function MacherLandingpage() {
       <section className="cta-section" id="zugang">
         <div className="wrap cta-box">
           <div>
-            <p className="eyebrow">Hamburger Kreis</p>
-            <h2>Werkpass vormerken.</h2>
+            <p className="eyebrow">Hamburger Werkzirkel</p>
+            <h2>Builder-Profil vormerken.</h2>
             <p>
-              Du baust ein digitales Werk in Hamburg und willst es testen lassen, weiterentwickeln
-              und in der Stadt sichtbar werden? Trag dich für den frühen Zugang ein. Der erste
-              Schauabend wird per E-Mail angekündigt.
+              Du baust ein digitales Produkt in Hamburg und willst es testen lassen, weiterentwickeln
+              und in der Stadt sichtbar werden? Trag dich für den frühen Zugang ein. Die erste
+              Demo Night wird per E-Mail angekündigt.
             </p>
           </div>
           <form className="waitlist" action="#" method="post">

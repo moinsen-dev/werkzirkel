@@ -65,11 +65,11 @@ export default function DatenschutzPage() {
             </li>
           </ul>
 
-          <h3>2.2 Werke, Werkpass, Prüfrunden</h3>
+          <h3>2.2 Werke, Builder-Profil, Feedback-Loops</h3>
           <ul>
             <li>
               <strong>Daten:</strong> Werk-Beschreibungen, Screenshots, Fähigkeiten, öffentliche
-              Werkpass-Inhalte, Tester-Feedback.
+              Builder-Profil-Inhalte, Tester-Feedback.
             </li>
             <li>
               <strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung).
@@ -84,7 +84,7 @@ export default function DatenschutzPage() {
           <h3>2.3 Bedarfe und Werkangebote</h3>
           <ul>
             <li>
-              <strong>Daten:</strong> Bedarfs-Texte, Organisation, Frist, Werkstattbeiträge,
+              <strong>Daten:</strong> Bedarfs-Texte, Organisation, Frist, Membership-Beiträge,
               Werkangebote, Status-Übergänge.
             </li>
             <li>
@@ -99,14 +99,14 @@ export default function DatenschutzPage() {
           <h3>2.4 Termine und Anwesenheit</h3>
           <ul>
             <li>
-              <strong>Daten:</strong> An-/Abmeldungen zu Schauabenden, Bedarfsschauen,
+              <strong>Daten:</strong> An-/Abmeldungen zu Demo Nightsn, Briefing Nights,
               Förder-Treffen; Anwesenheits-Logs für Förder-Verifizierung.
             </li>
             <li>
               <strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung).
             </li>
             <li>
-              <strong>Speicherdauer:</strong> 24 Monate nach Termin (für Werkpass-Historie),
+              <strong>Speicherdauer:</strong> 24 Monate nach Termin (für Builder-Profil-Historie),
               danach Aggregation auf Zähler ohne Personenbezug.
             </li>
           </ul>
@@ -194,7 +194,7 @@ export default function DatenschutzPage() {
               <code>/api/v1/me</code>, 30-Tage-Karenzfrist mit Wiederherstellungs-Option).
             </li>
             <li>
-              <strong>Werk-/Bedarf-/Förderprofil-Löschung:</strong> jeweils direkt im
+              <strong>Werk-/Bedarf-/Sponsor-Profil-Löschung:</strong> jeweils direkt im
               Bearbeiten-Dialog des Objekts.
             </li>
           </ul>

@@ -9,7 +9,7 @@
  * Slug-Mapping wie /zirkel/[stadt]: hh/hamburg → 'hh', b/berlin → 'b',
  * m/muenchen/münchen → 'm'. Unbekannte Slugs → 404.
  *
- * PRD-Referenz: §8.11 (Werkstatt-Kasse, öffentliche Quartalsübersicht).
+ * PRD-Referenz: §8.11 (Community-Pool, öffentliche Quartalsübersicht).
  */
 
 import { and, desc, eq, isNotNull } from 'drizzle-orm';

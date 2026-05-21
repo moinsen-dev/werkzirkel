@@ -2,9 +2,9 @@
  * POST /api/v1/foerderprofile/:id/reaktivieren
  *
  * Pausiertes Foerderprofil zurueck in Verifikation. Status 'pausiert' →
- * 'in_verifikation' — die Kurator:innen-Runde prueft erneut.
+ * 'in_verifikation' — die City-Leads-Runde prueft erneut.
  *
- * (Hinweis: Eine Bedarfsschau-Anwesenheit reaktiviert das Profil
+ * (Hinweis: Eine Briefing Night-Anwesenheit reaktiviert das Profil
  * automatisch — das geht ueber den `maybeUpdateFoerderprofilBedarfsschau`-
  * Hook, nicht ueber diesen Endpoint.)
  *

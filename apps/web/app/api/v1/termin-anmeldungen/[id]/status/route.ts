@@ -1,7 +1,7 @@
 /**
  * PATCH /api/v1/termin-anmeldungen/:id/status
  *
- * Einzel-Aenderung einer Anmeldung durch die Kurator:in (PRD §8.8). Wird
+ * Einzel-Aenderung einer Anmeldung durch die City-Lead (PRD §8.8). Wird
  * fuer nachtraegliche Korrekturen genutzt, wenn die Bulk-Anwesenheits-API
  * eine Person falsch zugeordnet hat.
  *
@@ -9,8 +9,8 @@
  *   Anmeldung — sonst 403.
  * - Body: `{ status: 'anwesend' | 'nicht_anwesend' }`.
  * - 'storniert'-Eintraege werden nicht ueberschrieben (422).
- * - Werkstattbeitrag-Hook wenn status auf 'anwesend' wechselt
- *   (Schauabend/Bedarfsschau + Bedarfstraeger:in).
+ * - Membership-Beitrag-Hook wenn status auf 'anwesend' wechselt
+ *   (Demo Night/Briefing Night + Bedarfstraeger:in).
  * - Audit-Log.
  * - Returns 200.
  */
@@ -75,7 +75,7 @@ export async function PATCH(req: Request, ctx: RouteContext): Promise<Response> 
         error: {
           code: 'kein_zugriff',
           message:
-            'Nur Kurator:innen der jeweiligen Stadt koennen den Anwesenheitsstatus aendern.',
+            'Nur City-Leads der jeweiligen Stadt koennen den Anwesenheitsstatus aendern.',
         },
       },
       { status: 403 },
@@ -121,7 +121,7 @@ export async function PATCH(req: Request, ctx: RouteContext): Promise<Response> 
     .set({ status: neuerStatus })
     .where(eq(terminAnmeldung.id, id));
 
-  // Werkstattbeitrag-Hook bei Uebergang auf 'anwesend'.
+  // Membership-Beitrag-Hook bei Uebergang auf 'anwesend'.
   if (neuerStatus === 'anwesend' && vorher !== 'anwesend') {
     try {
       await maybeCreateSchauabendBeitrag({

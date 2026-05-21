@@ -1,7 +1,7 @@
 /**
  * POST /api/v1/kurator/bedarfe/:id/ablehnen
  *
- * Kurator:in lehnt einen eingereichten Bedarf ab. Setzt Status auf
+ * City-Lead lehnt einen eingereichten Bedarf ab. Setzt Status auf
  * 'eingestellt' und versendet T-303 mit Grund-Text.
  *
  * PRD-Referenz: §F-603, §14.3.
@@ -49,7 +49,7 @@ export async function POST(req: Request, ctx: RouteContext): Promise<Response> {
         error: {
           code: 'kein_zugriff',
           message:
-            'Nur Kurator:innen der jeweiligen Stadt koennen Bedarfe ablehnen.',
+            'Nur City-Leads der jeweiligen Stadt koennen Bedarfe ablehnen.',
         },
       },
       { status: 403 },

@@ -6,10 +6,10 @@
  * - POST: Anmeldung als Tester:in.
  *     * Auth + Rolle 'macher'.
  *     * Pruefrunde muss status='oeffentlich' sein.
- *     * Tester:in darf nicht Werk-Inhaber:in sein.
+ *     * Tester:in darf nicht Builder:in sein.
  *     * Race-safer Slot-Check via Transaktion mit FOR UPDATE auf pruefrunde.
  *     * UNIQUE(pruefrunde_id, tester_id) verhindert Doppel-Anmeldung.
- *     * Sendet T-101 an Werk-Inhaber:in. Audit-Log-Eintrag.
+ *     * Sendet T-101 an Builder:in. Audit-Log-Eintrag.
  * - DELETE: Eigene Anmeldung zuruecknehmen.
  *     * Auth.
  *     * Nur in status='angemeldet' moeglich. status='feedback_gegeben' ist
@@ -52,7 +52,7 @@ export async function POST(req: Request, ctx: RouteContext): Promise<Response> {
         error: {
           code: 'rolle_fehlt',
           message:
-            'Nur Macher:innen koennen sich als Tester:in fuer Pruefrunden anmelden.',
+            'Nur Builder:innen koennen sich als Tester:in fuer Pruefrunden anmelden.',
         },
       },
       { status: 403 },
@@ -212,7 +212,7 @@ export async function POST(req: Request, ctx: RouteContext): Promise<Response> {
     );
   }
 
-  // T-101 an Werk-Inhaber:in senden (ausserhalb der Transaktion).
+  // T-101 an Builder:in senden (ausserhalb der Transaktion).
   try {
     await sendMail({
       to: outcome.werkInhaberEmail,

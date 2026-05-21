@@ -8,10 +8,10 @@
  *  - entwurf/in_pruefung: nur Owner und Kurator.
  *
  * Action-Box rechts je nach Rolle:
- *  - Macher:in (nicht Owner): Link zu /bedarfe/[id]/werkangebot-neu.
- *  - Bedarfstraeger:in (Owner): Werkangebote-Liste mit Status-Buttons (Server-Actions)
+ *  - Builder:in (nicht Owner): Link zu /bedarfe/[id]/werkangebot-neu.
+ *  - Bedarfstraeger:in (Owner): Werkangebote mit Status-Buttons (Server-Actions)
  *    + Erfuellt-markieren-Button.
- *  - Andere (eingeloggt aber weder Macher:in noch Owner): kein Action-Button.
+ *  - Andere (eingeloggt aber weder Builder:in noch Owner): kein Action-Button.
  */
 
 import type { Metadata } from 'next';
@@ -332,7 +332,7 @@ export default async function BedarfDetailPage({
             {sp.erfolg === 'status_gesetzt' ? (
               <Banner
                 kind="ok"
-                text="Status des Werkangebots wurde aktualisiert."
+                text="Status des Match-Angebots wurde aktualisiert."
               />
             ) : sp.erfolg === 'erfuellt' ? (
               <Banner
@@ -342,7 +342,7 @@ export default async function BedarfDetailPage({
             ) : sp.erfolg === 'erfolgsbeitrag_bezahlt' ? (
               <Banner
                 kind="ok"
-                text="Vielen Dank! Deine Spende geht in die Werkstatt-Kasse Hamburg."
+                text="Vielen Dank! Deine Spende geht in die Community-Pool Hamburg."
               />
             ) : sp.erfolg === 'erfolgsbeitrag_uebersprungen' ? (
               <Banner
@@ -436,7 +436,7 @@ export default async function BedarfDetailPage({
                   eigenes ? (
                     <>
                       <p className="eyebrow" style={{ margin: 0 }}>
-                        Dein Werkangebot
+                        Dein Match-Angebot
                       </p>
                       <p style={{ marginTop: 8 }}>
                         Status: <strong>{werkangebotStatusLabel(eigenes.status)}</strong>
@@ -454,7 +454,7 @@ export default async function BedarfDetailPage({
                   ) : (
                     <>
                       <p className="eyebrow" style={{ margin: 0 }}>
-                        Macher:in
+                        Builder:in
                       </p>
                       <p
                         style={{
@@ -667,7 +667,7 @@ function ErfolgsbeitragPanel({ bedarfId }: { bedarfId: string }) {
       </p>
       <p style={{ margin: '8px 0', fontSize: 13, color: 'var(--muted)' }}>
         Werkzirkel nimmt keine Provision. Wenn du magst, spende einen Anteil an
-        die Werkstatt-Kasse Hamburg — z.&nbsp;B. 5&nbsp;%. Du kannst auch{' '}
+        die Community-Pool Hamburg — z.&nbsp;B. 5&nbsp;%. Du kannst auch{' '}
         <strong>ohne Beitrag fortfahren</strong>.
       </p>
       <form

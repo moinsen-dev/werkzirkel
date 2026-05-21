@@ -7,14 +7,14 @@
  * - Pruefrunde muss status='oeffentlich' sein (geschlossene/abgeschlossene
  *   Runden nehmen keine neuen Feedbacks an).
  * - Tester:in muss eine pruefrunden_anmeldung mit status='angemeldet' haben.
- * - Werk-Inhaber:in darf nicht zur eigenen Pruefrunde feedbacken (defense in
+ * - Builder:in darf nicht zur eigenen Pruefrunde feedbacken (defense in
  *   depth — Anmeldung-API blockt das schon).
  * - Transaktion:
  *     * INSERT feedback (UNIQUE(pruefrunde_id, tester_id) faengt Doppel-Feedback
  *       ab → 422 'bereits_feedback_gegeben').
  *     * UPDATE pruefrunden_anmeldung SET status='feedback_gegeben'.
  *     * Reziprozitaets-Engine: feedbackGegeben(tester) + feedbackErhalten(werk_inhaber).
- * - Ausserhalb der Transaktion: T-102 an Werk-Inhaber:in + Audit-Log.
+ * - Ausserhalb der Transaktion: T-102 an Builder:in + Audit-Log.
  * - Returns 201.
  */
 
@@ -59,7 +59,7 @@ export async function POST(req: Request, ctx: RouteContext): Promise<Response> {
         error: {
           code: 'rolle_fehlt',
           message:
-            'Nur Macher:innen koennen Feedback zu Pruefrunden abgeben.',
+            'Nur Builder:innen koennen Feedback zu Pruefrunden abgeben.',
         },
       },
       { status: 403 },
@@ -274,7 +274,7 @@ export async function POST(req: Request, ctx: RouteContext): Promise<Response> {
     );
   }
 
-  // T-102 an Werk-Inhaber:in — Inhaber-E-Mail nachladen (nicht in Tx noetig).
+  // T-102 an Builder:in — Inhaber-E-Mail nachladen (nicht in Tx noetig).
   try {
     const inhaberRows = await db.execute<{ email: string }>(sql`
       SELECT email FROM nutzer WHERE id = ${pr.werkNutzerId} LIMIT 1

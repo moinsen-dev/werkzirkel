@@ -1,7 +1,7 @@
 /**
  * /uebersicht/bedarfe — Eigene Bedarfe (Server Component, Auth + Bedarfstraeger:in).
  *
- * Listet alle eigenen Bedarfe gruppiert nach Status. Plus Werkstattbeitrag-
+ * Listet alle eigenen Bedarfe gruppiert nach Status. Plus Membership-Beitrag-
  * Status-Karte (welche sind aktiv, wann laufen sie ab).
  */
 

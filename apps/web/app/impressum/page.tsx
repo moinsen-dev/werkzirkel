@@ -73,8 +73,8 @@ export default function ImpressumPage() {
 
           <h2>Haftung für Inhalte</h2>
           <p>
-            Werkzirkel ist eine Plattform für nutzergenerierte Inhalte (Werkpässe, Werke, Bedarfe,
-            Förderprofile, Hilfegesuche). Für eigene Inhalte sind wir nach den allgemeinen
+            Werkzirkel ist eine Plattform für nutzergenerierte Inhalte (Builder-Profile, Werke, Bedarfe,
+            Sponsor-Profile, Hilfegesuche). Für eigene Inhalte sind wir nach den allgemeinen
             Gesetzen verantwortlich. Für nutzergenerierte Inhalte gelten die §§ 7 ff. TMG sowie
             die einschlägigen Regelungen des Digital Services Act. Werkzirkel ist nicht
             verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen

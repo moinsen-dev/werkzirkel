@@ -344,10 +344,10 @@ export default async function PruefrundeFeedbackPage({
             <FehlerBanner text={tf.fehler_bereits_gegeben} />
           ) : null}
           {sp.fehler === 'falscher_status' ? (
-            <FehlerBanner text="Diese Prüfrunde nimmt kein Feedback mehr an." />
+            <FehlerBanner text="Diese Feedback-Loop nimmt kein Feedback mehr an." />
           ) : null}
           {sp.fehler === 'eigenes_werk' ? (
-            <FehlerBanner text="Du kannst zu deiner eigenen Prüfrunde kein Feedback abgeben." />
+            <FehlerBanner text="Du kannst zu deiner eigenen Feedback-Loop kein Feedback abgeben." />
           ) : null}
 
           <form action={action} style={{ display: 'grid', gap: 16 }}>

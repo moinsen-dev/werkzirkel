@@ -6,8 +6,8 @@
  *    /pruefrunden, /impressum, /datenschutz, /agb, /regeln, /streitschlichtung,
  *    /cookies
  *  - Dynamische Werke (sichtbarkeit='oeffentlich', status='aktiv')
- *  - Dynamische Werkpaesse (Macher:innen mit status='aktiv', rolle macher,
- *    Werkpass nicht-gesperrt)
+ *  - Dynamische Werkpaesse (Builder:innen mit status='aktiv', rolle macher,
+ *    Builder-Profil nicht-gesperrt)
  *  - Dynamische Termine (status='veroeffentlicht')
  *  - Zirkel-Staedte (status='aktiv'|'vorbereitung')
  *
@@ -86,7 +86,7 @@ async function ladeWerkeUrls(): Promise<MetadataRoute.Sitemap> {
   }
 }
 
-async function ladeWerkpassUrls(): Promise<MetadataRoute.Sitemap> {
+async function ladewerkpassUrls(): Promise<MetadataRoute.Sitemap> {
   try {
     const rows = await db
       .select({
@@ -184,7 +184,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const [werkeUrls, werkpaesseUrls, termineUrls, zirkelUrls] = await Promise.all([
     ladeWerkeUrls(),
-    ladeWerkpassUrls(),
+    ladewerkpassUrls(),
     ladeTermineUrls(),
     ladeZirkelUrls(),
   ]);

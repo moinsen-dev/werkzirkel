@@ -1,7 +1,7 @@
 /**
  * POST /api/v1/termine/:id/anwesenheit
  *
- * Anwesenheits-Dokumentation durch die Kurator:in nach dem Termin (PRD §8.8,
+ * Anwesenheits-Dokumentation durch die City-Lead nach dem Termin (PRD §8.8,
  * §F-401..§F-405). In einer Bulk-Operation werden alle Anmeldungen eines
  * Termins auf 'anwesend' oder 'nicht_anwesend' gesetzt.
  *
@@ -18,8 +18,8 @@
  *        'anwesend' — aber nur, wenn ihre Row zum Termin gehoert und nicht
  *        'storniert' ist.
  *     4. UPDATE termin.notizen_nach_termin wenn body-Feld gesetzt.
- * - Werkstattbeitrag-Hook nach Transaktion fuer jeden frisch 'anwesend'-
- *   markierten Nutzer mit Rolle 'bedarfstraeger' auf Schauabend/Bedarfsschau.
+ * - Membership-Beitrag-Hook nach Transaktion fuer jeden frisch 'anwesend'-
+ *   markierten Nutzer mit Rolle 'bedarfstraeger' auf Demo Night/Briefing Night.
  * - Audit-Log.
  * - Returns 200 mit { anwesend: N, nicht_anwesend: M }.
  */
@@ -85,7 +85,7 @@ export async function POST(req: Request, ctx: RouteContext): Promise<Response> {
         error: {
           code: 'kein_zugriff',
           message:
-            'Nur Kurator:innen der jeweiligen Stadt koennen die Anwesenheit dokumentieren.',
+            'Nur City-Leads der jeweiligen Stadt koennen die Anwesenheit dokumentieren.',
         },
       },
       { status: 403 },
@@ -201,7 +201,7 @@ export async function POST(req: Request, ctx: RouteContext): Promise<Response> {
     };
   });
 
-  // Werkstattbeitrag-Hook ausserhalb der Transaktion fuer jede frisch
+  // Membership-Beitrag-Hook ausserhalb der Transaktion fuer jede frisch
   // 'anwesend'-markierte Person. Defensive: einzelne Fehler werden geloggt,
   // verhindern aber kein erfolgreiches Bulk-Update.
   for (const fa of result.freshlyAnwesend) {

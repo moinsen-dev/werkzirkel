@@ -1,9 +1,9 @@
 /**
  * POST /api/v1/werkstattbeitrag/geldbeitrag
  *
- * Werkstattbeitrag-Pfad B: Bedarfstraeger:in zahlt einen Geldbeitrag
+ * Membership-Beitrag-Pfad B: Bedarfstraeger:in zahlt einen Geldbeitrag
  * (50/100/150 EUR) ueber Stripe Checkout. Endpunkt legt eine
- * Werkstattbeitrag-Row mit Status 'erfasst' an und erstellt die
+ * Membership-Beitrag-Row mit Status 'erfasst' an und erstellt die
  * Checkout-Session; die endgueltige Verifikation passiert im Webhook
  * (siehe /api/v1/stripe/webhook).
  *
@@ -41,7 +41,7 @@ export async function POST(req: Request): Promise<Response> {
         error: {
           code: 'keine_bedarfstraeger_rolle',
           message:
-            'Nur Bedarfstraeger:innen koennen einen Werkstattbeitrag leisten. Bitte erst die Rolle in den Einstellungen hinzufuegen.',
+            'Nur Bedarfstraeger:innen koennen einen Membership-Beitrag leisten. Bitte erst die Rolle in den Einstellungen hinzufuegen.',
         },
       },
       { status: 403 },
@@ -66,21 +66,21 @@ export async function POST(req: Request): Promise<Response> {
 
   // Dev-Fallback: ohne STRIPE_SECRET_KEY kein Crash, sondern 422 mit
   // Klartext-Hinweis. So bleiben Bedarf-Flows in lokaler Dev-Umgebung
-  // bedienbar (Schauabend-Teilnahme + Sachleistung).
+  // bedienbar (Demo Night-Teilnahme + Sachleistung).
   if (!isStripeConfigured()) {
     return Response.json(
       {
         error: {
           code: 'stripe_nicht_konfiguriert',
           message:
-            'Stripe ist nicht konfiguriert — bitte Schauabend-Teilnahme oder Sachleistung waehlen.',
+            'Stripe ist nicht konfiguriert — bitte Demo Night-Teilnahme oder Sachleistung waehlen.',
         },
       },
       { status: 422 },
     );
   }
 
-  // Werkstattbeitrag-Row als 'erfasst' anlegen — wird durch Webhook auf
+  // Membership-Beitrag-Row als 'erfasst' anlegen — wird durch Webhook auf
   // 'verifiziert' gehoben.
   const inserted = await db
     .insert(werkstattbeitrag)
@@ -109,7 +109,7 @@ export async function POST(req: Request): Promise<Response> {
           price_data: {
             currency: 'eur',
             product_data: {
-              name: 'Werkstattbeitrag Werkzirkel Hamburg',
+              name: 'Membership-Beitrag Werkzirkel Hamburg',
               description:
                 'Beitrag zur Werkstatt — gueltig 6 Monate fuer bis zu 4 Bedarfe.',
             },
@@ -132,7 +132,7 @@ export async function POST(req: Request): Promise<Response> {
     checkoutUrl = session.url;
     stripeSessionId = session.id;
   } catch (err) {
-    // Stripe-Fehler — wir loeschen die angelegte Werkstattbeitrag-Row
+    // Stripe-Fehler — wir loeschen die angelegte Membership-Beitrag-Row
     // wieder, damit kein 'erfasst'-Geist zurueckbleibt.
     try {
       const { eq } = await import('drizzle-orm');

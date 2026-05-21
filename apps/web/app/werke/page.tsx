@@ -48,9 +48,9 @@ import WerkeListView, {
 } from './werke-list-view';
 
 export const metadata: Metadata = {
-  title: 'Werke — Werkzirkel',
+  title: 'Builds — Werkzirkel',
   description:
-    'Alle öffentlichen Werke aus dem Werkzirkel. Filter nach Stadt, Werkstand und Hilfebedarf — kein Suchschlitz, sondern bewusste Auswahl.',
+    'Alle öffentlichen Builds aus dem Werkzirkel. Filter nach Stadt, Build-Stand und Hilfebedarf — kein Suchschlitz, sondern bewusste Auswahl.',
 };
 
 const PAGE_SIZE = 20;
@@ -221,7 +221,7 @@ async function ladeWerke(opts: {
       werkId: werk.id,
       werkName: werk.name,
       werkKurz: werk.kurzbeschreibung,
-      werkWerkstand: werk.werkstand,
+      werkstand: werk.werkstand,
       werkHilfebedarf: werk.hilfebedarf,
       werkScreenshots: werk.screenshots,
       werkAktualisiertAm: werk.aktualisiertAm,
@@ -275,7 +275,7 @@ async function ladeWerke(opts: {
     id: r.werkId,
     name: r.werkName,
     kurzbeschreibung: r.werkKurz,
-    werkstand: r.werkWerkstand as Werkstand,
+    werkstand: r.werkstand as Werkstand,
     hilfebedarf: (r.werkHilfebedarf ?? []) as Hilfebedarf[],
     screenshots: r.werkScreenshots ?? [],
     inhaberAnzeigename: r.inhaberAnzeigename,

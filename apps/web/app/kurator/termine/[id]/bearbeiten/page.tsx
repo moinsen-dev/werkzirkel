@@ -3,7 +3,7 @@
  *
  * Quelle: PRD §F-401, §14.6.
  *
- * Auth + Kurator:in der Stadt des Termins. 404 wenn fremde Stadt oder
+ * Auth + City-Lead der Stadt des Termins. 404 wenn fremde Stadt oder
  * unbekannte ID. Form vorgefuellt; PATCH-Logik via Server Action direkt
  * auf Drizzle.
  */
@@ -151,7 +151,7 @@ export async function terminAktualisierenAction(
   redirect(`${path}?erfolg=gespeichert`);
 }
 
-/* ─────────────────────  Bedarfsschau-Bezuege  ───────────────────── */
+/* ─────────────────────  Briefing Night-Bezuege  ───────────────────── */
 
 export async function bedarfsschauBedarfeSetzenAction(
   terminId: string,
@@ -396,7 +396,7 @@ export default async function TerminBearbeitenPage({
   const istEditierbar =
     row.status === 'geplant' || row.status === 'veroeffentlicht';
 
-  // Bedarfsschau-spezifische Daten: verfuegbare Optionen + aktuell gesetzte
+  // Briefing Night-spezifische Daten: verfuegbare Optionen + aktuell gesetzte
   // Bezuege.
   type BedarfOption = { id: string; titel: string; organisation: string };
   type FoerderprofilOption = { id: string; organisation: string };

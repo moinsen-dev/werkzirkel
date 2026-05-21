@@ -51,9 +51,9 @@ export const AUDIT_AKTION_CRON_LAUF = 'cron.termin-erinnerung-versenden';
 // Konsistent mit dem Anmeldungs-Endpoint.
 const TERMIN_TYP_LABEL: Record<string, string> = {
   pruefabend: 'Pruefabend',
-  schauabend: 'Schauabend',
-  bedarfsschau: 'Bedarfsschau',
-  baurunde: 'Baurunde',
+  schauabend: 'Demo Night',
+  bedarfsschau: 'Briefing Night',
+  baurunde: 'Build-Runde',
   werkgespraech: 'Werkgespraech',
   kennenlernrunde: 'Kennenlernrunde',
 };

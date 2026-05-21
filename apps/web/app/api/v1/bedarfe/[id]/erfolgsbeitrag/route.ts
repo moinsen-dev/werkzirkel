@@ -2,7 +2,7 @@
  * POST /api/v1/bedarfe/:id/erfolgsbeitrag
  *
  * Erzeugt einen Stripe-Checkout fuer eine FREIWILLIGE Spende der
- * Bedarfstraeger:in an die Werkstatt-Kasse, nachdem ein Bedarf als
+ * Bedarfstraeger:in an die Community-Pool, nachdem ein Bedarf als
  * erfuellt markiert wurde. KEINE Provision auf Vermittlungen — Werkzirkel
  * stellt nichts in Rechnung; der Beitrag ist eine Spende.
  *
@@ -128,9 +128,9 @@ export async function POST(req: Request, ctx: RouteContext): Promise<Response> {
           price_data: {
             currency: 'eur',
             product_data: {
-              name: 'Erfolgsbeitrag Werkstatt-Kasse',
+              name: 'Erfolgsbeitrag Community-Pool',
               description:
-                'Freiwillige Spende an die Werkstatt-Kasse Hamburg. Keine Provision — Werkzirkel vermittelt nicht.',
+                'Freiwillige Spende an die Community-Pool Hamburg. Keine Provision — Werkzirkel vermittelt nicht.',
             },
             unit_amount: hoehe_euro_cent,
           },

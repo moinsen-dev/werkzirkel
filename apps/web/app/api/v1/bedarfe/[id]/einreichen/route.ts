@@ -4,14 +4,14 @@
  * Bedarf von 'entwurf' → 'in_pruefung' transferieren. Zwei kritische
  * Schutzmechaniken (PRD §11A + §F-602):
  *
- * 1. **Werkstattbeitrag-Gate**: Es muss ein verifizierter Werkstattbeitrag
+ * 1. **Membership-Beitrag-Gate**: Es muss ein verifizierter Membership-Beitrag
  *    der Bedarfstraeger:in existieren, der noch gueltig ist (gueltig_bis
  *    > now oder NULL) und noch nicht 4-fach verwendet wurde
  *    (verwendet_fuer_bedarfe < 4). Ohne 422 mit code='werkstattbeitrag_fehlt'.
  *
  * 2. **Sprach-Check**: Pruefung gegen `lib/moderation/verbotene-woerter.ts`.
  *    Treffer fuehren nicht zur Ablehnung — sie werden im audit_log
- *    dokumentiert, damit die Kurator:in sie bei der Pruefung sieht.
+ *    dokumentiert, damit die City-Lead sie bei der Pruefung sieht.
  *    Der Status ist in beiden Faellen 'in_pruefung' (Kurator pruet immer).
  *
  * Versendet T-301 (Bestaetigung) an die Bedarfstraeger:in.
@@ -71,7 +71,7 @@ export async function POST(req: Request, ctx: RouteContext): Promise<Response> {
     );
   }
 
-  // ── Werkstattbeitrag-Gate ──────────────────────────────────────────────
+  // ── Membership-Beitrag-Gate ──────────────────────────────────────────────
   const jetzt = new Date();
   const beitragRows = await db
     .select()
@@ -96,7 +96,7 @@ export async function POST(req: Request, ctx: RouteContext): Promise<Response> {
         error: {
           code: 'werkstattbeitrag_fehlt',
           message:
-            'Bitte hinterlege zuerst einen gueltigen Werkstattbeitrag (Schauabend, Geldbeitrag oder Sachleistung).',
+            'Bitte hinterlege zuerst einen gueltigen Membership-Beitrag (Demo Night, Geldbeitrag oder Sachleistung).',
         },
       },
       { status: 422 },
@@ -136,7 +136,7 @@ export async function POST(req: Request, ctx: RouteContext): Promise<Response> {
     console.error('[bedarf-einreichen] sendMail T-301 failed:', err);
   }
 
-  // T-304 Push-Notification an alle Kurator:innen der Stadt. Ergänzt das
+  // T-304 Push-Notification an alle City-Leads der Stadt. Ergänzt das
   // bestehende Pull-Postfach (PRD §11A.S8) — ohne diese Mail merkt der
   // Kurator nur durch aktives Reinschauen, dass etwas zu prüfen ist.
   try {

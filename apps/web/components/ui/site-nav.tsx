@@ -23,9 +23,9 @@ export default function SiteNav() {
           <span>Werkzirkel</span>
         </Link>
         <div className="nav-links" aria-label="Bereiche">
-          <Link href="/">Macher:innen</Link>
+          <Link href="/">Builder:innen</Link>
           <Link href="/bedarf">Bedarf einbringen</Link>
-          <Link href="/foerdern">Werke fördern</Link>
+          <Link href="/foerdern">Builds sponsorn</Link>
         </div>
         <Link className="nav-cta" href="/anmelden">
           Anmelden

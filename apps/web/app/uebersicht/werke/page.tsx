@@ -1,9 +1,9 @@
 /**
  * /uebersicht/werke — Eigene Werke (Server Component).
  *
- * Listet ALLE eigenen Werke (oeffentlich, nur_zirkel, pausiert; aktiv +
+ * Listet ALLE eigenen Builds (oeffentlich, nur_zirkel, pausiert; aktiv +
  * ausgeblendet). Pro Werk: Name, Werkstand, Sichtbarkeit, Bearbeiten-Link.
- * Plus 'Neues Werk anlegen'-Button (disabled wenn Limit erreicht).
+ * Plus 'Neuen Build anlegen'-Button (disabled wenn Limit erreicht).
  *
  * Auth Pflicht — ohne Session redirect zu /anmelden?next=/uebersicht/werke.
  */
@@ -21,7 +21,7 @@ import { getSessionFromRequest } from '@/lib/auth/session';
 import { pruefeWerkAnlegenLimit } from '@/lib/werk/limit';
 
 export const metadata: Metadata = {
-  title: 'Meine Werke',
+  title: 'Meine Builds',
   robots: { index: false, follow: false },
 };
 
@@ -83,7 +83,7 @@ export default async function UebersichtWerkePage() {
       <header className="hero" id="top">
         <div className="wrap hero-grid single">
           <div>
-            <p className="eyebrow">Werkzirkel · Meine Werke</p>
+            <p className="eyebrow">Werkzirkel · Meine Builds</p>
             <h1>{tu.titel}</h1>
             <p className="hero-copy">{tu.untertitel}</p>
             <div

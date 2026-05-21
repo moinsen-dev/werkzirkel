@@ -24,7 +24,7 @@ import { terminTyp, type TerminTyp } from '@/lib/db/schema/enums';
 export const metadata: Metadata = {
   title: 'Termine — Werkzirkel',
   description:
-    'Schauabende, Prüfabende, Baurunden und mehr — alle Termine im Werkzirkel.',
+    'Demo Nights, Feedback-Loop-Abende, Build-Runden und mehr — alle Termine im Werkzirkel.',
 };
 
 const tl = de.termine.liste;
@@ -192,7 +192,7 @@ export default async function TermineListePage({ searchParams }: PageProps) {
             <span>Werkzirkel</span>
           </Link>
           <div className="nav-links" aria-label="Bereiche">
-            <Link href="/">Macher:innen</Link>
+            <Link href="/">Builder:innen</Link>
             <Link href="/werke">Werke</Link>
             <Link href="/pruefrunden">{tnav.nav_pruefrunden}</Link>
             <Link href="/termine" aria-current="page">

@@ -1,7 +1,7 @@
 /**
  * GET /api/v1/me/werkstattbeitrag
  *
- * Liste aller eigenen Werkstattbeitrag-Rows der eingeloggten Person.
+ * Liste aller eigenen Membership-Beitrag-Rows der eingeloggten Person.
  * Sortiert: neu zuerst.
  *
  * PRD-Referenz: §10.5 (Bedarfstraeger:innen-Uebersicht).

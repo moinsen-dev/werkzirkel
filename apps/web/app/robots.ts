@@ -4,7 +4,7 @@
  * Erlaubt alle public-Routen, verbietet alles unter:
  *   /api/        (REST-Endpunkte)
  *   /admin/      (Admin-Backoffice)
- *   /kurator/    (Kurator:innen-Bereich)
+ *   /kurator/    (City-Leads-Bereich)
  *   /uebersicht/ (eingeloggter Bereich)
  *   /einstellungen/ (Konto-Einstellungen)
  *   /bedarfe/    (Detail-Seiten — Bedarf-Liste ist auth-protected)

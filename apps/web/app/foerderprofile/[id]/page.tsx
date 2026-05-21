@@ -78,7 +78,7 @@ export async function generateMetadata({
   const { id } = await params;
   const row = await ladeProfilMitInhaber(id);
   return {
-    title: row ? `${row.fp.organisation} — Förderprofil` : 'Förderprofil',
+    title: row ? `${row.fp.organisation} — Sponsor-Profil` : 'Sponsor-Profil',
     robots: { index: false, follow: false },
   };
 }

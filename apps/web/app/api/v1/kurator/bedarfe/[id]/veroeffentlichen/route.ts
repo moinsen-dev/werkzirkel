@@ -1,7 +1,7 @@
 /**
  * POST /api/v1/kurator/bedarfe/:id/veroeffentlichen
  *
- * Kurator:in der Bedarf-Stadt setzt einen Bedarf von 'in_pruefung' auf
+ * City-Lead der Bedarf-Stadt setzt einen Bedarf von 'in_pruefung' auf
  * 'oeffentlich'. Inkrementiert dabei `werkstattbeitrag.verwendet_fuer_bedarfe`
  * um 1 (PRD §F-603 — der Beitrag wird durch die Veroeffentlichung verbraucht;
  * Max-Limit von 4 wird so durchgesetzt). Versendet T-302 an Bedarfstraeger:in.
@@ -57,7 +57,7 @@ export async function POST(req: Request, ctx: RouteContext): Promise<Response> {
         error: {
           code: 'kein_zugriff',
           message:
-            'Nur Kurator:innen der jeweiligen Stadt koennen Bedarfe veroeffentlichen.',
+            'Nur City-Leads der jeweiligen Stadt koennen Bedarfe veroeffentlichen.',
         },
       },
       { status: 403 },

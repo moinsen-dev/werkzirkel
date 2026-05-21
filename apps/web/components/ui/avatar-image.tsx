@@ -3,7 +3,7 @@
  *
  * Quelle: PRD §32 (Performance-Budgets) — Auto-AVIF/WebP + Lazy-Loading +
  * srcSet ueber das Next-Image-CDN sparen Initial-Bytes auf Werke-Listen
- * und Werkpass-Seiten signifikant.
+ * und Builder-Profil-Seiten signifikant.
  *
  * Designentscheidung:
  * - Server Component (kein 'use client'), reine Render-Logik.

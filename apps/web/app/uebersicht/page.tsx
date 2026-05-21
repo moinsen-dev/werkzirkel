@@ -1,7 +1,7 @@
 /**
  * /uebersicht — Landing-Pad nach Login (Server Component).
  *
- * Begruessung, Werkpass-Karte, Test-Saldo-Karte, Schnellzugriff fuer die
+ * Begruessung, Builder-Profil-Karte, Test-Saldo-Karte, Schnellzugriff fuer die
  * spaeter folgenden Bereiche (Werke, Pruefrunden, Termine — noch nicht
  * implementiert, deshalb als '(in Vorbereitung)' gelabelt) und ein
  * Abmelden-Button (Server-Action, ruft `signOut()` und redirected zu `/`).
@@ -486,7 +486,7 @@ export default async function UebersichtPage() {
               >
                 <p className="mock-label">{t.meine_werke}</p>
                 <strong>{t.meine_werke}</strong>
-                <p>Lege Werke an, bearbeite Werkstand und Screenshots.</p>
+                <p>Lege Werke an, bearbeite Build-Stand und Screenshots.</p>
               </Link>
             ) : null}
             {istBedarf ? (
@@ -499,8 +499,8 @@ export default async function UebersichtPage() {
                   <p className="mock-label">Meine Bedarfe</p>
                   <strong>Meine Bedarfe</strong>
                   <p>
-                    Eigene Bedarfe, Status der Werkstattbeiträge und
-                    Werkangebote von Macher:innen.
+                    Eigene Bedarfe, Status der Membership-Beiträge und
+                    Werkangebote von Builder:innen.
                   </p>
                 </Link>
                 <Link
@@ -508,10 +508,10 @@ export default async function UebersichtPage() {
                   className="mock-card"
                   style={{ textDecoration: 'none', color: 'inherit' }}
                 >
-                  <p className="mock-label">Werkstattbeitrag</p>
-                  <strong>Werkstattbeitrag</strong>
+                  <p className="mock-label">Membership-Beitrag</p>
+                  <strong>Membership-Beitrag</strong>
                   <p>
-                    Schauabend-Teilnahmen, Geldbeiträge und Sachleistungen auf
+                    Demo Night-Teilnahmen, Geldbeiträge und Sachleistungen auf
                     einen Blick.
                   </p>
                 </Link>
@@ -526,7 +526,7 @@ export default async function UebersichtPage() {
                 <p className="mock-label">Meine Werkangebote</p>
                 <strong>Meine Werkangebote</strong>
                 <p>
-                  Werkangebote, die du als Macher:in zu Bedarfen eingereicht
+                  Werkangebote, die du als Builder:in zu Bedarfen eingereicht
                   hast.
                 </p>
               </Link>
@@ -537,11 +537,11 @@ export default async function UebersichtPage() {
                 className="mock-card"
                 style={{ textDecoration: 'none', color: 'inherit' }}
               >
-                <p className="mock-label">Mein Förderprofil</p>
-                <strong>Mein Förderprofil</strong>
+                <p className="mock-label">Mein Sponsor-Profil</p>
+                <strong>Mein Sponsor-Profil</strong>
                 <p>
-                  Verifikations-Status, Bedarfsschau-Teilnahmen und
-                  Förderrahmen verwalten.
+                  Verifikations-Status, Briefing Night-Teilnahmen und
+                  Sponsor-Budget verwalten.
                 </p>
               </Link>
             ) : null}
@@ -553,7 +553,7 @@ export default async function UebersichtPage() {
               <p className="mock-label">{t.meine_pruefrunden}</p>
               <strong>{t.meine_pruefrunden}</strong>
               <p>
-                Eigene Prüfrunden und Tester:innen-Anmeldungen auf einen Blick.
+                Eigene Feedback-Loops und Tester:innen-Anmeldungen auf einen Blick.
               </p>
             </Link>
             <Link
@@ -565,7 +565,7 @@ export default async function UebersichtPage() {
                 {t.termine_in(stadtName || 'Hamburg')}
               </p>
               <strong>{t.termine_in(stadtName || 'Hamburg')}</strong>
-              <p>Schauabende, Prüfabende, Baurunden — alle Termine in deiner Stadt.</p>
+              <p>Demo Nights, Feedback-Loop-Abende, Build-Runden — alle Termine in deiner Stadt.</p>
             </Link>
             <Link
               href="/uebersicht/termine"

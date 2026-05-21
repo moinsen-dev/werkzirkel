@@ -1,5 +1,5 @@
 /**
- * Pure, sessionless Server-Component-Renderer fuer die Werke-Uebersicht.
+ * Pure, sessionless Server-Component-Renderer fuer die Builds-Uebersicht.
  *
  * Bewusst getrennt vom Page-Modul, damit Unit-Tests die Komponente mit
  * Mock-Daten rendern koennen, ohne `next/headers`, `notFound()` oder die
@@ -49,7 +49,7 @@ export interface WerkeListViewProps {
   filter: WerkeListFilterState;
   stadtOptions: Array<{ id: string; name: string; status: 'aktiv' | 'vorbereitung' | 'inaktiv' }>;
   stadtName: string;
-  /** Gesamt-Anzahl Werke fuer aktiven Stadt-Filter (vor Werkstand/Hilfebedarf). */
+  /** Gesamt-Anzahl Werke fuer aktiven Stadt-Filter (vor Build-Stand/Hilfebedarf). */
   gesamtAktuell: number;
   nextCursor: string | null;
 }
@@ -119,12 +119,12 @@ export default function WerkeListView({
             <span>Werkzirkel</span>
           </Link>
           <div className="nav-links" aria-label="Bereiche">
-            <Link href="/">Macher:innen</Link>
+            <Link href="/">Builder:innen</Link>
             <Link href="/werke" aria-current="page">
               Werke
             </Link>
             <Link href="/bedarf">Bedarf einbringen</Link>
-            <Link href="/foerdern">Werke fördern</Link>
+            <Link href="/foerdern">Builds sponsorn</Link>
           </div>
           <Link className="nav-cta" href="/anmelden">
             Anmelden
@@ -141,9 +141,9 @@ export default function WerkeListView({
             <h1>Werke aus der Region.</h1>
             <p className="hero-copy">
               {gesamtAktuell === 0
-                ? 'Noch keine öffentlichen Werke. Wer Rückmeldung will, hilft auch anderen.'
+                ? 'Noch keine öffentlichen Builds. Wer Rückmeldung will, hilft auch anderen.'
                 : `${gesamtAktuell} ${
-                    gesamtAktuell === 1 ? 'Werk' : 'Werke'
+                    gesamtAktuell === 1 ? 'Build' : 'Builds'
                   } gerade aktiv. Wer Rückmeldung will, hilft auch anderen.`}
             </p>
           </div>
@@ -203,7 +203,7 @@ export default function WerkeListView({
               </fieldset>
 
               <fieldset style={fieldsetStyle}>
-                <legend style={legendStyle}>Werkstand</legend>
+                <legend style={legendStyle}>Build-Stand</legend>
                 <div style={{ display: 'grid', gap: 6 }}>
                   {werkstandEnum.map((w) => (
                     <label
@@ -342,7 +342,7 @@ export default function WerkeListView({
               </div>
             ) : (
               <ul
-                aria-label="Werke-Liste"
+                aria-label="Builds-Liste"
                 style={{
                   listStyle: 'none',
                   padding: 0,
@@ -412,7 +412,7 @@ export default function WerkeListView({
                             </Link>
                           </h3>
                           <span className="status-pill warm">
-                            Werkstand: {werkstandLabel(w.werkstand)}
+                            Build-Stand: {werkstandLabel(w.werkstand)}
                           </span>
                         </div>
 
@@ -522,7 +522,7 @@ export default function WerkeListView({
         <div className="wrap footer-inner">
           <span>Werkzirkel — Gemeinsam digitale Produkte bauen.</span>
           <div className="footer-links" aria-label="Fußnavigation">
-            <Link href="/">Macher:innen</Link>
+            <Link href="/">Builder:innen</Link>
             <Link href="/bedarf">Bedarf</Link>
             <Link href="/foerdern">Fördern</Link>
           </div>

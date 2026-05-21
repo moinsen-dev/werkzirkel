@@ -34,7 +34,7 @@ const tnav = de.uebersicht;
 const APP_URL = env.APP_URL.replace(/\/+$/, '');
 
 export const metadata: Metadata = {
-  title: 'Förderprofil anlegen — Werkzirkel',
+  title: 'Sponsor-Profil anlegen — Werkzirkel',
   robots: { index: false, follow: false },
 };
 

@@ -1,10 +1,10 @@
 /**
  * GET /api/v1/me/werkangebote
  *
- * Liste aller eigenen Werkangebote der eingeloggten Macher:in.
+ * Liste aller eigenen Werkangebote der eingeloggten Builder:in.
  * Sortiert: neueste zuerst.
  *
- * PRD-Referenz: §F-623 (Macher:innen-Sicht eigener Werkangebote).
+ * PRD-Referenz: §F-623 (Builder:innen-Sicht eigener Werkangebote).
  */
 
 import { desc, eq } from 'drizzle-orm';

@@ -1,7 +1,7 @@
 /**
  * GET /api/v1/termine/:id/anmeldungen
  *
- * Liste aller Anmeldungen zu einem Termin. Sichtbar fuer Kurator:innen der
+ * Liste aller Anmeldungen zu einem Termin. Sichtbar fuer City-Leads der
  * jeweiligen Stadt (oder Admin). Liefert die nutzer-public-Daten + Status.
  *
  * PRD §F-402, §15.8.
@@ -42,7 +42,7 @@ export async function GET(req: Request, ctx: RouteContext): Promise<Response> {
         error: {
           code: 'kein_zugriff',
           message:
-            'Nur Kurator:innen der jeweiligen Stadt koennen die Anmeldungs-Liste sehen.',
+            'Nur City-Leads der jeweiligen Stadt koennen die Anmeldungs-Liste sehen.',
         },
       },
       { status: 403 },

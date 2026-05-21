@@ -1,11 +1,11 @@
 /**
- * T-603 — Werkstattbeitrag laeuft bald aus (30-Tage-Warnung).
+ * T-603 — Membership-Beitrag laeuft bald aus (30-Tage-Warnung).
  *
  * Wird vom Cron-Job 30 Tage vor Ablauf der 6-Monats-Gueltigkeit verschickt.
- * Empfaenger kann einen neuen Beitrag erbringen (Schauabend / Sachleistung /
+ * Empfaenger kann einen neuen Beitrag erbringen (Demo Night / Sachleistung /
  * Geldbeitrag) oder den aktuellen einfach auslaufen lassen.
  *
- * Betreff: „Dein Werkstattbeitrag laeuft bald aus"
+ * Betreff: „Dein Membership-Beitrag laeuft bald aus"
  */
 
 import { Button, Heading, Section, Text } from '@react-email/components';
@@ -22,7 +22,7 @@ export interface WerkstattbeitragAblaufWarnungProps {
   appUrl?: string;
 }
 
-export const T603_BETREFF = 'Dein Werkstattbeitrag laeuft bald aus';
+export const T603_BETREFF = 'Dein Membership-Beitrag laeuft bald aus';
 
 const buttonStyle = {
   backgroundColor: '#0c0a09',
@@ -48,15 +48,15 @@ export function WerkstattbeitragAblaufWarnung(
 
   return (
     <Layout
-      vorschau={`Dein Werkstattbeitrag laeuft in ${tageBisAblauf} Tagen aus.`}
+      vorschau={`Dein Membership-Beitrag laeuft in ${tageBisAblauf} Tagen aus.`}
       appUrl={appUrl}
     >
       <Heading as="h1" style={{ fontSize: '20px', margin: '0 0 16px 0' }}>
-        Dein Werkstattbeitrag laeuft bald aus
+        Dein Membership-Beitrag laeuft bald aus
       </Heading>
 
       <Text style={{ margin: '0 0 16px 0' }}>
-        Hallo {anzeigename}, dein Werkstattbeitrag ist noch bis
+        Hallo {anzeigename}, dein Membership-Beitrag ist noch bis
         {' '}{gueltigBis} gueltig — das sind {tageBisAblauf} Tage.
       </Text>
 
@@ -66,7 +66,7 @@ export function WerkstattbeitragAblaufWarnung(
       </Text>
 
       <Text style={{ margin: '0 0 8px 0' }}>
-        - Zum naechsten Schauabend kommen — automatischer Beitrag.
+        - Zum naechsten Demo Night kommen — automatischer Beitrag.
       </Text>
       <Text style={{ margin: '0 0 8px 0' }}>
         - Eine Sachleistung beitragen (z.B. Raum, Getraenke, Doku).

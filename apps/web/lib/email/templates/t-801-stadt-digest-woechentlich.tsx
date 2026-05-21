@@ -3,7 +3,7 @@
  *
  * Sendet jeden Mittwoch 09:00 Europe/Berlin pro aktive Stadt einen kurzen
  * Wochen-Digest: die 3 neuesten Werke, 2 naechsten Termine, 2 offenen
- * Hilfegesuche. Opt-out via `nutzer.benachrichtigungs_einstellungen.stadt_digest`
+ * Quick-Helps. Opt-out via `nutzer.benachrichtigungs_einstellungen.stadt_digest`
  * (default `true`, siehe `lib/notifications/defaults.ts`).
  *
  * Quelle: PRD §8.14 (Benachrichtigungs-Strategie, Stadt-Digest), §31 + §42
@@ -31,7 +31,7 @@ export interface StadtDigestTermin {
   titel: string;
   /** Schon formatiert, z.B. „Mi, 21. Mai 2026, 19:00 Uhr". */
   datumZeitFormatiert: string;
-  /** Schon formatiert, z.B. „Pruefabend" oder „Schauabend". */
+  /** Schon formatiert, z.B. „Pruefabend" oder „Demo Night". */
   typLabel: string;
   url: string;
 }
@@ -52,7 +52,7 @@ export interface StadtDigestWoechentlichProps {
   werke: StadtDigestWerk[];
   /** Bis zu 2 naechste Termine. */
   termine: StadtDigestTermin[];
-  /** Bis zu 2 offene Hilfegesuche. */
+  /** Bis zu 2 offene Quick-Helps. */
   hilfegesuche: StadtDigestHilfegesuch[];
   /** App-URL fuer Footer + CTA. */
   appUrl?: string;
@@ -120,7 +120,7 @@ export function StadtDigestWoechentlich(
 
   return (
     <Layout
-      vorschau={`Werkzirkel ${stadtName}: ${werke.length} Werke, ${termine.length} Termine, ${hilfegesuche.length} Hilfegesuche.`}
+      vorschau={`Werkzirkel ${stadtName}: ${werke.length} Werke, ${termine.length} Termine, ${hilfegesuche.length} Quick-Helps.`}
       appUrl={appUrl}
     >
       <Heading as="h1" style={{ fontSize: '22px', margin: '0 0 12px 0' }}>
@@ -130,14 +130,14 @@ export function StadtDigestWoechentlich(
       <Text style={{ margin: '0 0 16px 0' }}>
         Moin {anzeigename}, hier kommt dein woechentlicher Digest aus dem
         Werkzirkel {stadtName}. Drei neue Werke zum Anschauen, die naechsten
-        Termine und ein paar offene Hilfegesuche.
+        Termine und ein paar offene Quick-Helps.
       </Text>
 
       {istLeer ? (
         <Section style={{ margin: '16px 0' }}>
           <Text style={{ margin: 0, fontStyle: 'italic', color: '#57534e' }}>
             Diese Woche war es ruhig im Zirkel. Wenn du selbst was bewegen
-            willst, leg ein Werk an oder schreib ein Hilfegesuch — der Kreis
+            willst, leg ein Werk an oder schreib ein Quick-Help — der Kreis
             schaut hin.
           </Text>
         </Section>
@@ -184,7 +184,7 @@ export function StadtDigestWoechentlich(
 
       {hilfegesuche.length > 0 ? (
         <Section>
-          <Text style={sektionTitelStyle}>Offene Hilfegesuche</Text>
+          <Text style={sektionTitelStyle}>Offene Quick-Helps</Text>
           {hilfegesuche.map((h) => (
             <Section key={h.id} style={eintragStyle}>
               <Text style={eintragTitelStyle}>

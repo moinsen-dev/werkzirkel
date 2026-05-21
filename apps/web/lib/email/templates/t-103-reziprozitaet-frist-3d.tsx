@@ -23,7 +23,7 @@ export interface ReziprozitaetFrist3dProps {
   appUrl?: string;
 }
 
-export const T103_BETREFF = 'Deine Reziprozitäts-Frist endet in 3 Tagen';
+export const T103_BETREFF = 'Deine Gegenseitigkeits-Frist endet in 3 Tagen';
 
 const buttonStyle = {
   backgroundColor: '#0c0a09',
@@ -57,24 +57,24 @@ export function ReziprozitaetFrist3d(
       appUrl={appUrl}
     >
       <Heading as="h1" style={{ fontSize: '20px', margin: '0 0 16px 0' }}>
-        Noch 3 Tage bis zu deiner Reziprozitäts-Frist
+        Noch 3 Tage bis zu deiner Gegenseitigkeits-Frist
       </Heading>
 
       <Text style={{ margin: '0 0 16px 0' }}>
-        Du hast vor einer Weile eine Prüfrunde gestartet und im Gegenzug
+        Du hast vor einer Weile eine Feedback-Loop gestartet und im Gegenzug
         versprochen, zwei Werke anderer zu testen. Die Frist dafür endet am
         {' '}{fristFormatted}. {testSatz}
       </Text>
 
       <Text style={{ margin: '0 0 16px 0' }}>
-        Such dir eine offene Prüfrunde aus und gib ehrliches Feedback. So
+        Such dir eine offene Feedback-Loop aus und gib ehrliches Feedback. So
         bleibt der Kreis lebendig — und du kannst danach wieder eigene
-        Prüfrunden starten.
+        Feedback-Loops starten.
       </Text>
 
       <Section style={{ textAlign: 'center', margin: '24px 0' }}>
         <Button href={pruefrundenSucheUrl} style={buttonStyle}>
-          Prüfrunden ansehen
+          Feedback-Loops ansehen
         </Button>
       </Section>
 

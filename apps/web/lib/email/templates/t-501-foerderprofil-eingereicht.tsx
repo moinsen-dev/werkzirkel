@@ -2,7 +2,7 @@
  * T-501 — Foerderprofil eingereicht (Bestaetigung an Foerder:in).
  *
  * Wird verschickt, sobald eine Foerder:in ihr Profil zur Verifikation
- * eingereicht hat. Das Profil ist jetzt im Kurator:innen-Postfach.
+ * eingereicht hat. Das Profil ist jetzt im City-Leads-Postfach.
  *
  * Betreff: „Dein Foerderprofil ist eingereicht"
  */
@@ -49,7 +49,7 @@ export function FoerderprofilEingereicht(
 
       <Text style={{ margin: '0 0 16px 0' }}>
         Vielen Dank — dein Foerderprofil fuer {organisation} liegt jetzt
-        bei der Kurator:innen-Runde. Wir melden uns innerhalb von zwei
+        bei der City-Leads-Runde. Wir melden uns innerhalb von zwei
         Wochen mit einem Vorstellungs-Gespraech.
       </Text>
 

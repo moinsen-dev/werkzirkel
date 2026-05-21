@@ -1,8 +1,8 @@
 /**
  * T-503 — Foerderprofil abgelehnt.
  *
- * Wird verschickt, wenn eine Kurator:in das Foerderprofil ablehnt.
- * Enthaelt den Grund-Text der Kurator:in.
+ * Wird verschickt, wenn eine City-Lead das Foerderprofil ablehnt.
+ * Enthaelt den Grund-Text der City-Lead.
  *
  * Betreff: „Dein Foerderprofil wurde nicht freigeschaltet"
  */
@@ -42,7 +42,7 @@ export function FoerderprofilAbgelehnt(
       </Heading>
 
       <Text style={{ margin: '0 0 16px 0' }}>
-        Die Kurator:innen-Runde hat dein Profil fuer {organisation} nicht
+        Die City-Leads-Runde hat dein Profil fuer {organisation} nicht
         freigeschaltet. Begruendung:
       </Text>
 

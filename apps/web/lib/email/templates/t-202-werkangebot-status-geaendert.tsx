@@ -1,8 +1,8 @@
 /**
- * T-202 — Werkangebot-Status geaendert (an Macher:in).
+ * T-202 — Match-Angebot-Status geaendert (an Builder:in).
  *
  * Wird verschickt, wenn die Bedarfstraeger:in den Status eines
- * eingereichten Werkangebots wechselt:
+ * eingereichten Match-Angebots wechselt:
  *  - in_gespraechen → "Wir sind im Gespraech."
  *  - beauftragt    → "Du wurdest beauftragt."
  *  - nicht_gewaehlt → "Diesmal nicht gewaehlt."
@@ -16,23 +16,23 @@ import { Button, Heading, Section, Text } from '@react-email/components';
 import * as React from 'react';
 import { Layout } from './_layout';
 
-export type WerkangebotStatusForMail =
+export type WerkangebotWerkangebotStatusForMail =
   | 'in_gespraechen'
   | 'beauftragt'
   | 'nicht_gewaehlt';
 
-export interface WerkangebotStatusGeaendertProps {
+export interface WerkangebotWerkangebotStatusGeaendertProps {
   bedarfTitel: string;
   werkName: string;
-  neuerStatus: WerkangebotStatusForMail;
+  neuerStatus: WerkangebotWerkangebotStatusForMail;
   werkangebotUrl: string;
   appUrl?: string;
 }
 
-const STATUS_BETREFF: Record<WerkangebotStatusForMail, string> = {
-  in_gespraechen: 'Bedarfstraeger:in meldet sich zu deinem Werkangebot',
-  beauftragt: 'Dein Werkangebot wurde beauftragt',
-  nicht_gewaehlt: 'Diesmal nicht gewaehlt — dein Werkangebot',
+const STATUS_BETREFF: Record<WerkangebotWerkangebotStatusForMail, string> = {
+  in_gespraechen: 'Bedarfstraeger:in meldet sich zu deinem Match-Angebot',
+  beauftragt: 'Dein Match-Angebot wurde beauftragt',
+  nicht_gewaehlt: 'Diesmal nicht gewaehlt — dein Match-Angebot',
 };
 
 /**
@@ -41,9 +41,9 @@ const STATUS_BETREFF: Record<WerkangebotStatusForMail, string> = {
  * tatsaechliche Betreff wird zur Render-Zeit aus den Props gebildet
  * (siehe `betreffFor`).
  */
-export const T202_BETREFF = 'Werkangebot-Status hat sich geaendert';
+export const T202_BETREFF = 'Match-Angebot-Status hat sich geaendert';
 
-export function betreffFor(status: WerkangebotStatusForMail): string {
+export function betreffFor(status: WerkangebotWerkangebotStatusForMail): string {
   return STATUS_BETREFF[status];
 }
 
@@ -58,7 +58,7 @@ const buttonStyle = {
   display: 'inline-block',
 } as const;
 
-function bodyText(status: WerkangebotStatusForMail): { intro: string; ausblick: string } {
+function bodyText(status: WerkangebotWerkangebotStatusForMail): { intro: string; ausblick: string } {
   switch (status) {
     case 'in_gespraechen':
       return {
@@ -75,15 +75,15 @@ function bodyText(status: WerkangebotStatusForMail): { intro: string; ausblick: 
     case 'nicht_gewaehlt':
       return {
         intro:
-          'Die Bedarfstraeger:in hat sich diesmal fuer ein anderes Werkangebot entschieden.',
+          'Die Bedarfstraeger:in hat sich diesmal fuer ein anderes Match-Angebot entschieden.',
         ausblick:
           'Das ist kein Urteil ueber dich oder dein Werk — sondern ein Hinweis, dass es bei dieser Frage nicht gepasst hat. Andere Bedarfe folgen.',
       };
   }
 }
 
-export function WerkangebotStatusGeaendert(
-  props: WerkangebotStatusGeaendertProps,
+export function WerkangebotWerkangebotStatusGeaendert(
+  props: WerkangebotWerkangebotStatusGeaendertProps,
 ): React.JSX.Element {
   const {
     bedarfTitel,
@@ -96,7 +96,7 @@ export function WerkangebotStatusGeaendert(
 
   return (
     <Layout
-      vorschau={`Dein Werkangebot zu "${bedarfTitel}" — Status: ${neuerStatus.replace('_', ' ')}.`}
+      vorschau={`Dein Match-Angebot zu "${bedarfTitel}" — Status: ${neuerStatus.replace('_', ' ')}.`}
       appUrl={appUrl}
     >
       <Heading as="h1" style={{ fontSize: '20px', margin: '0 0 16px 0' }}>
@@ -115,11 +115,11 @@ export function WerkangebotStatusGeaendert(
 
       <Section style={{ textAlign: 'center', margin: '24px 0' }}>
         <Button href={werkangebotUrl} style={buttonStyle}>
-          Werkangebot ansehen
+          Match-Angebot ansehen
         </Button>
       </Section>
     </Layout>
   );
 }
 
-export default WerkangebotStatusGeaendert;
+export default WerkangebotWerkangebotStatusGeaendert;

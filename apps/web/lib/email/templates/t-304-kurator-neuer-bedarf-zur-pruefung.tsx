@@ -1,7 +1,7 @@
 /**
  * T-304 — Neuer Bedarf wartet im Kurator-Postfach.
  *
- * Wird an alle Kurator:innen einer Stadt verschickt, sobald ein Bedarf in
+ * Wird an alle City-Leads einer Stadt verschickt, sobald ein Bedarf in
  * den Status 'in_pruefung' eingereicht wurde. PRD §11A.S8 / §9: Push-
  * Benachrichtigung ergänzt das bestehende Pull-Postfach
  * (/api/v1/kurator/bedarfe-in-pruefung), damit Bedarfe nicht in der
@@ -57,9 +57,9 @@ export function KuratorNeuerBedarfZurPruefung(
       </Heading>
 
       <Text style={{ margin: '0 0 16px 0' }}>
-        Eine Bedarfsträger:in hat den Bedarf {'„'}
+        Eine Auftraggeber:in hat den Bedarf {'„'}
         {titel}
-        {'“'} zur Kurator:innen-Prüfung eingereicht. Er ist noch nicht
+        {'“'} zur City-Leads-Prüfung eingereicht. Er ist noch nicht
         öffentlich sichtbar — du entscheidest, ob er ins Bedarfs-Heft kommt.
       </Text>
 
@@ -84,7 +84,7 @@ export function KuratorNeuerBedarfZurPruefung(
           color: '#78716c',
         }}
       >
-        Du bekommst diese Mail, weil du Kurator:in dieser Stadt bist.
+        Du bekommst diese Mail, weil du City-Lead dieser Stadt bist.
       </Text>
     </Layout>
   );

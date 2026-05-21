@@ -157,15 +157,15 @@ import {
   type KuratorNeuerBedarfZurPruefungProps,
 } from './templates/t-304-kurator-neuer-bedarf-zur-pruefung';
 import {
-  WerkangebotEingegangen,
+  WerkangebotWerkangebotEingegangen,
   T201_BETREFF,
-  type WerkangebotEingegangenProps,
+  type WerkangebotWerkangebotEingegangenProps,
 } from './templates/t-201-werkangebot-eingegangen';
 import {
-  WerkangebotStatusGeaendert,
+  WerkangebotWerkangebotStatusGeaendert,
   T202_BETREFF,
   betreffFor as t202BetreffFor,
-  type WerkangebotStatusGeaendertProps,
+  type WerkangebotWerkangebotStatusGeaendertProps,
 } from './templates/t-202-werkangebot-status-geaendert';
 import {
   StadtDigestWoechentlich,
@@ -204,8 +204,8 @@ export type MailTemplate =
   | { template: 'T-302'; props: BedarfVeroeffentlichtProps }
   | { template: 'T-303'; props: BedarfAbgelehntProps }
   | { template: 'T-304'; props: KuratorNeuerBedarfZurPruefungProps }
-  | { template: 'T-201'; props: WerkangebotEingegangenProps }
-  | { template: 'T-202'; props: WerkangebotStatusGeaendertProps }
+  | { template: 'T-201'; props: WerkangebotWerkangebotEingegangenProps }
+  | { template: 'T-202'; props: WerkangebotWerkangebotStatusGeaendertProps }
   | { template: 'T-801'; props: StadtDigestWoechentlichProps };
 
 /**
@@ -376,12 +376,12 @@ function buildEmail(
       };
     case 'T-201':
       return {
-        element: React.createElement(WerkangebotEingegangen, opts.props),
+        element: React.createElement(WerkangebotWerkangebotEingegangen, opts.props),
         betreff: T201_BETREFF,
       };
     case 'T-202':
       return {
-        element: React.createElement(WerkangebotStatusGeaendert, opts.props),
+        element: React.createElement(WerkangebotWerkangebotStatusGeaendert, opts.props),
         // Betreff dynamisch vom status abhaengig.
         betreff: t202BetreffFor(opts.props.neuerStatus),
       };

@@ -1,7 +1,7 @@
 /**
  * T-502 — Foerderprofil verifiziert.
  *
- * Wird verschickt, wenn eine Kurator:in das Foerderprofil erfolgreich
+ * Wird verschickt, wenn eine City-Lead das Foerderprofil erfolgreich
  * verifiziert hat. Das Profil ist ab jetzt oeffentlich sichtbar.
  *
  * Betreff: „Dein Foerderprofil ist freigeschaltet"
@@ -45,14 +45,14 @@ export function FoerderprofilVerifiziert(
       </Heading>
 
       <Text style={{ margin: '0 0 16px 0' }}>
-        Die Kurator:innen-Runde hat dein Profil fuer {organisation}
+        Die City-Leads-Runde hat dein Profil fuer {organisation}
         verifiziert. Es ist ab sofort im Werkzirkel sichtbar und
-        kann auf Bedarfsschauen vorgestellt werden.
+        kann auf Briefing Nights vorgestellt werden.
       </Text>
 
       <Text style={{ margin: '0 0 16px 0' }}>
         Damit dein Profil aktiv bleibt, ist Teilnahme an mindestens einer
-        Bedarfsschau in vier Quartalen Pflicht — sonst wird es automatisch
+        Briefing Night in vier Quartalen Pflicht — sonst wird es automatisch
         pausiert. Du bekommst rechtzeitig eine Erinnerung.
       </Text>
 

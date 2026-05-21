@@ -1,9 +1,9 @@
 /**
  * T-302 — Bedarf veroeffentlicht.
  *
- * Wird verschickt, wenn eine Kurator:in den Bedarf von 'in_pruefung'
+ * Wird verschickt, wenn eine City-Lead den Bedarf von 'in_pruefung'
  * auf 'oeffentlich' setzt. Der Bedarf ist ab jetzt fuer die Werkstatt
- * sichtbar; Macher:innen koennen Werkangebote dazu abgeben.
+ * sichtbar; Builder:innen koennen Match-Angebote dazu abgeben.
  *
  * Betreff: „Dein Bedarf ist freigeschaltet"
  */
@@ -47,16 +47,16 @@ export function BedarfVeroeffentlicht(
       </Heading>
 
       <Text style={{ margin: '0 0 16px 0' }}>
-        Die Kurator:innen-Runde hat deinen Bedarf {'„'}{titel}{'“'} fuer
-        {' '}{organisation} freigeschaltet. Macher:innen koennen jetzt
-        Werkangebote dazu abgeben.
+        Die City-Leads-Runde hat deinen Bedarf {'„'}{titel}{'“'} fuer
+        {' '}{organisation} freigeschaltet. Builder:innen koennen jetzt
+        Match-Angebote dazu abgeben.
       </Text>
 
       <Text style={{ margin: '0 0 16px 0' }}>
-        Du bekommst eine Nachricht, sobald ein Werkangebot eingegangen ist.
-        Direkte Kontaktaufnahme von Macher:innen erfolgt ausschliesslich
+        Du bekommst eine Nachricht, sobald ein Match-Angebot eingegangen ist.
+        Direkte Kontaktaufnahme von Builder:innen erfolgt ausschliesslich
         ueber den Werkzirkel — bitte melde Cold-Outreach per E-Mail an
-        die Kurator:innen.
+        die City-Leads.
       </Text>
 
       <Section style={{ textAlign: 'center', margin: '24px 0' }}>

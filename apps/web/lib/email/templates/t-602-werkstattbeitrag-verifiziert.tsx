@@ -1,10 +1,10 @@
 /**
- * T-602 — Werkstattbeitrag verifiziert (Sachleistung).
+ * T-602 — Membership-Beitrag verifiziert (Sachleistung).
  *
- * Wird verschickt, wenn eine Kurator:in die Sachleistung als
- * Werkstattbeitrag anerkannt hat. Beitrag ist jetzt 6 Monate gueltig.
+ * Wird verschickt, wenn eine City-Lead die Sachleistung als
+ * Membership-Beitrag anerkannt hat. Beitrag ist jetzt 6 Monate gueltig.
  *
- * Betreff: „Deine Sachleistung wurde als Werkstattbeitrag anerkannt"
+ * Betreff: „Deine Sachleistung wurde als Membership-Beitrag anerkannt"
  */
 
 import { Button, Heading, Section, Text } from '@react-email/components';
@@ -20,7 +20,7 @@ export interface WerkstattbeitragVerifiziertProps {
 }
 
 export const T602_BETREFF =
-  'Deine Sachleistung wurde als Werkstattbeitrag anerkannt';
+  'Deine Sachleistung wurde als Membership-Beitrag anerkannt';
 
 const buttonStyle = {
   backgroundColor: '#0c0a09',
@@ -45,7 +45,7 @@ export function WerkstattbeitragVerifiziert(
 
   return (
     <Layout
-      vorschau="Deine Sachleistung ist als Werkstattbeitrag anerkannt."
+      vorschau="Deine Sachleistung ist als Membership-Beitrag anerkannt."
       appUrl={appUrl}
     >
       <Heading as="h1" style={{ fontSize: '20px', margin: '0 0 16px 0' }}>
@@ -53,8 +53,8 @@ export function WerkstattbeitragVerifiziert(
       </Heading>
 
       <Text style={{ margin: '0 0 16px 0' }}>
-        Hallo {anzeigename}, die Kurator:innen-Runde hat deine Sachleistung
-        als Werkstattbeitrag verifiziert. Damit kannst du Bedarfe in den
+        Hallo {anzeigename}, die City-Leads-Runde hat deine Sachleistung
+        als Membership-Beitrag verifiziert. Damit kannst du Bedarfe in den
         Werkzirkel einbringen.
       </Text>
 

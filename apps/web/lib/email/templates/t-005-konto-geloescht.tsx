@@ -47,7 +47,7 @@ export function KontoGeloescht(props: KontoGeloeschtProps): React.JSX.Element {
 
       <Text style={{ margin: '0 0 16px 0' }}>
         Feedback, das du zu Werken anderer hinterlassen hast, bleibt anonym
-        erhalten. So bleibt das Werk-Feedback für die Macher:innen lesbar,
+        erhalten. So bleibt das Werk-Feedback für die Builder:innen lesbar,
         ohne dass dein Name oder deine E-Mail mit drin steht.
       </Text>
 

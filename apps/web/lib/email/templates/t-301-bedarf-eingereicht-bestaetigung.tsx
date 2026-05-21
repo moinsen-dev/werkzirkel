@@ -2,7 +2,7 @@
  * T-301 — Bedarf eingereicht (Bestaetigung an Bedarfstraeger:in).
  *
  * Wird verschickt, sobald eine Bedarfstraeger:in den Bedarf zur
- * Kurator:innen-Pruefung eingereicht hat (Status 'in_pruefung').
+ * City-Leads-Pruefung eingereicht hat (Status 'in_pruefung').
  *
  * Betreff: „Dein Bedarf ist eingereicht"
  */
@@ -38,7 +38,7 @@ export function BedarfEingereichtBestaetigung(
 
   return (
     <Layout
-      vorschau={`Dein Bedarf "${titel}" liegt jetzt in der Kurator:innen-Pruefung.`}
+      vorschau={`Dein Bedarf "${titel}" liegt jetzt in der City-Leads-Pruefung.`}
       appUrl={appUrl}
     >
       <Heading as="h1" style={{ fontSize: '20px', margin: '0 0 16px 0' }}>
@@ -47,7 +47,7 @@ export function BedarfEingereichtBestaetigung(
 
       <Text style={{ margin: '0 0 16px 0' }}>
         Vielen Dank — dein Bedarf {'„'}{titel}{'“'} fuer {organisation} liegt
-        jetzt bei der Kurator:innen-Runde. Wir pruefen, ob er gut in
+        jetzt bei der City-Leads-Runde. Wir pruefen, ob er gut in
         den Werkzirkel passt, und melden uns innerhalb weniger Tage.
       </Text>
 

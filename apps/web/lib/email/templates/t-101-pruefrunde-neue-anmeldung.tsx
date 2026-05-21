@@ -28,7 +28,7 @@ export interface PruefrundeNeueAnmeldungProps {
   appUrl?: string;
 }
 
-export const T101_BETREFF = 'Neue Anmeldung zu deiner Prüfrunde';
+export const T101_BETREFF = 'Neue Anmeldung zu deiner Feedback-Loop';
 
 const buttonStyle = {
   backgroundColor: '#0c0a09',
@@ -66,11 +66,11 @@ export function PruefrundeNeueAnmeldung(
       appUrl={appUrl}
     >
       <Heading as="h1" style={{ fontSize: '20px', margin: '0 0 16px 0' }}>
-        Neue Anmeldung zu deiner Prüfrunde
+        Neue Anmeldung zu deiner Feedback-Loop
       </Heading>
 
       <Text style={{ margin: '0 0 16px 0' }}>
-        {testerAnzeigename} hat sich als Tester:in für deine Prüfrunde
+        {testerAnzeigename} hat sich als Tester:in für deine Feedback-Loop
         {' '}„{pruefrundeTitel}“ zu deinem Werk „{werkName}“ angemeldet.
       </Text>
 
@@ -82,7 +82,7 @@ export function PruefrundeNeueAnmeldung(
 
       <Section style={{ textAlign: 'center', margin: '24px 0' }}>
         <Button href={pruefrundeUrl} style={buttonStyle}>
-          Prüfrunde ansehen
+          Feedback-Loop ansehen
         </Button>
       </Section>
 

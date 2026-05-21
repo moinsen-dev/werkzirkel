@@ -63,7 +63,7 @@ export function PruefrundeNeuesFeedback(
       </Heading>
 
       <Text style={{ margin: '0 0 16px 0' }}>
-        Es gibt neues Feedback zu deiner Prüfrunde „{pruefrundeTitel}“ für dein
+        Es gibt neues Feedback zu deiner Feedback-Loop „{pruefrundeTitel}“ für dein
         Werk „{werkName}“. {rueckmeldungSatz}
       </Text>
 

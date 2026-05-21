@@ -1,8 +1,8 @@
 /**
  * T-303 — Bedarf abgelehnt.
  *
- * Wird verschickt, wenn eine Kurator:in den eingereichten Bedarf ablehnt
- * (Status 'eingestellt'). Enthaelt den Grund-Text der Kurator:in.
+ * Wird verschickt, wenn eine City-Lead den eingereichten Bedarf ablehnt
+ * (Status 'eingestellt'). Enthaelt den Grund-Text der City-Lead.
  *
  * Betreff: „Dein Bedarf wurde nicht freigeschaltet"
  */
@@ -43,7 +43,7 @@ export function BedarfAbgelehnt(
       </Heading>
 
       <Text style={{ margin: '0 0 16px 0' }}>
-        Die Kurator:innen-Runde hat deinen Bedarf {'„'}{titel}{'“'} fuer
+        Die City-Leads-Runde hat deinen Bedarf {'„'}{titel}{'“'} fuer
         {' '}{organisation} nicht freigeschaltet. Begruendung:
       </Text>
 

@@ -23,7 +23,7 @@ export interface ReziprozitaetFrist1dProps {
   appUrl?: string;
 }
 
-export const T104_BETREFF = 'Deine Reziprozitäts-Frist endet morgen';
+export const T104_BETREFF = 'Deine Gegenseitigkeits-Frist endet morgen';
 
 const buttonStyle = {
   backgroundColor: '#0c0a09',
@@ -57,23 +57,23 @@ export function ReziprozitaetFrist1d(
       appUrl={appUrl}
     >
       <Heading as="h1" style={{ fontSize: '20px', margin: '0 0 16px 0' }}>
-        Letzte Erinnerung: deine Reziprozitäts-Frist endet morgen
+        Letzte Erinnerung: deine Gegenseitigkeits-Frist endet morgen
       </Heading>
 
       <Text style={{ margin: '0 0 16px 0' }}>
-        Morgen, am {fristFormatted}, läuft deine Reziprozitäts-Frist ab.
+        Morgen, am {fristFormatted}, läuft deine Gegenseitigkeits-Frist ab.
         {' '}{testSatz}
       </Text>
 
       <Text style={{ margin: '0 0 16px 0' }}>
         Wenn du bis dahin keine Tests abgibst, kannst du keine neuen
-        Prüfrunden starten, bis du das nachholst. Deine bestehenden Werke
-        bleiben unberührt — nur der Start neuer Prüfrunden ruht.
+        Feedback-Loops starten, bis du das nachholst. Deine bestehenden Werke
+        bleiben unberührt — nur der Start neuer Feedback-Loops ruht.
       </Text>
 
       <Section style={{ textAlign: 'center', margin: '24px 0' }}>
         <Button href={pruefrundenSucheUrl} style={buttonStyle}>
-          Jetzt eine Prüfrunde testen
+          Jetzt eine Feedback-Loop testen
         </Button>
       </Section>
 

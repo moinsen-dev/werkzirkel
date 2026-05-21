@@ -1,11 +1,11 @@
 /**
- * T-601 — Werkstattbeitrag bezahlt (Geldbeitrag via Stripe).
+ * T-601 — Membership-Beitrag bezahlt (Geldbeitrag via Stripe).
  *
  * Wird verschickt, sobald Stripe via `checkout.session.completed`-Webhook
  * den Geldbeitrag bestaetigt hat. Der Beitrag ist jetzt 6 Monate gueltig
  * und kann fuer bis zu 4 Bedarfe verwendet werden.
  *
- * Betreff: „Dein Werkstattbeitrag ist eingegangen — danke!"
+ * Betreff: „Dein Membership-Beitrag ist eingegangen — danke!"
  */
 
 import { Button, Heading, Section, Text } from '@react-email/components';
@@ -19,12 +19,12 @@ export interface WerkstattbeitragBezahltProps {
   hoeheEuro: string;
   /** Gueltig bis als ISO-Datum (YYYY-MM-DD). */
   gueltigBis: string;
-  /** Link zur Werkstattbeitrag-Uebersicht. */
+  /** Link zur Membership-Beitrag-Uebersicht. */
   uebersichtUrl: string;
   appUrl?: string;
 }
 
-export const T601_BETREFF = 'Dein Werkstattbeitrag ist eingegangen — danke!';
+export const T601_BETREFF = 'Dein Membership-Beitrag ist eingegangen — danke!';
 
 const buttonStyle = {
   backgroundColor: '#0c0a09',
@@ -50,15 +50,15 @@ export function WerkstattbeitragBezahlt(
 
   return (
     <Layout
-      vorschau={`Dein Werkstattbeitrag von ${hoeheEuro} Euro ist eingegangen.`}
+      vorschau={`Dein Membership-Beitrag von ${hoeheEuro} Euro ist eingegangen.`}
       appUrl={appUrl}
     >
       <Heading as="h1" style={{ fontSize: '20px', margin: '0 0 16px 0' }}>
-        Dein Werkstattbeitrag ist eingegangen
+        Dein Membership-Beitrag ist eingegangen
       </Heading>
 
       <Text style={{ margin: '0 0 16px 0' }}>
-        Hallo {anzeigename}, vielen Dank fuer deinen Werkstattbeitrag von
+        Hallo {anzeigename}, vielen Dank fuer deinen Membership-Beitrag von
         {' '}{hoeheEuro} Euro. Damit traegst du den Werkzirkel Hamburg
         und kannst jetzt Bedarfe einbringen.
       </Text>
@@ -66,7 +66,7 @@ export function WerkstattbeitragBezahlt(
       <Text style={{ margin: '0 0 16px 0' }}>
         Der Beitrag ist bis {gueltigBis} gueltig und reicht fuer bis zu
         vier Bedarfe. Danach (oder nach Ablauf) brauchst du einen neuen
-        Beitrag — entweder per Schauabend-Teilnahme, Sachleistung oder
+        Beitrag — entweder per Demo Night-Teilnahme, Sachleistung oder
         wieder als Geldbeitrag.
       </Text>
 

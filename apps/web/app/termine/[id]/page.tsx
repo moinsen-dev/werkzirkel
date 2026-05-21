@@ -1051,6 +1051,7 @@ export default async function TerminDetailPage({
                     istVeroeffentlicht={istVeroeffentlicht}
                     slotsFrei={slotsFrei}
                     eigeneAnmeldung={eigeneAnmeldung}
+                    eigeneWartelistenPosition={eigeneWartelistenPosition}
                     angemeldet={!!sess}
                     anmeldenAction={anmeldenBound}
                     stornierenAction={stornierenBound}
@@ -1132,6 +1133,7 @@ interface ActionContentProps {
   eigeneAnmeldung: {
     status: TerminAnmeldungStatus;
   } | null;
+  eigeneWartelistenPosition: number | null;
   angemeldet: boolean;
   anmeldenAction: () => Promise<void>;
   stornierenAction: () => Promise<void>;
@@ -1146,6 +1148,7 @@ function ActionContent(props: ActionContentProps) {
     istVeroeffentlicht,
     slotsFrei,
     eigeneAnmeldung,
+    eigeneWartelistenPosition,
     angemeldet,
     anmeldenAction,
     stornierenAction,

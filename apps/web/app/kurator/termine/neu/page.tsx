@@ -15,7 +15,7 @@ import { redirect } from 'next/navigation';
 import { and, desc, eq, inArray } from 'drizzle-orm';
 import { de } from '@/i18n/de';
 import { db } from '@/lib/db';
-import { auditLog, termin, terminWerkBezug, werk } from '@/lib/db/schema';
+import { auditLog, nutzer, termin, terminWerkBezug, werk } from '@/lib/db/schema';
 import { terminTyp } from '@/lib/db/schema/enums';
 import { getSessionFromRequest } from '@/lib/auth/session';
 import { istKuratorVon } from '@/lib/auth/permissions';
@@ -114,10 +114,11 @@ export async function terminAnlegenAction(formData: FormData): Promise<void> {
     const validRows = await db
       .select({ id: werk.id })
       .from(werk)
+      .innerJoin(nutzer, eq(nutzer.id, werk.nutzerId))
       .where(
         and(
           inArray(werk.id, inputWerkIds),
-          eq(werk.stadtId, input.stadt_id),
+          eq(nutzer.stadtId, input.stadt_id),
           eq(werk.status, 'aktiv'),
           inArray(werk.sichtbarkeit, ['oeffentlich', 'nur_zirkel']),
         ),
@@ -211,9 +212,10 @@ export default async function TerminNeuPage({ searchParams }: PageProps) {
     ? await db
         .select({ id: werk.id, name: werk.name })
         .from(werk)
+        .innerJoin(nutzer, eq(nutzer.id, werk.nutzerId))
         .where(
           and(
-            eq(werk.stadtId, sess.nutzer.stadtId),
+            eq(nutzer.stadtId, sess.nutzer.stadtId),
             eq(werk.status, 'aktiv'),
             inArray(werk.sichtbarkeit, ['oeffentlich', 'nur_zirkel']),
           ),

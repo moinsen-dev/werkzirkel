@@ -14,7 +14,7 @@
 
 import { and, asc, eq, gt, gte, inArray, lte, or } from 'drizzle-orm';
 import { db } from '@/lib/db';
-import { auditLog, termin, terminWerkBezug, werk } from '@/lib/db/schema';
+import { auditLog, nutzer, termin, terminWerkBezug, werk } from '@/lib/db/schema';
 import { getSessionFromRequest } from '@/lib/auth/session';
 import { rejectIfBadOrigin } from '@/lib/auth/csrf';
 import { istKuratorVon } from '@/lib/auth/permissions';
@@ -102,10 +102,11 @@ export async function POST(req: Request): Promise<Response> {
     const validRows = await db
       .select({ id: werk.id })
       .from(werk)
+      .innerJoin(nutzer, eq(nutzer.id, werk.nutzerId))
       .where(
         and(
           inArray(werk.id, werkIds),
-          eq(werk.stadtId, input.stadt_id),
+          eq(nutzer.stadtId, input.stadt_id),
           eq(werk.status, 'aktiv'),
           inArray(werk.sichtbarkeit, ['oeffentlich', 'nur_zirkel']),
         ),

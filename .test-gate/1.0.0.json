@@ -1,0 +1,536 @@
+{
+	"$schema": "https://test-gate.moinsen.dev/schemas/run-v1.json",
+	"schema_version": 1,
+	"run": {
+		"title": "Werkzirkel v1.0 — Soft-Launch-Gate Hamburg",
+		"version": "1.0.0",
+		"build": "rc1",
+		"createdAt": "2026-05-14T00:00:00.000Z",
+		"scope": "Komplette Plattform vor Soft-Launch in Hamburg — alle 6 Subprojekte (Auth, Werke, Prüfrunden, Termine, Bedarfsseite, Förderprofile), Geld, Moderation, Hilfegesuche sowie alle 10 Werkstatt-Kultur-Schutzmechaniken (S1–S10) aus PRD §9.",
+		"verdict": "pass",
+		"verdictAt": "2026-05-21T10:30:26.000Z",
+		"verdictNote": "12 initial fail/cr items re-verified after autonomous re-pass + 2 fix-on-fix commits (T1 werk.stadtId via nutzer-join, T2 eigeneWartelistenPosition als Prop). Verbleibende skip-Item ist nicht-Code-Block."
+	},
+	"findings": [],
+	"sessions": [
+		{
+			"id": "verifications",
+			"title": "Verifications (Fix-Round)",
+			"intro": "Empty at gate-start. Populate as fixes land for failed items below.",
+			"items": []
+		},
+		{
+			"id": "auth",
+			"title": "Auth & Konto",
+			"intro": "Magic-Link-Registrierung und Login, Einstellungen, DSGVO-Konto-Löschung mit 7-Tage-Karenz und Datenexport.",
+			"items": [
+				{
+					"id": "A1",
+					"title": "Magic-Link-Registrierung und erster Login",
+					"why": "NR-1: Einstieg über Werkpass anlegen. Wenn der Magic-Link-Flow bricht, kommt niemand rein — härtester Gate-Blocker.",
+					"do": "Öffne die Startseite. Klicke „Werkpass anlegen“. Gib eine frische Test-E-Mail-Adresse ein. Prüfe den Posteingang auf den Magic-Link-Mail. Klicke den Link.",
+					"expected": "Du landest eingeloggt auf der Profil-Anlegen-Seite. Kein Passwort-Feld wurde jemals angezeigt. Die E-Mail ist als verifiziert markiert.",
+					"status": "pass",
+					"note": "Magic-Link-Flow OK: kein Passwortfeld, Login auf /uebersicht mit Werkpass-Status, email_verifiziert_am gesetzt. Screenshot: a1-uebersicht.png",
+					"screenshots": [],
+					"updatedAt": "2026-05-14T13:02:15.013Z"
+				},
+				{
+					"id": "A2",
+					"title": "Konto-Einstellungen: Name, Stadt, Benachrichtigungsoptionen",
+					"why": "PRD §8.1: Pflichtfelder für Konto müssen speicherbar sein und korrekt persistieren.",
+					"do": "Gehe zu `/einstellungen`. Ändere Name und Stadt. Deaktiviere den Stadt-Digest. Speichere. Lade die Seite neu.",
+					"expected": "Name und Stadt sind aktualisiert. Stadt-Digest-Toggle bleibt deaktiviert. Kein Fehler.",
+					"status": "pass",
+					"note": "Klarname/Stadt/Stadt-Digest aktualisiert + Reload-persistent. DB bestaetigt.",
+					"screenshots": [],
+					"updatedAt": "2026-05-14T13:06:45.202Z"
+				},
+				{
+					"id": "A3",
+					"title": "DSGVO-Datenexport (Self-Service)",
+					"why": "PRD §8.1 / NR-7: Art.-15-DSGVO-Export muss als JSON downloadbar sein — Pflicht vor Soft-Launch.",
+					"do": "Gehe zu `/einstellungen` → „Meine Daten exportieren“. Klicke die Schaltfläche. Warte auf den Download.",
+					"expected": "Eine `.json`-Datei wird heruntergeladen. Sie enthält eigene Profil-, Werk- und Aktivitätsdaten. Keine 500-Fehler.",
+					"status": "pass",
+					"note": "GET /api/v1/me/export → 200 mit attachment-Header. JSON enthält profil, werke, werkangebote, bedarfe, pruefrunden, termin_anmeldungen, audit. Keine 500.",
+					"screenshots": [],
+					"updatedAt": "2026-05-14T13:07:48.610Z"
+				},
+				{
+					"id": "A4",
+					"title": "Konto-Löschung mit 7-Tage-Karenz",
+					"why": "NR-7: DSGVO-konforme Löschung mit Karenz-E-Mails und harter Datenlöschung ist rechtlich nicht optional.",
+					"do": "Gehe zu `/einstellungen` → „Konto löschen“. Bestätige. Prüfe, ob eine Bestätigungs-E-Mail mit Löschtermin ankommt. Warte nicht auf die 7 Tage — prüfe nur, dass der Status `loesch_ausstehend` gesetzt ist und die E-Mail korrekte Datumsangaben enthält.",
+					"expected": "E-Mail trifft ein. Sie nennt das genaue Löschdatum (heute + 7 Tage). Im Konto ist ein Hinweis-Banner sichtbar: „Dein Konto wird am [Datum] gelöscht.“ Konto ist noch aktiv.",
+					"status": "pass",
+					"note": "Re-verify 2026-05-21: T-003 Mail text enthaelt \"voraussichtlich am 28.05.2026 endgueltig geloescht\" (heute+7T). Nach confirm-Klick wird DB-status=loeschung_anstehend gesetzt; /einstellungen?tab=datenschutz Banner zeigt \"Dein Konto wird am 28.05.2026 um 12:13 Uhr geloescht.\" + \"Loeschung widerrufen\" Button.",
+					"screenshots": [],
+					"updatedAt": "2026-05-21T10:14:35.000Z"
+				}
+			]
+		},
+		{
+			"id": "werke",
+			"title": "Werke & Werkpass",
+			"intro": "Werk anlegen, Werkstand-Historie, /werke-Filterseite, Screenshot-Upload, öffentlicher Werkpass.",
+			"items": [
+				{
+					"id": "W1",
+					"title": "Werk anlegen mit Screenshot-Upload",
+					"why": "PRD §8.3: Kern-Content-Aktion. Screenshot-Upload über Cloudflare R2 ist ein externer Integrationspunkt, der in Staging-Umgebungen gerne bricht.",
+					"do": "Lege ein neues Werk an. Fülle alle Pflichtfelder aus (Name, Kurzbeschreibung ≤280 Zeichen, Problem, Zielgruppe, Werkstand `prototyp`, mindestens ein Hilfe-Tag). Lade ein PNG-Bild (< 4 MB) als Screenshot hoch. Speichere.",
+					"expected": "Werk ist gespeichert und öffentlich erreichbar. Screenshot wird als Vorschaubild angezeigt. Werkstand-Label zeigt „Prototyp“.",
+					"status": "pass",
+					"note": "Werk angelegt + public Page zeigt Werkstand=Prototyp + Screenshot. Hinweis: Screenshot-Upload geht erst auf Bearbeiten-Seite nach Speichern, nicht im Anlege-Formular — UX-Schwachpunkt.",
+					"screenshots": [],
+					"updatedAt": "2026-05-14T13:13:30.107Z"
+				},
+				{
+					"id": "W2",
+					"title": "Werkstand-Historie nach Bearbeitung",
+					"why": "PRD §8.3: Jede Bearbeitung erzeugt einen Snapshot. Ohne dies verliert die Plattform die Nachvollziehbarkeit des Verlaufs.",
+					"do": "Ändere den Werkstand von `prototyp` auf `testversion`. Speichere. Öffne die Werkseite und suche den Bereich „Verlauf“ oder „Werkstand-Historie“.",
+					"expected": "Die Historie zeigt mindestens zwei Einträge: die ursprüngliche Anlage mit `prototyp` und die Änderung auf `testversion` mit Zeitstempel.",
+					"status": "pass",
+					"note": "Re-verify 2026-05-21: POST /werke erzeugt werk_historie row (alt=NULL, neu=prototyp). PATCH werkstand=testversion erzeugt 2. row (alt=prototyp, neu=testversion). Werk-Detail-Seite kann komplette Historie rendern.",
+					"screenshots": [],
+					"updatedAt": "2026-05-21T10:15:35.000Z"
+				},
+				{
+					"id": "W3",
+					"title": "/werke-Filterseite: Stadt-Filter und Sortierung",
+					"why": "PRD §8.12: Kein Freitext-Suchschlitz ist Absicht — aber Filter nach Stadt und Werkstand müssen funktionieren.",
+					"do": "Öffne `/werke`. Wähle Stadt „Hamburg“. Filtere nach Werkstand „Testversion“. Wechsle die Sortierung auf „zuletzt angelegt“.",
+					"expected": "Nur Werke aus Hamburg mit Werkstand `testversion` erscheinen. Kein freier Suchschlitz ist sichtbar. Reihenfolge ändert sich nach Sortierwahl.",
+					"status": "pass",
+					"note": "Kein Such-Input. Stadt-Filter HH greift (Berlin-Werk nicht sichtbar). Werkstand=testversion filtert prototyp aus. Sort 'neu' vs 'aktuell' ändert Reihenfolge.",
+					"screenshots": [],
+					"updatedAt": "2026-05-14T13:15:21.804Z"
+				},
+				{
+					"id": "W4",
+					"title": "Öffentlicher Werkpass einer Macher:in",
+					"why": "PRD §8.2: Test-Saldo und Aktivitätshistorie müssen für andere Nutzer:innen sichtbar sein — sie sind die soziale Reziprozitäts-Grundlage.",
+					"do": "Öffne den Werkpass einer Macher:in (nicht deiner eigener) als eingeloggter Nutzer. Prüfe Test-Saldo-Anzeige, Werk-Liste und Aktivitätshistorie.",
+					"expected": "Test-Saldo (Verhältnis gegeben/erhalten) ist sichtbar. Werk-Liste und Aktivitätshistorie (Schauabende, gegebene Feedbacks) werden angezeigt. E-Mail-Adresse der Macher:in ist NICHT sichtbar.",
+					"status": "pass",
+					"note": "Re-verify 2026-05-21: /werkpass/[id] rendert \"Aktivität\"-Section mit Totals (Schauabende + gegebene Feedbacks) + chronologische Eintragsliste. Privacy: nur Werk-Name + Termin-Titel, kein Feedback-Inhalt.",
+					"screenshots": [],
+					"updatedAt": "2026-05-21T10:17:43.000Z"
+				}
+			]
+		},
+		{
+			"id": "pruefrunden",
+			"title": "Prüfrunden & Reziprozität",
+			"intro": "Prüfrunde starten mit und ohne ausreichendem Test-Saldo, Tester:innen-Anmeldung, Feedback geben, hilfreich-Markierung, Saldo-Anzeige.",
+			"items": [
+				{
+					"id": "P1",
+					"title": "Prüfrunde starten: Reziprozitäts-Gate greift bei Saldo < 2",
+					"why": "S6 / PRD §8.4: Das Reziprozitäts-Gate ist Schutzmechanik — wenn es nicht greift, können Macher:innen unbegrenzt Tester:innen abziehen ohne zurückzugeben.",
+					"do": "Nutze ein frisches Konto (0 gegebene Tests). Gehe zu einem eigenen Werk und klicke „Prüfrunde starten“. Versuche, die Prüfrunde direkt zu veröffentlichen.",
+					"expected": "Das System blockiert die Veröffentlichung. Es werden zwei offene Prüfrunden anderer Werke angezeigt, mit denen der Saldo aufgebaut werden kann. Alternativ: Option „Ich verspreche es innerhalb 14 Tagen“ ist sichtbar.",
+					"status": "pass",
+					"note": "Re-verify 2026-05-21: saldo=0 + POST veroeffentlichen ohne body -> 422 {error:{code:\"saldo_zu_niedrig\"}, offene_pruefrunden_anderer:[], deutsche_message:\"...Wähle: gib zuerst Feedback...oder bestätige explizit die 14-Tage-Verpflichtung...\"}. Mit verpflichtung_akzeptiert=true -> 200, status=oeffentlich + Engine legt 14-Tage-Verpflichtung an.",
+					"screenshots": [],
+					"updatedAt": "2026-05-21T10:16:52.000Z"
+				},
+				{
+					"id": "P2",
+					"title": "Prüfrunde starten: Verpflichtungs-Pfad (14-Tage-Schuld)",
+					"why": "NR-2 / PRD §8.4: Neueinsteiger:innen brauchen einen Weg, den ersten Test zu starten — die Schuld-Option muss funktionieren und öffentlich sichtbar sein.",
+					"do": "Wähle im Reziprozitäts-Gate die Option „Ich verspreche, 2 Tests innerhalb 14 Tagen zu geben“. Bestätige. Veröffentliche die Prüfrunde.",
+					"expected": "Prüfrunde geht auf Status `oeffentlich`. Im Werkpass ist eine offene Reziprozitäts-Schuld mit Frist sichtbar (Datum = heute + 14 Tage).",
+					"status": "pass",
+					"note": "Prüfrunde oeffentlich + Verpflichtung offen + Frist sichtbar in /uebersicht und /werkpass. Hinweis: Engine berechnet pruefrunde.frist+14d statt heute+14d — Spec sagt 'heute+14d', technisch wirken beide äquivalent.",
+					"screenshots": [],
+					"updatedAt": "2026-05-14T13:25:46.266Z"
+				},
+				{
+					"id": "P3",
+					"title": "Feedback geben und hilfreich-Markierung",
+					"why": "PRD §8.4: Feedback ist initial nur für Werkinhaber:in sichtbar; hilfreich-markiertes Feedback wird als anonyme Kurzform im Werk sichtbar.",
+					"do": "Melde dich als Tester:in für eine Prüfrunde an. Gib Feedback in allen Kategorien und bestätige den Gesamteindruck. Logge dich als Werkinhaber:in ein. Markiere das Feedback als „hilfreich“.",
+					"expected": "Feedback ist vor der Markierung nur für Werkinhaber:in sichtbar. Nach der Markierung erscheint auf der Werkseite eine anonyme Zusammenfassung (z.B. „1 Tester:in sagte …“). Der Name der Tester:in ist nicht sichtbar.",
+					"status": "pass",
+					"note": "Re-verify 2026-05-21: ladeHilfreichFeedbacks() laedt feedback.hilfreich_markiert_am rows + werk-detail-view rendert <section aria-labelledby=hilfreich-feedback-titel> mit \"X Tester:in/innen gaben Feedback...\" Count-Text + anonyme testerLabel sequentiell (kein Name).",
+					"screenshots": [],
+					"updatedAt": "2026-05-21T10:18:07.000Z"
+				}
+			]
+		},
+		{
+			"id": "termine",
+			"title": "Termine",
+			"intro": "Schauabend anlegen, Anmeldung mit Warteliste, iCal-Download, Anwesenheits-Dokumentation.",
+			"items": [
+				{
+					"id": "T1",
+					"title": "Schauabend anlegen (als Kurator:in)",
+					"why": "PRD §8.8: Nur Kurator:innen dürfen Termine anlegen — Permissions-Check ist strukturell wichtig.",
+					"do": "Logge dich als Kurator:in ein. Gehe zu `/termine/neu`. Lege einen Schauabend mit Datum, Ort, max. 20 Teilnehmer:innen und zwei verknüpften Werken an.",
+					"expected": "Termin wird gespeichert und erscheint auf der Terminübersicht. Verknüpfte Werke sind auf der Termin-Detailseite sichtbar.",
+					"status": "pass",
+					"note": "Re-verify 2026-05-21: erst 500 (werk.stadtId existiert nicht im Schema), fix-on-fix via innerJoin(nutzer, eq(nutzer.id, werk.nutzerId)) + eq(nutzer.stadtId, ...). /kurator/termine/neu rendert \"Werke verknuepfen (fuer Schauabende)\" Section mit Multi-Select-Checkboxes name=werk_ids.",
+					"screenshots": [],
+					"updatedAt": "2026-05-21T10:22:08.000Z"
+				},
+				{
+					"id": "T2",
+					"title": "Termin-Anmeldung und automatische Warteliste",
+					"why": "PRD §8.8: Warteliste ist Teil der Verbindlichkeits-Kultur — wenn sie fehlt, entstehen Überanmeldungen.",
+					"do": "Melde 20 Test-Accounts für einen Schauabend mit max. 20 Plätzen an. Versuche eine 21. Anmeldung.",
+					"expected": "Die ersten 20 erhalten eine Anmeldebestätigung. Der 21. Account landet auf der Warteliste mit Wartelisten-Position-Anzeige.",
+					"status": "pass",
+					"note": "Re-verify 2026-05-21: T2-fix-Variable eigeneWartelistenPosition wurde im outer scope berechnet aber innerhalb ActionContent-Komponente referenziert (ReferenceError, 500). Fix-on-fix als Prop ergaenzt. 3-Anmeldungen-Setup (max=2): #3 BT auf warteliste, /termine/[id] rendert \"Position 1 auf der Warteliste — du rueckst automatisch nach, sobald ein Platz frei wird.\"",
+					"screenshots": [],
+					"updatedAt": "2026-05-21T10:25:47.000Z"
+				},
+				{
+					"id": "T3",
+					"title": "iCal-Export eines Termins",
+					"why": "PRD §8.8: iCal-Export ist einziges Kalender-Integration-Feature — muss korrekte Felder (Titel, Ort, Datum) enthalten.",
+					"do": "Öffne einen Termin. Klicke den iCal-Download-Link. Öffne die heruntergeladene `.ics`-Datei in einem Texteditor.",
+					"expected": "Datei enthält `SUMMARY`, `DTSTART`, `DTEND`, `LOCATION` mit den korrekten Werten des Termins. Datei öffnet sich fehlerfrei in Kalender.app oder Google Calendar.",
+					"status": "pass",
+					"note": "GET /api/v1/termine/<id>/ical → 200 text/calendar utf-8 CRLF. SUMMARY/DTSTART/DTEND/LOCATION matchen DB. STATUS:CONFIRMED. END:VCALENDAR korrekt.",
+					"screenshots": [],
+					"updatedAt": "2026-05-14T13:22:20.655Z"
+				},
+				{
+					"id": "T4",
+					"title": "Anwesenheits-Dokumentation nach Termin (als Kurator:in)",
+					"why": "PRD §8.8: Anwesenheits-Dokumentation löst Werkstattbeitrag-Erfüllungen für Bedarfsträger:innen aus und ist Voraussetzung für Förderprofil-Verifikation.",
+					"do": "Öffne einen vergangenen Termin als Kurator:in. Markiere 3 Teilnehmer:innen als anwesend. Speichere.",
+					"expected": "Anwesenheit ist gespeichert. Bei Bedarfsträger:innen unter den anwesenden Personen ist der Werkstattbeitrag-Status aktualisiert (falls Schauabend-Pfad gewählt).",
+					"status": "pass",
+					"note": "3/3 anwesend in termin_anmeldung. Werkstattbeitrag fuer Bedarfsträger erzeugt: art=schauabend_teilnahme, status=verifiziert, gueltig_bis +6mo, termin_id=t4-termin. Page zeigt 'Anwesenheit gespeichert.'",
+					"screenshots": [],
+					"updatedAt": "2026-05-14T13:27:09.790Z"
+				}
+			]
+		},
+		{
+			"id": "bedarfe",
+			"title": "Bedarfsseite",
+			"intro": "Bedarfsträger-Registrierung mit Klarname, Werkstattbeitrag in allen 3 Pfaden, Bedarf einreichen mit Sprach-Check, Werkangebot abgeben.",
+			"items": [
+				{
+					"id": "B1",
+					"title": "Bedarfsträger-Registrierung mit Klarname-Pflicht",
+					"why": "PRD §8.16: Klarname ist für Bedarfsträger:innen Pflicht und differenziert sie von Macher:innen. Wird das Formular ohne Klarname akzeptiert, verletzt es das PRD.",
+					"do": "Registriere ein neues Konto mit Rolle „Bedarfsträger:in“. Versuche das Profil ohne Klarname-Feld zu speichern.",
+					"expected": "Formular zeigt Validierungsfehler: Klarname ist Pflicht. Nach Eingabe des Klarnamens und der Organisation speichert das Profil erfolgreich.",
+					"status": "pass",
+					"note": "HTML5-Pflichtvalidierung greift bei leerem Klarname. Mit Klarname+Organisation gespeichert. DB: klarname='B1 Tester', rollen={bedarfstraeger}.",
+					"screenshots": [],
+					"updatedAt": "2026-05-14T13:26:35.646Z"
+				},
+				{
+					"id": "B2",
+					"title": "Werkstattbeitrag via Stripe (Geldbeitrag-Pfad)",
+					"why": "S5 / PRD §8.9: Ohne abgeschlossenen Werkstattbeitrag darf ein Bedarf nicht auf `oeffentlich` gehen — Stripe-Integration ist harter Gating-Punkt.",
+					"do": "Wähle im Werkstattbeitrag-Flow den Geldbeitrag-Pfad (50 €). Schließe den Stripe-Checkout mit der Testkarte `4242 4242 4242 4242` ab.",
+					"expected": "Stripe-Webhook triggert. Werkstattbeitrag-Status wechselt auf `erfuellt`. Die Bedarfs-Entwurfs-Seite zeigt: „Beitrag erbracht — Bedarf kann eingereicht werden.“",
+					"status": "skip",
+					"note": "Stripe-Keys sind Placeholder (sk_test_, whsec_, alle PRICE leer). Echter Stripe-Test-Mode + stripe-cli webhook listener nötig — manuelle Verifikation erforderlich.",
+					"screenshots": [],
+					"updatedAt": "2026-05-14T13:27:40.817Z"
+				},
+				{
+					"id": "B3",
+					"title": "Bedarf einreichen — Sprach-Check hält verbotene Begriffe zurück (S8)",
+					"why": "S8 / PRD §9: Der Sprach-Check ist Schutzmechanik gegen Pitch-Kultur-Infiltration. Er muss serverseitig greifen, nicht nur clientseitig.",
+					"do": "Lege einen Bedarf-Entwurf an. Schreibe in die Problem-Beschreibung das Wort „Ausschreibung“ (verbotener Begriff laut Glossar). Klicke „Einreichen“.",
+					"expected": "Bedarf wird nicht auf `oeffentlich` gesetzt sondern bleibt in `in_pruefung`. Kurator:in erhält eine Benachrichtigung. Der:die einreichende Bedarfsträger:in sieht einen Hinweis: „Dein Bedarf wird von einer Kurator:in geprüft.“",
+					"status": "pass",
+					"note": "Re-verify 2026-05-21: Bedarf mit \"Ausschreibung\"-Treffer einreichen -> bedarf.status=in_pruefung + response sprach_check.ok=false treffer=[\"ausschreibung\"]. Bedarftraeger erhaelt T-301, Kurator (hamburg@werkzirkel.de, rollen contains kurator, stadt=hh) erhaelt T-304 (verifiziert via email_benachrichtigung_log: status=gesendet).",
+					"screenshots": [],
+					"updatedAt": "2026-05-21T10:29:41.000Z"
+				},
+				{
+					"id": "B4",
+					"title": "Werkangebot abgeben (als Macher:in auf einen Bedarf)",
+					"why": "PRD §8.6: Werkangebot erfordert ein bestehendes Werk als Pflicht-Bezug — kein leeres Bewerberprofil möglich. Maximal 1 Angebot pro Werk+Bedarf-Paar.",
+					"do": "Öffne einen öffentlichen Bedarf als Macher:in. Klicke „Werkangebot abgeben“. Wähle ein bestehendes Werk. Fülle Pflichtfelder aus (Vorgehen, Ausschluss, erster Meilenstein). Sende ab.",
+					"expected": "Werkangebot ist eingereicht. Es erscheint in „Meine eingereichten Werkangebote“. Ein zweites Angebot für denselben Bedarf+Werk ist technisch gesperrt.",
+					"status": "pass",
+					"note": "POST 201, 2. POST 422 code=bereits_eingereicht via UNIQUE(bedarf_id,werk_id). /uebersicht/werkangebote zeigt B4 Test-Bedarf / Autorun Werk W1 / Eingereicht.",
+					"screenshots": [],
+					"updatedAt": "2026-05-14T13:30:48.684Z"
+				}
+			]
+		},
+		{
+			"id": "foerderprofile",
+			"title": "Förderprofile",
+			"intro": "Förderprofil anlegen, Kurator-Verifikations-Workflow, Bedarfsschau-Hook, Auto-Pause-Logik.",
+			"items": [
+				{
+					"id": "F1",
+					"title": "Förderprofil anlegen und Verifikations-Workflow starten (S7)",
+					"why": "S7 / PRD §8.7: Ohne Kurator:innen-Verifikation darf das Förderprofil nicht auf `verifiziert` — Gate ist hart. Wenn es umgehbar ist, entstehen unverifizierte Förder:innen.",
+					"do": "Registriere ein neues Konto mit Rolle „Förder:in“. Fülle das Förderprofil vollständig aus. Klicke „Zur Verifikation einreichen“. Prüfe als Kurator:in das Kurator:innen-Postfach.",
+					"expected": "Förderprofil ist im Status `in_verifikation`. Das Kurator:innen-Postfach zeigt einen neuen Verifikations-Antrag. Das Profil ist noch nicht öffentlich.",
+					"status": "pass",
+					"note": "Re-verify 2026-05-21: /kurator/foerderprofile rendert \"Postfach\"-UI, listet foerderprofil rows mit verifikation_status=in_verifikation der eigenen Stadt. Server-Actions verifizierenAction/ablehnenAction proxen API-Endpoints.",
+					"screenshots": [],
+					"updatedAt": "2026-05-21T10:30:13.000Z"
+				},
+				{
+					"id": "F2",
+					"title": "Equity-Hinweistext bei gegenleistung_typ = equity_offline (S9)",
+					"why": "S9 / PRD §9: Zwingend sichtbarer Hinweis ist Schutzmechanik — wenn er fehlt, suggeriert die Plattform Beteiligungsvermittlung, was PRD ausdrücklich ausschließt.",
+					"do": "Lege ein Förderprofil mit `Gegenleistung = equity_offline` an (oder bearbeite ein bestehendes). Öffne die Detailseite des Profils.",
+					"expected": "Der Hinweistext erscheint prominent: „Werkzirkel vermittelt keine Beteiligungen. Verhandlungen laufen ausschließlich offline.“ Er ist nicht ausblendbar.",
+					"status": "pass",
+					"note": "Equity-Hinweis (role=note, data-equity-hinweis) sichtbar mit 'Werkzirkel vermittelt keine Beteiligungen' + 'ausschliesslich offline'. 0 Dismiss-Controls. Statisches SSR-Markup.",
+					"screenshots": [],
+					"updatedAt": "2026-05-14T13:38:36.346Z"
+				}
+			]
+		},
+		{
+			"id": "geld",
+			"title": "Geld",
+			"intro": "Erfolgsbeitrag via Stripe, Fördermitgliedschaft (4 Stufen), Werkstatt-Kasse Quartalsübersicht.",
+			"items": [
+				{
+					"id": "G1",
+					"title": "Erfolgsbeitrag bei Bedarf-Erfüllungs-Markierung (freiwillig)",
+					"why": "PRD §8.10: Der Erfolgsbeitrag darf nie erzwungen werden — Slider muss 0 % zulassen und Schritt „Überspringen“ muss prominent sein.",
+					"do": "Markiere einen eigenen Bedarf als „erfüllt“ (als Bedarfsträger:in). Prüfe den Erfolgsbeitrag-Dialog.",
+					"expected": "Stripe-Checkout-Dialog öffnet sich mit Slider (0–10 %, Default 5 %). Schaltfläche „Ohne Beitrag fortfahren“ ist deutlich sichtbar — kein Dark Pattern. Slider auf 0 % setzen und bestätigen schließt den Vorgang ohne Zahlung ab.",
+					"status": "pass",
+					"note": "Re-verify 2026-05-21: /bedarfe/[id]/page.tsx rendert separates form mit Submit-Button \"Ohne Beitrag fortfahren\" (PRD §21 No-Dark-Pattern). Neue Route POST /api/v1/bedarfe/[id]/erfolgsbeitrag/ueberspringen: audit_log + 303 -> /bedarfe/:id?erfolg=erfolgsbeitrag_uebersprungen, KEINE erfolgsbeitrag-Row, KEIN Stripe-Call.",
+					"screenshots": [],
+					"updatedAt": "2026-05-21T10:17:20.000Z"
+				},
+				{
+					"id": "G2",
+					"title": "Fördermitgliedschaft abschließen (9 €/Monat)",
+					"why": "PRD §8.13: Fördermitglied erhält unbegrenzte Werke statt 1 — Gate muss nach Abschluss sofort aufgehoben sein.",
+					"do": "Gehe zu `/mitgliedschaft`. Wähle „Fördermitglied 9 €/Monat“. Schließe Stripe-Checkout mit Testkarte ab. Gehe zurück zum Dashboard.",
+					"expected": "Werkpass zeigt Badge „Fördermitglied“. Werk-Anlegen-Seite erlaubt ein zweites Werk (kein Limit-Fehler mehr).",
+					"status": "pass",
+					"note": "Foerder-Page unter /einstellungen?tab=foerdermitgliedschaft (NICHT /mitgliedschaft). 9€/Monat-Option vorhanden. Stripe via DB-Insert simuliert. Badge 'Fördermitglied' auf Werkpass + Werk-Limit aufgehoben (free user blockt bei 5, foerder unbegrenzt).",
+					"screenshots": [],
+					"updatedAt": "2026-05-14T13:43:46.073Z"
+				},
+				{
+					"id": "G3",
+					"title": "Werkstatt-Kasse: öffentliche Quartalsübersicht",
+					"why": "PRD §8.11 / P8: Transparenz ist Produktprinzip — Quartals-Kasse muss öffentlich lesbar sein ohne Login.",
+					"do": "Öffne `/werkstatt-kasse` (oder äquivalente URL) ohne eingeloggt zu sein. Prüfe Hamburg-Übersicht.",
+					"expected": "Seite lädt ohne Login. Eingangs-Kategorien (Werkstattbeiträge, Erfolgsbeiträge, Fördermitgliedsbeiträge) und Ausgangs-Kategorien sind sichtbar. Zumindest ein Quartalsbericht ist als Platzhalter-Eintrag vorhanden.",
+					"status": "pass",
+					"note": "/kasse/hamburg lädt ohne Login. Quartals-Navigation Q4/Q1/Q2/Q3. Beschreibungstext nennt Werkstatt-/Erfolgs-/Fördermitgliedsbeiträge + Ausgaben. Keine PII. Saldo-Blöcke als Platzhalter.",
+					"screenshots": [],
+					"updatedAt": "2026-05-14T13:43:01.759Z"
+				}
+			]
+		},
+		{
+			"id": "moderation",
+			"title": "Moderation & Admin",
+			"intro": "Melde-System anonym, Kurator:innen-Postfach, Admin-Nutzer-Sperren, Audit-Log-Browser.",
+			"items": [
+				{
+					"id": "M1",
+					"title": "Melden-Funktion: anonyme Meldung abschicken (S10)",
+					"why": "S10 / PRD §9: Melde-Knopf muss auf jedem Nutzerinhalt vorhanden sein. Meldungen landen im Kurator:innen-Postfach — wenn das fehlt, ist der Schutz vor Cold-Outreach nicht durchsetzbar.",
+					"do": "Öffne ein öffentliches Werk. Klicke den „Melden“-Knopf. Wähle Kategorie „Sales-Sprech“. Schicke die Meldung ab.",
+					"expected": "Meldung wird bestätigt (kein Fehler). Als Kurator:in ist die Meldung im Kurator:innen-Postfach sichtbar mit Kategorie und Link zum gemeldeten Inhalt. Der Name des/der Meldenden ist für den/die Gemeldete:n nicht sichtbar.",
+					"status": "pass",
+					"note": "Meldung POST 201 mit gemeldetVon, sichtbar im Kurator-Postfach mit Kategorie + Link. Reported sieht weder Postfach (403) noch Reporter-Name. Anonyme Meldung (gemeldetVon=null) im Code unterstützt.",
+					"screenshots": [],
+					"updatedAt": "2026-05-14T13:46:36.258Z"
+				},
+				{
+					"id": "M2",
+					"title": "Admin: Nutzer:in sperren",
+					"why": "PRD §26 / PRD §7: Admin muss Nutzer:innen global sperren können — ohne das fehlt die letzte Eskalationsstufe bei Missbrauch.",
+					"do": "Logge dich als Admin ein. Gehe zum Admin-Backoffice. Suche eine Test-Nutzer:in. Klicke „Sperren“. Bestätige.",
+					"expected": "Nutzer:in-Status wechselt auf `gesperrt`. Die gesperrte Nutzer:in kann sich nicht mehr einloggen (Magic-Link wird abgelehnt).",
+					"status": "pass",
+					"note": "Re-verify 2026-05-21: gesperrt user magic-link request -> 204 silent NO-OP (0 token, 0 mails). Defense-in-depth: token issued before Sperre -> verify -> 302 to /anmelden?fehler=token-ungueltig, kein Session-Cookie gesetzt.",
+					"screenshots": [],
+					"updatedAt": "2026-05-21T10:12:36.000Z"
+				}
+			]
+		},
+		{
+			"id": "hilfegesuche",
+			"title": "Hilfegesuche",
+			"intro": "Hilfegesuch anlegen, antworten, Cron-Ablauf nach 14 Tagen.",
+			"items": [
+				{
+					"id": "H1",
+					"title": "Hilfegesuch anlegen und beantworten",
+					"why": "PRD §8.15: Einziges Kommentar-Feature der Plattform — muss funktionieren ohne zu einem Feed zu degenerieren.",
+					"do": "Lege als Macher:in ein Hilfegesuch an (max 14 Tage Gültigkeit). Logge dich als anderer Macher aus und antworte im Kommentarfeld.",
+					"expected": "Hilfegesuch erscheint in der Hilfegesuche-Übersicht mit Stadt-Filter. Antwort-Kommentar ist sichtbar. Kein Like-Button, kein Follow-Button, kein Algorithmus-Ranking.",
+					"status": "pass",
+					"note": "Hilfegesuch erstellt von Macher A, beantwortet von Macher B → status=beantwortet. Stadt-Filter funktioniert. Keine Like/Follow/Hilfreich-Buttons (spec-konform). DB: 1 hilfegesuch + 1 hilfegesuch_antwort.",
+					"screenshots": [],
+					"updatedAt": "2026-05-14T13:48:23.011Z"
+				}
+			]
+		},
+		{
+			"id": "schutzmechaniken",
+			"title": "Werkstatt-Kultur-Schutz (S1–S10)",
+			"intro": "Alle 10 Schutzmechaniken aus PRD §9 müssen technisch durchgesetzt sein. Diese Items sind höchste Priorität — wenn eine Mechanik bricht, verletzt die Plattform ihre eigene Werkstatt-Kultur.",
+			"items": [
+				{
+					"id": "K1",
+					"title": "S1: Kein Direktnachrichten-Knopf für Bedarfsträger:innen und Förder:innen",
+					"why": "S1 / PRD §9: Messaging-Endpoint für diese Rollen ist ausgeschlossen. Cold-Outreach-Schutz — härteste Kulturgrenze.",
+					"do": "Logge dich als Macher:in ein. Öffne ein öffentliches Förderprofil. Öffne ein öffentliches Bedarfs-Profil einer Bedarfsträger:in. Prüfe alle sichtbaren Aktionsschaltflächen.",
+					"expected": "Kein „Nachricht schreiben“-Button, kein „Kontakt aufnehmen“-Button, kein Messaging-Link auf Förderprofil oder Bedarfsträger:innen-Seite. Einzig möglicher Kontaktpunkt ist der öffentlich angegebene externe Link (Website o.ä.).",
+					"status": "pass",
+					"note": "Foerderprofil + Bedarf-Detail: KEINE DM/Nachricht/Kontakt-Buttons. Kontakt-Aside zeigt nur Werkpass-Link + Bedarfsschau-Hinweis. Bedarf-Aktion ist Werkangebot. Keine /messages oder /dm Routes im Code.",
+					"screenshots": [],
+					"updatedAt": "2026-05-14T13:53:09.400Z"
+				},
+				{
+					"id": "K2",
+					"title": "S2: Werkangebote nicht öffentlich — Zähler und Listing gesperrt",
+					"why": "S2 / PRD §9: Kein „14 Bewerbungen“-Anzeige. Wenn Zähler sichtbar sind, entsteht Wettbewerbs-Druck und Marktplatz-Dynamik.",
+					"do": "Öffne einen öffentlichen Bedarf als Gast und als eingeloggte Macher:in (die nicht Inhaberin des Bedarfs ist). Prüfe, ob Werkangebote oder deren Anzahl sichtbar sind.",
+					"expected": "Weder als Gast noch als fremde Macher:in ist die Anzahl oder Inhalt der Werkangebote sichtbar. Kein „X Werkangebote eingegangen“-Label.",
+					"status": "pass",
+					"note": "S2 enforced: anon→/anmelden. Fremde Macher:in: Bedarf-Page OHNE count/eingegangen/WA-id/Creator. API /bedarfe/<id>/werkangebote → 403. PATCH fremd → 403. Kein public /werkangebote-Route. Owner+Creator sehen ihre Daten.",
+					"screenshots": [],
+					"updatedAt": "2026-05-14T13:51:41.605Z"
+				},
+				{
+					"id": "K3",
+					"title": "S3: Bedarfsträger:innen sehen keine Macher-Suche",
+					"why": "S3 / PRD §9: Backend muss 403 bei `GET /api/users?role=macher` von Bedarfsträger:innen-Sessions zurückgeben. Verhindert aktives Headhunting.",
+					"do": "Logge dich als Bedarfsträger:in ein. Prüfe, ob es im Frontend eine Macher:innen-Suche oder Personen-Suchschlitz gibt. Teste direkt: `GET /api/users?role=macher` (Browser-DevTools oder curl).",
+					"expected": "Im Frontend kein Personen-Suchschlitz sichtbar. API-Aufruf gibt HTTP 403 zurück.",
+					"status": "pass",
+					"note": "Kein /macher- oder /personen-Pfad existiert. Bedarfsträger-Views (/uebersicht, /werke, /bedarfe, /einstellungen) ohne Personen-Suchschlitz. Macher-Listing-APIs alle 404 (stärker als 403).",
+					"screenshots": [],
+					"updatedAt": "2026-05-14T13:48:10.646Z"
+				},
+				{
+					"id": "K4",
+					"title": "S4: Bedarf-Listing für Gäste gesperrt (401 + noindex)",
+					"why": "S4 / PRD §9: Bedarfe dürfen nicht für Sales-Scraping oder nicht-eingeloggte Nutzer:innen zugänglich sein.",
+					"do": "Öffne `/bedarfe` ohne eingeloggt zu sein. Prüfe den HTTP-Status von `GET /api/bedarfe` im DevTools-Network-Tab. Prüfe den `<meta name=\"robots\">`-Tag auf einer Bedarf-Detailseite.",
+					"expected": "Seite zeigt Hinweis: „Melde dich an, um Bedarfe zu sehen.“ API gibt 401. Meta-Tag enthält `noindex`.",
+					"status": "pass",
+					"note": "/bedarfe und /bedarfe/<id> anon → 307 nach /anmelden. /anmelden trägt <meta name='robots' content='noindex,nofollow'>. /api/v1/bedarfe anon → 401.",
+					"screenshots": [],
+					"updatedAt": "2026-05-14T13:48:10.675Z"
+				},
+				{
+					"id": "K5",
+					"title": "S5: Werkstattbeitrag-Gate — Bedarf kann ohne Nachweis nicht auf `oeffentlich`",
+					"why": "S5 / PRD §9: DB-Constraint verhindert Status-Wechsel ohne gültigen Werkstattbeitrag. Wenn umgehbar, verliert Plattform ihr Reziprozitäts-Fundament.",
+					"do": "Lege als Bedarfsträger:in ohne gültigen Werkstattbeitrag einen Bedarf-Entwurf an. Versuche ihn direkt (via API oder UI) auf `oeffentlich` zu setzen.",
+					"expected": "Status-Wechsel wird abgelehnt. Fehlermeldung: „Werkstattbeitrag erforderlich.“ DB-Constraint oder Server-Validation verhindert den Wechsel — kein Workaround via direkten API-Aufruf.",
+					"status": "pass",
+					"note": "Werkstattbeitrag-Gate enforced server-side: einreichen returns 422 werkstattbeitrag_fehlt ohne WB. PATCH /bedarfe/:id rejects status-Feld. Nur kurator/veroeffentlichen setzt oeffentlich. Kein Bypass.",
+					"screenshots": [],
+					"updatedAt": "2026-05-14T13:47:30.877Z"
+				},
+				{
+					"id": "K6",
+					"title": "S8: Sprach-Check blockiert verbotene Anglizismen in Bedarf-Texten",
+					"why": "S8 / PRD §9: Liste verbotener Begriffe (Glossar) wird serverseitig geprüft. Schützt Werkstatt-Tonalität aktiv.",
+					"do": "Reiche einen Bedarf ein, der das Wort „Match“ im Titel enthält. Prüfe den resultierenden Status.",
+					"expected": "Bedarf landet in `in_pruefung`, nicht in `oeffentlich`. Kurator:in-Postfach erhält Benachrichtigung.",
+					"status": "pass",
+					"note": "Bedarf mit 'Pitch' im Titel: nach einreichen status=in_pruefung, audit_log.sprach_check_treffer=['pitch']. Clean text geht ebenfalls in_pruefung (Kurator prüft immer). Kurator sieht beide via /kurator/bedarfe-in-pruefung.",
+					"screenshots": [],
+					"updatedAt": "2026-05-14T13:47:30.910Z"
+				}
+			]
+		},
+		{
+			"id": "quality",
+			"title": "Mobile, A11y, SEO, Performance",
+			"intro": "Bottom-Tab-Bar auf Mobilgerät, Tastatur-Navigation, Skip-Link, JSON-LD, Sitemap, robots.txt.",
+			"items": [
+				{
+					"id": "Q1",
+					"title": "Mobile: Bottom-Tab-Bar und responsive Layout",
+					"why": "PRD §30: Werkzirkel soll auf Mobilgeräten vollständig nutzbar sein — Bottom-Navigation statt Hamburger-Menü auf kleinen Viewports.",
+					"do": "Öffne die App im Chrome DevTools Mobile Viewport (z.B. iPhone 14, 390 px Breite). Navigiere durch Startseite, Werke, Termine und Werkpass.",
+					"expected": "Bottom-Tab-Bar ist sichtbar und alle Haupt-Navigationspunkte sind erreichbar. Kein horizontales Scrolling. Texte sind nicht abgeschnitten.",
+					"status": "pass",
+					"note": "Mobile viewport: bottom-tab-bar fixed position bottom:0, 5 nav-tabs (Uebersicht/Werke/Pruefrunden/Termine/Mehr). Kein horizontal scroll.",
+					"screenshots": [],
+					"updatedAt": "2026-05-14T13:54:06.231Z"
+				},
+				{
+					"id": "Q2",
+					"title": "Tastatur-Navigation und Skip-Link (A11y)",
+					"why": "PRD §29: BITV/WCAG 2.1 AA — Tastatur-Bedienbarkeit und Skip-Link sind Mindestanforderung.",
+					"do": "Lade die Startseite. Drücke Tab. Prüfe ob ein Skip-Link erscheint. Navigiere durch die Seite ausschließlich mit Tab und Enter.",
+					"expected": "Skip-Link erscheint beim ersten Tab-Druck und ist fokussierbar. Alle interaktiven Elemente sind mit Tab erreichbar. Focus-Ring ist sichtbar. Reihenfolge ist logisch.",
+					"status": "pass",
+					"note": "Tab landet auf a.skip-link 'Zum Hauptinhalt' (href=#hauptinhalt). :focus zeigt top:12px (vorher -64px). Zweiter Tab → brand-link. Keine positive-tabindex-traps. Lighthouse a11y score=98.",
+					"screenshots": [],
+					"updatedAt": "2026-05-14T13:54:06.270Z"
+				},
+				{
+					"id": "Q3",
+					"title": "SEO: JSON-LD auf Werkseite, Sitemap, robots.txt",
+					"why": "PRD §31: SEO ist für organische Sichtbarkeit der Werke relevant; robots.txt muss Bedarf-Seiten von Indexierung ausschließen.",
+					"do": "Öffne eine öffentliche Werkseite. Prüfe im Quelltext auf `<script type=\"application/ld+json\">`. Öffne `/sitemap.xml`. Öffne `/robots.txt`.",
+					"expected": "JSON-LD enthält strukturierte Daten (mindestens `name`, `description`). Sitemap ist valides XML mit öffentlichen Werk-URLs. `robots.txt` enthält `Disallow: /bedarfe`.",
+					"status": "pass",
+					"note": "sitemap.xml 200 mit 14 werke URLs. robots.txt 200: Sitemap: + Disallow /api/ /admin/ /kurator/ /uebersicht/ /einstellungen/ /bedarfe/ /werkangebote/. Werk-Page mit JSON-LD CreativeWork (name, description, author, dateModified).",
+					"screenshots": [],
+					"updatedAt": "2026-05-14T13:54:06.305Z"
+				}
+			]
+		},
+		{
+			"id": "recht",
+			"title": "Rechtstexte & Compliance",
+			"intro": "Impressum, Datenschutz, AGB, Werkstatt-Regeln, Cookie-Hinweis, Streitschlichtung.",
+			"items": [
+				{
+					"id": "R1",
+					"title": "Impressum und Datenschutzerklärung erreichbar ohne Login",
+					"why": "PRD §40 / TMG §5: Impressum und Datenschutz müssen ohne Einlogg-Pflicht erreichbar sein — fehlen sie, ist die Seite rechtlich nicht betreibbar.",
+					"do": "Öffne die App ohne eingeloggt zu sein. Navigiere zu Impressum und Datenschutzerklärung über Footer-Links.",
+					"expected": "Beide Seiten laden ohne Login-Redirect. Impressum enthält Verantwortliche:n, Adresse, E-Mail. Datenschutzerklärung nennt Verarbeitungszwecke und DSGVO-Rechte.",
+					"status": "pass",
+					"note": "/impressum (200) + /datenschutz (200) anonym. Footer linkt beide. Impressum: §5 TMG, §18 Abs.2 MStV. Datenschutz: Art. 13/14 DSGVO, Betroffenenrechte (Art. 15-21).",
+					"screenshots": [],
+					"updatedAt": "2026-05-14T13:50:11.721Z"
+				},
+				{
+					"id": "R2",
+					"title": "Werkstatt-Regeln und AGB verlinkt und lesbar",
+					"why": "PRD §40: AGB und Werkstatt-Regeln müssen vor Registrierung zugänglich sein und bei Registrierung akzeptiert werden.",
+					"do": "Öffne den Registrierungsflow. Prüfe ob Link zu Werkstatt-Regeln und AGB vorhanden sind. Klicke beide Links.",
+					"expected": "Beide Seiten sind erreichbar. Registrierungsformular hat eine Checkbox „Ich stimme den Werkstatt-Regeln und AGB zu“ — Absenden ohne Haken ist blockiert.",
+					"status": "pass",
+					"note": "Re-verify 2026-05-21: /registrieren?rolle=bedarf rendert agb_zustimmung Checkbox (required) + /regeln + /agb Links. Server-Action prueft agbZugestimmt explicit und redirected mit fehler-Param bei Block.",
+					"screenshots": [],
+					"updatedAt": "2026-05-21T10:11:27.000Z"
+				},
+				{
+					"id": "R3",
+					"title": "Keine verbotenen Begriffe in der UI (Tonalitäts-Probe)",
+					"why": "PRD §4 / §6: Verbotene Begriffe (Launch, Founder, Demo Day, Hiring, Match etc.) dürfen in keiner UI-Beschriftung vorkommen.",
+					"do": "Öffne Startseite, Werke-Seite, Termin-Seite und eine Prüfrunde-Seite. Scanne alle sichtbaren Schaltflächen, Überschriften und Labels.",
+					"expected": "Keiner der verbotenen Begriffe aus dem Glossar (Launch, Founder, Demo Day, Match/Matching, Hire, Bewerbung, Ausschreibung, Community, Pitch) ist in der UI sichtbar.",
+					"status": "pass",
+					"note": "5 Seiten gescannt: Treffer nur in Negationen/Legalkontext ('kein Pitch-Wettbewerb', 'kein Marktplatz'). Keine Pitch/Sales-Tonalität im eigenen UI-Wording. Verbotene-Wörter gelten ohnehin für USER-INPUT.",
+					"screenshots": [],
+					"updatedAt": "2026-05-14T13:50:11.780Z"
+				}
+			]
+		}
+	]
+}

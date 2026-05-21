@@ -132,7 +132,7 @@ describe('/werkpass/[id] page', () => {
     const { html, notFound } = await render(userId);
     expect(notFound).toBe(false);
     expect(html).toContain('Lara Macher');
-    expect(html).toContain('Werkpass im Werkzirkel');
+    expect(html).toContain('Builder-Profil im Werkzirkel');
   });
 
   it('unbekannte id → 404', async () => {
@@ -188,7 +188,7 @@ describe('/werkpass/[id] page', () => {
     expect(html).not.toContain('cus_test123');
   });
 
-  it('Test-Saldo: ohne test_saldo-Row → 0 gegeben · 0 erhalten · 0 offen', async () => {
+  it('Feedback-Saldo: ohne test_saldo-Row → 0 gegeben · 0 erhalten · 0 offen', async () => {
     const userId = await nutzerAnlegen({
       email: 'saldo-0@test.werkzirkel.de',
     });
@@ -200,7 +200,7 @@ describe('/werkpass/[id] page', () => {
     expect(html).toContain('0 offen');
   });
 
-  it('Test-Saldo: mit test_saldo-Row zeigt die Werte', async () => {
+  it('Feedback-Saldo: mit test_saldo-Row zeigt die Werte', async () => {
     const userId = await nutzerAnlegen({
       email: 'saldo-3@test.werkzirkel.de',
     });
@@ -217,7 +217,7 @@ describe('/werkpass/[id] page', () => {
     expect(html).toContain('3 erhalten');
     expect(html).toContain('1 offen');
     // Frist-Hinweis (nicht moralisierend, einfach Fakt) wenn offen > 0.
-    expect(html).toContain('Hat eine offene Reziprozitäts-Verpflichtung');
+    expect(html).toContain('Hat eine offene Feedback-Schuld');
   });
 
   it('Werke-Sektion: zeigt nur sichtbare Werke (oeffentlich/nur_zirkel + aktiv)', async () => {
@@ -275,12 +275,12 @@ describe('/werkpass/[id] page', () => {
     expect(html).not.toContain('Geheim Real Name');
   });
 
-  it('Erklaerungs-Sektion Test-Saldo ist im HTML', async () => {
+  it('Erklaerungs-Sektion Feedback-Saldo ist im HTML', async () => {
     const userId = await nutzerAnlegen({
       email: 'erkl@test.werkzirkel.de',
     });
     const { html } = await render(userId);
-    expect(html).toContain('Was ist ein Test-Saldo?');
-    expect(html).toContain('Reziprozität');
+    expect(html).toContain('Was ist ein Feedback-Saldo?');
+    expect(html).toContain('Gegenseitigkeit');
   });
 });

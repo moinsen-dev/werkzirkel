@@ -116,7 +116,7 @@ describe('/termine Liste page', () => {
     const kid = await kuratorAnlegen();
     await terminAnlegen({
       kuratorId: kid,
-      titel: 'Schauabend X',
+      titel: 'Demo Night X',
       typ: 'schauabend',
     });
     await terminAnlegen({
@@ -125,7 +125,7 @@ describe('/termine Liste page', () => {
       typ: 'pruefabend',
     });
     const html = await render({ typ: 'schauabend' });
-    expect(html).toContain('Schauabend X');
+    expect(html).toContain('Demo Night X');
     expect(html).not.toContain('Pruefabend Y');
   });
 

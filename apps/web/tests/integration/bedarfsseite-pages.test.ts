@@ -306,7 +306,7 @@ describe('/bedarfe/neu', () => {
     const { html } = await renderPage(() =>
       BedarfNeu({ searchParams: Promise.resolve({}) }),
     );
-    expect(html).toContain('Bedarfsträger:innen-Rolle');
+    expect(html).toContain('Auftraggeber:innen-Rolle');
     expectKeineEnglischenStrings(html);
   });
 
@@ -359,7 +359,7 @@ describe('/bedarfe/[id]/werkangebot-neu', () => {
     expect(redirect).toContain('/anmelden');
   });
 
-  it('ohne Macher:innen-Rolle → Hinweis', async () => {
+  it('ohne Builder:innen-Rolle → Hinweis', async () => {
     const uid = await createUser('wn-noroll@test.werkzirkel.de');
     const bid = await createBedarf(uid);
     const sid = await createSessionFor(uid);
@@ -370,7 +370,7 @@ describe('/bedarfe/[id]/werkangebot-neu', () => {
         searchParams: Promise.resolve({}),
       }),
     );
-    expect(html).toContain('Macher:innen-Rolle');
+    expect(html).toContain('Builder:innen-Rolle');
     expectKeineEnglischenStrings(html);
   });
 
@@ -386,7 +386,7 @@ describe('/bedarfe/[id]/werkangebot-neu', () => {
         searchParams: Promise.resolve({}),
       }),
     );
-    expect(html).toContain('eigenes Werk');
+    expect(html).toContain('eigenen Build');
   });
 
   it('Macher:in mit Werk → Form sichtbar', async () => {
@@ -518,7 +518,7 @@ describe('/foerderprofile/neu', () => {
       FoerderprofilNeu({ searchParams: Promise.resolve({}) }),
     );
     expect(html).toContain('Organisation');
-    expect(html).toContain('Förderart');
+    expect(html).toContain('Sponsor-Art');
     expectKeineEnglischenStrings(html);
   });
 });
@@ -568,7 +568,7 @@ describe('/uebersicht/werkangebote', () => {
     const { html } = await renderPage(() =>
       UebersichtWerkangebote({ searchParams: Promise.resolve({}) }),
     );
-    expect(html).toContain('Du hast noch kein Werkangebot');
+    expect(html).toContain('Du hast noch kein Match-Angebot');
     expectKeineEnglischenStrings(html);
   });
 
@@ -614,7 +614,7 @@ describe('/uebersicht/foerderprofil', () => {
     const { html } = await renderPage(() =>
       UebersichtFoerderprofil({ searchParams: Promise.resolve({}) }),
     );
-    expect(html).toContain('Du hast noch kein Förderprofil');
+    expect(html).toContain('Du hast noch kein Sponsor-Profil');
     expectKeineEnglischenStrings(html);
   });
 
@@ -654,7 +654,7 @@ describe('/uebersicht/werkstattbeitrag', () => {
     const { html } = await renderPage(() =>
       UebersichtWerkstattbeitrag({ searchParams: Promise.resolve({}) }),
     );
-    expect(html).toContain('Noch kein Werkstattbeitrag');
+    expect(html).toContain('Noch kein Membership-Beitrag');
     expectKeineEnglischenStrings(html);
   });
 
@@ -679,7 +679,7 @@ describe('/uebersicht Schnellzugriff-Karten', () => {
     setSession(sid);
     const { html } = await renderPage(() => Uebersicht());
     expect(html).toContain('Meine Bedarfe');
-    expect(html).toContain('Werkstattbeitrag');
+    expect(html).toContain('Membership-Beitrag');
     expect(html).not.toContain('in Vorbereitung');
     expectKeineEnglischenStrings(html);
   });
@@ -698,7 +698,7 @@ describe('/uebersicht Schnellzugriff-Karten', () => {
     const sid = await createSessionFor(uid);
     setSession(sid);
     const { html } = await renderPage(() => Uebersicht());
-    expect(html).toContain('Mein Förderprofil');
+    expect(html).toContain('Mein Sponsor-Profil');
     expect(html).not.toContain('in Vorbereitung');
   });
 });

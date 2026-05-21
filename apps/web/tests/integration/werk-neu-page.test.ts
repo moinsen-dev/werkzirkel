@@ -145,7 +145,7 @@ describe('/werke/neu page', () => {
     const { html, redirect } = await render({ sid });
     expect(redirect).toBeNull();
     expect(html).toContain('data-rolle-fehlt');
-    expect(html).toContain('Macher:innen-Rolle');
+    expect(html).toContain('Builder:innen-Rolle');
     // Kein Form-Submit-Button mit "Werk anlegen"-Text
     expect(html).not.toMatch(/type="submit"[^>]*>[^<]*Werk anlegen/);
   });
@@ -164,8 +164,8 @@ describe('/werke/neu page', () => {
     // alle 6 Werkstand-Optionen
     expect(html).toContain('Idee');
     expect(html).toContain('Prototyp');
-    expect(html).toContain('Testversion');
-    expect(html).toContain('Wachsend');
+    expect(html).toContain('Beta');
+    expect(html).toContain('Stabil');
   });
 });
 
@@ -178,7 +178,7 @@ describe('werkAnlegen server action', () => {
   ): FormData {
     const fd = new FormData();
     const base: Record<string, string | string[]> = {
-      name: 'Mein Werk',
+      name: 'Mein Build',
       kurzbeschreibung: 'Eine kurze Beschreibung.',
       problem: 'Wir loesen Problem X.',
       zielgruppe: 'Indie Macher:innen',
@@ -220,7 +220,7 @@ describe('werkAnlegen server action', () => {
 
     const rows = await db.select().from(werk).where(eq(werk.nutzerId, userId));
     expect(rows.length).toBe(1);
-    expect(rows[0]?.name).toBe('Mein Werk');
+    expect(rows[0]?.name).toBe('Mein Build');
   });
 
   it('kurzbeschreibung > 280 Zeichen → redirect mit ?fehler=validierung', async () => {

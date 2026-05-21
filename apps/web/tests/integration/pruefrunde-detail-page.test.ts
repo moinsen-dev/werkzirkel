@@ -107,7 +107,7 @@ async function werkAnlegen(nutzerId: string): Promise<string> {
   await db.insert(werk).values({
     id,
     nutzerId,
-    name: 'Werk',
+    name: 'Build',
     kurzbeschreibung: 'k',
     problem: 'p',
     zielgruppe: 'z',
@@ -243,7 +243,7 @@ describe('/pruefrunden/[id] Detail page', () => {
     const prId = await pruefrundeAnlegen({ werkId, status: 'oeffentlich' });
     const sid = await sessionAnlegen(inhaberId);
     const html = await render(prId, { sid });
-    expect(html).toContain('Deine Prüfrunde verwalten');
+    expect(html).toContain('Deinen Feedback-Loop verwalten');
     expect(html).toContain('Angemeldete Tester:innen');
   });
 

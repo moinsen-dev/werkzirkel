@@ -812,7 +812,7 @@ describe('GET /api/v1/admin/email-log', () => {
         nutzerId: u1,
         email: 'el-u1@test.werkzirkel.de',
         template: 'T-200 werkangebot',
-        betreff: 'Werkangebot',
+        betreff: 'Match-Angebot',
         status: 'gesendet',
       },
     ]);

@@ -13,7 +13,7 @@ import {
 } from '@/lib/validators/werk';
 
 const validBase = {
-  name: 'Mein Werk',
+  name: 'Mein Build',
   kurzbeschreibung: 'Eine knackige Beschreibung.',
   problem: 'Wir loesen XYZ.',
   zielgruppe: 'Indie-Macher:innen',

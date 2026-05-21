@@ -135,7 +135,7 @@ describe('/uebersicht page', () => {
     expect(lastRedirect).toBe('/anmelden?next=/uebersicht');
   });
 
-  it('mit gueltiger Session → 200, rendert Anzeigename und Test-Saldo', async () => {
+  it('mit gueltiger Session → 200, rendert Anzeigename und Feedback-Saldo', async () => {
     const userId = await createUser(TEST_EMAIL, {
       anzeigename: 'Lara aus HH',
     });
@@ -143,7 +143,7 @@ describe('/uebersicht page', () => {
     const html = await renderWithSession(sid);
     expect(lastRedirect).toBeNull();
     expect(html).toContain('Hallo, Lara aus HH.');
-    expect(html).toContain('Test-Saldo');
+    expect(html).toContain('Feedback-Saldo');
   });
 
   it('ohne test_saldo-Row → rendert 0/0/0 (keine `undefined`)', async () => {
@@ -168,7 +168,7 @@ describe('/uebersicht page', () => {
     });
     const html = await renderWithSession(sid);
     expect(html).toContain('role="alert"');
-    expect(html).toContain('2 offene Verpflichtungen');
+    expect(html).toContain('2 offene Feedback-Schulden');
     expect(html).toContain('01.06.2026');
   });
 
@@ -177,7 +177,7 @@ describe('/uebersicht page', () => {
     const sid = await createSessionFor(userId);
     const html = await renderWithSession(sid);
     expect(html).toContain('Abmelden');
-    expect(html).toContain('Werkpass bearbeiten');
+    expect(html).toContain('Builder-Profil bearbeiten');
     expect(html).toMatch(/href="\/einstellungen\?tab=profil"/);
   });
 
@@ -186,8 +186,8 @@ describe('/uebersicht page', () => {
     const sid = await createSessionFor(userId);
     const html = await renderWithSession(sid);
     expect(html).toContain('Schnellzugriff');
-    expect(html).toContain('Meine Werke');
-    expect(html).toContain('Meine Prüfrunden');
+    expect(html).toContain('Meine Builds');
+    expect(html).toContain('Meine Feedback-Loops');
     // Stubs wurden in wp-werkpass-werke, wp-pruefrunden und wp-termine
     // aufgeloest — die Links zeigen jetzt auf echte Routen.
     expect(html).toMatch(/href="\/uebersicht\/werke"/);
@@ -204,6 +204,6 @@ describe('/uebersicht page', () => {
       .where(eq(sessionTable.id, sid));
     expect(sessionRows.length).toBe(1);
     const html = await renderWithSession(sid);
-    expect(html).toContain('Werkpass');
+    expect(html).toContain('Builder-Profil');
   });
 });

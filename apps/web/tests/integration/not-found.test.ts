@@ -50,6 +50,6 @@ describe('not-found page', () => {
     expect(html).toMatch(/href="\/foerdern"/);
     expect(html).toContain('Zum Werkzirkel');
     expect(html).toContain('Bedarf einbringen');
-    expect(html).toContain('Werke fördern');
+    expect(html).toContain('Builds sponsorn');
   });
 });

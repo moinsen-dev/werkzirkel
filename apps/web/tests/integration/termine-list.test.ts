@@ -4,7 +4,7 @@
  * Deckt PRD §15.8:
  *  - Filter: stadt_id, typ (mehrfach), ab_datum, bis_datum, status
  *  - Public sieht nur 'veroeffentlicht' + 'durchgefuehrt'
- *  - Kurator:in der Stadt sieht zusaetzlich 'geplant' der eigenen Stadt
+ *  - City-Lead der Stadt sieht zusaetzlich 'geplant' der eigenen Stadt
  *  - Admin sieht alles
  *  - Cursor-Pagination konsistent
  *  - Sortierung datum_uhrzeit ASC
@@ -127,7 +127,7 @@ describe('GET /api/v1/termine (Liste)', () => {
     expect(data.termine.length).toBe(2);
   });
 
-  it('Kurator:in der Stadt sieht zusaetzlich geplant der eigenen Stadt', async () => {
+  it('City-Lead der Stadt sieht zusaetzlich geplant der eigenen Stadt', async () => {
     const owner = await userAnlegen({ email: 'l-owner2@test.werkzirkel.de', rollen: ['kurator'] });
     const sid = await sessionAnlegen(owner);
     await terminAnlegen({ erstelltVon: owner, status: 'geplant' });
@@ -147,7 +147,7 @@ describe('GET /api/v1/termine (Liste)', () => {
     expect(stati).toContain('veroeffentlicht');
   });
 
-  it('Kurator:in fremder Stadt sieht KEINE geplant der anderen Stadt', async () => {
+  it('City-Lead fremder Stadt sieht KEINE geplant der anderen Stadt', async () => {
     const ownerHH = await userAnlegen({ email: 'l-ownerHH@test.werkzirkel.de', rollen: ['kurator'] });
     const kuratorB = await userAnlegen({
       email: 'l-kurB@test.werkzirkel.de',

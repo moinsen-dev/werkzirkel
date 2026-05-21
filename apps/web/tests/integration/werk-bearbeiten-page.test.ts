@@ -204,7 +204,7 @@ describe('/werke/[id]/bearbeiten page', () => {
     const sid = await createSessionFor(ownerId);
     const wId = await createWerk(ownerId);
     const { html } = await render(wId, { sid, searchParams: { frisch: '1' } });
-    expect(html).toMatch(/Werk angelegt/i);
+    expect(html).toMatch(/Build angelegt/i);
   });
 });
 
@@ -328,7 +328,7 @@ describe('werkLoeschenAction', () => {
     }
   }
 
-  it('eigenes Werk loeschen → redirect /uebersicht/werke + DB-Row weg', async () => {
+  it('eigenen Build loeschen → redirect /uebersicht/werke + DB-Row weg', async () => {
     const ownerId = await createUser('del-owner@test.werkzirkel.de');
     const sid = await createSessionFor(ownerId);
     setSessionCookie(sid);

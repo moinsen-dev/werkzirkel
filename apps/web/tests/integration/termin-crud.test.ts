@@ -2,8 +2,8 @@
  * Integration-Tests fuer Termin-CRUD-API.
  *
  * Deckt PRD §F-401..§F-405, §15.8, §8.8, §14.6:
- *  - POST anlegen + Permission-Check (Kurator:in der Stadt / fremd / admin)
- *  - GET Detail (geplant nur fuer Kurator:in, sonst public)
+ *  - POST anlegen + Permission-Check (City-Lead der Stadt / fremd / admin)
+ *  - GET Detail (geplant nur fuer City-Lead, sonst public)
  *  - PATCH nur in 'geplant' oder 'veroeffentlicht'
  *  - DELETE nur in 'geplant'
  *  - Statusmaschine geplant → veroeffentlicht → abgesagt | durchgefuehrt
@@ -112,7 +112,7 @@ describe('POST /api/v1/termine (anlegen)', () => {
   beforeEach(truncateAll);
   afterAll(truncateAll);
 
-  it('Kurator:in der Stadt legt Termin als geplant an → 201', async () => {
+  it('City-Lead der Stadt legt Termin als geplant an → 201', async () => {
     const kuratorId = await userAnlegen({
       email: 'crud-kur@test.werkzirkel.de',
       rollen: ['kurator'],
@@ -174,7 +174,7 @@ describe('POST /api/v1/termine (anlegen)', () => {
     expect(data.error.code).toBe('kein_zugriff');
   });
 
-  it('Kurator:in fremder Stadt → 403', async () => {
+  it('City-Lead fremder Stadt → 403', async () => {
     const kuratorBId = await userAnlegen({
       email: 'crud-kurB@test.werkzirkel.de',
       stadtId: 'b',
@@ -369,7 +369,7 @@ describe('GET /api/v1/termine/:id (Detail)', () => {
     expect(anon.status).toBe(404);
   });
 
-  it('geplant als Kurator:in der Stadt → 200', async () => {
+  it('geplant als City-Lead der Stadt → 200', async () => {
     const kuratorId = await userAnlegen({
       email: 'det-2@test.werkzirkel.de',
       rollen: ['kurator'],
@@ -467,7 +467,7 @@ describe('PATCH /api/v1/termine/:id', () => {
     return { kuratorId, sid, terminId: tid };
   }
 
-  it('Kurator:in aendert Titel in geplant → 200', async () => {
+  it('City-Lead aendert Titel in geplant → 200', async () => {
     const { sid, terminId } = await setup();
     const res = await terminPatch(
       buildRequest({
@@ -523,7 +523,7 @@ describe('PATCH /api/v1/termine/:id', () => {
     expect(data.error.code).toBe('nicht_editierbar');
   });
 
-  it('PATCH von fremder Kurator:in (andere Stadt) → 403', async () => {
+  it('PATCH von fremder City-Lead (andere Stadt) → 403', async () => {
     const { terminId } = await setup();
     const fremdId = await userAnlegen({
       email: 'patch-fremd@test.werkzirkel.de',
@@ -582,7 +582,7 @@ describe('DELETE /api/v1/termine/:id', () => {
   beforeEach(truncateAll);
   afterAll(truncateAll);
 
-  it('Kurator:in loescht geplanten Termin → 204', async () => {
+  it('City-Lead loescht geplanten Termin → 204', async () => {
     const kuratorId = await userAnlegen({
       email: 'del-1@test.werkzirkel.de',
       rollen: ['kurator'],
@@ -699,7 +699,7 @@ describe('Status-Transitions', () => {
     expect(res.status).toBe(422);
   });
 
-  it('veroeffentlichen von fremder Kurator:in → 403', async () => {
+  it('veroeffentlichen von fremder City-Lead → 403', async () => {
     const { terminId } = await setupGeplant();
     const fremdId = await userAnlegen({
       email: 'st-fremd@test.werkzirkel.de',
@@ -740,7 +740,7 @@ describe('Status-Transitions', () => {
         method: 'POST',
         path: `/api/v1/termine/${terminId}/absagen`,
         sessionId: sid,
-        body: { absage_grund: 'Krankheit der Kurator:in' },
+        body: { absage_grund: 'Krankheit der City-Lead' },
       }),
       { params: Promise.resolve({ id: terminId }) },
     );

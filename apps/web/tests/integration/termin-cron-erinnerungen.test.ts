@@ -77,7 +77,7 @@ async function terminAnlegen(opts: {
     id,
     stadtId: 'hh',
     typ: 'schauabend',
-    titel: opts.titel ?? 'Schauabend',
+    titel: opts.titel ?? 'Demo Night',
     beschreibung: 'Beschreibung.',
     ortText: 'Werkstatt St. Pauli',
     datumUhrzeit: new Date(Date.now() + opts.datumOffsetMs),

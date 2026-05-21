@@ -141,7 +141,7 @@ describe('WerkeListView — no search input (P4)', () => {
     );
     expect(html).toContain('Werke im Werkzirkel Hamburg');
     expect(html).toContain('Werke aus der Region.');
-    expect(html).toContain('7 Werke gerade aktiv');
+    expect(html).toContain('7 Builds gerade aktiv');
   });
 
   it('rendert deutschen Singular bei genau 1 Werk', () => {
@@ -155,7 +155,7 @@ describe('WerkeListView — no search input (P4)', () => {
         nextCursor: null,
       }),
     );
-    expect(html).toContain('1 Werk gerade aktiv');
+    expect(html).toContain('1 Build gerade aktiv');
   });
 
   it('Berlin-Empty-State zeigt den Hamburg-Trag-Hinweis', () => {

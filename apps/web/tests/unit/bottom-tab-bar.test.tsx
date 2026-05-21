@@ -180,7 +180,7 @@ describe('BottomTabBar', () => {
       createElement(BottomTabBar, { aktiv: true }),
     );
     expect(html).toContain('Uebersicht');
-    expect(html).toContain('Werke');
+    expect(html).toContain('Builds');
     expect(html).toContain('Pruefrunden');
     expect(html).toContain('Termine');
     expect(html).toContain('Mehr');

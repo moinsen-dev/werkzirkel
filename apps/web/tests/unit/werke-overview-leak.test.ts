@@ -172,7 +172,7 @@ describe('WerkeListView leak check', () => {
     );
     // Mind. die ersten 3 deutschen Labels muessen vorhanden sein.
     expect(html).toContain('UX-Test');
-    expect(html).toContain('Marketing');
+    expect(html).toContain('Go-To-Market');
     expect(html).toContain('Positionierung');
     // 'mehr'-Hinweis bei >3.
     expect(html).toContain('… mehr');
@@ -202,7 +202,7 @@ describe('WerkeListView leak check', () => {
         nextCursor: null,
       }),
     );
-    expect(html).toContain('Werkstand: Wachsend');
+    expect(html).toContain('Build-Stand: Stabil');
   });
 
   it('Werk-Name verlinkt auf /werke/<id>', () => {

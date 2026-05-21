@@ -122,10 +122,10 @@ describe('/regeln', () => {
     const html = render(RegelnPage() as React.ReactElement);
     expect(html).toContain('Werkstatt-Regeln');
     expect(html).toMatch(/Cold-Outreach|Cold Outreach/);
-    expect(html).toContain('Werkstattbeitrag');
+    expect(html).toContain('Membership-Beitrag');
     expect(html).toMatch(/Förder-Mitgliedschaft|Foerder-Mitgliedschaft/);
     expect(html).toMatch(/Equity|Beteiligung/);
-    expect(html).toMatch(/Kurator:innen|Kuratorinnen/);
+    expect(html).toMatch(/City-Leads|City-Leads/);
   });
 });
 

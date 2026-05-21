@@ -97,14 +97,14 @@ describe('/pruefrunden Liste page', () => {
 
   it('rendert Hero mit Hamburg-Default und Counter', async () => {
     const html = await render({});
-    expect(html).toContain('Prüfrunden im Werkzirkel');
+    expect(html).toContain('Feedback-Loops im Werkzirkel');
     // Wir koennen den Stadtnamen "Hamburg" erwarten, weil die stadt-Seeds das vorsehen.
     expect(html).toMatch(/Hamburg/);
   });
 
   it('zeigt nur veroeffentlichte/geschlossene/abgeschlossene Pruefrunden — keine Entwuerfe', async () => {
     const userId = await nutzerAnlegen();
-    const werkId = await werkAnlegen(userId, 'Mein Werk');
+    const werkId = await werkAnlegen(userId, 'Mein Build');
     await pruefrundeAnlegen({
       werkId,
       titel: 'Oeffentliche Runde Sichtbar',
@@ -122,7 +122,7 @@ describe('/pruefrunden Liste page', () => {
 
   it('Empty-State auf Deutsch wenn keine Pruefrunden', async () => {
     const html = await render({});
-    expect(html).toContain('Noch keine offenen Prüfrunden in Hamburg');
+    expect(html).toContain('Noch keine offenen Feedback-Loops in Hamburg');
   });
 
   it('zeigt Werk-Link in Card', async () => {

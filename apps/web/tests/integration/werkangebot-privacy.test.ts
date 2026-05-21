@@ -82,7 +82,7 @@ async function werkAnlegen(opts: { nutzerId: string; name?: string }): Promise<s
   await db.insert(werk).values({
     id,
     nutzerId: opts.nutzerId,
-    name: opts.name ?? 'Mein Werk',
+    name: opts.name ?? 'Mein Build',
     kurzbeschreibung: 'Kurz',
     problem: 'Problem',
     zielgruppe: 'Zielgruppe',
@@ -432,7 +432,7 @@ describe('GET /api/v1/bedarfe/:id/werkangebote — Privacy-Matrix (PRD §11A S2)
     expect(res.status).toBe(401);
   });
 
-  it('fremde Macher:in (kein eigenes Werkangebot) → 403 kein_zugriff', async () => {
+  it('fremde Macher:in (kein eigenen Buildangebot) → 403 kein_zugriff', async () => {
     const { bedarfId, aussenSid } = await setup();
     const res = await werkangeboteGet(
       buildRequest({

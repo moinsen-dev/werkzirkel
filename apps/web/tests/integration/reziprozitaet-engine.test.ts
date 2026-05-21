@@ -211,7 +211,7 @@ describe('Reziprozitaets-Engine', () => {
     });
 
     it('default ohne verpflichtung_akzeptiert bei 0-Saldo → blockiert mit saldo_zu_niedrig', async () => {
-      // PRD §8.4: das Reziprozitäts-Gate muss eine bewusste Wahl erzwingen
+      // PRD §8.4: das Feedback-Saldo-Gate muss eine bewusste Wahl erzwingen
       // (zuerst Feedback geben ODER explizit Verpflichtung eingehen).
       // Ohne expliziten Opt-In darf die Engine keine Verpflichtung anlegen.
       const { testerId, pruefrundeId, pruefrundeFrist } =

@@ -24,13 +24,13 @@ async function renderPage(
 describe('/anmelden page', () => {
   it('ohne Params rendert Formular mit beiden Buttons', async () => {
     const html = await renderPage();
-    expect(html).toContain('Anmelden oder Werkpass anlegen');
+    expect(html).toContain('Anmelden oder Builder-Profil anlegen');
     expect(html).toContain('Hamburger Werkzirkel');
     expect(html).toContain('name="email"');
     expect(html).toContain('value="login"');
     expect(html).toContain('value="registrierung"');
     expect(html).toContain('Anmelden');
-    expect(html).toContain('Werkpass anlegen');
+    expect(html).toContain('Builder-Profil anlegen');
     expect(html).toContain('name="next"');
   });
 

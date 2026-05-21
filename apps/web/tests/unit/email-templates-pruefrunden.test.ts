@@ -47,7 +47,7 @@ const TEMPLATES: Array<{
         appUrl: APP_URL,
       },
     },
-    betreff: 'Neue Anmeldung zu deiner Prüfrunde',
+    betreff: 'Neue Anmeldung zu deiner Feedback-Loop',
     bodyPhrasen: ['Jana', 'Onboarding-Strecke', 'Werkzirkel-Onboarding-App'],
   },
   {
@@ -76,8 +76,8 @@ const TEMPLATES: Array<{
         appUrl: APP_URL,
       },
     },
-    betreff: 'Deine Reziprozitäts-Frist endet in 3 Tagen',
-    bodyPhrasen: ['Reziprozitäts-Frist', '16. Mai 2026', '3 Tage'],
+    betreff: 'Deine Gegenseitigkeits-Frist endet in 3 Tagen',
+    bodyPhrasen: ['Gegenseitigkeits-Frist', '16. Mai 2026', '3 Tage'],
   },
   {
     name: 'T-104 reziprozitaet-frist-1d',
@@ -90,7 +90,7 @@ const TEMPLATES: Array<{
         appUrl: APP_URL,
       },
     },
-    betreff: 'Deine Reziprozitäts-Frist endet morgen',
+    betreff: 'Deine Gegenseitigkeits-Frist endet morgen',
     bodyPhrasen: ['morgen', '14. Mai 2026', 'keine neuen'],
   },
 ];

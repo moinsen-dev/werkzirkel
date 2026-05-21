@@ -169,9 +169,9 @@ describe('/pruefrunden/[id]/bearbeiten page', () => {
     const html = await render(prId, { sid });
     expect(html).toContain('Test-Pruefrunde-Bearbeiten');
     expect(html).toContain('Änderungen speichern');
-    // Saldo=0 (frischer User) → Reziprozitäts-Wahl-Block erscheint statt
+    // Saldo=0 (frischer User) → Gegenseitigkeits-Wahl-Block erscheint statt
     // direkter Veröffentlichen-Knopf (PRD §8.4).
-    expect(html).toContain('Reziprozitäts-Gate');
+    expect(html).toContain('Feedback-Saldo-Gate');
     expect(html).toContain('Veröffentlichen mit 14-Tage-Verpflichtung');
     expect(html).toContain('Entwurf löschen');
   });
@@ -185,7 +185,7 @@ describe('/pruefrunden/[id]/bearbeiten page', () => {
     await db.update(pruefrunde).set({ status: 'oeffentlich' }).where(eq(pruefrunde.id, prId));
     const html = await render(prId, { sid });
     expect(html).toContain('bereits veröffentlicht');
-    expect(html).not.toContain('Prüfrunde veröffentlichen');
+    expect(html).not.toContain('Feedback-Loop veröffentlichen');
   });
 
   it('fehler=reziprozitaet → Roter Banner mit Link zu /pruefrunden', async () => {
@@ -194,7 +194,7 @@ describe('/pruefrunden/[id]/bearbeiten page', () => {
     const werkId = await werkAnlegen(owner);
     const prId = await entwurfAnlegen(werkId);
     const html = await render(prId, { sid, sp: { fehler: 'reziprozitaet' } });
-    expect(html).toContain('abgelaufene Reziprozitäts-Verpflichtung');
+    expect(html).toContain('abgelaufene Feedback-Schuld');
     expect(html).toMatch(/href="\/pruefrunden"/);
   });
 

@@ -504,7 +504,7 @@ describe('POST /api/v1/pruefrunden/:id/veroeffentlichen (Reziprozitaet)', () => 
   }
 
   it('ohne Saldo, ohne abgelaufene Verpflichtung, ohne Opt-In → 422 saldo_zu_niedrig + offene_pruefrunden_anderer', async () => {
-    // PRD §8.4 Reziprozitäts-Gate: ohne explizites verpflichtung_akzeptiert
+    // PRD §8.4 Feedback-Saldo-Gate: ohne explizites verpflichtung_akzeptiert
     // muss die API blockieren und die Wahl-Hilfe (2 offene Prüfrunden
     // anderer) mitgeben.
     const { sid, pruefrundeId } = await setup();

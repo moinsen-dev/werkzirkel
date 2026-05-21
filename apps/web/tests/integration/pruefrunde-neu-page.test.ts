@@ -118,12 +118,12 @@ describe('/pruefrunden/neu page', () => {
     expect(lastRedirect).toBe('/anmelden?next=/pruefrunden/neu');
   });
 
-  it('mit Session aber ohne Werk → Hinweis "kein eigenes Werk"', async () => {
+  it('mit Session aber ohne Werk → Hinweis "kein eigenen Build"', async () => {
     const userId = await nutzerAnlegen();
     const sid = await sessionAnlegen(userId);
     const html = await render({ sid });
-    expect(html).toContain('Werk');
-    expect(html).toContain('Neues Werk anlegen');
+    expect(html).toContain('Build');
+    expect(html).toContain('Build anlegen');
   });
 
   it('mit Session und Werk → Form sichtbar mit Werk-Dropdown', async () => {
@@ -131,9 +131,9 @@ describe('/pruefrunden/neu page', () => {
     const sid = await sessionAnlegen(userId);
     await werkAnlegen(userId);
     const html = await render({ sid });
-    expect(html).toContain('Titel der Prüfrunde');
+    expect(html).toContain('Titel des Feedback-Loops');
     expect(html).toContain('Werk-Neu');
-    expect(html).toContain('Prüfrunde als Entwurf anlegen');
+    expect(html).toContain('Feedback-Loop als Entwurf anlegen');
   });
 
   it('?werk=<id> wird im Dropdown vorausgewaehlt', async () => {

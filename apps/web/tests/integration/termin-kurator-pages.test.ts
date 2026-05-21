@@ -131,7 +131,7 @@ async function terminAnlegen(opts: {
     id,
     stadtId: 'hh',
     typ: 'schauabend',
-    titel: opts.titel ?? 'Schauabend',
+    titel: opts.titel ?? 'Demo Night',
     beschreibung: 'Drei Werke stellen sich vor.',
     ortText: 'Werkstatt St. Pauli',
     datumUhrzeit: datum,

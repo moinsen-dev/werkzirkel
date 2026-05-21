@@ -5,7 +5,7 @@
  *
  * Deckt PRD §8.8, §F-401..§F-405:
  *  - Bulk-Setzung 'anwesend' vs. 'nicht_anwesend'
- *  - Permission-Check (Kurator:in der Stadt)
+ *  - Permission-Check (City-Lead der Stadt)
  *  - Termin-in-der-Vergangenheit-Pflicht
  *  - Notizen_nach_termin Persistenz
  *  - Werkstattbeitrag-Hook fuer Bedarfstraeger:innen auf Schauabend
@@ -232,7 +232,7 @@ describe('POST /api/v1/termine/:id/anwesenheit', () => {
     expect(map.get(a2)).toBe('storniert');
   });
 
-  it('fremder Kurator:in (andere Stadt) → 403', async () => {
+  it('fremder City-Lead (andere Stadt) → 403', async () => {
     const kuratorHH = await userAnlegen({
       email: 'aw-hh@test.werkzirkel.de',
       rollen: ['kurator'],
@@ -417,7 +417,7 @@ describe('PATCH /api/v1/termin-anmeldungen/:id/status', () => {
   beforeEach(truncateAll);
   afterAll(truncateAll);
 
-  it('Kurator:in setzt Einzel-Anmeldung auf anwesend → 200, DB-Update', async () => {
+  it('City-Lead setzt Einzel-Anmeldung auf anwesend → 200, DB-Update', async () => {
     const kuratorId = await userAnlegen({
       email: 'st-kur@test.werkzirkel.de',
       rollen: ['kurator'],

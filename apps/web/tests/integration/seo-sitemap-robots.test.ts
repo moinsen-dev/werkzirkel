@@ -178,7 +178,7 @@ describe('JSON-LD builder', () => {
   it('Werk: schema.org CreativeWork mit Autor', () => {
     const fakeWerk = {
       id: 'w1',
-      name: 'Mein Werk',
+      name: 'Mein Build',
       kurzbeschreibung: 'Kurz',
       aktualisiertAm: new Date('2026-05-13T12:00:00Z'),
     } as unknown as Parameters<typeof buildWerkJsonLd>[0]['werk'];
@@ -188,7 +188,7 @@ describe('JSON-LD builder', () => {
     });
     expect(ld['@context']).toBe('https://schema.org');
     expect(ld['@type']).toBe('CreativeWork');
-    expect(ld.name).toBe('Mein Werk');
+    expect(ld.name).toBe('Mein Build');
     expect((ld.author as { name: string }).name).toBe('Jana');
   });
 

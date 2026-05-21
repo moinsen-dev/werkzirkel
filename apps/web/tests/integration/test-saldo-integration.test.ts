@@ -8,7 +8,7 @@
  *    + Frist-Datum + Pruefrunden-Link (?stadt=<user-stadt>).
  *  - Engine-Integration: `feedbackGegeben` aktualisiert `test_saldo` (UNIT).
  *
- * PRD-Referenzen: §F-209, §8.2 (Werkpass Test-Saldo), §8.4 (Reziprozitaet).
+ * PRD-Referenzen: §F-209, §8.2 (Werkpass Feedback-Saldo), §8.4 (Reziprozitaet).
  */
 
 import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -142,7 +142,7 @@ async function renderWerkpass(id: string): Promise<string> {
   }
 }
 
-describe('Test-Saldo Integration: echte Werte auf /uebersicht', () => {
+describe('Feedback-Saldo Integration: echte Werte auf /uebersicht', () => {
   beforeEach(reset);
   afterAll(reset);
 
@@ -192,8 +192,8 @@ describe('Test-Saldo Integration: echte Werte auf /uebersicht', () => {
     });
     const sid = await sessionAnlegen(userId);
     const html = await renderUebersicht(sid);
-    expect(html).toContain('Reziprozitäts-Frist endet bald');
-    expect(html).toContain('Jetzt eine Prüfrunde testen');
+    expect(html).toContain('Feedback-Schuld läuft bald ab');
+    expect(html).toContain('Jetzt einen Build testen');
     // Link mit Stadt-Param.
     expect(html).toMatch(/href="\/pruefrunden\?stadt=hh"/);
     // Deutsche Frist-Formatierung dd.mm.jjjj.
@@ -217,8 +217,8 @@ describe('Test-Saldo Integration: echte Werte auf /uebersicht', () => {
     });
     const sid = await sessionAnlegen(userId);
     const html = await renderUebersicht(sid);
-    expect(html).not.toContain('Reziprozitäts-Frist endet bald');
-    expect(html).not.toContain('Jetzt eine Prüfrunde testen');
+    expect(html).not.toContain('Feedback-Schuld läuft bald ab');
+    expect(html).not.toContain('Jetzt einen Build testen');
   });
 
   it('/uebersicht: keine offene Verpflichtung → kein Top-Banner', async () => {
@@ -233,11 +233,11 @@ describe('Test-Saldo Integration: echte Werte auf /uebersicht', () => {
     });
     const sid = await sessionAnlegen(userId);
     const html = await renderUebersicht(sid);
-    expect(html).not.toContain('Reziprozitäts-Frist endet bald');
+    expect(html).not.toContain('Feedback-Schuld läuft bald ab');
   });
 });
 
-describe('Test-Saldo Integration: echte Werte auf /werkpass/[id]', () => {
+describe('Feedback-Saldo Integration: echte Werte auf /werkpass/[id]', () => {
   beforeEach(reset);
   afterAll(reset);
 
@@ -259,7 +259,7 @@ describe('Test-Saldo Integration: echte Werte auf /werkpass/[id]', () => {
   });
 });
 
-describe('Test-Saldo Integration: feedbackGegeben aktualisiert test_saldo', () => {
+describe('Feedback-Saldo Integration: feedbackGegeben aktualisiert test_saldo', () => {
   beforeEach(reset);
   afterAll(reset);
 

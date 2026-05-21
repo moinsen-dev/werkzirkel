@@ -469,7 +469,7 @@ describe('Werk-Limit-Override durch aktive Foerdermitgliedschaft', () => {
   beforeEach(truncateAll);
   afterAll(truncateAll);
 
-  it('Nutzer mit 5 Werken und aktiver Mitgliedschaft darf weiteres Werk anlegen', async () => {
+  it('Build anlegen', async () => {
     const userId = await userAnlegen('foer-limit-ok@test.werkzirkel.de');
     for (let i = 1; i <= MAX_WERKE_FREI; i++) {
       await db.insert(werk).values({

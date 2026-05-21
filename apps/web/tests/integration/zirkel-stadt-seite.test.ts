@@ -212,12 +212,12 @@ describe('/zirkel/[stadt] page', () => {
 
     const { html } = await render('hh');
     expect(html).toContain('Hamburger Schauabend Mai');
-    expect(html).toContain('Schauabend');
+    expect(html).toContain('Demo Night');
   });
 
   it('Termine: leer in HH → Empty-State mit Kurator-Mail "hamburg@werkzirkel.de"', async () => {
     const { html } = await render('hh');
-    expect(html).toContain('Der nächste Schauabend steht noch nicht');
+    expect(html).toContain('Die nächste Demo Night steht noch nicht');
     expect(html).toContain('hamburg@werkzirkel.de');
   });
 

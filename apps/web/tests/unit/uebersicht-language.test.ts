@@ -168,8 +168,8 @@ describe('/uebersicht Sprach-Check', () => {
   it('rendert die deutsche Begruessung mit Anzeigename', async () => {
     const html = await renderPage();
     expect(html).toContain('Hallo, lara.');
-    expect(html).toContain('Werkpass');
-    expect(html).toContain('Test-Saldo');
+    expect(html).toContain('Builder-Profil');
+    expect(html).toContain('Feedback-Saldo');
     expect(html).toContain('Schnellzugriff');
   });
 });

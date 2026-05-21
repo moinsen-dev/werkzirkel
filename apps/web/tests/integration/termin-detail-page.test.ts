@@ -169,10 +169,10 @@ describe('/termine/[id] detail page', () => {
     const kid = await userAnlegen({ rollen: ['kurator'] });
     const tid = await terminAnlegen({
       kuratorId: kid,
-      titel: 'Schauabend Public',
+      titel: 'Demo Night Public',
     });
     const html = await render({ id: tid });
-    expect(html).toContain('Schauabend Public');
+    expect(html).toContain('Demo Night Public');
     expect(html).toContain('Anmelden, um teilzunehmen');
   });
 

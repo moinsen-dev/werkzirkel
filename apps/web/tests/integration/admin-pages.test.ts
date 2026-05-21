@@ -179,7 +179,7 @@ describe('/admin (Dashboard) und Konfiguration-Stub', () => {
     const tree = AdminKonfiguration();
     const html = renderToStaticMarkup(tree as React.ReactElement);
     expect(html).toContain('Globale Konfiguration');
-    expect(html).toContain('Werkstattbeitrag-Skala');
+    expect(html).toContain('Membership-Beitrag-Skala');
     expect(html).toContain('Foerdermitgliedschaft-Preise');
     expect(html).toContain('Verbotene Woerter');
   });

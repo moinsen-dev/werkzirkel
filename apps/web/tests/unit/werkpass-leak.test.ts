@@ -138,7 +138,7 @@ describe('WerkpassView leak check', () => {
     expect(renderToStaticMarkup(treeKein)).not.toContain('Fördermitglied');
   });
 
-  it('zeigt Test-Saldo-Anzeige im Format N gegeben · M erhalten · K offen', () => {
+  it('zeigt Feedback-Saldo-Anzeige im Format N gegeben · M erhalten · K offen', () => {
     const tree = createElement(WerkpassView, {
       nutzer: {
         id: 'n',

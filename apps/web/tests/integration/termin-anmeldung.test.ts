@@ -6,7 +6,7 @@
  *  - POST: nur veroeffentlichte Termine, nur zukuenftige Termine
  *  - POST: Doppel-Anmeldung idempotent (oder reaktiviert nach Storno)
  *  - DELETE: storniert + zieht aelteste Warteliste-Person hoch (T-401)
- *  - GET: Kurator:in sieht Liste, fremder Nutzer 403
+ *  - GET: City-Lead sieht Liste, fremder Nutzer 403
  *
  * Methode: Route-Handler direkt importieren, synthetische Request-Objekte.
  */
@@ -516,7 +516,7 @@ describe('GET /api/v1/termine/:id/anmeldungen', () => {
   beforeEach(truncateAll);
   afterAll(truncateAll);
 
-  it('Kurator:in der Stadt → 200 mit Liste', async () => {
+  it('City-Lead der Stadt → 200 mit Liste', async () => {
     const kuratorId = await userAnlegen({
       email: 'tg-kur-1@test.werkzirkel.de',
       rollen: ['kurator'],
@@ -559,7 +559,7 @@ describe('GET /api/v1/termine/:id/anmeldungen', () => {
     expect(stati).toEqual(['angemeldet', 'warteliste']);
   });
 
-  it('Admin (nicht Kurator:in dieser Stadt) → 200 mit Liste', async () => {
+  it('Admin (nicht City-Lead dieser Stadt) → 200 mit Liste', async () => {
     // Admin lebt in einer "anderen Stadt"-Konstellation: er hat keinen
     // expliziten Kurator-Bezug auf den Termin, aber die admin-Rolle
     // ueberschreibt das in `istKuratorVon`.

@@ -148,7 +148,7 @@ describe('/uebersicht/werke page', () => {
     const userId = await createUser('werke-leer@test.werkzirkel.de');
     const sid = await createSessionFor(userId);
     const { html } = await render({ sid });
-    expect(html).toContain('Du hast noch kein Werk angelegt.');
+    expect(html).toContain('Du hast noch keinen Build angelegt.');
   });
 
   it('mit eigenen Werken → alle aufgelistet, inkl. pausiert/ausgeblendet', async () => {
@@ -191,6 +191,6 @@ describe('/uebersicht/werke page', () => {
     expect(html).not.toContain('href="/werke/neu"');
     expect(html).toMatch(/<button[^>]*disabled[^>]*>/);
     expect(html).toContain('data-limit-hinweis');
-    expect(html).toContain('Fördermitgliedschaft');
+    expect(html).toContain('Pro-Membership');
   });
 });

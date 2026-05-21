@@ -139,7 +139,7 @@ describe('WerkDetailView leak check', () => {
     });
     const html = renderToStaticMarkup(tree);
     expect(html).toContain('UX-Test');
-    expect(html).toContain('Marketing');
+    expect(html).toContain('Go-To-Market');
   });
 
   it('rendert Werkstand-Pill via deutsche i18n-Labels', () => {
@@ -156,7 +156,7 @@ describe('WerkDetailView leak check', () => {
       historie: [],
     });
     const html = renderToStaticMarkup(tree);
-    expect(html).toContain('Werkstand: Wachsend');
+    expect(html).toContain('Build-Stand: Stabil');
   });
 
   it('rendert externen link wenn gesetzt', () => {

@@ -96,7 +96,7 @@ describe('POST /api/v1/werke', () => {
   beforeEach(truncateAll);
   afterAll(truncateAll);
 
-  it('legt eigenes Werk an → 201 + in DB persistiert', async () => {
+  it('legt eigenen Build an → 201 + in DB persistiert', async () => {
     const userId = await macherAnlegen({ email: 'crud-1@test.werkzirkel.de' });
     const sid = await sessionAnlegen(userId);
 
@@ -322,7 +322,7 @@ describe('DELETE /api/v1/werke/:id', () => {
   beforeEach(truncateAll);
   afterAll(truncateAll);
 
-  it('Inhaber:in loescht eigenes Werk → 204, CASCADE raeumt werk_historie', async () => {
+  it('Inhaber:in loescht eigenen Build → 204, CASCADE raeumt werk_historie', async () => {
     const userId = await macherAnlegen({ email: 'del-1@test.werkzirkel.de' });
     const sid = await sessionAnlegen(userId);
 

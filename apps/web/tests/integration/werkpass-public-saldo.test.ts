@@ -1,9 +1,9 @@
 /**
- * Integration-Tests fuer das oeffentliche Test-Saldo auf /werkpass/[id].
+ * Integration-Tests fuer das oeffentliche Feedback-Saldo auf /werkpass/[id].
  *
  *  - Werkpass eines Nutzers ohne test_saldo-Row → 0/0/0.
  *  - Werkpass eines Nutzers mit 5/3/1 → echte Werte sichtbar.
- *  - Hinweis 'Hat eine offene Reziprozitäts-Verpflichtung bis ...' rendert,
+ *  - Hinweis 'Hat eine offene Feedback-Schuld bis ...' rendert,
  *    wenn `offene_verpflichtung_anzahl > 0`.
  *
  * PRD-Referenz: §F-209, §8.2.
@@ -78,7 +78,7 @@ async function render(id: string): Promise<string> {
   }
 }
 
-describe('/werkpass/[id] — oeffentlicher Test-Saldo', () => {
+describe('/werkpass/[id] — oeffentlicher Feedback-Saldo', () => {
   beforeEach(reset);
   afterAll(reset);
 
@@ -89,7 +89,7 @@ describe('/werkpass/[id] — oeffentlicher Test-Saldo', () => {
     expect(html).toContain('0 erhalten');
     expect(html).toContain('0 offen');
     // Keine offene Verpflichtungs-Notiz.
-    expect(html).not.toContain('Hat eine offene Reziprozitäts-Verpflichtung');
+    expect(html).not.toContain('Hat eine offene Feedback-Schuld');
   });
 
   it('mit 5 gegeben / 3 erhalten / 1 offen → echte Werte', async () => {
@@ -108,7 +108,7 @@ describe('/werkpass/[id] — oeffentlicher Test-Saldo', () => {
     expect(html).toContain('1 offen');
   });
 
-  it('mit offen=1 → Hinweis "Hat eine offene Reziprozitäts-Verpflichtung bis <datum>."', async () => {
+  it('mit offen=1 → Hinweis "Hat eine offene Feedback-Schuld bis <datum>."', async () => {
     const id = await userAnlegen('wp-saldo-hinweis@test.werkzirkel.de');
     const frist = new Date('2026-09-01T00:00:00Z');
     await db.insert(testSaldo).values({
@@ -119,7 +119,7 @@ describe('/werkpass/[id] — oeffentlicher Test-Saldo', () => {
       naechsteVerpflichtungFrist: frist,
     });
     const html = await render(id);
-    expect(html).toContain('Hat eine offene Reziprozitäts-Verpflichtung');
+    expect(html).toContain('Hat eine offene Feedback-Schuld');
     expect(html).toContain('01.09.2026');
   });
 
@@ -132,6 +132,6 @@ describe('/werkpass/[id] — oeffentlicher Test-Saldo', () => {
       offeneVerpflichtungAnzahl: 0,
     });
     const html = await render(id);
-    expect(html).not.toContain('Hat eine offene Reziprozitäts-Verpflichtung');
+    expect(html).not.toContain('Hat eine offene Feedback-Schuld');
   });
 });

@@ -65,7 +65,7 @@ async function sessionAnlegen(nutzerId: string): Promise<string> {
   return sid;
 }
 
-async function werkAnlegen(nutzerId: string, name = 'Werk'): Promise<string> {
+async function werkAnlegen(nutzerId: string, name = 'Build'): Promise<string> {
   const id = createId();
   await db.insert(werk).values({
     id,

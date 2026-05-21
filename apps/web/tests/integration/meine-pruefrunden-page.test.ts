@@ -146,9 +146,9 @@ describe('/uebersicht/pruefrunden page', () => {
     const userId = await nutzerAnlegen('u');
     const sid = await sessionAnlegen(userId);
     const html = await render({ sid });
-    expect(html).toContain('Eigene Prüfrunden');
+    expect(html).toContain('Eigene Feedback-Loops');
     expect(html).toContain('Als Tester:in angemeldet');
-    expect(html).toContain('noch keine Prüfrunde angelegt');
+    expect(html).toContain('noch keinen Feedback-Loop angelegt');
   });
 
   it('Eigene Pruefrunde → Card sichtbar', async () => {
@@ -196,7 +196,7 @@ describe('/uebersicht/pruefrunden page', () => {
     });
     const html = await render({ sid });
     expect(html).toContain('role="alert"');
-    expect(html).toContain('Reziprozität');
+    expect(html).toContain('Gegenseitigkeit');
     expect(html).toContain('01.07.2026');
   });
 

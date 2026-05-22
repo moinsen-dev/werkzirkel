@@ -42,20 +42,21 @@ export default function FoerdernLandingpage() {
         <div className="wrap hero-grid single">
           <div>
             <p className="eyebrow">Sponsor:innen · Hamburg</p>
-            <h1>Lokale Builds sponsorn — ohne Pitch-Theater.</h1>
+            <h1>Lokale Builds sehen, bevor sie pitchen müssen.</h1>
             <p className="hero-copy">
-              Du willst Geld, Raum, Mentoring oder Vertriebszugang an unabhängige Hamburger
-              Builder:innen geben? Werkzirkel macht dich im Kreis sichtbar — mit verifiziertem
-              Sponsor-Profil, transparentem Sponsor-Budget und persönlicher Vorstellung auf der
-              Briefing Night. Keine Bewerbungs-Berge, keine Equity-Vermittlung über die Plattform.
+              Du willst Geld, Raum, Mentoring oder Vertriebszugang an Hamburger{' '}
+              <strong>Builder:innen</strong> geben — aber ohne VC-Pitch-Decks, ohne Hockey-Sticks,
+              ohne Equity-Theater? Werkzirkel zeigt dir verifizierte lokale Builds mit echtem
+              Stand auf einer <strong>Briefing Night</strong>. Klarname, transparentes Budget,
+              keine Vermittlung über die Plattform. Du entscheidest direkt, wen du unterstützt.
             </p>
             <div className="hero-actions">
-              <a className="button primary" href="#zugang">
-                Sponsor-Profil vormerken
-              </a>
-              <a className="button secondary" href="#ablauf">
-                So funktioniert das
-              </a>
+              <Link className="button primary" href="/anmelden?zweck=registrierung-foerder">
+                Sponsor-Profil anlegen
+              </Link>
+              <Link className="button secondary" href="/werke">
+                Aktive Builds ansehen
+              </Link>
             </div>
           </div>
         </div>
@@ -70,7 +71,7 @@ export default function FoerdernLandingpage() {
                 <h3>Builder-Profil anlegen</h3>
                 <p>
                   Eigene digitale Produkte zeigen, testen lassen, weiterentwickeln. Auf
-                  Demo Nightsn vorstellen.
+                  Demo Nights vorstellen.
                 </p>
               </div>
               <span className="arrow">Zur Builder:innen-Seite →</span>
@@ -91,7 +92,7 @@ export default function FoerdernLandingpage() {
                 <p className="meta">Du förderst</p>
                 <h3>Builds sponsorn</h3>
                 <p>
-                  Sponsor-Profil anlegen, von der City-Lead verifizieren lassen, in einer
+                  Sponsor-Profil anlegen, vom City-Lead verifizieren lassen, in einer
                   Briefing Night persönlich sichtbar werden.
                 </p>
               </div>

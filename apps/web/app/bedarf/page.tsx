@@ -42,20 +42,21 @@ export default function BedarfLandingpage() {
         <div className="wrap hero-grid single">
           <div>
             <p className="eyebrow">Auftraggeber:innen · Hamburg</p>
-            <h1>Dein digitales Problem trifft lokale Builder:innen.</h1>
+            <h1>Drei lokale Macher:innen für dein digitales Problem.</h1>
             <p className="hero-copy">
-              Werkzirkel ist kein Freelancer-Marktplatz und keine Ausschreibungsplattform. Es ist
-              eine Werkstatt mit kuratierter Sichtbarkeit. Du bringst dein Problem persönlich in
-              den Kreis — Hamburger Builder:innen antworten mit Werkangeboten, verhandelt wird
-              offline.
+              Keine Ausschreibung, kein Pitch-Wettbewerb, keine zwölf Angebote bis Donnerstag.
+              Du bringst dein konkretes Problem in den Werkzirkel — Hamburger{' '}
+              <strong>Builder:innen</strong> antworten mit einem <strong>Match-Angebot</strong>:
+              gestützt auf einen Build, den sie schon gemacht haben. Du wählst aus, was passt.
+              Verhandelt wird offline.
             </p>
             <div className="hero-actions">
-              <a className="button primary" href="#zugang">
-                Bedarf vormerken
-              </a>
-              <a className="button secondary" href="#ablauf">
-                So funktioniert das
-              </a>
+              <Link className="button primary" href="/anmelden?zweck=registrierung-bedarf">
+                Bedarf einbringen
+              </Link>
+              <Link className="button secondary" href="/bedarfe">
+                Aktuelle Bedarfe ansehen
+              </Link>
             </div>
           </div>
         </div>
@@ -70,7 +71,7 @@ export default function BedarfLandingpage() {
                 <h3>Builder-Profil anlegen</h3>
                 <p>
                   Eigene digitale Produkte zeigen, testen lassen, weiterentwickeln. Auf
-                  Demo Nightsn vorstellen.
+                  Demo Nights vorstellen.
                 </p>
               </div>
               <span className="arrow">Zur Builder:innen-Seite →</span>

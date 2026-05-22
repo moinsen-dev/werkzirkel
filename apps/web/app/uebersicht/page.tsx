@@ -500,7 +500,7 @@ export default async function UebersichtPage() {
                   <strong>Meine Bedarfe</strong>
                   <p>
                     Eigene Bedarfe, Status der Membership-Beiträge und
-                    Werkangebote von Builder:innen.
+                    Match-Angebote von Builder:innen.
                   </p>
                 </Link>
                 <Link
@@ -523,10 +523,10 @@ export default async function UebersichtPage() {
                 className="mock-card"
                 style={{ textDecoration: 'none', color: 'inherit' }}
               >
-                <p className="mock-label">Meine Werkangebote</p>
-                <strong>Meine Werkangebote</strong>
+                <p className="mock-label">Meine Match-Angebote</p>
+                <strong>Meine Match-Angebote</strong>
                 <p>
-                  Werkangebote, die du als Builder:in zu Bedarfen eingereicht
+                  Match-Angebote, die du als Builder:in zu Bedarfen eingereicht
                   hast.
                 </p>
               </Link>

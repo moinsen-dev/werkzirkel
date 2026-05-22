@@ -397,7 +397,7 @@ function AktivVariant({
           </div>
           {termine.length === 0 ? (
             <p style={{ color: 'var(--muted)', maxWidth: 640 }}>
-              Der nächste Demo Night steht noch nicht. Schreib der
+              Die nächste Demo Night steht noch nicht. Schreib dem
               City-Lead unter{' '}
               <a href={`mailto:${stadtMail}`} style={{ color: 'var(--fg)' }}>
                 {stadtMail}

@@ -281,6 +281,6 @@ describe('/werkpass/[id] page', () => {
     });
     const { html } = await render(userId);
     expect(html).toContain('Was ist ein Feedback-Saldo?');
-    expect(html).toContain('Gegenseitigkeit');
+    expect(html).toContain('Gib zwei, nimm eins');
   });
 });

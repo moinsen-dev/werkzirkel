@@ -20,11 +20,11 @@ export default function SiteFooter() {
   return (
     <footer className="site-footer">
       <div className="wrap footer-inner">
-        <span>Werkzirkel — Gemeinsam digitale Produkte bauen.</span>
+        <span>Werkzirkel — Build in Public, ohne Pitch-Theater.</span>
         <div className="footer-links" aria-label="Fußnavigation">
           <Link href="/">Builder:innen</Link>
           <Link href="/bedarf">Bedarf</Link>
-          <Link href="/foerdern">Fördern</Link>
+          <Link href="/foerdern">Sponsorn</Link>
           <Link href="/regeln">Regeln</Link>
           <Link href="/impressum">Impressum</Link>
           <Link href="/datenschutz">Datenschutz</Link>

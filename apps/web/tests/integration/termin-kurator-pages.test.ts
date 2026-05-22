@@ -175,7 +175,7 @@ describe('/kurator/termine/neu page', () => {
     const html = await tryRender(() =>
       NeuPage({ searchParams: Promise.resolve({}) }),
     );
-    expect(html).toContain('Kurator');
+    expect(html).toContain('City-Lead');
     // Form sollte NICHT gerendert sein, da kein Kurator
     expect(html).not.toContain('name="titel"');
   });

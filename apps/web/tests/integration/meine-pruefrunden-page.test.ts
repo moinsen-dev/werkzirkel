@@ -196,7 +196,7 @@ describe('/uebersicht/pruefrunden page', () => {
     });
     const html = await render({ sid });
     expect(html).toContain('role="alert"');
-    expect(html).toContain('Gegenseitigkeit');
+    expect(html).toContain('Feedback-Schuld');
     expect(html).toContain('01.07.2026');
   });
 

@@ -417,7 +417,7 @@ export default async function PruefrundeBearbeitenPage({
           ) : null}
 
           {sp.fehler === 'saldo_zu_niedrig' ? (
-            <FehlerBanner text="Gegenseitigkeits-Gate greift: du hast noch keine zwei Tests gegeben. Wähle unten zwischen Feedback geben oder 14-Tage-Verpflichtung." />
+            <FehlerBanner text="Feedback-Saldo-Gate greift: du hast noch keine zwei Tests gegeben. Wähle unten zwischen Feedback geben oder 14-Tage-Verpflichtung." />
           ) : null}
 
           {sp.fehler === 'validierung' ? (
@@ -650,7 +650,7 @@ export default async function PruefrundeBearbeitenPage({
                     id="reziprozitaet-wahl-titel"
                     style={{ fontSize: 18, margin: '0 0 8px' }}
                   >
-                    Gegenseitigkeits-Gate
+                    Feedback-Saldo-Gate
                   </h2>
                   <p style={{ margin: '0 0 12px', fontSize: 14 }}>
                     Du hast bisher{' '}
@@ -728,7 +728,7 @@ export default async function PruefrundeBearbeitenPage({
                     Veröffentliche jetzt — verpflichte dich aber im selben
                     Zug, innerhalb der nächsten 14 Tage Feedback zu zwei
                     Feedback-Loops anderer Builds zu geben. Bis dahin gilt das
-                    als offene Gegenseitigkeits-Schuld in deinem Builder-Profil.
+                    als offene Feedback-Schuld in deinem Builder-Profil.
                   </p>
                   <form action={veroeffentlichenMitVerpflichtungBound}>
                     <button type="submit" className="button primary">
@@ -751,7 +751,7 @@ export default async function PruefrundeBearbeitenPage({
                       fontSize: 13,
                     }}
                   >
-                    Beim Veröffentlichen prüfen wir dein Test-Saldo
+                    Beim Veröffentlichen prüfen wir dein Feedback-Saldo
                     (Gegenseitigkeit).
                   </p>
                 </form>

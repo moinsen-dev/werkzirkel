@@ -256,13 +256,13 @@ describe('/werke/[id] page', () => {
 
     const { html } = await render(werkId);
     expect(html).toContain('Build-Verlauf');
-    expect(html).toContain('Werkstand geändert von Beta auf Wachsend');
-    expect(html).toContain('Werkstand geändert von Prototyp auf Beta');
-    expect(html).toContain('Werkstand geändert von Idee auf Prototyp');
+    expect(html).toContain('Build-Stand geändert von Beta auf Stabil');
+    expect(html).toContain('Build-Stand geändert von Prototyp auf Beta');
+    expect(html).toContain('Build-Stand geändert von Idee auf Prototyp');
 
-    // Reihenfolge: neuester Eintrag zuerst. Index von 'wachsend'-Eintrag <
+    // Reihenfolge: neuester Eintrag zuerst. Index von 'Stabil'-Eintrag <
     // Index von 'prototyp'-Eintrag.
-    const idxNeu = html.indexOf('Beta auf Wachsend');
+    const idxNeu = html.indexOf('Beta auf Stabil');
     const idxAlt = html.indexOf('Idee auf Prototyp');
     expect(idxNeu).toBeGreaterThan(-1);
     expect(idxAlt).toBeGreaterThan(-1);

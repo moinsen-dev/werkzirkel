@@ -70,7 +70,7 @@ export default async function UebersichtHilfegesuchePage() {
       <header className="hero" id="top">
         <div className="wrap hero-grid single">
           <div>
-            <p className="eyebrow">Werkzirkel · Hilfegesuche</p>
+            <p className="eyebrow">Werkzirkel · Quick-Helps</p>
             <h1>{th.uebersicht_titel}</h1>
             <p className="hero-copy">{th.uebersicht_untertitel}</p>
             <div style={{ marginTop: 20 }}>

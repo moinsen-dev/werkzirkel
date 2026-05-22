@@ -381,10 +381,10 @@ export default function WerkDetailView({
       </section>
 
       {historie.length > 0 ? (
-        <section className="section compact" aria-label="Build-Stand-Verlauf">
+        <section className="section compact" aria-label="Build-Verlauf">
           <div className="wrap">
             <div className="section-head">
-              <h2 style={{ fontSize: 32 }}>Build-Stand-Verlauf</h2>
+              <h2 style={{ fontSize: 32 }}>Build-Verlauf</h2>
             </div>
             <ul className="explain-list">
               {historie.map((h, i) => (

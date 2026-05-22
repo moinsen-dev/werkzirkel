@@ -116,7 +116,7 @@ export default async function HilfegesucheListePage({ searchParams }: PageProps)
       <header className="hero" id="top">
         <div className="wrap hero-grid single">
           <div>
-            <p className="eyebrow">Werkzirkel · Hilfegesuche</p>
+            <p className="eyebrow">Werkzirkel · Quick-Helps</p>
             <h1>{th.liste_titel}</h1>
             <p className="hero-copy">{th.liste_untertitel}</p>
             <div style={{ display: 'flex', gap: 12, marginTop: 20, flexWrap: 'wrap' }}>

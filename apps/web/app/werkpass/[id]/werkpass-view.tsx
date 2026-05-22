@@ -282,7 +282,7 @@ export default function WerkpassView({
                 color: 'var(--muted)',
                 fontSize: 15,
               }}
-              aria-label="Test-Saldo"
+              aria-label="Feedback-Saldo"
             >
               {testSaldo.testsGegeben} gegeben · {testSaldo.testsErhalten}{' '}
               erhalten · {testSaldo.offeneVerpflichtungAnzahl} offen
@@ -663,10 +663,10 @@ export default function WerkpassView({
 
       <section
         className="section compact"
-        aria-label="Was ist ein Test-Saldo"
+        aria-label="Was ist ein Feedback-Saldo"
       >
         <div className="wrap">
-          <h2 style={{ fontSize: 24 }}>Was ist ein Test-Saldo?</h2>
+          <h2 style={{ fontSize: 24 }}>Was ist ein Feedback-Saldo?</h2>
           <p
             style={{
               marginTop: 12,
@@ -676,9 +676,9 @@ export default function WerkpassView({
               maxWidth: 720,
             }}
           >
-            Im Werkzirkel ist Gegenseitigkeit verbindlich: Wer eine Feedback-Loop
+            Im Werkzirkel gilt „Gib zwei, nimm eins": Wer eine Feedback-Loop
             startet, hat zuvor zwei Builds anderer getestet — oder verpflichtet
-            sich, es innerhalb von 14 Tagen zu tun. Das Test-Saldo macht das
+            sich, es innerhalb von 14 Tagen zu tun. Das Feedback-Saldo macht das
             öffentlich sichtbar.
           </p>
         </div>

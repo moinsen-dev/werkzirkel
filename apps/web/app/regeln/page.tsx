@@ -42,7 +42,7 @@ export default function RegelnPage() {
             Direkte Privatnachrichten („Hey, ich hätte da was für dich“) an
             Auftraggeber:innen oder Sponsor:innen sind nicht vorgesehen und werden bei
             Wiederholung mit Kontosperre geahndet. Kontakt entsteht über{' '}
-            <strong>Werkangebote</strong> (Antwort auf einen offenen Bedarf),{' '}
+            <strong>Match-Angebote</strong> (Antwort auf einen offenen Bedarf),{' '}
             <strong>Demo Nights</strong> und <strong>Briefing Nights</strong> — kuratiert und
             sichtbar für alle.
           </p>
@@ -54,8 +54,8 @@ export default function RegelnPage() {
               Lösung oder ein Lasten-Stunden-Heft.
             </li>
             <li>
-              Wer mehrere reine Stellenanzeigen einreicht, wird vom City-Leads-Team auf den
-              Briefing Night-Modus umgeschult oder verliert den Schreibzugriff.
+              Wer mehrere reine Stellenanzeigen einreicht, wird vom City-Lead-Team auf den
+              Briefing-Night-Modus umgeschult oder verliert den Schreibzugriff.
             </li>
           </ul>
 
@@ -67,11 +67,11 @@ export default function RegelnPage() {
             ernsthafte Anfragen.
           </p>
 
-          <h2>5. Förder-Mitgliedschaft erfordert Anwesenheit</h2>
+          <h2>5. Sponsor-Status erfordert Anwesenheit</h2>
           <p>
             Wer als Sponsor:in verifiziert sein will, ist mindestens einmal pro Quartal auf einer
             Briefing Night anwesend. „Stille Spende ohne Gesicht“ ist möglich, gibt aber keinen
-            verifizierten Förder-Status.
+            verifizierten Sponsor-Status.
           </p>
 
           <h2>6. Keine Equity-Vermittlung über die Plattform</h2>
@@ -107,14 +107,14 @@ export default function RegelnPage() {
             zu Konto-Sperre.
           </p>
 
-          <h2>10. City-Leads-Entscheidungen sind verbindlich</h2>
+          <h2>10. City-Lead-Entscheidungen sind verbindlich</h2>
           <p>
-            City-Leads verteilen Schau-Slots, geben Bedarfe frei und können Profile pausieren.
+            City-Leads verteilen Demo-Slots, geben Bedarfe frei und können Profile pausieren.
             Ihre Entscheidungen können per E-Mail an{' '}
             <a href="mailto:developer@moinsen.dev">developer@moinsen.dev</a> widersprochen
             werden; das Veto-Recht liegt bei der Plattform-Leitung. Im Zweifel gilt: Wer die
-            Build-Kultur ernst meint, akzeptiert City-Leads-Entscheidungen, auch wenn
-            sie einmal gegen das eigene Werk gehen.
+            Build-Kultur ernst meint, akzeptiert City-Lead-Entscheidungen, auch wenn
+            sie einmal gegen den eigenen Build gehen.
           </p>
 
           <p className="legal-note">

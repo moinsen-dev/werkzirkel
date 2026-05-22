@@ -123,7 +123,7 @@ describe('/regeln', () => {
     expect(html).toContain('Werkstatt-Regeln');
     expect(html).toMatch(/Cold-Outreach|Cold Outreach/);
     expect(html).toContain('Membership-Beitrag');
-    expect(html).toMatch(/Förder-Mitgliedschaft|Foerder-Mitgliedschaft/);
+    expect(html).toMatch(/Sponsor-Status/);
     expect(html).toMatch(/Equity|Beteiligung/);
     expect(html).toMatch(/City-Leads|City-Leads/);
   });

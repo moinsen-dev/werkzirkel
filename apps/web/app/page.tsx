@@ -68,20 +68,22 @@ export default function MacherLandingpage() {
         <div className="wrap hero-grid">
           <div>
             <p className="eyebrow">Build in Public · Hamburg zuerst</p>
-            <h1>Bau dein Produkt nicht allein.</h1>
+            <h1>Bauen, Testen, Gefragt werden.</h1>
             <p className="hero-copy">
-              Werkzirkel bringt unabhängige Builder:innen und Founder:innen in Hamburg zusammen — zum
-              Austauschen, Testen und Vorankommen. Und macht sie sichtbar für lokale
-              Auftraggeber:innen und Sponsor:innen, die in derselben Stadt sitzen. Build in Public,
-              ohne Pitch-Theater.
+              Werkzirkel ist eine Stadt-Werkstatt für digitale Produkte.{' '}
+              <strong>Builder:innen</strong> zeigen Builds und testen sich gegenseitig — zwei
+              Feedbacks geben, eins bekommen. <strong>Auftraggeber:innen</strong> stellen konkrete
+              digitale Probleme rein und finden Macher:innen, ohne Pitch-Wettbewerb.{' '}
+              <strong>Sponsor:innen</strong> unterstützen lokal, mit Klarname und transparentem
+              Rahmen.
             </p>
             <div className="hero-actions">
-              <a className="button primary" href="#zugang">
-                Builder-Profil vormerken
-              </a>
-              <a className="button secondary" href="#formate">
-                Formate ansehen
-              </a>
+              <Link className="button primary" href="/anmelden">
+                Builder-Profil anlegen
+              </Link>
+              <Link className="button secondary" href="/bedarf">
+                Bedarf einbringen
+              </Link>
             </div>
             <div className="city-picker" aria-label="Regionale Werkzirkel">
               <button className="city-chip" type="button" aria-pressed="true">
